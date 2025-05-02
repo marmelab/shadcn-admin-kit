@@ -7,4 +7,4 @@ install: package.json ## Install dependencies
 	pnpm install
 
 run:
-	pnpm run run
+	pnpm run dev
