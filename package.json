@@ -1,0 +1,21 @@
+{
+  "name": "ra-shadcn-ui-monorepo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "run": "cd demo && pnpm run dev"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "@types/node": "^22.15.3",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "eslint": "^9.22.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^16.0.0",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.26.1"
+  }
+}
