@@ -152,8 +152,8 @@ const Pagination = () => {
   const { hasPreviousPage, hasNextPage, page, perPage, total, setPage } =
     useListPaginationContext();
 
-  const pageStart = page * perPage + 1;
-  const pageEnd = hasNextPage ? page * perPage + perPage : total;
+  const pageStart = (page - 1) * perPage + 1;
+  const pageEnd = hasNextPage ? page * perPage : total;
 
   return (
     <div className="flex items-center justify-end space-x-2 py-4 px-4">
