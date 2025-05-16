@@ -1,0 +1,73 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "React Admin Shadcn UI Library",
+  "homepage": "https://github.com/marmelab/ra-shadcn-ui",
+  "items": [
+    {
+      "name": "react-admin-crud",
+      "type": "registry:block",
+      "title": "React Admin CRUD",
+      "description": "Components to build a CRUD application with React Admin",
+      "registryDependencies": [
+        "button",
+        "navigation-menu",
+        "avatar",
+        "dropdown-menu",
+        "command",
+        "form",
+        "popover",
+        "badge",
+        "input",
+        "table",
+        "alert",
+        "tooltip"
+      ],
+      "dependencies": [
+        "ra-core",
+        "react-router-dom",
+        "react-hook-form",
+        "lodash",
+        "@tanstack/react-query",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/AutoCompleteInput.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/BadgeField.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/Breadcrumb.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/DataTable.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/FormError.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/RaInput.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ReferenceField.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ReferenceInput.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ReferenceManyCount.tsx",
+          "type": "registry:component"
+        }
+      ]
+    }
+  ]
+}

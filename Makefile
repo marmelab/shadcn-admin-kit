@@ -8,3 +8,12 @@ install: package.json ## Install dependencies
 
 run:
 	pnpm run dev
+
+lint: ## Run linter
+	pnpm run lint
+
+build: ## Build the project
+	pnpm run build
+
+build-registry: ## Build the UI registry
+	pnpm run registry:build
