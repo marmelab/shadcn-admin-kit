@@ -50,6 +50,7 @@ export const ProductList = () => {
         </Column>
         <Column source="stock" headerClassName="w-24" />
         <Column
+          label="Actions"
           headerClassName="w-12"
           render={(record) => (
             <Link

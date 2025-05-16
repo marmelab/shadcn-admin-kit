@@ -39,6 +39,7 @@ export const CategoryList = () => {
           />
         </Column>
         <Column
+          label="Actions"
           headerClassName="w-12"
           render={(record) => (
             <Link
