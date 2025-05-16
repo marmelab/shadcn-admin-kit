@@ -1,4 +1,5 @@
 import { createElement, ReactNode, useCallback } from "react";
+import { cn } from "@/lib/utils";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   Table,
@@ -201,7 +202,7 @@ export function DataTableColumn<
 function DataTableHeadCell<
   RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
 >(props: DataTableColumnProps<RecordType>) {
-  const { disableSort, source, label, sortByOrder } = props;
+  const { disableSort, source, label, sortByOrder, headerClassName } = props;
 
   const sort = useDataTableSortContext();
   const { handleSort } = useDataTableCallbacksContext();
@@ -229,7 +230,7 @@ function DataTableHeadCell<
   });
 
   return (
-    <TableHead>
+    <TableHead className={headerClassName}>
       {handleSort && sort && !disableSort && source ? (
         <TooltipProvider>
           <Tooltip>
@@ -265,7 +266,7 @@ const oppositeOrder: Record<SortPayload["order"], SortPayload["order"]> = {
 function DataTableCell<
   RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
 >(props: DataTableColumnProps<RecordType>) {
-  const { children, render, field, source } = props;
+  const { children, render, field, source, cellClassName } = props;
 
   const record = useRecordContext<RecordType>();
   if (!render && !field && !children && !source) {
@@ -275,7 +276,7 @@ function DataTableCell<
   }
 
   return (
-    <TableCell className="py-1">
+    <TableCell className={cn("py-1", cellClassName)}>
       {children ??
         (render
           ? record && render(record)
@@ -289,6 +290,8 @@ function DataTableCell<
 interface DataTableColumnProps<
   RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
 > {
+  cellClassName?: string;
+  headerClassName?: string;
   children?: ReactNode;
   render?: (record: RecordType) => React.ReactNode;
   field?: React.ElementType;
