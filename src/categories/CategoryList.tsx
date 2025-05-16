@@ -30,7 +30,7 @@ export const CategoryList = () => {
       </Breadcrumb>
       <DataTable>
         <Column source="name" />
-        <Column source="productCount" headerClassName="w-24">
+        <Column source="productCount" headerClassName="w-24" disableSort>
           <ReferenceManyCount
             reference="products"
             resource="categories"
