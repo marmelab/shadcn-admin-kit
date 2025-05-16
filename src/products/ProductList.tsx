@@ -3,7 +3,6 @@ import { Breadcrumb, BreadcrumbItem } from "@/components/Breadcrumb";
 import { DataTable } from "@/components/DataTable";
 import { ReferenceField } from "@/components/ReferenceField";
 import { buttonVariants } from "@/components/ui/button";
-import { createColumnHelper } from "@tanstack/react-table";
 import { ListContextProvider, useListController } from "ra-core";
 import { Link } from "react-router-dom";
 
@@ -20,52 +19,7 @@ type Product = {
   image: string;
 };
 
-const columnHelper = createColumnHelper<Product>();
-
-const columns = [
-  columnHelper.accessor("reference", {
-    header: () => "Reference",
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("category_id", {
-    header: () => "Category",
-    cell: (info) => {
-      return (
-        <ReferenceField
-          reference="categories"
-          record={info.row.original}
-          source="category_id"
-          link="edit"
-        >
-          <BadgeField source="name" />
-        </ReferenceField>
-      );
-    },
-  }),
-  columnHelper.accessor("stock", {
-    header: () => "Stock",
-    cell: (info) => info.renderValue(),
-    meta: {
-      headerClassName: "w-24",
-    },
-  }),
-  columnHelper.accessor((row) => row.id, {
-    id: "actions",
-    cell: (info) => (
-      <Link
-        className={buttonVariants({ variant: "outline" })}
-        to={info.getValue().toString()}
-      >
-        Edit
-      </Link>
-    ),
-    enableSorting: false,
-    header: () => <span />,
-    meta: {
-      headerClassName: "w-12",
-    },
-  }),
-];
+const Column = DataTable.Col<Product>;
 
 export const ProductList = () => {
   const context = useListController<Product>();
@@ -83,7 +37,30 @@ export const ProductList = () => {
         </BreadcrumbItem>
         <BreadcrumbItem>Products</BreadcrumbItem>
       </Breadcrumb>
-      <DataTable<Product> columns={columns} />
+      <DataTable>
+        <Column source="reference" />
+        <Column source="category_id">
+          <ReferenceField
+            reference="categories"
+            source="category_id"
+            link="edit"
+          >
+            <BadgeField source="name" />
+          </ReferenceField>
+        </Column>
+        <Column source="stock" headerClassName="w-24" />
+        <Column
+          headerClassName="w-12"
+          render={(record) => (
+            <Link
+              className={buttonVariants({ variant: "outline" })}
+              to={(record?.id || "").toString()}
+            >
+              Edit
+            </Link>
+          )}
+        />
+      </DataTable>
     </ListContextProvider>
   );
 };
