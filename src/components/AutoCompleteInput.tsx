@@ -46,7 +46,7 @@ export const AutoCompleteInput = (
     resource,
     isFromReference,
   } = useChoicesContext(props);
-  const { field, fieldState } = useInput({ ...props, source });
+  const { field, fieldState, isRequired } = useInput({ ...props, source });
 
   const getRecordRepresentation = useGetRecordRepresentation(resource);
   const { getChoiceText, getChoiceValue } = useChoices({
@@ -78,7 +78,7 @@ export const AutoCompleteInput = (
               aria-expanded={open}
               className="w-full justify-between"
             >
-              {selectedChoice ? getChoiceText(selectedChoice) : ""}
+              {selectedChoice ? getChoiceText(selectedChoice) : "Select..."}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
@@ -92,6 +92,14 @@ export const AutoCompleteInput = (
                     key={getChoiceValue(choice)}
                     value={getChoiceValue(choice)}
                     onSelect={() => {
+                      if (
+                        field.value === getChoiceValue(choice) &&
+                        !isRequired
+                      ) {
+                        field.onChange("");
+                        setOpen(false);
+                        return;
+                      }
                       field.onChange(getChoiceValue(choice));
                       setOpen(false);
                     }}

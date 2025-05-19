@@ -38,7 +38,7 @@ const ProductEditView = () => {
         <div className="flex flex-col gap-4 w-full max-w-lg">
           <RaInput source="reference" label="Reference" validate={required()} />
           <ReferenceInput source="category_id" reference="categories">
-            <AutoCompleteInput label="Category" />
+            <AutoCompleteInput label="Category" validate={required()} />
           </ReferenceInput>
           <div className="flex flex-row gap-4">
             <Button className="btn btn-primary" type="submit">
