@@ -20,7 +20,7 @@ export const RaInput = (props: InputProps) => {
           : props.label}
       </FormLabel>
       <FormControl>
-        <Input {...field} />
+        <Input type={props.type} {...field} />
       </FormControl>
       <FormDescription>{props.helperText}</FormDescription>
       <FormError fieldState={fieldState} />

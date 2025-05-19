@@ -114,6 +114,14 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/Create.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/CreateButton.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/lib/i18nProvider.ts",
           "type": "registry:lib"
         }
