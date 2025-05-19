@@ -31,7 +31,8 @@
         "react-hook-form",
         "lodash",
         "@tanstack/react-query",
-        "lucide-react"
+        "lucide-react",
+        "inflection"
       ],
       "files": [
         {
@@ -140,6 +141,10 @@
         },
         {
           "path": "src/components/TextField.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ListGuesser.tsx",
           "type": "registry:component"
         },
         {

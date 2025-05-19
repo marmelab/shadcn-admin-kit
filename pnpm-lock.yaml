@@ -53,6 +53,9 @@ importers:
       data-generator-retail:
         specifier: ^5.8.0
         version: 5.8.2(ra-core@5.8.2(react-dom@19.1.0(react@19.1.0))(react-hook-form@7.56.3(react@19.1.0))(react-router-dom@7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-router@7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0))
+      inflection:
+        specifier: ^3.0.2
+        version: 3.0.2
       lodash:
         specifier: ^4.17.21
         version: 4.17.21

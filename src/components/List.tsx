@@ -16,9 +16,37 @@ import { CreateButton } from "@/components/CreateButton";
 export const List = <RecordType extends RaRecord = RaRecord>(
   props: ListProps<RecordType>
 ) => {
+  const {
+    debounce,
+    disableAuthentication,
+    disableSyncWithLocation,
+    exporter,
+    filter,
+    filterDefaultValues,
+    loading,
+    perPage,
+    queryOptions,
+    resource,
+    sort,
+    storeKey,
+    ...rest
+  } = props;
   return (
-    <ListBase<RecordType> {...props}>
-      <ListView {...props} />
+    <ListBase<RecordType>
+      debounce={debounce}
+      disableAuthentication={disableAuthentication}
+      disableSyncWithLocation={disableSyncWithLocation}
+      exporter={exporter}
+      filter={filter}
+      filterDefaultValues={filterDefaultValues}
+      loading={loading}
+      perPage={perPage}
+      queryOptions={queryOptions}
+      resource={resource}
+      sort={sort}
+      storeKey={storeKey}
+    >
+      <ListView {...rest} />
     </ListBase>
   );
 };
@@ -41,7 +69,7 @@ export const ListView = (props: ListViewProps) => {
   const title = translate("ra.page.list", {
     name: resourceLabel,
   });
-  const { hasCreate } = useResourceDefinition(props);
+  const { hasCreate } = useResourceDefinition({ resource });
 
   return (
     <>
@@ -74,5 +102,4 @@ export const ListView = (props: ListViewProps) => {
 export interface ListViewProps {
   children: ReactNode;
   filters?: ReactElement[];
-  resource?: string;
 }
