@@ -24,6 +24,8 @@
       ],
       "dependencies": [
         "ra-core",
+        "ra-language-english",
+        "ra-i18n-polyglot",
         "react-router-dom",
         "react-hook-form",
         "lodash",
@@ -31,6 +33,26 @@
         "lucide-react"
       ],
       "files": [
+        {
+          "path": "src/components/Admin.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/Layout.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/LoginPage.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/NavigationBar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/UserMenu.tsx",
+          "type": "registry:component"
+        },
         {
           "path": "src/components/AutoCompleteInput.tsx",
           "type": "registry:component"
@@ -66,6 +88,10 @@
         {
           "path": "src/components/ReferenceManyCount.tsx",
           "type": "registry:component"
+        },
+        {
+          "path": "src/lib/i18nProvider.ts",
+          "type": "registry:lib"
         }
       ]
     }

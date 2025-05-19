@@ -1,24 +1,16 @@
-import { CoreAdmin, Resource } from "ra-core";
+import { Resource } from "ra-core";
 import { dataProvider } from "./dataProvider";
 import authProvider from "./authProvider";
-import { i18nProvider } from "./i18nProvider";
-import { Layout } from "./layout/Layout";
-import { LoginPage } from "./layout/LoginPage";
+import { Admin } from "@/components/Admin";
 import { products } from "./products";
 import { categories } from "./categories";
 
 function App() {
   return (
-    <CoreAdmin
-      dataProvider={dataProvider}
-      authProvider={authProvider}
-      i18nProvider={i18nProvider}
-      layout={Layout}
-      loginPage={LoginPage}
-    >
+    <Admin dataProvider={dataProvider} authProvider={authProvider}>
       <Resource {...products} />
       <Resource {...categories} />
-    </CoreAdmin>
+    </Admin>
   );
 }
 
