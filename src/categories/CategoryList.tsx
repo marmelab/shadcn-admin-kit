@@ -1,8 +1,7 @@
-import { List } from "@/components/List";
 import { DataTable } from "@/components/DataTable";
+import { EditButton } from "@/components/EditButton";
+import { List } from "@/components/List";
 import { ReferenceManyCount } from "@/components/ReferenceManyCount";
-import { buttonVariants } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 
 type Category = {
   id: number;
@@ -25,18 +24,9 @@ export const CategoryList = () => {
             source="id"
           />
         </Column>
-        <Column
-          label="Actions"
-          headerClassName="w-12"
-          render={(record) => (
-            <Link
-              className={buttonVariants({ variant: "outline" })}
-              to={(record?.id || "").toString()}
-            >
-              Edit
-            </Link>
-          )}
-        />
+        <Column label="Actions" headerClassName="w-12">
+          <EditButton />
+        </Column>
       </DataTable>
     </List>
   );

@@ -1,11 +1,10 @@
 import { AutoCompleteInput } from "@/components/AutoCompleteInput";
 import { BadgeField } from "@/components/BadgeField";
 import { DataTable } from "@/components/DataTable";
+import { EditButton } from "@/components/EditButton";
 import { List } from "@/components/List";
 import { ReferenceField } from "@/components/ReferenceField";
 import { ReferenceInput } from "@/components/ReferenceInput";
-import { buttonVariants } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 
 type Product = {
   id: number;
@@ -47,18 +46,9 @@ export const ProductList = () => {
           </ReferenceField>
         </Column>
         <Column source="stock" headerClassName="w-24" />
-        <Column
-          label="Actions"
-          headerClassName="w-12"
-          render={(record) => (
-            <Link
-              className={buttonVariants({ variant: "outline" })}
-              to={(record?.id || "").toString()}
-            >
-              Edit
-            </Link>
-          )}
-        />
+        <Column label="Actions" headerClassName="w-12">
+          <EditButton />
+        </Column>
       </DataTable>
     </List>
   );

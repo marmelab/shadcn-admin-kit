@@ -110,6 +110,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/EditButton.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/lib/i18nProvider.ts",
           "type": "registry:lib"
         }
