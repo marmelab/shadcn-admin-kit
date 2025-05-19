@@ -1,4 +1,4 @@
-import { InputProps, useInput, useTranslate } from "ra-core";
+import { InputProps, useInput, useResourceContext, FieldTitle } from "ra-core";
 import {
   FormControl,
   FormDescription,
@@ -9,15 +9,18 @@ import { Input } from "@/components/ui/input";
 import { FormError } from "./FormError";
 
 export const RaInput = (props: InputProps) => {
-  const translate = useTranslate();
-  const { field, fieldState } = useInput(props);
+  const resource = useResourceContext(props);
+  const { field, fieldState, isRequired } = useInput(props);
 
   return (
     <FormItem>
       <FormLabel>
-        {typeof props.label === "string"
-          ? translate(props.label, { _: props.label })
-          : props.label}
+        <FieldTitle
+          label={props.label}
+          source={props.source}
+          resource={resource}
+          isRequired={isRequired}
+        />
       </FormLabel>
       <FormControl>
         <Input type={props.type} {...field} />

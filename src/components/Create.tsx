@@ -46,7 +46,7 @@ export const CreateView = ({ children }: { children: ReactNode }) => {
         </BreadcrumbItem>
         <BreadcrumbItem>Create</BreadcrumbItem>
       </Breadcrumb>
-      {children}
+      <div className="my-2">{children}</div>
     </>
   );
 };

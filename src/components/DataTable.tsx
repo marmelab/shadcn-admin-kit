@@ -53,7 +53,7 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
       empty={<DataTableEmpty />}
       {...rest}
     >
-      <div className="rounded-md border my-2">
+      <div className="rounded-md border">
         <Table>
           <DataTableRenderContext.Provider value="header">
             <DataTableHead>{children}</DataTableHead>

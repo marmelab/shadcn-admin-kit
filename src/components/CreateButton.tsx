@@ -10,8 +10,16 @@ export const CreateButton = () => {
     type: "create",
   });
   return (
-    <Link className={buttonVariants({ variant: "outline" })} to={link}>
+    <Link
+      className={buttonVariants({ variant: "outline" })}
+      to={link}
+      onClick={stopPropagation}
+    >
       Create
     </Link>
   );
 };
+
+// useful to prevent click bubbling in a datagrid with rowClick
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const stopPropagation = (e: any) => e.stopPropagation();

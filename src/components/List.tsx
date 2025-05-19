@@ -34,8 +34,8 @@ export const List = <RecordType extends RaRecord = RaRecord>(
   return (
     <ListBase<RecordType> {...props}>
       <h2 className="text-3xl font-bold tracking-tight mb-2">{title}</h2>
-      <div className="flex justify-between items-center">
-        <Breadcrumb className="my-4">
+      <div className="flex justify-between items-center my-4">
+        <Breadcrumb>
           <BreadcrumbItem>
             <Link to="/">Home</Link>
           </BreadcrumbItem>
@@ -54,7 +54,7 @@ export const List = <RecordType extends RaRecord = RaRecord>(
           </div>
         </FilterLiveForm>
       ) : null}
-      {children}
+      <div className="my-2">{children}</div>
     </ListBase>
   );
 };

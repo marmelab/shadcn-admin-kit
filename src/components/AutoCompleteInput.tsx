@@ -27,7 +27,7 @@ import {
   useChoicesContext,
   useGetRecordRepresentation,
   useInput,
-  useTranslate,
+  FieldTitle,
 } from "ra-core";
 import { FormError } from "./FormError";
 
@@ -39,7 +39,6 @@ export const AutoCompleteInput = (
       translateChoice?: boolean;
     }
 ) => {
-  const translate = useTranslate();
   const {
     allChoices = [],
     source,
@@ -65,9 +64,12 @@ export const AutoCompleteInput = (
   return (
     <FormItem>
       <FormLabel>
-        {typeof props.label === "string"
-          ? translate(props.label, { _: props.label })
-          : props.label}
+        <FieldTitle
+          label={props.label}
+          source={props.source ?? source}
+          resource={resource}
+          isRequired={isRequired}
+        />
       </FormLabel>
       <FormControl>
         <Popover open={open} onOpenChange={setOpen}>

@@ -1,8 +1,8 @@
 import { Breadcrumb, BreadcrumbItem } from "@/components/Breadcrumb";
 import {
-  EditBase,
+  ShowBase,
   useCreatePath,
-  useEditContext,
+  useShowContext,
   useGetRecordRepresentation,
   useGetResourceLabel,
   useResourceContext,
@@ -10,21 +10,21 @@ import {
 } from "ra-core";
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ShowButton } from "@/components/ShowButton";
+import { EditButton } from "@/components/EditButton";
 
-export const Edit = ({ children }: { children: ReactNode }) => (
-  <EditBase mutationMode="pessimistic">
-    <EditView>{children}</EditView>
-  </EditBase>
+export const Show = ({ children }: { children: ReactNode }) => (
+  <ShowBase>
+    <ShowView>{children}</ShowView>
+  </ShowBase>
 );
 
-export const EditView = ({ children }: { children: ReactNode }) => {
-  const context = useEditContext();
+export const ShowView = ({ children }: { children: ReactNode }) => {
+  const context = useShowContext();
 
   const resource = useResourceContext();
   if (!resource) {
     throw new Error(
-      "The EditView component must be used within a ResourceContextProvider"
+      "The ShowView component must be used within a ResourceContextProvider"
     );
   }
   const getResourceLabel = useGetResourceLabel();
@@ -38,7 +38,7 @@ export const EditView = ({ children }: { children: ReactNode }) => {
   const getRecordRepresentation = useGetRecordRepresentation(resource);
   const recordRepresentation = getRecordRepresentation(context.record);
 
-  const { hasShow } = useResourceDefinition({ resource });
+  const { hasEdit } = useResourceDefinition({ resource });
 
   if (context.isLoading || !context.record) {
     return null;
@@ -59,7 +59,7 @@ export const EditView = ({ children }: { children: ReactNode }) => {
           </BreadcrumbItem>
           <BreadcrumbItem>{recordRepresentation}</BreadcrumbItem>
         </Breadcrumb>
-        {hasShow ? <ShowButton /> : null}
+        {hasEdit ? <EditButton /> : null}
       </div>
       <div className="my-2">{children}</div>
     </>

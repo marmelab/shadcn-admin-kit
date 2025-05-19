@@ -2,13 +2,13 @@ import { Link } from "react-router-dom";
 import { buttonVariants } from "@/components/ui/button";
 import { useCreatePath, useRecordContext, useResourceContext } from "ra-core";
 
-export const EditButton = () => {
+export const ShowButton = () => {
   const resource = useResourceContext();
   const record = useRecordContext();
   const createPath = useCreatePath();
   const link = createPath({
     resource,
-    type: "edit",
+    type: "show",
     id: record?.id,
   });
   return (
@@ -17,7 +17,7 @@ export const EditButton = () => {
       to={link}
       onClick={stopPropagation}
     >
-      Edit
+      Show
     </Link>
   );
 };
