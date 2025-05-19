@@ -54,6 +54,14 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/ThemeProvider.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ThemeModeToggle.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/AutoCompleteInput.tsx",
           "type": "registry:component"
         },
