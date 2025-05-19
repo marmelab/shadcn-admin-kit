@@ -16,6 +16,18 @@ import { CreateButton } from "@/components/CreateButton";
 export const List = <RecordType extends RaRecord = RaRecord>(
   props: ListProps<RecordType>
 ) => {
+  return (
+    <ListBase<RecordType> {...props}>
+      <ListView {...props} />
+    </ListBase>
+  );
+};
+
+export interface ListProps<RecordType extends RaRecord = RaRecord>
+  extends ListBaseProps<RecordType>,
+    ListViewProps {}
+
+export const ListView = (props: ListViewProps) => {
   const { filters, children } = props;
   const translate = useTranslate();
   const resource = useResourceContext();
@@ -32,7 +44,7 @@ export const List = <RecordType extends RaRecord = RaRecord>(
   const { hasCreate } = useResourceDefinition(props);
 
   return (
-    <ListBase<RecordType> {...props}>
+    <>
       <h2 className="text-3xl font-bold tracking-tight mb-2">{title}</h2>
       <div className="flex justify-between items-center my-4">
         <Breadcrumb>
@@ -55,12 +67,12 @@ export const List = <RecordType extends RaRecord = RaRecord>(
         </FilterLiveForm>
       ) : null}
       <div className="my-2">{children}</div>
-    </ListBase>
+    </>
   );
 };
 
-export interface ListProps<RecordType extends RaRecord = RaRecord>
-  extends ListBaseProps<RecordType> {
+export interface ListViewProps {
   children: ReactNode;
   filters?: ReactElement[];
+  resource?: string;
 }
