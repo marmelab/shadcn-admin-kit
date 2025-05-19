@@ -32,7 +32,7 @@ export const NavigationBar = () => {
   );
 };
 
-const DashboardMenuItem = () => {
+export const DashboardMenuItem = () => {
   const translate = useTranslate();
   const label = translate("ra.page.dashboard", {
     _: "Dashboard",
@@ -54,7 +54,7 @@ const DashboardMenuItem = () => {
   );
 };
 
-const ResourceMenuItem = ({ name }: { name: string }) => {
+export const ResourceMenuItem = ({ name }: { name: string }) => {
   const resources = useResourceDefinitions();
   const getResourceLabel = useGetResourceLabel();
   const createPath = useCreatePath();

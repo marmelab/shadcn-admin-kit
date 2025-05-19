@@ -53,7 +53,7 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
       empty={<DataTableEmpty />}
       {...rest}
     >
-      <div className="rounded-md border">
+      <div className="rounded-md border my-2">
         <Table>
           <DataTableRenderContext.Provider value="header">
             <DataTableHead>{children}</DataTableHead>
@@ -182,7 +182,7 @@ const Pagination = () => {
   );
 };
 
-interface DataTableProps<RecordType extends RaRecord = RaRecord>
+export interface DataTableProps<RecordType extends RaRecord = RaRecord>
   extends Partial<DataTableBaseProps<RecordType>> {
   children: ReactNode;
 }
@@ -287,7 +287,7 @@ function DataTableCell<
   );
 }
 
-interface DataTableColumnProps<
+export interface DataTableColumnProps<
   RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
 > {
   cellClassName?: string;

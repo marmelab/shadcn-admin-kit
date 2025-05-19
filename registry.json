@@ -98,6 +98,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/List.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/lib/i18nProvider.ts",
           "type": "registry:lib"
         }
