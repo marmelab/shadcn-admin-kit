@@ -67,7 +67,7 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/AutoCompleteInput.tsx",
+          "path": "src/components/AutocompleteInput.tsx",
           "type": "registry:component"
         },
         {

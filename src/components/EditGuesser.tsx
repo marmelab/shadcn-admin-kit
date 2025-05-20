@@ -13,7 +13,7 @@ import { EditView } from "@/components/Edit";
 import { SimpleForm } from "@/components/SimpleForm";
 import { RaInput } from "@/components/RaInput";
 import { ReferenceInput } from "@/components/ReferenceInput";
-import { AutoCompleteInput } from "@/components/AutoCompleteInput";
+import { AutocompleteInput } from "@/components/AutocompleteInput";
 
 export const EditGuesser = (props: { enableLog?: boolean }) => {
   return (
@@ -100,12 +100,12 @@ ${children
   reference: {
     component: (props: any) => (
       <ReferenceInput source={props.source} reference={props.reference}>
-        <AutoCompleteInput />
+        <AutocompleteInput />
       </ReferenceInput>
     ),
     representation: (props: any) =>
       `<ReferenceInput source="${props.source}" reference="${props.reference}">
-                  <AutoCompleteInput />
+                  <AutocompleteInput />
               </ReferenceInput>`,
   },
   string: {

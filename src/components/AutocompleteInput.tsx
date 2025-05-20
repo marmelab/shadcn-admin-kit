@@ -31,7 +31,7 @@ import {
 } from "ra-core";
 import { FormError } from "./FormError";
 
-export const AutoCompleteInput = (
+export const AutocompleteInput = (
   props: Omit<InputProps, "source"> &
     Partial<Pick<InputProps, "source">> &
     ChoicesProps & {

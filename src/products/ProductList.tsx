@@ -1,4 +1,4 @@
-import { AutoCompleteInput } from "@/components/AutoCompleteInput";
+import { AutocompleteInput } from "@/components/AutocompleteInput";
 import { BadgeField } from "@/components/BadgeField";
 import { DataTable } from "@/components/DataTable";
 import { EditButton } from "@/components/EditButton";
@@ -27,7 +27,7 @@ const filters = [
     reference="categories"
     sort={{ field: "name", order: "ASC" }}
   >
-    <AutoCompleteInput label="Filter by category" />
+    <AutocompleteInput label="Filter by category" />
   </ReferenceInput>,
 ];
 
