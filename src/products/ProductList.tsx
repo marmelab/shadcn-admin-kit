@@ -5,6 +5,7 @@ import { EditButton } from "@/components/EditButton";
 import { List } from "@/components/List";
 import { ReferenceField } from "@/components/ReferenceField";
 import { ReferenceInput } from "@/components/ReferenceInput";
+import { TextInput } from "@/components/TextInput";
 
 type Product = {
   id: number;
@@ -22,6 +23,7 @@ type Product = {
 const Column = DataTable.Col<Product>;
 
 const filters = [
+  <TextInput source="q" label="Search" />,
   <ReferenceInput
     source="category_id"
     reference="categories"
