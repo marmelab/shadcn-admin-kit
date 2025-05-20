@@ -19,5 +19,5 @@ build-registry: ## Build the UI registry
 	pnpm run registry:build
 
 test-registry: ## Test the UI registry
-	./scripts/test-registry.sh
+	./scripts/test_registry.sh
 
