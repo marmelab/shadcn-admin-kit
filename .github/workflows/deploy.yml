@@ -42,12 +42,12 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
-      - name: Build registry
-        run: make build-registry
       - name: Build demo
         run: make build
       - name: Move demo code to public folder
         run: mv ./dist/* ./public
+      - name: Build registry
+        run: make build-registry
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
