@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { ShowButton } from "@/components/ShowButton";
 
 export const Edit = ({ children }: { children: ReactNode }) => (
-  <EditBase mutationMode="pessimistic">
+  <EditBase>
     <EditView>{children}</EditView>
   </EditBase>
 );

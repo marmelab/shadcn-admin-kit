@@ -21,7 +21,8 @@
         "table",
         "alert",
         "tooltip",
-        "label"
+        "label",
+        "sonner"
       ],
       "dependencies": [
         "ra-core",
@@ -153,6 +154,10 @@
         },
         {
           "path": "src/components/EditGuesser.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/Notification.tsx",
           "type": "registry:component"
         },
         {

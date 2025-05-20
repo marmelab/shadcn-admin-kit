@@ -2,6 +2,7 @@ import { CoreLayoutProps } from "ra-core";
 import { NavigationBar } from "@/components/NavigationBar";
 import { UserMenu } from "@/components/UserMenu";
 import { ThemeModeToggle } from "@/components/ThemeModeToggle";
+import { Notification } from "@/components/Notification";
 
 export const Layout = (props: CoreLayoutProps) => {
   return (
@@ -16,6 +17,7 @@ export const Layout = (props: CoreLayoutProps) => {
         </div>
       </div>
       <div className="grow mt-8">{props.children}</div>
+      <Notification />
     </div>
   );
 };

@@ -17,7 +17,7 @@ import { AutoCompleteInput } from "@/components/AutoCompleteInput";
 
 export const EditGuesser = (props: { enableLog?: boolean }) => {
   return (
-    <EditBase mutationMode="pessimistic">
+    <EditBase>
       <EditViewGuesser {...props} />
     </EditBase>
   );
