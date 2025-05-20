@@ -33,7 +33,9 @@
         "lodash",
         "@tanstack/react-query",
         "lucide-react",
-        "inflection"
+        "inflection",
+        "clsx",
+        "tailwind-merge"
       ],
       "files": [
         {
@@ -159,6 +161,10 @@
         {
           "path": "src/components/Notification.tsx",
           "type": "registry:component"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib"
         },
         {
           "path": "src/lib/i18nProvider.ts",
