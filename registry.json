@@ -87,7 +87,7 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/RaInput.tsx",
+          "path": "src/components/TextInput.tsx",
           "type": "registry:component"
         },
         {

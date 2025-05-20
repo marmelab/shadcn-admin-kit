@@ -8,7 +8,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { FormError } from "./FormError";
 
-export const RaInput = (props: InputProps) => {
+export const TextInput = (props: InputProps) => {
   const resource = useResourceContext(props);
   const { field, fieldState, isRequired } = useInput(props);
 

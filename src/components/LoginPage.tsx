@@ -1,11 +1,11 @@
-import { RaInput } from "@/components/RaInput";
+import { TextInput } from "@/components/TextInput";
 import { Button } from "@/components/ui/button";
 import { Form, required, useLogin } from "ra-core";
 
 export const LoginPage = () => {
-    const login = useLogin();
+  const login = useLogin();
 
-	return (
+  return (
     <div className="min-h-screen flex">
       <div className="container relative hidden flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
@@ -49,13 +49,13 @@ export const LoginPage = () => {
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               onSubmit={(values: any) => login(values)}
             >
-              <RaInput
+              <TextInput
                 label="Email"
                 source="email"
                 type="email"
                 validate={required()}
               />
-              <RaInput
+              <TextInput
                 label="Password"
                 source="password"
                 type="password"

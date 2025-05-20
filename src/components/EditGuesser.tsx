@@ -11,7 +11,7 @@ import {
 import { capitalize, singularize } from "inflection";
 import { EditView } from "@/components/Edit";
 import { SimpleForm } from "@/components/SimpleForm";
-import { RaInput } from "@/components/RaInput";
+import { TextInput } from "@/components/TextInput";
 import { ReferenceInput } from "@/components/ReferenceInput";
 import { AutocompleteInput } from "@/components/AutocompleteInput";
 
@@ -109,7 +109,7 @@ ${children
               </ReferenceInput>`,
   },
   string: {
-    component: (props: any) => <RaInput {...props} />,
-    representation: (props: any) => `<RaInput source="${props.source}" />`,
+    component: (props: any) => <TextInput {...props} />,
+    representation: (props: any) => `<TextInput source="${props.source}" />`,
   },
 };
