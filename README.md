@@ -1,4 +1,4 @@
-# Shadcn Admin
+# Shadcn Admin Kit
 
 ![Screenshot_20250520_171715](https://github.com/user-attachments/assets/d3bf0d2f-f075-466f-aacf-665ad3b72b19)
 
