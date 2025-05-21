@@ -28,9 +28,9 @@ export const LoginPage = () => {
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">
               <p className="text-lg">
-                &ldquo;React-admin has allowed us to quickly create and evolve a
-                powerful tool that otherwise would have taken months of time and
-                effort to develop.&rdquo;
+                &ldquo;Shadcn Admin Kit has allowed us to quickly create and
+                evolve a powerful tool that otherwise would have taken months of
+                time and effort to develop.&rdquo;
               </p>
               <footer className="text-sm">John Doe</footer>
             </blockquote>

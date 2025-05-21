@@ -24,7 +24,7 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 export function ThemeProvider({
   children,
   defaultTheme = "system",
-  storageKey = "ra-shadcn-ui-theme",
+  storageKey = "shadcn-admin-kit-theme",
   ...props
 }: ThemeProviderProps) {
   const [theme, setTheme] = useStore<Theme>(storageKey, defaultTheme);

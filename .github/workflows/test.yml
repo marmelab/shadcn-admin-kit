@@ -1,4 +1,4 @@
-name: Test React Admin Shadcn UI Library
+name: Test Shadcn Admin Kit
 
 on:
   push:

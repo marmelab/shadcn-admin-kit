@@ -1,13 +1,13 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "React Admin Shadcn UI Library",
-  "homepage": "https://github.com/marmelab/ra-shadcn-ui",
+  "name": "Shadcn Admin Kit",
+  "homepage": "https://github.com/marmelab/shadcn-admin-kit",
   "items": [
     {
-      "name": "react-admin-crud",
+      "name": "shadcn-admin-kit-base",
       "type": "registry:block",
-      "title": "React Admin CRUD",
-      "description": "Components to build a CRUD application with React Admin",
+      "title": "Shadcn Admin Kit Base",
+      "description": "Shadcn Admin Kit Base Components",
       "registryDependencies": [
         "button",
         "navigation-menu",
