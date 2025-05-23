@@ -13,6 +13,7 @@ import { cloneElement, ReactElement, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { CreateButton } from "@/components/CreateButton";
 import { ListPagination } from "@/components/ListPagination";
+import { BulkActionsToolbar } from "@/components//BulkActionsToolbar";
 
 export const List = <RecordType extends RaRecord = RaRecord>(
   props: ListProps<RecordType>
@@ -102,6 +103,7 @@ export const ListView = (props: ListViewProps) => {
       </div>
       <div className="my-2">{children}</div>
       <ListPagination />
+      <BulkActionsToolbar />
     </>
   );
 };

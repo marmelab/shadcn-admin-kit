@@ -10,6 +10,8 @@
       "description": "Shadcn Admin Kit Base Components",
       "registryDependencies": [
         "button",
+        "card",
+        "checkbox",
         "navigation-menu",
         "avatar",
         "dropdown-menu",
@@ -164,6 +166,14 @@
         },
         {
           "path": "src/components/Notification.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/BulkActionsToolbar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/BulkDeleteButton.tsx",
           "type": "registry:component"
         },
         {

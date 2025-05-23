@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Tooltip,
   TooltipContent,
@@ -30,6 +31,7 @@ import {
   useDataTableCallbacksContext,
   useDataTableDataContext,
   useDataTableRenderContext,
+  useDataTableSelectedIdsContext,
   useDataTableSortContext,
   useGetPathForRecordCallback,
   useRecordContext,
@@ -67,9 +69,24 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
 DataTable.Col = DataTableColumn;
 
 const DataTableHead = ({ children }: { children: ReactNode }) => {
+  const data = useDataTableDataContext();
+  const { onSelect } = useDataTableCallbacksContext();
+  const selectedIds = useDataTableSelectedIdsContext();
+  const handleToggleSelectAll = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    if (!onSelect || !data) return;
+    const allSelected = selectedIds?.length === data.length;
+    const newSelectedIds = allSelected ? [] : data.map((record) => record.id);
+    onSelect(newSelectedIds);
+  };
   return (
     <TableHeader>
-      <TableRow>{children}</TableRow>
+      <TableRow>
+        <TableHead className="flex items-center">
+          <Checkbox onClick={handleToggleSelectAll} />
+        </TableHead>
+        {children}
+      </TableRow>
     </TableHeader>
   );
 };
@@ -91,7 +108,8 @@ const DataTableBody = ({ children }: { children: ReactNode }) => {
 };
 
 const DataTableRow = ({ children }: { children: ReactNode }) => {
-  const { rowClick } = useDataTableCallbacksContext();
+  const { rowClick, handleToggleItem } = useDataTableCallbacksContext();
+  const selectedIds = useDataTableSelectedIdsContext();
 
   const record = useRecordContext();
   if (!record) {
@@ -105,6 +123,15 @@ const DataTableRow = ({ children }: { children: ReactNode }) => {
 
   const navigate = useNavigate();
   const getPathForRecord = useGetPathForRecordCallback();
+
+  const handleToggle = useCallback(
+    (event: React.MouseEvent) => {
+      event.stopPropagation();
+      if (!handleToggleItem) return;
+      handleToggleItem(record.id, event);
+    },
+    [handleToggleItem, record.id]
+  );
 
   const handleClick = useCallback(async () => {
     const temporaryLink =
@@ -129,6 +156,13 @@ const DataTableRow = ({ children }: { children: ReactNode }) => {
 
   return (
     <TableRow key={record.id} onClick={handleClick}>
+      <TableCell className="flex items-center" onClick={handleToggle}>
+        <Checkbox
+          checked={selectedIds?.includes(record.id)}
+          onClick={handleToggle}
+          className="mt-1"
+        />
+      </TableCell>
       {children}
     </TableRow>
   );
