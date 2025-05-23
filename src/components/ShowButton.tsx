@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { buttonVariants } from "@/components/ui/button";
+import { Eye } from "lucide-react";
 import { useCreatePath, useRecordContext, useResourceContext } from "ra-core";
 
 export const ShowButton = () => {
@@ -17,6 +18,7 @@ export const ShowButton = () => {
       to={link}
       onClick={stopPropagation}
     >
+      <Eye />
       Show
     </Link>
   );

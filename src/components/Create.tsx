@@ -34,7 +34,7 @@ export const CreateView = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <h2 className="text-3xl font-bold tracking-tight mb-2">
+      <h2 className="text-2xl font-bold tracking-tight">
         {context.defaultTitle}
       </h2>
       <Breadcrumb className="my-4">

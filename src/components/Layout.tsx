@@ -16,7 +16,7 @@ export const Layout = (props: CoreLayoutProps) => {
           </div>
         </div>
       </div>
-      <div className="grow mt-8">{props.children}</div>
+      <div className="grow space-y-4 p-8 pt-6">{props.children}</div>
       <Notification />
     </div>
   );

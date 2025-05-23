@@ -107,6 +107,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/ListPagination.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/Edit.tsx",
           "type": "registry:component"
         },

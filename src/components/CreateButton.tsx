@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Plus } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { useCreatePath, useResourceContext } from "ra-core";
 
@@ -15,6 +16,7 @@ export const CreateButton = () => {
       to={link}
       onClick={stopPropagation}
     >
+      <Plus />
       Create
     </Link>
   );

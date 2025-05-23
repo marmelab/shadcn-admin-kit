@@ -23,13 +23,13 @@ type Product = {
 const Column = DataTable.Col<Product>;
 
 const filters = [
-  <TextInput source="q" label="Search" />,
+  <TextInput source="q" placeholder="Search products..." label={false} />,
   <ReferenceInput
     source="category_id"
     reference="categories"
     sort={{ field: "name", order: "ASC" }}
   >
-    <AutocompleteInput label="Filter by category" />
+    <AutocompleteInput placeholder="Filter by category" label={false} />
   </ReferenceInput>,
 ];
 

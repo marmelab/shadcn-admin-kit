@@ -12,6 +12,7 @@ import {
 import { cloneElement, ReactElement, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { CreateButton } from "@/components/CreateButton";
+import { ListPagination } from "@/components/ListPagination";
 
 export const List = <RecordType extends RaRecord = RaRecord>(
   props: ListProps<RecordType>
@@ -73,7 +74,7 @@ export const ListView = (props: ListViewProps) => {
 
   return (
     <>
-      <h2 className="text-3xl font-bold tracking-tight mb-2">{title}</h2>
+      <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
       <div className="flex justify-between items-center my-4">
         <Breadcrumb>
           <BreadcrumbItem>
@@ -81,20 +82,26 @@ export const ListView = (props: ListViewProps) => {
           </BreadcrumbItem>
           <BreadcrumbItem>{resourceLabel}</BreadcrumbItem>
         </Breadcrumb>
+      </div>
+      <div className="flex justify-between items-end my-4">
+        {filters && filters.length ? (
+          <FilterLiveForm>
+            <div className="flex items-center gap-2">
+              {filters.map((filter) =>
+                cloneElement(filter, {
+                  key:
+                    filter.key ?? (filter.props as { source: string }).source,
+                })
+              )}
+            </div>
+          </FilterLiveForm>
+        ) : (
+          <span />
+        )}
         {hasCreate ? <CreateButton /> : null}
       </div>
-      {filters && filters.length ? (
-        <FilterLiveForm>
-          <div className="flex items-center my-2 gap-2">
-            {filters.map((filter) =>
-              cloneElement(filter, {
-                key: filter.key ?? (filter.props as { source: string }).source,
-              })
-            )}
-          </div>
-        </FilterLiveForm>
-      ) : null}
       <div className="my-2">{children}</div>
+      <ListPagination />
     </>
   );
 };

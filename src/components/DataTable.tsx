@@ -32,7 +32,6 @@ import {
   useDataTableRenderContext,
   useDataTableSortContext,
   useGetPathForRecordCallback,
-  useListPaginationContext,
   useRecordContext,
   useResourceContext,
   useTranslate,
@@ -60,7 +59,6 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
           </DataTableRenderContext.Provider>
           <DataTableBody>{children}</DataTableBody>
         </Table>
-        <Pagination />
       </div>
     </DataTableBase>
   );
@@ -145,40 +143,6 @@ const DataTableEmpty = () => {
     <Alert>
       <AlertDescription>No results found.</AlertDescription>
     </Alert>
-  );
-};
-
-const Pagination = () => {
-  const { hasPreviousPage, hasNextPage, page, perPage, total, setPage } =
-    useListPaginationContext();
-
-  const pageStart = (page - 1) * perPage + 1;
-  const pageEnd = hasNextPage ? page * perPage : total;
-
-  return (
-    <div className="flex items-center justify-end space-x-2 py-4 px-4">
-      <div className="flex-1 text-sm text-muted-foreground">
-        {total != null ? `${pageStart} - ${pageEnd} of ${total}` : null}
-      </div>
-      <div className="space-x-2">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setPage(page - 1)}
-          disabled={!hasPreviousPage}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setPage(page + 1)}
-          disabled={!hasNextPage}
-        >
-          Next
-        </Button>
-      </div>
-    </div>
   );
 };
 

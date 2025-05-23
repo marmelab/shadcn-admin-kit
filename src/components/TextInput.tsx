@@ -8,24 +8,32 @@ import {
 import { Input } from "@/components/ui/input";
 import { FormError } from "./FormError";
 
-export const TextInput = (props: InputProps) => {
+export type TextInputProps = InputProps & {
+  placeholder?: string;
+};
+
+export const TextInput = (props: TextInputProps) => {
   const resource = useResourceContext(props);
   const { field, fieldState, isRequired } = useInput(props);
 
   return (
     <FormItem>
-      <FormLabel>
-        <FieldTitle
-          label={props.label}
-          source={props.source}
-          resource={resource}
-          isRequired={isRequired}
-        />
-      </FormLabel>
+      {props.label !== false && (
+        <FormLabel>
+          <FieldTitle
+            label={props.label}
+            source={props.source}
+            resource={resource}
+            isRequired={isRequired}
+          />
+        </FormLabel>
+      )}
       <FormControl>
-        <Input type={props.type} {...field} />
+        <Input type={props.type} placeholder={props.placeholder} {...field} />
       </FormControl>
-      <FormDescription>{props.helperText}</FormDescription>
+      {props.helperText && (
+        <FormDescription>{props.helperText}</FormDescription>
+      )}
       <FormError fieldState={fieldState} />
     </FormItem>
   );
