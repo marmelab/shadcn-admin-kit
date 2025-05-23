@@ -6,13 +6,14 @@ export const TextField = <RecordType extends RaRecord = RaRecord>(
 ) => {
   const value = useFieldValue(props);
   return (
-    <span>
+    <span className={props.className}>
       {value != null && typeof value !== "string" ? value.toString() : value}
     </span>
   );
 };
 
 export interface TextFieldProps<RecordType extends RaRecord = RaRecord> {
+  className?: string;
   source: ExtractRecordPaths<RecordType>;
   label?: string | ReactElement | boolean;
   record?: RecordType;
