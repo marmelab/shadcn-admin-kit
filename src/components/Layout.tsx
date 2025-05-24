@@ -10,7 +10,7 @@ export const Layout = (props: CoreLayoutProps) => {
       <div className="border-b grow-0 pb-2">
         <div className="flex pr-4 w-full justify-between">
           <NavigationBar />
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <ThemeModeToggle />
             <UserMenu />
           </div>
