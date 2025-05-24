@@ -12,6 +12,7 @@ import {
 import { cloneElement, ReactElement, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { CreateButton } from "@/components/CreateButton";
+import { ExportButton } from "@/components/ExportButton";
 import { ListPagination } from "@/components/ListPagination";
 import { BulkActionsToolbar } from "@/components//BulkActionsToolbar";
 
@@ -99,7 +100,10 @@ export const ListView = (props: ListViewProps) => {
         ) : (
           <span />
         )}
-        {hasCreate ? <CreateButton /> : null}
+        <div className="flex items-center gap-2">
+          {hasCreate ? <CreateButton /> : null}
+          {<ExportButton />}
+        </div>
       </div>
       <div className="my-2">{children}</div>
       <ListPagination />
