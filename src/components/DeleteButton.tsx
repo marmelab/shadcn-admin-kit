@@ -1,27 +1,30 @@
 import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
-  useResourceContext,
-  useDeleteMany,
-  useListContext,
+  useDelete,
   useNotify,
+  useRecordContext,
+  useRedirect,
+  useResourceContext,
 } from "ra-core";
 
-export const BulkDeleteButton = () => {
+export const DeleteButton = () => {
   const resource = useResourceContext();
-  const [deleteMany, { isPending }] = useDeleteMany();
-  const { selectedIds, onUnselectItems } = useListContext();
+  const [deleteOne, { isPending }] = useDelete();
+  const record = useRecordContext();
   const notify = useNotify();
+  const redirect = useRedirect();
   const handleClick = (e: React.MouseEvent) => {
     stopPropagation(e);
-    deleteMany(
+    if (!record) return;
+    deleteOne(
       resource,
-      { ids: selectedIds },
+      { id: record.id },
       {
         mutationMode: "undoable",
         onSuccess: () => {
-          onUnselectItems();
-          notify(`${selectedIds.length} elements deleted`, { undoable: true });
+          notify("Element deleted", { undoable: true });
+          redirect("list", resource);
         },
       }
     );

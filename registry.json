@@ -177,6 +177,14 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/DeleteButton.tsx",
+          "type": "registry:component"
+        },
+                {
+          "path": "src/components/ExportButton.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/lib/utils.ts",
           "type": "registry:lib"
         },

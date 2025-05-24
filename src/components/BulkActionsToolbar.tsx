@@ -24,7 +24,7 @@ export const BulkActionsToolbar = () => {
       </Button>
 
       <span className="text-sm text-muted-foreground">
-        {selectedIds.length} selected
+        {selectedIds.length} rows selected
       </span>
       <BulkDeleteButton />
     </Card>
