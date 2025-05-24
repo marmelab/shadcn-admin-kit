@@ -18,6 +18,15 @@ function App() {
         list={ListGuesser}
         show={ShowGuesser}
         edit={EditGuesser}
+        recordRepresentation={(record) =>
+          `${record.first_name} ${record.last_name}`
+        }
+      />
+      <Resource
+        name="orders"
+        list={ListGuesser}
+        show={ShowGuesser}
+        edit={EditGuesser}
         recordRepresentation="reference"
       />
     </Admin>

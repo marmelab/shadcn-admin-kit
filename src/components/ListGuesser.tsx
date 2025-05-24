@@ -13,8 +13,10 @@ import {
 import { ListProps, ListView, ListViewProps } from "@/components/List";
 import { capitalize, singularize } from "inflection";
 import { DataTable } from "@/components/DataTable";
+import { ArrayField } from "@/components/ArrayField";
 import { BadgeField } from "@/components/BadgeField";
 import { ReferenceField } from "@/components/ReferenceField";
+import { SingleFieldList } from "@/components/SingleFieldList";
 
 export const ListGuesser = <RecordType extends RaRecord = RaRecord>(
   props: Omit<ListProps, "children"> & { enableLog?: boolean }
@@ -135,17 +137,41 @@ ${children
   reference: {
     component: (props: any) => (
       <DataTable.Col source={props.source}>
-        <ReferenceField source={props.source} reference={props.reference}>
-          <BadgeField source="id" />
-        </ReferenceField>
+        <ReferenceField source={props.source} reference={props.reference} />
       </DataTable.Col>
     ),
     representation: (props: any) =>
       `<DataTable.Col source="${props.source}">
-                <ReferenceField source="${props.source}" reference="${props.reference}">
-                    <BadgeField source="id" />
-                </ReferenceField>
+                <ReferenceField source="${props.source}" reference="${props.reference}" />
             </DataTable.Col>`,
+  },
+  array: {
+    component: ({ children, ...props }: any) => {
+      const childrenArray = React.Children.toArray(children);
+      return (
+        <DataTable.Col source={props.source}>
+          <ArrayField source={props.source}>
+            <SingleFieldList>
+              <BadgeField
+                source={
+                  childrenArray.length > 0 &&
+                  React.isValidElement(childrenArray[0]) &&
+                  (childrenArray[0].props as any).source
+                }
+              />
+            </SingleFieldList>
+          </ArrayField>
+        </DataTable.Col>
+      );
+    },
+    representation: (props: any, children: any) =>
+      `<ArrayField source="${props.source}">
+                <SingleFieldList>
+                    <BadgeField source="${
+                      children.length > 0 && children[0].getProps().source
+                    }" />
+                </SingleFieldList>
+            </ArrayField>`,
   },
   string: {
     component: DataTable.Col,

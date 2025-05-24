@@ -9,22 +9,22 @@
       "title": "Shadcn Admin Kit Base",
       "description": "Shadcn Admin Kit Base Components",
       "registryDependencies": [
+        "alert",
+        "avatar",
+        "badge",
         "button",
         "card",
         "checkbox",
-        "navigation-menu",
-        "avatar",
-        "dropdown-menu",
         "command",
+        "dropdown-menu",
         "form",
-        "popover",
-        "badge",
         "input",
-        "table",
-        "alert",
-        "tooltip",
         "label",
-        "sonner"
+        "navigation-menu",
+        "popover",
+        "sonner",
+        "table",
+        "tooltip"
       ],
       "dependencies": [
         "ra-core",
@@ -180,8 +180,16 @@
           "path": "src/components/DeleteButton.tsx",
           "type": "registry:component"
         },
-                {
+        {
           "path": "src/components/ExportButton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ArrayField.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/SingleFieldList.tsx",
           "type": "registry:component"
         },
         {
