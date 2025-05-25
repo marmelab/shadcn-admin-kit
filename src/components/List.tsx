@@ -76,16 +76,14 @@ export const ListView = (props: ListViewProps) => {
 
   return (
     <>
+      <Breadcrumb>
+        <BreadcrumbItem>
+          <Link to="/">Home</Link>
+        </BreadcrumbItem>
+        <BreadcrumbItem>{resourceLabel}</BreadcrumbItem>
+      </Breadcrumb>
       <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
-      <div className="flex justify-between items-center my-4">
-        <Breadcrumb>
-          <BreadcrumbItem>
-            <Link to="/">Home</Link>
-          </BreadcrumbItem>
-          <BreadcrumbItem>{resourceLabel}</BreadcrumbItem>
-        </Breadcrumb>
-      </div>
-      <div className="flex justify-between items-end my-4">
+      <div className="flex justify-between items-end my-2">
         {filters && filters.length ? (
           <FilterLiveForm>
             <div className="flex items-center gap-2">
