@@ -22,6 +22,10 @@
         "label",
         "navigation-menu",
         "popover",
+        "separator",
+        "sheet",
+        "sidebar",
+        "skeleton",
         "sonner",
         "table",
         "tooltip"
@@ -53,7 +57,7 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/NavigationBar.tsx",
+          "path": "src/components/AppSidebar.tsx",
           "type": "registry:component"
         },
         {

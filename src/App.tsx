@@ -7,6 +7,8 @@ import { ShowGuesser } from "@/components/ShowGuesser";
 import { EditGuesser } from "@/components/EditGuesser";
 import { products } from "./products";
 import { categories } from "./categories";
+import { Users } from "lucide-react";
+import { DollarSign } from "lucide-react";
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
         recordRepresentation={(record) =>
           `${record.first_name} ${record.last_name}`
         }
+        icon={Users}
       />
       <Resource
         name="orders"
@@ -28,6 +31,7 @@ function App() {
         show={ShowGuesser}
         edit={EditGuesser}
         recordRepresentation="reference"
+        icon={DollarSign}
       />
     </Admin>
   );
