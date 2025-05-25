@@ -27,7 +27,7 @@ export const Layout = (props: CoreLayoutProps) => {
           <ThemeModeToggle />
           <UserMenu />
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4">{props.children}</div>
+        <div className="flex flex-1 flex-col p-4">{props.children}</div>
       </main>
       <Notification />
     </SidebarProvider>
