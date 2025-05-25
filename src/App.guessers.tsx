@@ -1,6 +1,6 @@
 import { Resource } from "ra-core";
 import { dataProvider } from "./dataProvider";
-import authProvider from "./authProvider";
+import { authProvider } from "./authProvider";
 import { Admin } from "@/components/Admin";
 import { ListGuesser } from "@/components/ListGuesser";
 import { ShowGuesser } from "@/components/ShowGuesser";
