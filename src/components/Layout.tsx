@@ -5,6 +5,7 @@ import { UserMenu } from "@/components/UserMenu";
 import { ThemeModeToggle } from "@/components/ThemeModeToggle";
 import { Notification } from "@/components/Notification";
 import { AppSidebar } from "@/components/AppSidebar";
+import { LocalesMenuButton } from "@/components/LocalesMenuButton";
 
 export const Layout = (props: CoreLayoutProps) => {
   return (
@@ -24,6 +25,7 @@ export const Layout = (props: CoreLayoutProps) => {
         <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="scale-125 sm:scale-100" />
           <div className="flex-1 flex items-center" id="breadcrumb" />
+          <LocalesMenuButton />
           <ThemeModeToggle />
           <UserMenu />
         </header>

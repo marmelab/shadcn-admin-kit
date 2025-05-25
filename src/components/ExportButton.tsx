@@ -7,6 +7,7 @@ import {
   useNotify,
   useListContext,
   Exporter,
+  Translate,
 } from "ra-core";
 import { Button } from "@/components/ui/button";
 
@@ -14,7 +15,7 @@ export const ExportButton = (props: ExportButtonProps) => {
   const {
     maxResults = 1000,
     onClick,
-    label = "Export",
+    label = "ra.action.export",
     icon = defaultIcon,
     exporter: customExporter,
     meta,
@@ -74,7 +75,7 @@ export const ExportButton = (props: ExportButtonProps) => {
   return (
     <Button variant="outline" onClick={handleClick} disabled={total === 0}>
       {icon}
-      {label}
+      <Translate i18nKey={label}>Export</Translate>
     </Button>
   );
 };

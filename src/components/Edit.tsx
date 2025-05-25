@@ -1,6 +1,7 @@
 import { Breadcrumb, BreadcrumbItem } from "@/components/Breadcrumb";
 import {
   EditBase,
+  Translate,
   useCreatePath,
   useEditContext,
   useGetRecordRepresentation,
@@ -52,7 +53,9 @@ export const EditView = ({ children }: { children: ReactNode }) => {
       <div className="flex justify-between items-center my-4">
         <Breadcrumb>
           <BreadcrumbItem>
-            <Link to="/">Home</Link>
+            <Link to="/">
+              <Translate i18nKey="ra.page.dashboard">Home</Translate>
+            </Link>
           </BreadcrumbItem>
           <BreadcrumbItem>
             <Link to={listLink}>{listLabel}</Link>

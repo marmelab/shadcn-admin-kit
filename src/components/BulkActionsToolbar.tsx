@@ -1,4 +1,4 @@
-import { useListContext } from "ra-core";
+import { useListContext, Translate } from "ra-core";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BulkDeleteButton } from "@/components//BulkDeleteButton";
@@ -24,7 +24,12 @@ export const BulkActionsToolbar = () => {
       </Button>
 
       <span className="text-sm text-muted-foreground">
-        {selectedIds.length} rows selected
+        <Translate
+          i18nKey="ra.action.bulk_actions"
+          options={{ smart_count: selectedIds.length }}
+        >
+          {selectedIds.length} rows selected
+        </Translate>
       </span>
       <BulkDeleteButton />
     </Card>

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Form } from "ra-core";
+import { Form, Translate } from "ra-core";
 import { Save } from "lucide-react";
 import { ReactNode } from "react";
 import { DeleteButton } from "@/components//DeleteButton";
@@ -12,7 +12,7 @@ export const SimpleForm = ({ children }: { children: ReactNode }) => {
         <div className="flex flex-row gap-4">
           <Button className="btn btn-primary" type="submit">
             <Save />
-            Save
+            <Translate i18nKey="ra.action.save">Save</Translate>
           </Button>
           <DeleteButton />
         </div>

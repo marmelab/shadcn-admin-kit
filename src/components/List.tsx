@@ -4,6 +4,7 @@ import {
   ListBase,
   ListBaseProps,
   RaRecord,
+  Translate,
   useGetResourceLabel,
   useResourceContext,
   useResourceDefinition,
@@ -78,7 +79,9 @@ export const ListView = (props: ListViewProps) => {
     <>
       <Breadcrumb>
         <BreadcrumbItem>
-          <Link to="/">Home</Link>
+          <Link to="/">
+            <Translate i18nKey="ra.page.dashboard">Home</Translate>
+          </Link>
         </BreadcrumbItem>
         <BreadcrumbItem>{resourceLabel}</BreadcrumbItem>
       </Breadcrumb>

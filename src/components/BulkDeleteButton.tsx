@@ -5,6 +5,7 @@ import {
   useDeleteMany,
   useListContext,
   useNotify,
+  Translate,
 } from "ra-core";
 
 export const BulkDeleteButton = () => {
@@ -34,7 +35,7 @@ export const BulkDeleteButton = () => {
       disabled={isPending}
     >
       <Trash />
-      Delete
+      <Translate i18nKey="ra.action.delete">Delete</Translate>
     </Button>
   );
 };

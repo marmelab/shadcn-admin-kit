@@ -5,6 +5,7 @@ import {
   useCreateContext,
   useGetResourceLabel,
   useResourceContext,
+  Translate,
 } from "ra-core";
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
@@ -39,12 +40,16 @@ export const CreateView = ({ children }: { children: ReactNode }) => {
       </h2>
       <Breadcrumb className="my-4">
         <BreadcrumbItem>
-          <Link to="/">Home</Link>
+          <Link to="/">
+            <Translate i18nKey="ra.page.dashboard">Home</Translate>
+          </Link>
         </BreadcrumbItem>
         <BreadcrumbItem>
           <Link to={listLink}>{listLabel}</Link>
         </BreadcrumbItem>
-        <BreadcrumbItem>Create</BreadcrumbItem>
+        <BreadcrumbItem>
+          <Translate i18nKey="ra.action.create">Create</Translate>
+        </BreadcrumbItem>
       </Breadcrumb>
       <div className="my-2">{children}</div>
     </>

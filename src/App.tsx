@@ -1,6 +1,7 @@
 import { Resource } from "ra-core";
 import { dataProvider } from "./dataProvider";
-import authProvider from "./authProvider";
+import { authProvider } from "./authProvider";
+import { i18nProvider } from "./i18nProvider";
 import { Admin } from "@/components/Admin";
 import { ListGuesser } from "@/components/ListGuesser";
 import { ShowGuesser } from "@/components/ShowGuesser";
@@ -12,7 +13,11 @@ import { DollarSign } from "lucide-react";
 
 function App() {
   return (
-    <Admin dataProvider={dataProvider} authProvider={authProvider}>
+    <Admin
+      dataProvider={dataProvider}
+      authProvider={authProvider}
+      i18nProvider={i18nProvider}
+    >
       <Resource {...products} />
       <Resource {...categories} />
       <Resource

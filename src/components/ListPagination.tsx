@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useListPaginationContext } from "ra-core";
+import { useListPaginationContext, Translate } from "ra-core";
 
 export const ListPagination = () => {
   const { hasPreviousPage, hasNextPage, page, perPage, total, setPage } =
@@ -20,7 +20,7 @@ export const ListPagination = () => {
           onClick={() => setPage(page - 1)}
           disabled={!hasPreviousPage}
         >
-          Previous
+          <Translate i18nKey="ra.navigation.previous">Previous</Translate>
         </Button>
         <Button
           variant="outline"
@@ -28,7 +28,7 @@ export const ListPagination = () => {
           onClick={() => setPage(page + 1)}
           disabled={!hasNextPage}
         >
-          Next
+          <Translate i18nKey="ra.navigation.next">Next</Translate>
         </Button>
       </div>
     </div>

@@ -6,6 +6,7 @@ import {
   useRecordContext,
   useRedirect,
   useResourceContext,
+  Translate,
 } from "ra-core";
 
 export const DeleteButton = () => {
@@ -37,7 +38,7 @@ export const DeleteButton = () => {
       disabled={isPending}
     >
       <Trash />
-      Delete
+      <Translate i18nKey="ra.action.delete">Delete</Translate>
     </Button>
   );
 };
