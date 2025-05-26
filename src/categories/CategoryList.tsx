@@ -16,7 +16,12 @@ export const CategoryList = () => {
     <List>
       <DataTable>
         <Column source="name" />
-        <Column source="productCount" headerClassName="w-24" disableSort>
+        <Column
+          source="productCount"
+          headerClassName="w-24 text-right"
+          cellClassName="text-right"
+          disableSort
+        >
           <ReferenceManyCount
             reference="products"
             resource="categories"

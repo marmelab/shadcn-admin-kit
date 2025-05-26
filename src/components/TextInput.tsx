@@ -10,6 +10,7 @@ import { FormError } from "./FormError";
 
 export type TextInputProps = InputProps & {
   placeholder?: string;
+  className?: string;
 };
 
 export const TextInput = (props: TextInputProps) => {
@@ -17,7 +18,7 @@ export const TextInput = (props: TextInputProps) => {
   const { field, fieldState, isRequired } = useInput(props);
 
   return (
-    <FormItem>
+    <FormItem className={props.className}>
       {props.label !== false && (
         <FormLabel>
           <FieldTitle

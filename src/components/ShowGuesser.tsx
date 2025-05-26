@@ -97,16 +97,12 @@ ${children
   reference: {
     component: (props: any) => (
       <Labeled source={props.source}>
-        <ReferenceField source={props.source} reference={props.reference}>
-          <TextField source="id" />
-        </ReferenceField>
+        <ReferenceField source={props.source} reference={props.reference} />
       </Labeled>
     ),
     representation: (props: any) =>
       `<Labeled source="${props.source}">
-                <ReferenceField source="${props.source}" reference="${props.reference}">
-                    <TextField source="id" />
-                </ReferenceField>
+                <ReferenceField source="${props.source}" reference="${props.reference}" />
             </Labeled>`,
   },
   string: {

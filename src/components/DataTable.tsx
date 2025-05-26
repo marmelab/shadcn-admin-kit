@@ -72,18 +72,34 @@ const DataTableHead = ({ children }: { children: ReactNode }) => {
   const data = useDataTableDataContext();
   const { onSelect } = useDataTableCallbacksContext();
   const selectedIds = useDataTableSelectedIdsContext();
-  const handleToggleSelectAll = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    if (!onSelect || !data) return;
-    const allSelected = selectedIds?.length === data.length;
-    const newSelectedIds = allSelected ? [] : data.map((record) => record.id);
-    onSelect(newSelectedIds);
+  const handleToggleSelectAll = (checked: boolean) => {
+    if (!onSelect || !data || !selectedIds) return;
+    onSelect(
+      checked
+        ? selectedIds.concat(
+            data
+              .filter((record) => !selectedIds.includes(record.id))
+              .map((record) => record.id)
+          )
+        : []
+    );
   };
+  const selectableIds = Array.isArray(data)
+    ? data.map((record) => record.id)
+    : [];
   return (
     <TableHeader>
       <TableRow>
         <TableHead className="flex items-center">
-          <Checkbox onClick={handleToggleSelectAll} />
+          <Checkbox
+            onCheckedChange={handleToggleSelectAll}
+            checked={
+              selectedIds &&
+              selectedIds.length > 0 &&
+              selectableIds.length > 0 &&
+              selectableIds.every((id) => selectedIds.includes(id))
+            }
+          />
         </TableHead>
         {children}
       </TableRow>

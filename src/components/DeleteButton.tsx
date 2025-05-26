@@ -6,6 +6,7 @@ import {
   useRecordContext,
   useRedirect,
   useResourceContext,
+  useTranslate,
   Translate,
 } from "ra-core";
 
@@ -15,6 +16,7 @@ export const DeleteButton = () => {
   const record = useRecordContext();
   const notify = useNotify();
   const redirect = useRedirect();
+  const translate = useTranslate();
   const handleClick = (e: React.MouseEvent) => {
     stopPropagation(e);
     if (!record) return;
@@ -24,7 +26,17 @@ export const DeleteButton = () => {
       {
         mutationMode: "undoable",
         onSuccess: () => {
-          notify("Element deleted", { undoable: true });
+          notify(`resources.${resource}.notifications.deleted`, {
+            type: "info",
+            messageArgs: {
+              smart_count: 1,
+              _: translate("ra.notification.deleted", {
+                smart_count: 1,
+                _: "Element deleted",
+              }),
+            },
+            undoable: true,
+          });
           redirect("list", resource);
         },
       }

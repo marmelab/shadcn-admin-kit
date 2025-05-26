@@ -6,6 +6,7 @@ import {
   RaRecord,
   Translate,
   useGetResourceLabel,
+  useHasDashboard,
   useResourceContext,
   useResourceDefinition,
   useTranslate,
@@ -74,22 +75,25 @@ export const ListView = (props: ListViewProps) => {
     name: resourceLabel,
   });
   const { hasCreate } = useResourceDefinition({ resource });
+  const hasDashboard = useHasDashboard();
 
   return (
     <>
       <Breadcrumb>
-        <BreadcrumbItem>
-          <Link to="/">
-            <Translate i18nKey="ra.page.dashboard">Home</Translate>
-          </Link>
-        </BreadcrumbItem>
+        {hasDashboard && (
+          <BreadcrumbItem>
+            <Link to="/">
+              <Translate i18nKey="ra.page.dashboard">Home</Translate>
+            </Link>
+          </BreadcrumbItem>
+        )}
         <BreadcrumbItem>{resourceLabel}</BreadcrumbItem>
       </Breadcrumb>
       <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
-      <div className="flex justify-between items-end my-2">
+      <div className="flex justify-between items-end flex-wrap my-2 gap-2">
         {filters && filters.length ? (
           <FilterLiveForm>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               {filters.map((filter) =>
                 cloneElement(filter, {
                   key:

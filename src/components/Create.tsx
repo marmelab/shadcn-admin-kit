@@ -4,6 +4,7 @@ import {
   useCreatePath,
   useCreateContext,
   useGetResourceLabel,
+  useHasDashboard,
   useResourceContext,
   Translate,
 } from "ra-core";
@@ -32,6 +33,7 @@ export const CreateView = ({ children }: { children: ReactNode }) => {
     resource,
     type: "list",
   });
+  const hasDashboard = useHasDashboard();
 
   return (
     <>
@@ -39,11 +41,13 @@ export const CreateView = ({ children }: { children: ReactNode }) => {
         {context.defaultTitle}
       </h2>
       <Breadcrumb className="my-4">
-        <BreadcrumbItem>
-          <Link to="/">
-            <Translate i18nKey="ra.page.dashboard">Home</Translate>
-          </Link>
-        </BreadcrumbItem>
+        {hasDashboard && (
+          <BreadcrumbItem>
+            <Link to="/">
+              <Translate i18nKey="ra.page.dashboard">Home</Translate>
+            </Link>
+          </BreadcrumbItem>
+        )}
         <BreadcrumbItem>
           <Link to={listLink}>{listLabel}</Link>
         </BreadcrumbItem>

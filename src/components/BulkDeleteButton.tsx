@@ -5,6 +5,7 @@ import {
   useDeleteMany,
   useListContext,
   useNotify,
+  useTranslate,
   Translate,
 } from "ra-core";
 
@@ -13,6 +14,7 @@ export const BulkDeleteButton = () => {
   const [deleteMany, { isPending }] = useDeleteMany();
   const { selectedIds, onUnselectItems } = useListContext();
   const notify = useNotify();
+  const translate = useTranslate();
   const handleClick = (e: React.MouseEvent) => {
     stopPropagation(e);
     deleteMany(
@@ -22,7 +24,16 @@ export const BulkDeleteButton = () => {
         mutationMode: "undoable",
         onSuccess: () => {
           onUnselectItems();
-          notify(`${selectedIds.length} elements deleted`, { undoable: true });
+          notify(`resources.${resource}.notifications.deleted`, {
+            messageArgs: {
+              smart_count: selectedIds.length,
+              _: translate("ra.notification.deleted", {
+                smart_count: selectedIds.length,
+                _: `${selectedIds.length} elements deleted`,
+              }),
+            },
+            undoable: true,
+          });
         },
       }
     );

@@ -51,20 +51,20 @@ export const ProductList = () => {
           source="width"
           headerClassName="text-right"
           cellClassName="text-right"
-          render={(record) => record.width.toLocaleString()}
+          render={(record) => record.width?.toLocaleString()}
         />
         <Column
           source="height"
           headerClassName="text-right"
           cellClassName="text-right"
-          render={(record) => record.height.toLocaleString()}
+          render={(record) => record.height?.toLocaleString()}
         />
         <Column
           source="price"
           headerClassName="text-right"
           cellClassName="text-right"
           render={(record) =>
-            record.price.toLocaleString(undefined, {
+            record.price?.toLocaleString(undefined, {
               style: "currency",
               currency: "USD",
             })

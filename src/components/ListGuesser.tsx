@@ -165,13 +165,15 @@ ${children
       );
     },
     representation: (props: any, children: any) =>
-      `<ArrayField source="${props.source}">
-                <SingleFieldList>
-                    <BadgeField source="${
-                      children.length > 0 && children[0].getProps().source
-                    }" />
-                </SingleFieldList>
-            </ArrayField>`,
+      `<DataTable.Col source="${props.source}">
+               <ArrayField source="${props.source}">
+                    <SingleFieldList>
+                        <BadgeField source="${
+                          children.length > 0 && children[0].getProps().source
+                        }" />
+                   </SingleFieldList>
+                </ArrayField>
+            </DataTable.Col>`,
   },
   string: {
     component: DataTable.Col,

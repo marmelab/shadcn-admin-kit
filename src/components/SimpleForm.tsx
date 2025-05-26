@@ -9,7 +9,7 @@ export const SimpleForm = ({ children }: { children: ReactNode }) => {
     <Form>
       <div className="flex flex-col gap-4 w-full max-w-lg">
         {children}
-        <div className="flex flex-row gap-4">
+        <div className="flex flex-row gap-4 justify-between">
           <Button className="btn btn-primary" type="submit">
             <Save />
             <Translate i18nKey="ra.action.save">Save</Translate>

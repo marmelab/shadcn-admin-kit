@@ -27,6 +27,7 @@ import {
   useChoicesContext,
   useGetRecordRepresentation,
   useInput,
+  useTranslate,
   FieldTitle,
 } from "ra-core";
 import { FormError } from "./FormError";
@@ -35,6 +36,7 @@ export const AutocompleteInput = (
   props: Omit<InputProps, "source"> &
     Partial<Pick<InputProps, "source">> &
     ChoicesProps & {
+      className?: string;
       disableValue?: string;
       translateChoice?: boolean;
       placeholder?: string;
@@ -47,7 +49,9 @@ export const AutocompleteInput = (
     isFromReference,
   } = useChoicesContext(props);
   const { field, fieldState, isRequired } = useInput({ ...props, source });
-  const { placeholder = "Select..." } = props;
+  const translate = useTranslate();
+  const { placeholder = translate("ra.action.search", { _: "Search..." }) } =
+    props;
 
   const getRecordRepresentation = useGetRecordRepresentation(resource);
   const { getChoiceText, getChoiceValue } = useChoices({
@@ -64,7 +68,7 @@ export const AutocompleteInput = (
   );
 
   return (
-    <FormItem>
+    <FormItem className={props.className}>
       {props.label !== false && (
         <FormLabel>
           <FieldTitle

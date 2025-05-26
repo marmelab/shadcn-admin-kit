@@ -15,6 +15,15 @@ export const ProductShow = () => (
           <TextField source="name" />
         </ReferenceField>
       </Labeled>
+      <Labeled label="Width">
+        <TextField source="width" />
+      </Labeled>
+      <Labeled label="Height">
+        <TextField source="height" />
+      </Labeled>
+      <Labeled label="Price">
+        <TextField source="price" />
+      </Labeled>
       <Labeled label="Stock">
         <TextField source="stock" />
       </Labeled>

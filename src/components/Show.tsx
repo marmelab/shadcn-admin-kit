@@ -3,6 +3,7 @@ import {
   ShowBase,
   Translate,
   useCreatePath,
+  useHasDashboard,
   useShowContext,
   useGetRecordRepresentation,
   useGetResourceLabel,
@@ -40,6 +41,7 @@ export const ShowView = ({ children }: { children: ReactNode }) => {
   const recordRepresentation = getRecordRepresentation(context.record);
 
   const { hasEdit } = useResourceDefinition({ resource });
+  const hasDashboard = useHasDashboard();
 
   if (context.isLoading || !context.record) {
     return null;
@@ -47,21 +49,23 @@ export const ShowView = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <h2 className="text-2xl font-bold tracking-tight">
-        {context.defaultTitle}
-      </h2>
-      <div className="flex justify-between items-center my-4">
-        <Breadcrumb>
+      <Breadcrumb>
+        {hasDashboard && (
           <BreadcrumbItem>
             <Link to="/">
               <Translate i18nKey="ra.page.dashboard">Home</Translate>
             </Link>
           </BreadcrumbItem>
-          <BreadcrumbItem>
-            <Link to={listLink}>{listLabel}</Link>
-          </BreadcrumbItem>
-          <BreadcrumbItem>{recordRepresentation}</BreadcrumbItem>
-        </Breadcrumb>
+        )}
+        <BreadcrumbItem>
+          <Link to={listLink}>{listLabel}</Link>
+        </BreadcrumbItem>
+        <BreadcrumbItem>{recordRepresentation}</BreadcrumbItem>
+      </Breadcrumb>
+      <h2 className="text-2xl font-bold tracking-tight">
+        {context.defaultTitle}
+      </h2>
+      <div className="flex justify-end items-center my-4">
         {hasEdit ? <EditButton /> : null}
       </div>
       <div className="my-2">{children}</div>

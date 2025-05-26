@@ -6,7 +6,7 @@ import {
   useResourceDefinitions,
   useTranslate,
 } from "ra-core";
-import { Link } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 import {
   Sidebar,
   SidebarContent,
@@ -50,9 +50,10 @@ export const DashboardMenuItem = () => {
   const label = translate("ra.page.dashboard", {
     _: "Dashboard",
   });
+  const match = useMatch({ path: "/." });
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton asChild>
+      <SidebarMenuButton asChild isActive={!!match}>
         <Link to="/">{label}</Link>
       </SidebarMenuButton>
     </SidebarMenuItem>
@@ -63,17 +64,17 @@ export const ResourceMenuItem = ({ name }: { name: string }) => {
   const resources = useResourceDefinitions();
   const getResourceLabel = useGetResourceLabel();
   const createPath = useCreatePath();
+  const to = createPath({
+    resource: name,
+    type: "list",
+  });
+  const match = useMatch({ path: to });
   if (!resources || !resources[name]) return null;
+
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton asChild>
-        <Link
-          to={createPath({
-            resource: name,
-            type: "list",
-          })}
-          state={{ _scrollToTop: true }}
-        >
+      <SidebarMenuButton asChild isActive={!!match}>
+        <Link to={to} state={{ _scrollToTop: true }}>
           {resources[name].icon ? (
             createElement(resources[name].icon)
           ) : (
