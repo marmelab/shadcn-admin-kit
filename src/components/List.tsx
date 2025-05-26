@@ -90,7 +90,7 @@ export const ListView = (props: ListViewProps) => {
         <BreadcrumbItem>{resourceLabel}</BreadcrumbItem>
       </Breadcrumb>
       <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
-      <div className="flex justify-between items-end flex-wrap my-2 gap-2">
+      <div className="flex justify-between items-end flex-wrap my-4 gap-2">
         {filters && filters.length ? (
           <FilterLiveForm>
             <div className="flex items-center gap-2 flex-wrap">
@@ -110,7 +110,7 @@ export const ListView = (props: ListViewProps) => {
           {<ExportButton />}
         </div>
       </div>
-      <div className="my-2">{children}</div>
+      {children}
       <ListPagination />
       <BulkActionsToolbar />
     </>

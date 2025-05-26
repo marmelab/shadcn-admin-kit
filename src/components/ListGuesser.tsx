@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import { useState, useEffect } from "react";
-
 import {
   ListBase,
   getElementsFromRecords,
   InferredElement,
   useListContext,
+  usePrevious,
   useResourceContext,
   RaRecord,
 } from "ra-core";
+import { useLocation } from "react-router-dom";
 import { ListProps, ListView, ListViewProps } from "@/components/List";
 import { capitalize, singularize } from "inflection";
 import { DataTable } from "@/components/DataTable";
@@ -33,6 +34,14 @@ export const ListGuesser = <RecordType extends RaRecord = RaRecord>(
     sort,
     ...rest
   } = props;
+  // force a rerender of this component when any list parameter changes
+  // otherwise the ListBase won't be rerendered when the sort changes
+  // and the following check won't be performed
+  useLocation();
+  // keep previous data, unless the resource changes
+  const resourceFromContext = useResourceContext(props);
+  const previousResource = usePrevious(resourceFromContext);
+  const keepPreviousData = previousResource === resourceFromContext;
   return (
     <ListBase<RecordType>
       debounce={debounce}
@@ -43,6 +52,10 @@ export const ListGuesser = <RecordType extends RaRecord = RaRecord>(
       filterDefaultValues={filterDefaultValues}
       perPage={perPage}
       resource={resource}
+      queryOptions={{
+        placeholderData: (previousData) =>
+          keepPreviousData ? previousData : undefined,
+      }}
       sort={sort}
     >
       <ListViewGuesser {...rest} />
