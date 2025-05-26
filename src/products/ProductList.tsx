@@ -35,7 +35,7 @@ const Column = DataTable.Col<Product>;
 
 export const ProductList = () => {
   return (
-    <List filters={filters}>
+    <List filters={filters} sort={{ field: "reference", order: "ASC" }}>
       <DataTable>
         <Column source="reference" />
         <Column source="category_id">

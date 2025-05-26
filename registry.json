@@ -203,6 +203,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/RefreshButton.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/lib/utils.ts",
           "type": "registry:lib"
         },

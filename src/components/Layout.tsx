@@ -5,6 +5,7 @@ import { UserMenu } from "@/components/UserMenu";
 import { ThemeModeToggle } from "@/components/ThemeModeToggle";
 import { Notification } from "@/components/Notification";
 import { AppSidebar } from "@/components/AppSidebar";
+import { RefreshButton } from "@/components/RefreshButton";
 import { LocalesMenuButton } from "@/components/LocalesMenuButton";
 
 export const Layout = (props: CoreLayoutProps) => {
@@ -27,6 +28,7 @@ export const Layout = (props: CoreLayoutProps) => {
           <div className="flex-1 flex items-center" id="breadcrumb" />
           <LocalesMenuButton />
           <ThemeModeToggle />
+          <RefreshButton />
           <UserMenu />
         </header>
         <div className="flex flex-1 flex-col p-4">{props.children}</div>
