@@ -18,7 +18,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { List } from "lucide-react";
+import { List, House } from "lucide-react";
 
 export function AppSidebar() {
   const hasDashboard = useHasDashboard();
@@ -27,10 +27,10 @@ export function AppSidebar() {
     <Sidebar variant="floating" collapsible="icon">
       <SidebarHeader />
       <SidebarContent>
-        {hasDashboard ? <DashboardMenuItem /> : null}
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
+              {hasDashboard ? <DashboardMenuItem /> : null}
               {Object.keys(resources)
                 .filter((name) => resources[name].hasList)
                 .map((name) => (
@@ -50,11 +50,14 @@ export const DashboardMenuItem = () => {
   const label = translate("ra.page.dashboard", {
     _: "Dashboard",
   });
-  const match = useMatch({ path: "/." });
+  const match = useMatch({ path: "/" });
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild isActive={!!match}>
-        <Link to="/">{label}</Link>
+        <Link to="/">
+          <House />
+          {label}
+        </Link>
       </SidebarMenuButton>
     </SidebarMenuItem>
   );
