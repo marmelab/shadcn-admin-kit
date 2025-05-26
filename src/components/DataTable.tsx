@@ -233,7 +233,20 @@ function DataTableHeadCell<
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" data-field={source} onClick={handleSort}>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="-ml-3 -mr-3 h-8 data-[state=open]:bg-accent cursor-pointer"
+                data-field={source}
+                onClick={handleSort}
+              >
+                {headerClassName?.includes("text-right") ? null : (
+                  <FieldTitle
+                    label={label}
+                    source={source}
+                    resource={resource}
+                  />
+                )}
                 {sort.field === source ? (
                   sort.order === "ASC" ? (
                     <ArrowDownAZ className="ml-2 h-6 w-6" />
@@ -241,7 +254,13 @@ function DataTableHeadCell<
                     <ArrowUpZA className="ml-2 h-6 w-6" />
                   )
                 ) : null}
-                <FieldTitle label={label} source={source} resource={resource} />
+                {headerClassName?.includes("text-right") ? (
+                  <FieldTitle
+                    label={label}
+                    source={source}
+                    resource={resource}
+                  />
+                ) : null}
               </Button>
             </TooltipTrigger>
             <TooltipContent>
