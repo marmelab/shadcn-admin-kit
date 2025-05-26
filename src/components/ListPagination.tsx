@@ -6,13 +6,27 @@ import {
   PaginationItem,
   PaginationLink,
 } from "@/components/ui/pagination";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { useListPaginationContext, useTranslate } from "ra-core";
+import { useListPaginationContext, Translate, useTranslate } from "ra-core";
 
 export const ListPagination = () => {
   const translate = useTranslate();
-  const { hasPreviousPage, hasNextPage, page, perPage, total, setPage } =
-    useListPaginationContext();
+  const {
+    hasPreviousPage,
+    hasNextPage,
+    page,
+    perPage,
+    setPerPage,
+    total,
+    setPage,
+  } = useListPaginationContext();
 
   const pageStart = (page - 1) * perPage + 1;
   const pageEnd = hasNextPage ? page * perPage : total;
@@ -65,8 +79,43 @@ export const ListPagination = () => {
 
   return (
     <div className="flex items-center justify-end space-x-2 py-4  gap-4">
+      <div className="flex items-center space-x-2">
+        <p className="hidden text-sm font-medium sm:block">
+          <Translate i18nKey="ra.navigation.page_rows_per_page">
+            Rows per page
+          </Translate>
+        </p>
+        <Select
+          value={perPage.toString()}
+          onValueChange={(value) => {
+            setPerPage(Number(value));
+          }}
+        >
+          <SelectTrigger className="h-8 w-[70px]">
+            <SelectValue placeholder={perPage} />
+          </SelectTrigger>
+          <SelectContent side="top">
+            {[5, 10, 25, 50].map((pageSize) => (
+              <SelectItem key={pageSize} value={`${pageSize}`}>
+                {pageSize}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
       <div className="text-sm text-muted-foreground">
-        {total != null ? `${pageStart} - ${pageEnd} of ${total}` : null}
+        <Translate
+          i18nKey="ra.navigation.page_range_info"
+          options={{
+            offsetBegin: pageStart,
+            offsetEnd: pageEnd,
+            total: count === -1 ? pageEnd : count,
+          }}
+        >
+          {total != null
+            ? `${pageStart}-${pageEnd} of ${count === -1 ? pageEnd : count}`
+            : null}
+        </Translate>
       </div>
       <Pagination className="-w-full -mx-auto">
         <PaginationContent>
