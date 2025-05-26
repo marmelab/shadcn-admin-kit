@@ -11,8 +11,7 @@ import {
 import { capitalize, singularize } from "inflection";
 import { ShowView } from "@/components/Show";
 import { SimpleShowLayout } from "@/components/SimpleShowLayout";
-import { Labeled } from "@/components/Labeled";
-import { TextField } from "@/components/TextField";
+import { RecordField } from "@/components/RecordField";
 import { ReferenceField } from "@/components/ReferenceField";
 
 export const ShowGuesser = (props: { enableLog?: boolean }) => (
@@ -96,24 +95,17 @@ ${children
   },
   reference: {
     component: (props: any) => (
-      <Labeled source={props.source}>
+      <RecordField source={props.source}>
         <ReferenceField source={props.source} reference={props.reference} />
-      </Labeled>
+      </RecordField>
     ),
     representation: (props: any) =>
-      `<Labeled source="${props.source}">
+      `<RecordField source="${props.source}">
                 <ReferenceField source="${props.source}" reference="${props.reference}" />
-            </Labeled>`,
+            </RecordField>`,
   },
   string: {
-    component: (props: any) => (
-      <Labeled source={props.source}>
-        <TextField source={props.source} />
-      </Labeled>
-    ),
-    representation: (props: any) =>
-      `<Labeled source="${props.source}">
-                <TextField source="${props.source}" />
-            </Labeled>`,
+    component: (props: any) => <RecordField source={props.source} />,
+    representation: (props: any) => `<RecordField source="${props.source}" />`,
   },
 };

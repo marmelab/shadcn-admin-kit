@@ -139,10 +139,6 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/Labeled.tsx",
-          "type": "registry:component"
-        },
-        {
           "path": "src/components/Show.tsx",
           "type": "registry:component"
         },
@@ -200,6 +196,10 @@
         },
         {
           "path": "src/components/LocalesMenuButton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/RecordField.tsx",
           "type": "registry:component"
         },
         {
