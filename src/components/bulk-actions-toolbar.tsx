@@ -1,7 +1,7 @@
 import { useListContext, Translate } from "ra-core";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BulkDeleteButton } from "@/components//BulkDeleteButton";
+import { BulkDeleteButton } from "@/components//bulk-delete-button";
 import { X } from "lucide-react";
 
 export const BulkActionsToolbar = () => {

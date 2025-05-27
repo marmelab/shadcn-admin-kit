@@ -1,4 +1,4 @@
-import { Breadcrumb, BreadcrumbItem } from "@/components/Breadcrumb";
+import { Breadcrumb, BreadcrumbItem } from "@/components/breadcrumb";
 import {
   CreateBase,
   useCreatePath,

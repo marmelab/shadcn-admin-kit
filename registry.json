@@ -47,163 +47,163 @@
       ],
       "files": [
         {
-          "path": "src/components/Admin.tsx",
+          "path": "src/components/admin.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/AppSidebar.tsx",
+          "path": "src/components/app-sidebar.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/ArrayField.tsx",
+          "path": "src/components/array-field.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/AutocompleteInput.tsx",
+          "path": "src/components/autocomplete-input.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/BadgeField.tsx",
+          "path": "src/components/badge-field.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/Breadcrumb.tsx",
+          "path": "src/components/breadcrumb.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/BulkActionsToolbar.tsx",
+          "path": "src/components/bulk-actions-toolbar.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/BulkDeleteButton.tsx",
+          "path": "src/components/bulk-delete-button.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/Create.tsx",
+          "path": "src/components/create.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/CreateButton.tsx",
+          "path": "src/components/create-button.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/DataTable.tsx",
+          "path": "src/components/data-table.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/DeleteButton.tsx",
+          "path": "src/components/delete-button.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/Edit.tsx",
+          "path": "src/components/edit.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/EditButton.tsx",
+          "path": "src/components/edit-button.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/EditGuesser.tsx",
+          "path": "src/components/edit-guesser.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/ExportButton.tsx",
+          "path": "src/components/export-button.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/FormError.tsx",
+          "path": "src/components/form-error.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/Layout.tsx",
+          "path": "src/components/layout.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/List.tsx",
+          "path": "src/components/list.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/ListGuesser.tsx",
+          "path": "src/components/list-guesser.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/ListPagination.tsx",
+          "path": "src/components/list-pagination.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/LocalesMenuButton.tsx",
+          "path": "src/components/locales-menu-button.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/LoginPage.tsx",
+          "path": "src/components/login-page.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/Notification.tsx",
+          "path": "src/components/notification.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/RecordField.tsx",
+          "path": "src/components/record-field.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/ReferenceField.tsx",
+          "path": "src/components/reference-field.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/ReferenceInput.tsx",
+          "path": "src/components/reference-input.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/ReferenceManyCount.tsx",
+          "path": "src/components/reference-many-count.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/RefreshButton.tsx",
+          "path": "src/components/refresh-button.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/Show.tsx",
+          "path": "src/components/show.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/ShowButton.tsx",
+          "path": "src/components/show-button.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/ShowGuesser.tsx",
+          "path": "src/components/show-guesser.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/SimpleForm.tsx",
+          "path": "src/components/simple-form.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/SimpleShowLayout.tsx",
+          "path": "src/components/simple-show-layout.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/SingleFieldList.tsx",
+          "path": "src/components/single-field-list.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/TextField.tsx",
+          "path": "src/components/text-field.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/TextInput.tsx",
+          "path": "src/components/text-input.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/ThemeModeToggle.tsx",
+          "path": "src/components/theme-mode-toggle.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/ThemeProvider.tsx",
+          "path": "src/components/theme-provider.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/UserMenu.tsx",
+          "path": "src/components/user-menu.tsx",
           "type": "registry:component"
         },
         {

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Form, Translate } from "ra-core";
 import { Save } from "lucide-react";
 import { ReactNode } from "react";
-import { DeleteButton } from "@/components//DeleteButton";
+import { DeleteButton } from "@/components//delete-button";
 
 export const SimpleForm = ({ children }: { children: ReactNode }) => {
   return (

@@ -30,7 +30,7 @@ import {
   useTranslate,
   FieldTitle,
 } from "ra-core";
-import { FormError } from "./FormError";
+import { FormError } from "@/components/form-error";
 
 export const AutocompleteInput = (
   props: Omit<InputProps, "source"> &

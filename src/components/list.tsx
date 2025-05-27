@@ -1,4 +1,4 @@
-import { Breadcrumb, BreadcrumbItem } from "@/components/Breadcrumb";
+import { Breadcrumb, BreadcrumbItem } from "@/components/breadcrumb";
 import {
   FilterLiveForm,
   ListBase,
@@ -13,10 +13,10 @@ import {
 } from "ra-core";
 import { cloneElement, ReactElement, ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { CreateButton } from "@/components/CreateButton";
-import { ExportButton } from "@/components/ExportButton";
-import { ListPagination } from "@/components/ListPagination";
-import { BulkActionsToolbar } from "@/components//BulkActionsToolbar";
+import { CreateButton } from "@/components/create-button";
+import { ExportButton } from "@/components/export-button";
+import { ListPagination } from "@/components/list-pagination";
+import { BulkActionsToolbar } from "@/components//bulk-actions-toolbar";
 
 export const List = <RecordType extends RaRecord = RaRecord>(
   props: ListProps<RecordType>

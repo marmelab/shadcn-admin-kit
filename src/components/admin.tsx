@@ -1,8 +1,8 @@
 import { CoreAdmin, CoreAdminProps } from "ra-core";
 import { i18nProvider } from "@/lib/i18nProvider";
-import { Layout } from "@/components/Layout";
-import { LoginPage } from "@/components/LoginPage";
-import { ThemeProvider } from "@/components/ThemeProvider";
+import { Layout } from "@/components/layout";
+import { LoginPage } from "@/components/login-page";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const Admin = (props: CoreAdminProps) => {
   return (
@@ -16,4 +16,3 @@ export const Admin = (props: CoreAdminProps) => {
     </ThemeProvider>
   );
 };
-

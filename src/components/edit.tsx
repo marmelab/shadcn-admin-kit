@@ -1,4 +1,3 @@
-import { Breadcrumb, BreadcrumbItem } from "@/components/Breadcrumb";
 import {
   EditBase,
   Translate,
@@ -12,7 +11,8 @@ import {
 } from "ra-core";
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ShowButton } from "@/components/ShowButton";
+import { Breadcrumb, BreadcrumbItem } from "@/components/breadcrumb";
+import { ShowButton } from "@/components/show-button";
 
 export const Edit = ({ children }: { children: ReactNode }) => (
   <EditBase>
