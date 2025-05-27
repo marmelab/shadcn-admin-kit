@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReactNode, useEffect, useState } from "react";
+import {
+  ReactNode,
+  useEffect,
+  useState,
+  isValidElement,
+  Children,
+} from "react";
 import {
   ShowBase,
   InferredElement,
@@ -13,6 +19,9 @@ import { ShowView } from "@/components/Show";
 import { SimpleShowLayout } from "@/components/SimpleShowLayout";
 import { RecordField } from "@/components/RecordField";
 import { ReferenceField } from "@/components/ReferenceField";
+import { ArrayField } from "@/components/ArrayField";
+import { BadgeField } from "@/components/BadgeField";
+import { SingleFieldList } from "@/components/SingleFieldList";
 
 export const ShowGuesser = (props: { enableLog?: boolean }) => (
   <ShowBase>
@@ -102,6 +111,36 @@ ${children
     representation: (props: any) =>
       `<RecordField source="${props.source}">
                 <ReferenceField source="${props.source}" reference="${props.reference}" />
+            </RecordField>`,
+  },
+  array: {
+    component: ({ children, ...props }: any) => {
+      const childrenArray = Children.toArray(children);
+      return (
+        <RecordField source={props.source}>
+          <ArrayField source={props.source}>
+            <SingleFieldList>
+              <BadgeField
+                source={
+                  childrenArray.length > 0 &&
+                  isValidElement(childrenArray[0]) &&
+                  (childrenArray[0].props as any).source
+                }
+              />
+            </SingleFieldList>
+          </ArrayField>
+        </RecordField>
+      );
+    },
+    representation: (props: any, children: any) =>
+      `<RecordField source="${props.source}">
+                <ArrayField source="${props.source}">
+                    <SingleFieldList>
+                        <BadgeField source="${
+                          children.length > 0 && children[0].getProps().source
+                        }" />
+                    </SingleFieldList>
+                </ArrayField>
             </RecordField>`,
   },
   string: {
