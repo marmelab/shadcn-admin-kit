@@ -27,6 +27,7 @@ import {
   useChoicesContext,
   useGetRecordRepresentation,
   useInput,
+  useTranslate,
   FieldTitle,
 } from "ra-core";
 import { FormError } from "./FormError";
@@ -35,8 +36,10 @@ export const AutocompleteInput = (
   props: Omit<InputProps, "source"> &
     Partial<Pick<InputProps, "source">> &
     ChoicesProps & {
+      className?: string;
       disableValue?: string;
       translateChoice?: boolean;
+      placeholder?: string;
     }
 ) => {
   const {
@@ -46,6 +49,9 @@ export const AutocompleteInput = (
     isFromReference,
   } = useChoicesContext(props);
   const { field, fieldState, isRequired } = useInput({ ...props, source });
+  const translate = useTranslate();
+  const { placeholder = translate("ra.action.search", { _: "Search..." }) } =
+    props;
 
   const getRecordRepresentation = useGetRecordRepresentation(resource);
   const { getChoiceText, getChoiceValue } = useChoices({
@@ -62,15 +68,17 @@ export const AutocompleteInput = (
   );
 
   return (
-    <FormItem>
-      <FormLabel>
-        <FieldTitle
-          label={props.label}
-          source={props.source ?? source}
-          resource={resource}
-          isRequired={isRequired}
-        />
-      </FormLabel>
+    <FormItem className={props.className}>
+      {props.label !== false && (
+        <FormLabel>
+          <FieldTitle
+            label={props.label}
+            source={props.source ?? source}
+            resource={resource}
+            isRequired={isRequired}
+          />
+        </FormLabel>
+      )}
       <FormControl>
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
@@ -80,7 +88,7 @@ export const AutocompleteInput = (
               aria-expanded={open}
               className="w-full justify-between"
             >
-              {selectedChoice ? getChoiceText(selectedChoice) : "Select..."}
+              {selectedChoice ? getChoiceText(selectedChoice) : placeholder}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
@@ -122,7 +130,9 @@ export const AutocompleteInput = (
           </PopoverContent>
         </Popover>
       </FormControl>
-      <FormDescription>{props.helperText}</FormDescription>
+      {props.helperText && (
+        <FormDescription>{props.helperText}</FormDescription>
+      )}
       <FormError fieldState={fieldState} />
     </FormItem>
   );

@@ -1,6 +1,6 @@
 # Shadcn Admin Kit
 
-![Screenshot_20250520_171715](https://github.com/user-attachments/assets/d3bf0d2f-f075-466f-aacf-665ad3b72b19)
+![Screenshot](./public/shadcn-admin-kit.webp)
 
 A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/).
 
@@ -12,78 +12,102 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 
 ## Features
 
-- List, Show, Edit and Create pages per resource
-- Data Table with sorting, filtering and pagination
-- Form components with validation
-- View and edit a reference record
-- Login page (when used with an *authProvider*)
+- CRUD: working List, Show, Edit and Create pages
+- Data Table with sorting, filtering, export, bulk actions, and pagination
+- Form components with data binding and validation
+- View and edit references (one-to-many, many-to-one)
+- Sidebar menu
+- Login page (compatible with any authentication backend)
 - Dashboard page
+- Automatically guess the code based on the data, using *Guessers*
+- i18n support
 - Light/dark mode
 - Responsive
 - Accessible
-- Compatible with any API, thanks to the *dataProvider* abstraction
-- Automatically guess the code based on the data, using *Guessers*
+- Compatible with any API (REST, GraphQL, etc.)
 
-## Usage
+## Tech Stack
 
-### Prerequisite: Set up shadcn/ui
+- UI: [shadcn/ui](https://ui.shadcn.com/) & [Radix UI](https://www.radix-ui.com/)
+- Styling: [Tailwind CSS](https://tailwindcss.com/)
+- Icons: [Lucide](https://lucide.dev/)
+- Routing: [React Router](https://reactrouter.com/)
+- API calls: [TanStack Query](https://tanstack.com/query/latest/)
+- Forms & Validation: [React Hook Form](https://react-hook-form.com/)
+- Admin Framework: [React Admin](https://marmelab.com/react-admin/)
+- Type safety: [TypeScript](https://www.typescriptlang.org/)
+- Build tool: [Vite](https://vitejs.dev/) (SPA mode)
 
-If you haven't already, start by [installing shadcn/ui](https://ui.shadcn.com/docs/installation) in your project. Use the appropriate setup guide for the framework of your choice.
+## Installation
 
-### Install the components
+1. Create a [Vite](https://vite.dev/) single-page app
 
-You can install the components required to build your Admin using the following command:
+    ```bash
+    npm create vite@latest my-shadcn-admin-app -- --template react-ts
+    ```
 
-```bash
-# pnpm
-pnpm dlx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
-# npm
-npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
-# yarn
-yarn dlx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
-# bun
-bunx --bun shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
-```
+2. [Install shadcn/ui](https://ui.shadcn.com/docs/installation/vite) in your project.
 
-This command will download the components and add them to your project.
+3. Download the `shadcn-admin-kit` components and add them to your project using the `shadcn` CLI.
 
-### Configure the `<Admin>` component
+    ```bash
+    npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
+    ```
 
-You'll need to specify the `dataProvider` to use with your `<Admin>`.
+    If you use another package manager than npm, use the appropriate command:
 
-The following example uses `ra-data-simple-rest` but there are [many more](https://marmelab.com/react-admin/DataProviderList.html) you can choose from. You can even [build your own](https://marmelab.com/react-admin/DataProviderWriting.html).
+    ```bash
+    # pnpm
+    pnpm dlx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
+    # yarn
+    yarn dlx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
+    # bun
+    bunx --bun shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
+    ```
+
+## Usage 
+
+### Use `<Admin>` As Root Component
+
+The entry point of your application is the `<Admin>` component. It allows to configure the application adapters, routes, and UI.
+
+You'll need to specify a Data Provider to let the Admin know how to fetch data from your API. A Data Provider is an abstraction that allows you to connect your Admin to any API, whether it's REST, GraphQL, or any other protocol. You can choose from any of the [50+ Data Providers](https://marmelab.com/react-admin/DataProviderList.html), and you can even [build your own](https://marmelab.com/react-admin/DataProviderWriting.html).
+
+The following example uses a simple REST adapter called `ra-data-simple-rest`:
 
 ```tsx
 import { Admin } from "@/components/Admin";
 import simpleRestProvider from 'ra-data-simple-rest';
 
+const dataProvider = simpleRestProvider('http://path.to.my.api');
+
 export const App = () => (
-  <Admin
-    dataProvider={simpleRestProvider('http://path.to.my.api')}
-  >
+  <Admin dataProvider={dataProvider}>
     {/* Resources go here */}
   </Admin>
 );
 ```
 
-Then, you'll need to declare the resources you want to use in your Admin. You can do this by using the `<Resource>` component from `ra-core` (which was automatically added to your dependencies).
+### Declare Resources
 
-For each resource, you can specify the **list**, **edit**, **create** and **show** components to use.
+Then, you'll need to declare the routes of the application. `shadcn-admin-kit` allows to define CRUD routes (list, edit, create, show), and custom routes. Use the `<Resource>` component from `ra-core` (which was automatically added to your dependencies) to define CRUD routes.
 
-If you don't know where to start, you can use the built-in **guessers** to generate the components for you! The guessers will automatically generate the components based on the data returned by your API.
+For each resource, you can specify a `name` (which will map to the API endpoint) and the `list`, `edit`, `create` and `show` components to use.
+
+If you don't know where to start, you can use the built-in **guessers** to configure the admin for you! The guessers will automatically generate code based on the data returned by your API.
 
 ```tsx
-import { Admin } from "@/components/Admin";
 import { Resource } from "ra-core";
 import simpleRestProvider from 'ra-data-simple-rest';
+import { Admin } from "@/components/Admin";
 import { ListGuesser } from "@/components/ListGuesser";
 import { ShowGuesser } from "@/components/ShowGuesser";
 import { EditGuesser } from "@/components/EditGuesser";
 
+const dataProvider = simpleRestProvider('http://path.to.my.api');
+
 export const App = () => (
-  <Admin
-    dataProvider={simpleRestProvider('http://path.to.my.api')}
-  >
+  <Admin dataProvider={dataProvider}>
     <Resource
       name="posts"
       list={ListGuesser}
@@ -122,9 +146,9 @@ You can configure authentication in your Admin by using the `authProvider` prop.
 Once your authProvider is set up, you can pass it to the `authProvider` prop, and the `<Admin>` component will automatically display the login page when the user is not authenticated.
 
 ```tsx
-import { Admin } from "@/components/Admin";
 import { Resource } from "ra-core";
 import simpleRestProvider from 'ra-data-simple-rest';
+import { Admin } from "@/components/Admin";
 import { ListGuesser } from "@/components/ListGuesser";
 import { authProvider } from './authProvider';
 
@@ -146,9 +170,9 @@ export const App = () => (
 You can add a dashboard to your Admin by using the `dashboard` prop. The dashboard can be any React component.
 
 ```tsx
-import { Admin } from "@/components/Admin";
 import { Resource } from "ra-core";
 import simpleRestProvider from 'ra-data-simple-rest';
+import { Admin } from "@/components/Admin";
 import { ListGuesser } from "@/components/ListGuesser";
 
 const Dashboard = () => (
@@ -176,39 +200,25 @@ You can filter the list of records by using the `filters` prop on the `<List>` c
 
 ```tsx
 import { AutocompleteInput } from "@/components/AutocompleteInput";
-import { BadgeField } from "@/components/BadgeField";
-import { DataTable } from "@/components/DataTable";
 import { List } from "@/components/List";
-import { ReferenceField } from "@/components/ReferenceField";
 import { ReferenceInput } from "@/components/ReferenceInput";
 import { TextInput } from "@/components/TextInput";
 
 const filters = [
-  <TextInput source="q" label="Search" />,
+  <TextInput source="q" placeholder="Search products..." label={false} />,
   <ReferenceInput
     source="category_id"
     reference="categories"
     sort={{ field: "name", order: "ASC" }}
   >
-    <AutocompleteInput label="Filter by category" />
+    <AutocompleteInput placeholder="Filter by category" label={false} />
   </ReferenceInput>,
 ];
 
 export const ProductList = () => {
   return (
     <List filters={filters}>
-      <DataTable>
-        <DataTable.Col source="reference" />
-        <DataTable.Col source="category_id">
-          <ReferenceField
-            reference="categories"
-            source="category_id"
-            link="edit"
-          >
-            <BadgeField source="name" />
-          </ReferenceField>
-        </DataTable.Col>
-      </DataTable>
+      ...
     </List>
   );
 };

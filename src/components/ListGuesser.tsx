@@ -1,20 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import { useState, useEffect } from "react";
-
 import {
   ListBase,
   getElementsFromRecords,
   InferredElement,
   useListContext,
+  usePrevious,
   useResourceContext,
   RaRecord,
 } from "ra-core";
+import { useLocation } from "react-router-dom";
 import { ListProps, ListView, ListViewProps } from "@/components/List";
 import { capitalize, singularize } from "inflection";
 import { DataTable } from "@/components/DataTable";
+import { ArrayField } from "@/components/ArrayField";
 import { BadgeField } from "@/components/BadgeField";
 import { ReferenceField } from "@/components/ReferenceField";
+import { SingleFieldList } from "@/components/SingleFieldList";
 
 export const ListGuesser = <RecordType extends RaRecord = RaRecord>(
   props: Omit<ListProps, "children"> & { enableLog?: boolean }
@@ -31,6 +34,14 @@ export const ListGuesser = <RecordType extends RaRecord = RaRecord>(
     sort,
     ...rest
   } = props;
+  // force a rerender of this component when any list parameter changes
+  // otherwise the ListBase won't be rerendered when the sort changes
+  // and the following check won't be performed
+  useLocation();
+  // keep previous data, unless the resource changes
+  const resourceFromContext = useResourceContext(props);
+  const previousResource = usePrevious(resourceFromContext);
+  const keepPreviousData = previousResource === resourceFromContext;
   return (
     <ListBase<RecordType>
       debounce={debounce}
@@ -41,6 +52,10 @@ export const ListGuesser = <RecordType extends RaRecord = RaRecord>(
       filterDefaultValues={filterDefaultValues}
       perPage={perPage}
       resource={resource}
+      queryOptions={{
+        placeholderData: (previousData) =>
+          keepPreviousData ? previousData : undefined,
+      }}
       sort={sort}
     >
       <ListViewGuesser {...rest} />
@@ -135,16 +150,42 @@ ${children
   reference: {
     component: (props: any) => (
       <DataTable.Col source={props.source}>
-        <ReferenceField source={props.source} reference={props.reference}>
-          <BadgeField source="id" />
-        </ReferenceField>
+        <ReferenceField source={props.source} reference={props.reference} />
       </DataTable.Col>
     ),
     representation: (props: any) =>
       `<DataTable.Col source="${props.source}">
-                <ReferenceField source="${props.source}" reference="${props.reference}">
-                    <BadgeField source="id" />
-                </ReferenceField>
+                <ReferenceField source="${props.source}" reference="${props.reference}" />
+            </DataTable.Col>`,
+  },
+  array: {
+    component: ({ children, ...props }: any) => {
+      const childrenArray = React.Children.toArray(children);
+      return (
+        <DataTable.Col source={props.source}>
+          <ArrayField source={props.source}>
+            <SingleFieldList>
+              <BadgeField
+                source={
+                  childrenArray.length > 0 &&
+                  React.isValidElement(childrenArray[0]) &&
+                  (childrenArray[0].props as any).source
+                }
+              />
+            </SingleFieldList>
+          </ArrayField>
+        </DataTable.Col>
+      );
+    },
+    representation: (props: any, children: any) =>
+      `<DataTable.Col source="${props.source}">
+               <ArrayField source="${props.source}">
+                    <SingleFieldList>
+                        <BadgeField source="${
+                          children.length > 0 && children[0].getProps().source
+                        }" />
+                   </SingleFieldList>
+                </ArrayField>
             </DataTable.Col>`,
   },
   string: {

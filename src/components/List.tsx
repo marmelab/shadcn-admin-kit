@@ -4,7 +4,9 @@ import {
   ListBase,
   ListBaseProps,
   RaRecord,
+  Translate,
   useGetResourceLabel,
+  useHasDashboard,
   useResourceContext,
   useResourceDefinition,
   useTranslate,
@@ -12,6 +14,9 @@ import {
 import { cloneElement, ReactElement, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { CreateButton } from "@/components/CreateButton";
+import { ExportButton } from "@/components/ExportButton";
+import { ListPagination } from "@/components/ListPagination";
+import { BulkActionsToolbar } from "@/components//BulkActionsToolbar";
 
 export const List = <RecordType extends RaRecord = RaRecord>(
   props: ListProps<RecordType>
@@ -70,22 +75,30 @@ export const ListView = (props: ListViewProps) => {
     name: resourceLabel,
   });
   const { hasCreate } = useResourceDefinition({ resource });
+  const hasDashboard = useHasDashboard();
 
   return (
     <>
-      <h2 className="text-3xl font-bold tracking-tight mb-2">{title}</h2>
-      <div className="flex justify-between items-center my-4">
-        <Breadcrumb>
+      <Breadcrumb>
+        {hasDashboard && (
           <BreadcrumbItem>
-            <Link to="/">Home</Link>
+            <Link to="/">
+              <Translate i18nKey="ra.page.dashboard">Home</Translate>
+            </Link>
           </BreadcrumbItem>
-          <BreadcrumbItem>{resourceLabel}</BreadcrumbItem>
-        </Breadcrumb>
-        {hasCreate ? <CreateButton /> : null}
+        )}
+        <BreadcrumbItem>{resourceLabel}</BreadcrumbItem>
+      </Breadcrumb>
+      <div className="flex justify-between items-end flex-wrap gap-2 mb-2">
+        <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
+        <div className="flex items-center gap-2">
+          {hasCreate ? <CreateButton /> : null}
+          {<ExportButton />}
+        </div>
       </div>
       {filters && filters.length ? (
         <FilterLiveForm>
-          <div className="flex items-center my-2 gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             {filters.map((filter) =>
               cloneElement(filter, {
                 key: filter.key ?? (filter.props as { source: string }).source,
@@ -93,8 +106,12 @@ export const ListView = (props: ListViewProps) => {
             )}
           </div>
         </FilterLiveForm>
-      ) : null}
+      ) : (
+        <span />
+      )}
       <div className="my-2">{children}</div>
+      <ListPagination />
+      <BulkActionsToolbar />
     </>
   );
 };

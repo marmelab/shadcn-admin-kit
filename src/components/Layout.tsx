@@ -1,23 +1,39 @@
+import { cn } from "@/lib/utils";
 import { CoreLayoutProps } from "ra-core";
-import { NavigationBar } from "@/components/NavigationBar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { UserMenu } from "@/components/UserMenu";
 import { ThemeModeToggle } from "@/components/ThemeModeToggle";
 import { Notification } from "@/components/Notification";
+import { AppSidebar } from "@/components/AppSidebar";
+import { RefreshButton } from "@/components/RefreshButton";
+import { LocalesMenuButton } from "@/components/LocalesMenuButton";
 
 export const Layout = (props: CoreLayoutProps) => {
   return (
-    <div className="min-h-screen flex flex-col p-2">
-      <div className="border-b grow-0 pb-2">
-        <div className="flex pr-4 w-full justify-between">
-          <NavigationBar />
-          <div className="flex items-center gap-2">
-            <ThemeModeToggle />
-            <UserMenu />
-          </div>
-        </div>
-      </div>
-      <div className="grow mt-8">{props.children}</div>
+    <SidebarProvider>
+      <AppSidebar />
+      <main
+        className={cn(
+          "ml-auto w-full max-w-full",
+          "peer-data-[state=collapsed]:w-[calc(100%-var(--sidebar-width-icon)-1rem)]",
+          "peer-data-[state=expanded]:w-[calc(100%-var(--sidebar-width))]",
+          "sm:transition-[width] sm:duration-200 sm:ease-linear",
+          "flex h-svh flex-col",
+          "group-data-[scroll-locked=1]/body:h-full",
+          "has-[main.fixed-main]:group-data-[scroll-locked=1]/body:h-svh"
+        )}
+      >
+        <header className="flex h-16 md:h-12 shrink-0 items-center gap-2 px-4">
+          <SidebarTrigger className="scale-125 sm:scale-100" />
+          <div className="flex-1 flex items-center" id="breadcrumb" />
+          <LocalesMenuButton />
+          <ThemeModeToggle />
+          <RefreshButton />
+          <UserMenu />
+        </header>
+        <div className="flex flex-1 flex-col p-4">{props.children}</div>
+      </main>
       <Notification />
-    </div>
+    </SidebarProvider>
   );
 };

@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 import { buttonVariants } from "@/components/ui/button";
-import { useCreatePath, useRecordContext, useResourceContext } from "ra-core";
+import { Eye } from "lucide-react";
+import {
+  Translate,
+  useCreatePath,
+  useRecordContext,
+  useResourceContext,
+} from "ra-core";
 
 export const ShowButton = () => {
   const resource = useResourceContext();
@@ -17,7 +23,8 @@ export const ShowButton = () => {
       to={link}
       onClick={stopPropagation}
     >
-      Show
+      <Eye />
+      <Translate i18nKey="ra.action.show">Show</Translate>
     </Link>
   );
 };

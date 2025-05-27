@@ -20,22 +20,22 @@ type Product = {
   image: string;
 };
 
-const Column = DataTable.Col<Product>;
-
 const filters = [
-  <TextInput source="q" label="Search" />,
+  <TextInput source="q" placeholder="Search products..." label={false} />,
   <ReferenceInput
     source="category_id"
     reference="categories"
     sort={{ field: "name", order: "ASC" }}
   >
-    <AutocompleteInput label="Filter by category" />
+    <AutocompleteInput placeholder="Filter by category" label={false} />
   </ReferenceInput>,
 ];
 
+const Column = DataTable.Col<Product>;
+
 export const ProductList = () => {
   return (
-    <List filters={filters}>
+    <List filters={filters} sort={{ field: "reference", order: "ASC" }}>
       <DataTable>
         <Column source="reference" />
         <Column source="category_id">
@@ -47,7 +47,34 @@ export const ProductList = () => {
             <BadgeField source="name" />
           </ReferenceField>
         </Column>
-        <Column source="stock" headerClassName="w-24" />
+        <Column
+          source="width"
+          headerClassName="text-right"
+          cellClassName="text-right"
+          render={(record) => record.width?.toLocaleString()}
+        />
+        <Column
+          source="height"
+          headerClassName="text-right"
+          cellClassName="text-right"
+          render={(record) => record.height?.toLocaleString()}
+        />
+        <Column
+          source="price"
+          headerClassName="text-right"
+          cellClassName="text-right"
+          render={(record) =>
+            record.price?.toLocaleString(undefined, {
+              style: "currency",
+              currency: "USD",
+            })
+          }
+        />
+        <Column
+          source="stock"
+          headerClassName="text-right"
+          cellClassName="text-right"
+        />
         <Column label="Actions" headerClassName="w-12">
           <EditButton />
         </Column>

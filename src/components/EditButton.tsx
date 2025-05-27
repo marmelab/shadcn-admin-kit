@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 import { buttonVariants } from "@/components/ui/button";
-import { useCreatePath, useRecordContext, useResourceContext } from "ra-core";
+import { Pencil } from "lucide-react";
+import {
+  useCreatePath,
+  useRecordContext,
+  useResourceContext,
+  Translate,
+} from "ra-core";
 
 export const EditButton = () => {
   const resource = useResourceContext();
@@ -17,7 +23,8 @@ export const EditButton = () => {
       to={link}
       onClick={stopPropagation}
     >
-      Edit
+      <Pencil />
+      <Translate i18nKey="ra.action.edit">Edit</Translate>
     </Link>
   );
 };

@@ -1,15 +1,43 @@
 import { Resource } from "ra-core";
 import { dataProvider } from "./dataProvider";
-import authProvider from "./authProvider";
+import { authProvider } from "./authProvider";
+import { i18nProvider } from "./i18nProvider";
 import { Admin } from "@/components/Admin";
+import { ListGuesser } from "@/components/ListGuesser";
+import { ShowGuesser } from "@/components/ShowGuesser";
+import { EditGuesser } from "@/components/EditGuesser";
 import { products } from "./products";
 import { categories } from "./categories";
+import { Users } from "lucide-react";
+import { DollarSign } from "lucide-react";
 
 function App() {
   return (
-    <Admin dataProvider={dataProvider} authProvider={authProvider}>
+    <Admin
+      dataProvider={dataProvider}
+      authProvider={authProvider}
+      i18nProvider={i18nProvider}
+    >
       <Resource {...products} />
       <Resource {...categories} />
+      <Resource
+        name="customers"
+        list={ListGuesser}
+        show={ShowGuesser}
+        edit={EditGuesser}
+        recordRepresentation={(record) =>
+          `${record.first_name} ${record.last_name}`
+        }
+        icon={Users}
+      />
+      <Resource
+        name="orders"
+        list={ListGuesser}
+        show={ShowGuesser}
+        edit={EditGuesser}
+        recordRepresentation="reference"
+        icon={DollarSign}
+      />
     </Admin>
   );
 }

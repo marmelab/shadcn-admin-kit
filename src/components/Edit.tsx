@@ -1,10 +1,12 @@
 import { Breadcrumb, BreadcrumbItem } from "@/components/Breadcrumb";
 import {
   EditBase,
+  Translate,
   useCreatePath,
   useEditContext,
   useGetRecordRepresentation,
   useGetResourceLabel,
+  useHasDashboard,
   useResourceContext,
   useResourceDefinition,
 } from "ra-core";
@@ -39,6 +41,7 @@ export const EditView = ({ children }: { children: ReactNode }) => {
   const recordRepresentation = getRecordRepresentation(context.record);
 
   const { hasShow } = useResourceDefinition({ resource });
+  const hasDashboard = useHasDashboard();
 
   if (context.isLoading || !context.record) {
     return null;
@@ -46,20 +49,26 @@ export const EditView = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <h2 className="text-3xl font-bold tracking-tight mb-2">
-        {context.defaultTitle}
-      </h2>
-      <div className="flex justify-between items-center my-4">
-        <Breadcrumb>
+      <Breadcrumb>
+        {hasDashboard && (
           <BreadcrumbItem>
-            <Link to="/">Home</Link>
+            <Link to="/">
+              <Translate i18nKey="ra.page.dashboard">Home</Translate>
+            </Link>
           </BreadcrumbItem>
-          <BreadcrumbItem>
-            <Link to={listLink}>{listLabel}</Link>
-          </BreadcrumbItem>
-          <BreadcrumbItem>{recordRepresentation}</BreadcrumbItem>
-        </Breadcrumb>
-        {hasShow ? <ShowButton /> : null}
+        )}
+        <BreadcrumbItem>
+          <Link to={listLink}>{listLabel}</Link>
+        </BreadcrumbItem>
+        <BreadcrumbItem>{recordRepresentation}</BreadcrumbItem>
+      </Breadcrumb>
+      <div className="flex justify-between items-end flex-wrap gap-2 mb-2">
+        <h2 className="text-2xl font-bold tracking-tight">
+          {context.defaultTitle}
+        </h2>
+        <div className="flex justify-end items-center">
+          {hasShow ? <ShowButton /> : null}
+        </div>
       </div>
       <div className="my-2">{children}</div>
     </>

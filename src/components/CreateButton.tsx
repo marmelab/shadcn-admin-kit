@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import { Plus } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
-import { useCreatePath, useResourceContext } from "ra-core";
+import { useCreatePath, useResourceContext, Translate } from "ra-core";
 
 export const CreateButton = () => {
   const resource = useResourceContext();
@@ -15,7 +16,8 @@ export const CreateButton = () => {
       to={link}
       onClick={stopPropagation}
     >
-      Create
+      <Plus />
+      <Translate i18nKey="ra.action.create">Create</Translate>
     </Link>
   );
 };

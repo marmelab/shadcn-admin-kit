@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Tooltip,
   TooltipContent,
@@ -30,9 +31,9 @@ import {
   useDataTableCallbacksContext,
   useDataTableDataContext,
   useDataTableRenderContext,
+  useDataTableSelectedIdsContext,
   useDataTableSortContext,
   useGetPathForRecordCallback,
-  useListPaginationContext,
   useRecordContext,
   useResourceContext,
   useTranslate,
@@ -60,7 +61,6 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
           </DataTableRenderContext.Provider>
           <DataTableBody>{children}</DataTableBody>
         </Table>
-        <Pagination />
       </div>
     </DataTableBase>
   );
@@ -69,9 +69,40 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
 DataTable.Col = DataTableColumn;
 
 const DataTableHead = ({ children }: { children: ReactNode }) => {
+  const data = useDataTableDataContext();
+  const { onSelect } = useDataTableCallbacksContext();
+  const selectedIds = useDataTableSelectedIdsContext();
+  const handleToggleSelectAll = (checked: boolean) => {
+    if (!onSelect || !data || !selectedIds) return;
+    onSelect(
+      checked
+        ? selectedIds.concat(
+            data
+              .filter((record) => !selectedIds.includes(record.id))
+              .map((record) => record.id)
+          )
+        : []
+    );
+  };
+  const selectableIds = Array.isArray(data)
+    ? data.map((record) => record.id)
+    : [];
   return (
     <TableHeader>
-      <TableRow>{children}</TableRow>
+      <TableRow>
+        <TableHead className="flex items-center">
+          <Checkbox
+            onCheckedChange={handleToggleSelectAll}
+            checked={
+              selectedIds &&
+              selectedIds.length > 0 &&
+              selectableIds.length > 0 &&
+              selectableIds.every((id) => selectedIds.includes(id))
+            }
+          />
+        </TableHead>
+        {children}
+      </TableRow>
     </TableHeader>
   );
 };
@@ -93,7 +124,8 @@ const DataTableBody = ({ children }: { children: ReactNode }) => {
 };
 
 const DataTableRow = ({ children }: { children: ReactNode }) => {
-  const { rowClick } = useDataTableCallbacksContext();
+  const { rowClick, handleToggleItem } = useDataTableCallbacksContext();
+  const selectedIds = useDataTableSelectedIdsContext();
 
   const record = useRecordContext();
   if (!record) {
@@ -107,6 +139,15 @@ const DataTableRow = ({ children }: { children: ReactNode }) => {
 
   const navigate = useNavigate();
   const getPathForRecord = useGetPathForRecordCallback();
+
+  const handleToggle = useCallback(
+    (event: React.MouseEvent) => {
+      event.stopPropagation();
+      if (!handleToggleItem) return;
+      handleToggleItem(record.id, event);
+    },
+    [handleToggleItem, record.id]
+  );
 
   const handleClick = useCallback(async () => {
     const temporaryLink =
@@ -131,6 +172,13 @@ const DataTableRow = ({ children }: { children: ReactNode }) => {
 
   return (
     <TableRow key={record.id} onClick={handleClick}>
+      <TableCell className="flex items-center" onClick={handleToggle}>
+        <Checkbox
+          checked={selectedIds?.includes(record.id)}
+          onClick={handleToggle}
+          className="mt-1"
+        />
+      </TableCell>
       {children}
     </TableRow>
   );
@@ -145,40 +193,6 @@ const DataTableEmpty = () => {
     <Alert>
       <AlertDescription>No results found.</AlertDescription>
     </Alert>
-  );
-};
-
-const Pagination = () => {
-  const { hasPreviousPage, hasNextPage, page, perPage, total, setPage } =
-    useListPaginationContext();
-
-  const pageStart = (page - 1) * perPage + 1;
-  const pageEnd = hasNextPage ? page * perPage : total;
-
-  return (
-    <div className="flex items-center justify-end space-x-2 py-4 px-4">
-      <div className="flex-1 text-sm text-muted-foreground">
-        {total != null ? `${pageStart} - ${pageEnd} of ${total}` : null}
-      </div>
-      <div className="space-x-2">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setPage(page - 1)}
-          disabled={!hasPreviousPage}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setPage(page + 1)}
-          disabled={!hasNextPage}
-        >
-          Next
-        </Button>
-      </div>
-    </div>
   );
 };
 
@@ -235,7 +249,20 @@ function DataTableHeadCell<
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" data-field={source} onClick={handleSort}>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="-ml-3 -mr-3 h-8 data-[state=open]:bg-accent cursor-pointer"
+                data-field={source}
+                onClick={handleSort}
+              >
+                {headerClassName?.includes("text-right") ? null : (
+                  <FieldTitle
+                    label={label}
+                    source={source}
+                    resource={resource}
+                  />
+                )}
                 {sort.field === source ? (
                   sort.order === "ASC" ? (
                     <ArrowDownAZ className="ml-2 h-6 w-6" />
@@ -243,7 +270,13 @@ function DataTableHeadCell<
                     <ArrowUpZA className="ml-2 h-6 w-6" />
                   )
                 ) : null}
-                <FieldTitle label={label} source={source} resource={resource} />
+                {headerClassName?.includes("text-right") ? (
+                  <FieldTitle
+                    label={label}
+                    source={source}
+                    resource={resource}
+                  />
+                ) : null}
               </Button>
             </TooltipTrigger>
             <TooltipContent>
