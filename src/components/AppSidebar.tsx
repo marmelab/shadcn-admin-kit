@@ -50,7 +50,7 @@ export const DashboardMenuItem = () => {
   const label = translate("ra.page.dashboard", {
     _: "Dashboard",
   });
-  const match = useMatch({ path: "/" });
+  const match = useMatch({ path: "/", end: true });
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild isActive={!!match}>
@@ -71,7 +71,7 @@ export const ResourceMenuItem = ({ name }: { name: string }) => {
     resource: name,
     type: "list",
   });
-  const match = useMatch({ path: to });
+  const match = useMatch({ path: to, end: false });
   if (!resources || !resources[name]) return null;
 
   return (
