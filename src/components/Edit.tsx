@@ -62,11 +62,13 @@ export const EditView = ({ children }: { children: ReactNode }) => {
         </BreadcrumbItem>
         <BreadcrumbItem>{recordRepresentation}</BreadcrumbItem>
       </Breadcrumb>
-      <h2 className="text-2xl font-bold tracking-tight">
-        {context.defaultTitle}
-      </h2>
-      <div className="flex justify-end items-center my-4">
-        {hasShow ? <ShowButton /> : null}
+      <div className="flex justify-between items-end flex-wrap gap-2 mb-2">
+        <h2 className="text-2xl font-bold tracking-tight">
+          {context.defaultTitle}
+        </h2>
+        <div className="flex justify-end items-center">
+          {hasShow ? <ShowButton /> : null}
+        </div>
       </div>
       <div className="my-2">{children}</div>
     </>

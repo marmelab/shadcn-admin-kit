@@ -78,7 +78,7 @@ export const ListPagination = () => {
   };
 
   return (
-    <div className="flex items-center justify-end space-x-2 py-4 gap-4">
+    <div className="flex items-center justify-end space-x-2 gap-4">
       <div className="hidden md:flex items-center space-x-2">
         <p className="text-sm font-medium">
           <Translate i18nKey="ra.navigation.page_rows_per_page">

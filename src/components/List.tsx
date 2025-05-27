@@ -89,28 +89,27 @@ export const ListView = (props: ListViewProps) => {
         )}
         <BreadcrumbItem>{resourceLabel}</BreadcrumbItem>
       </Breadcrumb>
-      <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
-      <div className="flex justify-between items-end flex-wrap my-4 gap-2">
-        {filters && filters.length ? (
-          <FilterLiveForm>
-            <div className="flex items-center gap-2 flex-wrap">
-              {filters.map((filter) =>
-                cloneElement(filter, {
-                  key:
-                    filter.key ?? (filter.props as { source: string }).source,
-                })
-              )}
-            </div>
-          </FilterLiveForm>
-        ) : (
-          <span />
-        )}
+      <div className="flex justify-between items-end flex-wrap gap-2 mb-2">
+        <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
         <div className="flex items-center gap-2">
           {hasCreate ? <CreateButton /> : null}
           {<ExportButton />}
         </div>
       </div>
-      {children}
+      {filters && filters.length ? (
+        <FilterLiveForm>
+          <div className="flex items-center gap-2 flex-wrap">
+            {filters.map((filter) =>
+              cloneElement(filter, {
+                key: filter.key ?? (filter.props as { source: string }).source,
+              })
+            )}
+          </div>
+        </FilterLiveForm>
+      ) : (
+        <span />
+      )}
+      <div className="my-2">{children}</div>
       <ListPagination />
       <BulkActionsToolbar />
     </>

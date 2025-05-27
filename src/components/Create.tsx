@@ -37,9 +37,6 @@ export const CreateView = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <h2 className="text-2xl font-bold tracking-tight">
-        {context.defaultTitle}
-      </h2>
       <Breadcrumb className="my-4">
         {hasDashboard && (
           <BreadcrumbItem>
@@ -55,6 +52,11 @@ export const CreateView = ({ children }: { children: ReactNode }) => {
           <Translate i18nKey="ra.action.create">Create</Translate>
         </BreadcrumbItem>
       </Breadcrumb>
+      <div className="flex justify-between items-end flex-wrap gap-2 mb-2">
+        <h2 className="text-2xl font-bold tracking-tight">
+          {context.defaultTitle}
+        </h2>
+      </div>
       <div className="my-2">{children}</div>
     </>
   );
