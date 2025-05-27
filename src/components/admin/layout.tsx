@@ -1,12 +1,12 @@
 import { cn } from "@/lib/utils";
 import { CoreLayoutProps } from "ra-core";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { UserMenu } from "@/components/user-menu";
-import { ThemeModeToggle } from "@/components/theme-mode-toggle";
-import { Notification } from "@/components/notification";
-import { AppSidebar } from "@/components/app-sidebar";
-import { RefreshButton } from "@/components/refresh-button";
-import { LocalesMenuButton } from "@/components/locales-menu-button";
+import { UserMenu } from "@/components/admin/user-menu";
+import { ThemeModeToggle } from "@/components/admin/theme-mode-toggle";
+import { Notification } from "@/components/admin/notification";
+import { AppSidebar } from "@/components/admin/app-sidebar";
+import { RefreshButton } from "@/components/admin/refresh-button";
+import { LocalesMenuButton } from "@/components/admin/locales-menu-button";
 
 export const Layout = (props: CoreLayoutProps) => {
   return (

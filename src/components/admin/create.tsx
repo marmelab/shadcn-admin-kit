@@ -1,32 +1,29 @@
-import { Breadcrumb, BreadcrumbItem } from "@/components/breadcrumb";
+import { Breadcrumb, BreadcrumbItem } from "@/components/admin/breadcrumb";
 import {
-  ShowBase,
-  Translate,
+  CreateBase,
   useCreatePath,
-  useHasDashboard,
-  useShowContext,
-  useGetRecordRepresentation,
+  useCreateContext,
   useGetResourceLabel,
+  useHasDashboard,
   useResourceContext,
-  useResourceDefinition,
+  Translate,
 } from "ra-core";
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { EditButton } from "@/components/edit-button";
 
-export const Show = ({ children }: { children: ReactNode }) => (
-  <ShowBase>
-    <ShowView>{children}</ShowView>
-  </ShowBase>
+export const Create = ({ children }: { children: ReactNode }) => (
+  <CreateBase>
+    <CreateView>{children}</CreateView>
+  </CreateBase>
 );
 
-export const ShowView = ({ children }: { children: ReactNode }) => {
-  const context = useShowContext();
+export const CreateView = ({ children }: { children: ReactNode }) => {
+  const context = useCreateContext();
 
   const resource = useResourceContext();
   if (!resource) {
     throw new Error(
-      "The ShowView component must be used within a ResourceContextProvider"
+      "The CreateView component must be used within a ResourceContextProvider"
     );
   }
   const getResourceLabel = useGetResourceLabel();
@@ -36,20 +33,11 @@ export const ShowView = ({ children }: { children: ReactNode }) => {
     resource,
     type: "list",
   });
-
-  const getRecordRepresentation = useGetRecordRepresentation(resource);
-  const recordRepresentation = getRecordRepresentation(context.record);
-
-  const { hasEdit } = useResourceDefinition({ resource });
   const hasDashboard = useHasDashboard();
-
-  if (context.isLoading || !context.record) {
-    return null;
-  }
 
   return (
     <>
-      <Breadcrumb>
+      <Breadcrumb className="my-4">
         {hasDashboard && (
           <BreadcrumbItem>
             <Link to="/">
@@ -60,15 +48,14 @@ export const ShowView = ({ children }: { children: ReactNode }) => {
         <BreadcrumbItem>
           <Link to={listLink}>{listLabel}</Link>
         </BreadcrumbItem>
-        <BreadcrumbItem>{recordRepresentation}</BreadcrumbItem>
+        <BreadcrumbItem>
+          <Translate i18nKey="ra.action.create">Create</Translate>
+        </BreadcrumbItem>
       </Breadcrumb>
       <div className="flex justify-between items-end flex-wrap gap-2 mb-2">
         <h2 className="text-2xl font-bold tracking-tight">
           {context.defaultTitle}
         </h2>
-        <div className="flex justify-end items-center">
-          {hasEdit ? <EditButton /> : null}
-        </div>
       </div>
       <div className="my-2">{children}</div>
     </>

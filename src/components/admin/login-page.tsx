@@ -1,4 +1,4 @@
-import { TextInput } from "@/components/text-input";
+import { TextInput } from "@/components/admin/text-input";
 import { Button } from "@/components/ui/button";
 import { Form, required, useLogin } from "ra-core";
 

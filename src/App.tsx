@@ -1,15 +1,16 @@
 import { Resource } from "ra-core";
+import { Admin } from "@/components/admin/admin";
+import { ListGuesser } from "@/components/admin/list-guesser";
+import { ShowGuesser } from "@/components/admin/show-guesser";
+import { EditGuesser } from "@/components/admin/edit-guesser";
+import { Users } from "lucide-react";
+import { DollarSign } from "lucide-react";
+
 import { dataProvider } from "./dataProvider";
 import { authProvider } from "./authProvider";
 import { i18nProvider } from "./i18nProvider";
-import { Admin } from "@/components/admin";
-import { ListGuesser } from "@/components/list-guesser";
-import { ShowGuesser } from "@/components/show-guesser";
-import { EditGuesser } from "@/components/edit-guesser";
 import { products } from "./products";
 import { categories } from "./categories";
-import { Users } from "lucide-react";
-import { DollarSign } from "lucide-react";
 
 function App() {
   return (

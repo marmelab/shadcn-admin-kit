@@ -1,8 +1,8 @@
-import { AutocompleteInput } from "@/components/autocomplete-input";
-import { Create } from "@/components/create";
-import { TextInput } from "@/components/text-input";
-import { ReferenceInput } from "@/components/reference-input";
-import { SimpleForm } from "@/components/simple-form";
+import { AutocompleteInput } from "@/components/admin/autocomplete-input";
+import { Create } from "@/components/admin/create";
+import { TextInput } from "@/components/admin/text-input";
+import { ReferenceInput } from "@/components/admin/reference-input";
+import { SimpleForm } from "@/components/admin/simple-form";
 import { required } from "ra-core";
 
 export const ProductCreate = () => (

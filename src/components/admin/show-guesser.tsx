@@ -15,13 +15,13 @@ import {
   InferredTypeMap,
 } from "ra-core";
 import { capitalize, singularize } from "inflection";
-import { ShowView } from "@/components/show";
-import { SimpleShowLayout } from "@/components/simple-show-layout";
-import { RecordField } from "@/components/record-field";
-import { ReferenceField } from "@/components/reference-field";
-import { ArrayField } from "@/components/array-field";
-import { BadgeField } from "@/components/badge-field";
-import { SingleFieldList } from "@/components/single-field-list";
+import { ShowView } from "@/components/admin/show";
+import { SimpleShowLayout } from "@/components/admin/simple-show-layout";
+import { RecordField } from "@/components/admin/record-field";
+import { ReferenceField } from "@/components/admin/reference-field";
+import { ArrayField } from "@/components/admin/array-field";
+import { BadgeField } from "@/components/admin/badge-field";
+import { SingleFieldList } from "@/components/admin/single-field-list";
 
 export const ShowGuesser = (props: { enableLog?: boolean }) => (
   <ShowBase>

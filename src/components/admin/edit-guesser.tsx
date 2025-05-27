@@ -9,11 +9,11 @@ import {
   InferredTypeMap,
 } from "ra-core";
 import { capitalize, singularize } from "inflection";
-import { EditView } from "@/components/edit";
-import { SimpleForm } from "@/components/simple-form";
-import { TextInput } from "@/components/text-input";
-import { ReferenceInput } from "@/components/reference-input";
-import { AutocompleteInput } from "@/components/autocomplete-input";
+import { EditView } from "@/components/admin/edit";
+import { SimpleForm } from "@/components/admin/simple-form";
+import { TextInput } from "@/components/admin/text-input";
+import { ReferenceInput } from "@/components/admin/reference-input";
+import { AutocompleteInput } from "@/components/admin/autocomplete-input";
 
 export const EditGuesser = (props: { enableLog?: boolean }) => {
   return (

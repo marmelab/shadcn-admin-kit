@@ -6,7 +6,7 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { FormError } from "@/components/form-error";
+import { FormError } from "@/components/admin/form-error";
 
 export type TextInputProps = InputProps & {
   placeholder?: string;
