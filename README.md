@@ -43,7 +43,7 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 1. Create a [Vite](https://vite.dev/) single-page app
 
     ```bash
-    npm create vite@latest my-vue-app -- --template react-ts
+    npm create vite@latest my-shadcn-admin-app -- --template react-ts
     ```
 
 2. [Install shadcn/ui](https://ui.shadcn.com/docs/installation/vite) in your project.
