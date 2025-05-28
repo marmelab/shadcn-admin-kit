@@ -33,17 +33,19 @@
         "tooltip"
       ],
       "dependencies": [
-        "ra-core",
-        "ra-language-english",
-        "ra-i18n-polyglot",
-        "react-router-dom",
-        "react-hook-form",
-        "lodash",
         "@tanstack/react-query",
-        "lucide-react",
-        "inflection",
+        "class-variance-authority",
         "clsx",
-        "tailwind-merge"
+        "inflection",
+        "lodash",
+        "lucide-react",
+        "ra-core",
+        "ra-i18n-polyglot",
+        "ra-language-english",
+        "react-hook-form",
+        "react-router-dom",
+        "tailwind-merge",
+        "tw-animate-css"
       ],
       "files": [
         {

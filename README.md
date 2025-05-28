@@ -65,6 +65,17 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
     bunx --bun shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
     ```
 
+4. Set the `verbatimModuleSyntax` option to `false` in your `tsconfig.app.json` file to avoid an [issue](https://github.com/shadcn-ui/ui/issues/6618) with the latest version of TypeScript.
+
+    ```json
+    {
+      "compilerOptions": {
+        // ...
+        "verbatimModuleSyntax": false
+      }
+    }
+    ```
+
 ## Usage 
 
 ### Use `<Admin>` As Root Component
@@ -86,6 +97,8 @@ export const App = () => (
     {/* Resources go here */}
   </Admin>
 );
+
+export default App;
 ```
 
 ### Declare Resources
