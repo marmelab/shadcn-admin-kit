@@ -237,6 +237,38 @@ export const ProductList = () => {
 };
 ```
 
+### Adding Custom Routes
+
+To register your own routes, pass one or several [`<CustomRoutes>`](https://marmelab.com/react-admin/CustomRoutes.html) elements as children of `<Admin>`. Declare as many [react-router-dom](https://reactrouter.com/en/6/start/concepts#defining-routes) `<Route>` as you want inside them.
+
+```tsx
+// in src/App.tsx
+import { Resource, CustomRoutes } from 'ra-core';
+import { Route } from "react-router-dom";
+import { Admin } from "@/components/admin/admin";
+
+import { dataProvider } from './dataProvider';
+import posts from './posts';
+import comments from './comments';
+import { Settings } from './Settings';
+import { Profile } from './Profile';
+
+export const App = () => (
+    <Admin dataProvider={dataProvider}>
+        <Resource name="posts" {...posts} />
+        <Resource name="comments" {...comments} />
+        <CustomRoutes>
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/profile" element={<Profile />} />
+        </CustomRoutes>
+    </Admin>
+);
+```
+
+Now, when a user browses to `/settings` or `/profile`, the components you defined will appear in the main part of the screen.
+
+**Tip:** Custom routes don’t automatically appear in the menu. You'll need to customize the [`<AppSidebar>` component](https://github.com/marmelab/shadcn-admin-kit/blob/main/src/components/admin/app-sidebar.tsx) if you want custom routes to be accessible from the menu.
+
 ## Local Development
 
 This project requires [Node.js](https://nodejs.org/) and [pnpm](https://pnpm.io/).
