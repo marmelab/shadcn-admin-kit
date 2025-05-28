@@ -115,6 +115,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/index.ts",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/layout.tsx",
           "type": "registry:component"
         },
