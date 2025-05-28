@@ -1,7 +1,7 @@
-import { ReferenceManyCount } from "@/components/ReferenceManyCount";
-import { Show } from "@/components/Show";
-import { SimpleShowLayout } from "@/components/SimpleShowLayout";
-import { RecordField } from "@/components/RecordField";
+import { ReferenceManyCount } from "@/components/admin/reference-many-count";
+import { Show } from "@/components/admin/show";
+import { SimpleShowLayout } from "@/components/admin/simple-show-layout";
+import { RecordField } from "@/components/admin/record-field";
 
 export const CategoryShow = () => (
   <Show>

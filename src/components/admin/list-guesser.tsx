@@ -11,13 +11,13 @@ import {
   RaRecord,
 } from "ra-core";
 import { useLocation } from "react-router-dom";
-import { ListProps, ListView, ListViewProps } from "@/components/List";
+import { ListProps, ListView, ListViewProps } from "@/components/admin/list";
 import { capitalize, singularize } from "inflection";
-import { DataTable } from "@/components/DataTable";
-import { ArrayField } from "@/components/ArrayField";
-import { BadgeField } from "@/components/BadgeField";
-import { ReferenceField } from "@/components/ReferenceField";
-import { SingleFieldList } from "@/components/SingleFieldList";
+import { DataTable } from "@/components/admin/data-table";
+import { ArrayField } from "@/components/admin/array-field";
+import { BadgeField } from "@/components/admin/badge-field";
+import { ReferenceField } from "@/components/admin/reference-field";
+import { SingleFieldList } from "@/components/admin/single-field-list";
 
 export const ListGuesser = <RecordType extends RaRecord = RaRecord>(
   props: Omit<ListProps, "children"> & { enableLog?: boolean }

@@ -1,32 +1,32 @@
-import { Breadcrumb, BreadcrumbItem } from "@/components/Breadcrumb";
+import { Breadcrumb, BreadcrumbItem } from "@/components/admin/breadcrumb";
 import {
-  EditBase,
+  ShowBase,
   Translate,
   useCreatePath,
-  useEditContext,
+  useHasDashboard,
+  useShowContext,
   useGetRecordRepresentation,
   useGetResourceLabel,
-  useHasDashboard,
   useResourceContext,
   useResourceDefinition,
 } from "ra-core";
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ShowButton } from "@/components/ShowButton";
+import { EditButton } from "@/components/admin/edit-button";
 
-export const Edit = ({ children }: { children: ReactNode }) => (
-  <EditBase>
-    <EditView>{children}</EditView>
-  </EditBase>
+export const Show = ({ children }: { children: ReactNode }) => (
+  <ShowBase>
+    <ShowView>{children}</ShowView>
+  </ShowBase>
 );
 
-export const EditView = ({ children }: { children: ReactNode }) => {
-  const context = useEditContext();
+export const ShowView = ({ children }: { children: ReactNode }) => {
+  const context = useShowContext();
 
   const resource = useResourceContext();
   if (!resource) {
     throw new Error(
-      "The EditView component must be used within a ResourceContextProvider"
+      "The ShowView component must be used within a ResourceContextProvider"
     );
   }
   const getResourceLabel = useGetResourceLabel();
@@ -40,7 +40,7 @@ export const EditView = ({ children }: { children: ReactNode }) => {
   const getRecordRepresentation = useGetRecordRepresentation(resource);
   const recordRepresentation = getRecordRepresentation(context.record);
 
-  const { hasShow } = useResourceDefinition({ resource });
+  const { hasEdit } = useResourceDefinition({ resource });
   const hasDashboard = useHasDashboard();
 
   if (context.isLoading || !context.record) {
@@ -67,7 +67,7 @@ export const EditView = ({ children }: { children: ReactNode }) => {
           {context.defaultTitle}
         </h2>
         <div className="flex justify-end items-center">
-          {hasShow ? <ShowButton /> : null}
+          {hasEdit ? <EditButton /> : null}
         </div>
       </div>
       <div className="my-2">{children}</div>

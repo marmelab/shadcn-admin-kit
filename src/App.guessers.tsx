@@ -1,10 +1,10 @@
 import { Resource } from "ra-core";
 import { dataProvider } from "./dataProvider";
 import { authProvider } from "./authProvider";
-import { Admin } from "@/components/Admin";
-import { ListGuesser } from "@/components/ListGuesser";
-import { ShowGuesser } from "@/components/ShowGuesser";
-import { EditGuesser } from "@/components/EditGuesser";
+import { Admin } from "@/components/admin/admin";
+import { ListGuesser } from "@/components/admin/list-guesser";
+import { ShowGuesser } from "@/components/admin/show-guesser";
+import { EditGuesser } from "@/components/admin/edit-guesser";
 
 function App() {
   return (

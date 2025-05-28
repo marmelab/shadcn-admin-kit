@@ -1,11 +1,11 @@
-import { AutocompleteInput } from "@/components/AutocompleteInput";
-import { BadgeField } from "@/components/BadgeField";
-import { DataTable } from "@/components/DataTable";
-import { EditButton } from "@/components/EditButton";
-import { List } from "@/components/List";
-import { ReferenceField } from "@/components/ReferenceField";
-import { ReferenceInput } from "@/components/ReferenceInput";
-import { TextInput } from "@/components/TextInput";
+import { AutocompleteInput } from "@/components/admin/autocomplete-input";
+import { BadgeField } from "@/components/admin/badge-field";
+import { DataTable } from "@/components/admin/data-table";
+import { EditButton } from "@/components/admin/edit-button";
+import { List } from "@/components/admin/list";
+import { ReferenceField } from "@/components/admin/reference-field";
+import { ReferenceInput } from "@/components/admin/reference-input";
+import { TextInput } from "@/components/admin/text-input";
 
 type Product = {
   id: number;

@@ -76,7 +76,7 @@ You'll need to specify a Data Provider to let the Admin know how to fetch data f
 The following example uses a simple REST adapter called `ra-data-simple-rest`:
 
 ```tsx
-import { Admin } from "@/components/Admin";
+import { Admin } from "@/components/admin/admin";
 import simpleRestProvider from 'ra-data-simple-rest';
 
 const dataProvider = simpleRestProvider('http://path.to.my.api');
@@ -99,10 +99,10 @@ If you don't know where to start, you can use the built-in **guessers** to confi
 ```tsx
 import { Resource } from "ra-core";
 import simpleRestProvider from 'ra-data-simple-rest';
-import { Admin } from "@/components/Admin";
-import { ListGuesser } from "@/components/ListGuesser";
-import { ShowGuesser } from "@/components/ShowGuesser";
-import { EditGuesser } from "@/components/EditGuesser";
+import { Admin } from "@/components/admin/admin";
+import { ListGuesser } from "@/components/admin/list-guesser";
+import { ShowGuesser } from "@/components/admin/show-guesser";
+import { EditGuesser } from "@/components/admin/edit-guesser";
 
 const dataProvider = simpleRestProvider('http://path.to.my.api');
 
@@ -148,8 +148,8 @@ Once your authProvider is set up, you can pass it to the `authProvider` prop, an
 ```tsx
 import { Resource } from "ra-core";
 import simpleRestProvider from 'ra-data-simple-rest';
-import { Admin } from "@/components/Admin";
-import { ListGuesser } from "@/components/ListGuesser";
+import { Admin } from "@/components/admin/admin";
+import { ListGuesser } from "@/components/admin/list-guesser";
 import { authProvider } from './authProvider';
 
 export const App = () => (
@@ -172,8 +172,8 @@ You can add a dashboard to your Admin by using the `dashboard` prop. The dashboa
 ```tsx
 import { Resource } from "ra-core";
 import simpleRestProvider from 'ra-data-simple-rest';
-import { Admin } from "@/components/Admin";
-import { ListGuesser } from "@/components/ListGuesser";
+import { Admin } from "@/components/admin/admin";
+import { ListGuesser } from "@/components/admin/list-guesser";
 
 const Dashboard = () => (
   <div>
@@ -199,10 +199,10 @@ export const App = () => (
 You can filter the list of records by using the `filters` prop on the `<List>` component. The `filters` prop needs to be an array of input components.
 
 ```tsx
-import { AutocompleteInput } from "@/components/AutocompleteInput";
-import { List } from "@/components/List";
-import { ReferenceInput } from "@/components/ReferenceInput";
-import { TextInput } from "@/components/TextInput";
+import { AutocompleteInput } from "@/components/admin/autocomplete-input";
+import { List } from "@/components/admin/list";
+import { ReferenceInput } from "@/components/admin/reference-input";
+import { TextInput } from "@/components/admin/text-input";
 
 const filters = [
   <TextInput source="q" placeholder="Search products..." label={false} />,
