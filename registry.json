@@ -47,163 +47,163 @@
       ],
       "files": [
         {
-          "path": "src/components/admin.tsx",
+          "path": "src/components/admin/admin.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/app-sidebar.tsx",
+          "path": "src/components/admin/app-sidebar.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/array-field.tsx",
+          "path": "src/components/admin/array-field.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/autocomplete-input.tsx",
+          "path": "src/components/admin/autocomplete-input.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/badge-field.tsx",
+          "path": "src/components/admin/badge-field.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/breadcrumb.tsx",
+          "path": "src/components/admin/breadcrumb.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/bulk-actions-toolbar.tsx",
+          "path": "src/components/admin/bulk-actions-toolbar.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/bulk-delete-button.tsx",
+          "path": "src/components/admin/bulk-delete-button.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/create.tsx",
+          "path": "src/components/admin/create.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/create-button.tsx",
+          "path": "src/components/admin/create-button.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/data-table.tsx",
+          "path": "src/components/admin/data-table.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/delete-button.tsx",
+          "path": "src/components/admin/delete-button.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/edit.tsx",
+          "path": "src/components/admin/edit.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/edit-button.tsx",
+          "path": "src/components/admin/edit-button.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/edit-guesser.tsx",
+          "path": "src/components/admin/edit-guesser.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/export-button.tsx",
+          "path": "src/components/admin/export-button.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/form-error.tsx",
+          "path": "src/components/admin/form-error.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/layout.tsx",
+          "path": "src/components/admin/layout.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/list.tsx",
+          "path": "src/components/admin/list.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/list-guesser.tsx",
+          "path": "src/components/admin/list-guesser.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/list-pagination.tsx",
+          "path": "src/components/admin/list-pagination.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/locales-menu-button.tsx",
+          "path": "src/components/admin/locales-menu-button.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/login-page.tsx",
+          "path": "src/components/admin/login-page.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/notification.tsx",
+          "path": "src/components/admin/notification.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/record-field.tsx",
+          "path": "src/components/admin/record-field.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/reference-field.tsx",
+          "path": "src/components/admin/reference-field.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/reference-input.tsx",
+          "path": "src/components/admin/reference-input.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/reference-many-count.tsx",
+          "path": "src/components/admin/reference-many-count.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/refresh-button.tsx",
+          "path": "src/components/admin/refresh-button.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/show.tsx",
+          "path": "src/components/admin/show.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/show-button.tsx",
+          "path": "src/components/admin/show-button.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/show-guesser.tsx",
+          "path": "src/components/admin/show-guesser.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/simple-form.tsx",
+          "path": "src/components/admin/simple-form.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/simple-show-layout.tsx",
+          "path": "src/components/admin/simple-show-layout.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/single-field-list.tsx",
+          "path": "src/components/admin/single-field-list.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/text-field.tsx",
+          "path": "src/components/admin/text-field.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/text-input.tsx",
+          "path": "src/components/admin/text-input.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/theme-mode-toggle.tsx",
+          "path": "src/components/admin/theme-mode-toggle.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/theme-provider.tsx",
+          "path": "src/components/admin/theme-provider.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/user-menu.tsx",
+          "path": "src/components/admin/user-menu.tsx",
           "type": "registry:component"
         },
         {
