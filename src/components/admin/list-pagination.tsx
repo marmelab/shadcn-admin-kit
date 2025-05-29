@@ -109,11 +109,11 @@ export const ListPagination = () => {
           options={{
             offsetBegin: pageStart,
             offsetEnd: pageEnd,
-            total: count === -1 ? pageEnd : count,
+            total: total === -1 ? pageEnd : total,
           }}
         >
           {total != null
-            ? `${pageStart}-${pageEnd} of ${count === -1 ? pageEnd : count}`
+            ? `${pageStart}-${pageEnd} of ${total === -1 ? pageEnd : total}`
             : null}
         </Translate>
       </div>
