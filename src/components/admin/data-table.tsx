@@ -1,22 +1,4 @@
 import { createElement, ReactNode, useCallback } from "react";
-import { cn } from "@/lib/utils";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import {
   DataTableBase,
   DataTableBaseProps,
@@ -41,6 +23,25 @@ import {
 } from "ra-core";
 import { ArrowDownAZ, ArrowUpZA } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { cn } from "@/lib/utils";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { NumberField } from "@/components/admin/number-field";
 import get from "lodash/get";
 
 export function DataTable<RecordType extends RaRecord = RaRecord>(
@@ -67,6 +68,7 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
 }
 
 DataTable.Col = DataTableColumn;
+DataTable.NumberCol = DataTableNumberColumn;
 
 const DataTableHead = ({ children }: { children: ReactNode }) => {
   const data = useDataTableDataContext();
@@ -332,4 +334,26 @@ export interface DataTableColumnProps<
   label?: React.ReactNode;
   disableSort?: boolean;
   sortByOrder?: SortPayload["order"];
+}
+
+export function DataTableNumberColumn(props: DataTableNumberColumnProps) {
+  const { source, options, locales, ...rest } = props;
+  return (
+    <DataTableColumn
+      source={source}
+      {...rest}
+      headerClassName="text-right"
+      cellClassName="text-right"
+    >
+      <NumberField source={source} options={options} locales={locales} />
+    </DataTableColumn>
+  );
+}
+
+export interface DataTableNumberColumnProps<
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+> extends DataTableColumnProps<RecordType> {
+  source: NoInfer<HintedString<ExtractRecordPaths<RecordType>>>;
+  locales?: string | string[];
+  options?: Intl.NumberFormatOptions;
 }

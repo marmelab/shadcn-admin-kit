@@ -4,13 +4,13 @@ import { ListGuesser } from "@/components/admin/list-guesser";
 import { ShowGuesser } from "@/components/admin/show-guesser";
 import { EditGuesser } from "@/components/admin/edit-guesser";
 import { Users } from "lucide-react";
-import { DollarSign } from "lucide-react";
 
 import { dataProvider } from "./dataProvider";
 import { authProvider } from "./authProvider";
 import { i18nProvider } from "./i18nProvider";
 import { products } from "./products";
 import { categories } from "./categories";
+import { orders } from "./orders";
 import { Dashboard } from "./dashboard/Dashboard";
 
 function App() {
@@ -21,6 +21,7 @@ function App() {
       i18nProvider={i18nProvider}
       dashboard={Dashboard}
     >
+      <Resource {...orders} />
       <Resource {...products} />
       <Resource {...categories} />
       <Resource
@@ -34,12 +35,10 @@ function App() {
         icon={Users}
       />
       <Resource
-        name="orders"
+        name="reviews"
         list={ListGuesser}
         show={ShowGuesser}
         edit={EditGuesser}
-        recordRepresentation="reference"
-        icon={DollarSign}
       />
     </Admin>
   );
