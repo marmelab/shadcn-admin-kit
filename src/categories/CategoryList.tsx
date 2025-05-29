@@ -1,7 +1,9 @@
-import { DataTable } from "@/components/admin/data-table";
-import { EditButton } from "@/components/admin/edit-button";
-import { List } from "@/components/admin/list";
-import { ReferenceManyCount } from "@/components/admin/reference-many-count";
+import {
+  DataTable,
+  EditButton,
+  List,
+  ReferenceManyCount,
+} from "@/components/admin";
 
 type Category = {
   id: number;

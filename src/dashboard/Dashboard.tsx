@@ -1,6 +1,7 @@
 import { useMemo } from "react";
-import { useGetList } from "ra-core";
+import { useGetList, Translate } from "ra-core";
 import { subDays, startOfDay } from "date-fns";
+import { Breadcrumb, BreadcrumbItem } from "@/components/admin";
 
 import Welcome from "./Welcome";
 import MonthlyRevenue from "./MonthlyRevenue";
@@ -81,6 +82,11 @@ export const Dashboard = () => {
   const { nbNewOrders, pendingOrders, revenue, recentOrders } = aggregation;
   return (
     <>
+      <Breadcrumb>
+        <BreadcrumbItem>
+          <Translate i18nKey="ra.page.dashboard">Home</Translate>
+        </BreadcrumbItem>
+      </Breadcrumb>
       <Welcome />
       <div style={styles.flex}>
         <div style={styles.leftCol}>

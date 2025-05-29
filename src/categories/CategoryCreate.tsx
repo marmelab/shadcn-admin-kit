@@ -1,6 +1,4 @@
-import { Create } from "@/components/admin/create";
-import { TextInput } from "@/components/admin/text-input";
-import { SimpleForm } from "@/components/admin/simple-form";
+import { Create, SimpleForm, TextInput } from "@/components/admin";
 import { required } from "ra-core";
 
 export const CategoryCreate = () => (

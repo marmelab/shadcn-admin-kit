@@ -1,6 +1,4 @@
-import { Edit } from "@/components/admin/edit";
-import { TextInput } from "@/components/admin/text-input";
-import { SimpleForm } from "@/components/admin/simple-form";
+import { Edit, SimpleForm, TextInput } from "@/components/admin";
 import { required } from "ra-core";
 
 export const CategoryEdit = () => (

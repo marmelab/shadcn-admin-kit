@@ -1,8 +1,10 @@
-import { AutocompleteInput } from "@/components/admin/autocomplete-input";
-import { Edit } from "@/components/admin/edit";
-import { TextInput } from "@/components/admin/text-input";
-import { ReferenceInput } from "@/components/admin/reference-input";
-import { SimpleForm } from "@/components/admin/simple-form";
+import {
+  AutocompleteInput,
+  Edit,
+  ReferenceInput,
+  SimpleForm,
+  TextInput,
+} from "@/components/admin";
 import { required } from "ra-core";
 
 export const ProductEdit = () => (

@@ -1,8 +1,10 @@
 import { Resource } from "ra-core";
-import { Admin } from "@/components/admin/admin";
-import { ListGuesser } from "@/components/admin/list-guesser";
-import { ShowGuesser } from "@/components/admin/show-guesser";
-import { EditGuesser } from "@/components/admin/edit-guesser";
+import {
+  Admin,
+  ListGuesser,
+  ShowGuesser,
+  EditGuesser,
+} from "@/components/admin";
 import { Users, MessageSquareText } from "lucide-react";
 
 import { dataProvider } from "./dataProvider";

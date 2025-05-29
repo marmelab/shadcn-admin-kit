@@ -1,7 +1,9 @@
-import { ReferenceField } from "@/components/admin/reference-field";
-import { Show } from "@/components/admin/show";
-import { SimpleShowLayout } from "@/components/admin/simple-show-layout";
-import { RecordField } from "@/components/admin/record-field";
+import {
+  RecordField,
+  ReferenceField,
+  Show,
+  SimpleShowLayout,
+} from "@/components/admin";
 
 export const ProductShow = () => (
   <Show>
