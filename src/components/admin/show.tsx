@@ -62,7 +62,7 @@ export const ShowView = ({ children }: { children: ReactNode }) => {
         </BreadcrumbItem>
         <BreadcrumbItem>{recordRepresentation}</BreadcrumbItem>
       </Breadcrumb>
-      <div className="flex justify-between items-end flex-wrap gap-2 mb-2">
+      <div className="flex justify-between items-start flex-wrap gap-2 mb-2">
         <h2 className="text-2xl font-bold tracking-tight">
           {context.defaultTitle}
         </h2>

@@ -1,5 +1,13 @@
 import { useListContext } from "ra-core";
-import { DataTable, List, ReferenceField, Count } from "@/components/admin";
+import {
+  DataTable,
+  List,
+  ReferenceField,
+  Count,
+  TextInput,
+  ReferenceInput,
+  AutocompleteInput,
+} from "@/components/admin";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 
@@ -11,10 +19,22 @@ const storeKeyByStatus = {
   cancelled: "orders.list3",
 };
 
+const filters = [
+  <TextInput source="q" placeholder="Search..." label={false} />,
+  <ReferenceInput
+    source="customer_id"
+    reference="customers"
+    sort={{ field: "last_name", order: "ASC" }}
+  >
+    <AutocompleteInput placeholder="Filter by customer" label={false} />
+  </ReferenceInput>,
+];
+
 export const OrderList = () => (
   <List
     sort={{ field: "date", order: "DESC" }}
     filterDefaultValues={{ status: "ordered" }}
+    filters={filters}
   >
     <TabbedDataTable />
   </List>
@@ -78,7 +98,10 @@ const TabbedDataTable = () => {
 
 const OrdersTable = ({ storeKey }: { storeKey: string }) => (
   <DataTable storeKey={storeKey}>
-    <DataTable.Col source="date" />
+    <DataTable.Col
+      source="date"
+      render={(record) => new Date(record.date).toLocaleString()}
+    />
     <DataTable.Col source="reference" />
     <DataTable.Col source="customer_id">
       <ReferenceField source="customer_id" reference="customers" />
