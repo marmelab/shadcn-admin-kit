@@ -11,6 +11,7 @@ import { authProvider } from "./authProvider";
 import { i18nProvider } from "./i18nProvider";
 import { products } from "./products";
 import { categories } from "./categories";
+import { Dashboard } from "./dashboard/Dashboard";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       dataProvider={dataProvider}
       authProvider={authProvider}
       i18nProvider={i18nProvider}
+      dashboard={Dashboard}
     >
       <Resource {...products} />
       <Resource {...categories} />

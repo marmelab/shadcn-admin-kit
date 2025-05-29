@@ -1,42 +1,31 @@
 import {
-  CreatePathType,
-  Identifier,
   LinkToType,
   RaRecord,
-  RecordContextProvider,
-  ResourceContextProvider,
-  UseReferenceResult,
-  useCreatePath,
+  ReferenceFieldBase,
+  useFieldValue,
   useGetRecordRepresentation,
-  useRecordContext,
-  useReference,
-  useResourceDefinition,
+  useReferenceFieldContext,
   useTranslate,
 } from "ra-core";
 import { ReactNode, memo } from "react";
 import { Link } from "react-router-dom";
 import { UseQueryOptions } from "@tanstack/react-query";
-import get from "lodash/get";
 
 export const ReferenceField = (props: ReferenceFieldProps) => {
-  const { source, emptyText, link = "edit", ...rest } = props;
-  const record = useRecordContext(props);
-  const id = get(record, source);
+  const { empty } = props;
+  const id = useFieldValue(props);
   const translate = useTranslate();
 
   return id == null ? (
-    emptyText ? (
-      <span>{emptyText && translate(emptyText, { _: emptyText })}</span>
-    ) : null
+    typeof empty === "string" ? (
+      <>{empty && translate(empty, { _: empty })}</>
+    ) : (
+      empty
+    )
   ) : (
-    <NonEmptyReferenceField
-      {...rest}
-      link={link}
-      emptyText={emptyText}
-      source={source}
-      record={record}
-      id={id as Identifier}
-    />
+    <ReferenceFieldBase {...props}>
+      <PureReferenceFieldView {...props} />
+    </ReferenceFieldBase>
   );
 };
 
@@ -52,83 +41,30 @@ export interface ReferenceFieldProps extends Partial<ReferenceFieldViewProps> {
   source: string;
 }
 
-/**
- * This intermediate component is made necessary by the useReference hook,
- * which cannot be called conditionally when get(record, source) is empty.
- */
-export const NonEmptyReferenceField = ({
-  children,
-  id,
-  reference,
-  queryOptions,
-  link,
-  ...props
-}: ReferenceFieldProps & {
-  id: Identifier;
-}) => {
-  return (
-    <ResourceContextProvider value={reference}>
-      <PureReferenceFieldView
-        reference={reference}
-        {...props}
-        {...useReference({
-          reference,
-          id,
-          options: queryOptions,
-        })}
-        resourceLinkPath={link}
-      >
-        {children}
-      </PureReferenceFieldView>
-    </ResourceContextProvider>
-  );
-};
-
 // useful to prevent click bubbling in a datagrid with rowClick
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const stopPropagation = (e: any) => e.stopPropagation();
 
 export const ReferenceFieldView = (props: ReferenceFieldViewProps) => {
-  const {
-    children,
-    className,
-    emptyText,
-    error,
-    isLoading,
-    reference,
-    referenceRecord,
-    resourceLinkPath,
-  } = props;
+  const { children, className, empty, reference, loading = null } = props;
+  const { error, link, isLoading, referenceRecord } =
+    useReferenceFieldContext();
   const getRecordRepresentation = useGetRecordRepresentation(reference);
   const translate = useTranslate();
-  const createPath = useCreatePath();
-  const resourceDefinition = useResourceDefinition({ resource: reference });
 
   if (error) {
     return null;
   }
   if (isLoading) {
-    return null;
+    return loading;
   }
   if (!referenceRecord) {
-    return emptyText ? (
-      <>{emptyText && translate(emptyText, { _: emptyText })}</>
-    ) : null;
+    return typeof empty === "string" ? (
+      <>{empty && translate(empty, { _: empty })}</>
+    ) : (
+      empty
+    );
   }
-
-  const link =
-    resourceLinkPath === false ||
-    (resourceLinkPath === "edit" && !resourceDefinition.hasEdit) ||
-    (resourceLinkPath === "show" && !resourceDefinition.hasShow)
-      ? false
-      : createPath({
-          resource: reference,
-          id: referenceRecord.id,
-          type:
-            typeof resourceLinkPath === "function"
-              ? (resourceLinkPath(referenceRecord, reference) as CreatePathType)
-              : (resourceLinkPath as CreatePathType),
-        });
 
   const child = children || (
     <span>{getRecordRepresentation(referenceRecord)}</span>
@@ -137,32 +73,28 @@ export const ReferenceFieldView = (props: ReferenceFieldViewProps) => {
   if (link) {
     return (
       <div className={className}>
-        <RecordContextProvider value={referenceRecord}>
-          <Link to={link} onClick={stopPropagation}>
-            {child}
-          </Link>
-        </RecordContextProvider>
+        <Link to={link} onClick={stopPropagation}>
+          {child}
+        </Link>
       </div>
     );
   }
 
-  return (
-    <RecordContextProvider value={referenceRecord}>
-      {child}
-    </RecordContextProvider>
-  );
+  return <>{child}</>;
 };
 
-export interface ReferenceFieldViewProps extends UseReferenceResult {
+export interface ReferenceFieldViewProps {
   children?: ReactNode;
   className?: string;
-  emptyText?: string;
+  empty?: ReactNode;
+  loading?: ReactNode;
   record?: RaRecord;
   reference: string;
   source: string;
   resource?: string;
   translateChoice?: ((record: RaRecord) => string) | boolean;
   resourceLinkPath?: LinkToType;
+  error?: ReactNode;
 }
 
 const PureReferenceFieldView = memo(ReferenceFieldView);
