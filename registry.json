@@ -81,6 +81,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/count.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/create.tsx",
           "type": "registry:component"
         },
@@ -146,6 +150,10 @@
         },
         {
           "path": "src/components/admin/notification.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/number-field.tsx",
           "type": "registry:component"
         },
         {
