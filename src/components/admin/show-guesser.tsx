@@ -74,7 +74,10 @@ const ShowViewGuesser = (props: { enableLog?: boolean }) => {
 
 ${components
   .map(
-    (component) => `import { ${component} } from "@/components/${component}";`
+    (component) =>
+      `import { ${component} } from "@/components/admin/${kebabCase(
+        component
+      )}";`
   )
   .join("\n")}
 
@@ -147,4 +150,11 @@ ${children
     component: (props: any) => <RecordField source={props.source} />,
     representation: (props: any) => `<RecordField source="${props.source}" />`,
   },
+};
+
+const kebabCase = (name: string) => {
+  return name
+    .replace(/([a-z])([A-Z])/g, "$1-$2")
+    .replace(/([A-Z])([A-Z][a-z])/g, "$1-$2")
+    .toLowerCase();
 };
