@@ -3,7 +3,7 @@ import { Admin } from "@/components/admin/admin";
 import { ListGuesser } from "@/components/admin/list-guesser";
 import { ShowGuesser } from "@/components/admin/show-guesser";
 import { EditGuesser } from "@/components/admin/edit-guesser";
-import { Users } from "lucide-react";
+import { Users, MessageSquareText } from "lucide-react";
 
 import { dataProvider } from "./dataProvider";
 import { authProvider } from "./authProvider";
@@ -39,6 +39,7 @@ function App() {
         list={ListGuesser}
         show={ShowGuesser}
         edit={EditGuesser}
+        icon={MessageSquareText}
       />
     </Admin>
   );

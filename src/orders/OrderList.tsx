@@ -1,8 +1,7 @@
 import { useListContext } from "ra-core";
-import { DataTable } from "@/components/admin/data-table";
-import { List } from "@/components/admin/list";
-import { ReferenceField } from "@/components/admin/reference-field";
+import { DataTable, List, ReferenceField, Count } from "@/components/admin";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 import { AddressField } from "../customers/AddressField";
 
 const storeKeyByStatus = {
@@ -30,13 +29,37 @@ const TabbedDataTable = () => {
     <Tabs value={filterValues.status ?? "ordered"} className="mb-4 -gap-2">
       <TabsList className="w-full">
         <TabsTrigger value="ordered" onClick={handleChange("ordered")}>
-          Ordered
+          Ordered{" "}
+          <Badge variant="outline">
+            <Count
+              filter={{
+                ...filterValues,
+                status: "ordered",
+              }}
+            />
+          </Badge>
         </TabsTrigger>
         <TabsTrigger value="delivered" onClick={handleChange("delivered")}>
           Delivered
+          <Badge variant="outline">
+            <Count
+              filter={{
+                ...filterValues,
+                status: "delivered",
+              }}
+            />
+          </Badge>
         </TabsTrigger>
         <TabsTrigger value="cancelled" onClick={handleChange("cancelled")}>
-          Cancelled
+          Cancelled{" "}
+          <Badge variant="outline">
+            <Count
+              filter={{
+                ...filterValues,
+                status: "cancelled",
+              }}
+            />
+          </Badge>
         </TabsTrigger>
       </TabsList>
       <TabsContent value="ordered">

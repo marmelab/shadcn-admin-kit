@@ -6,6 +6,7 @@ export * from "./badge-field";
 export * from "./breadcrumb";
 export * from "./bulk-actions-toolbar";
 export * from "./bulk-delete-button";
+export * from "./count";
 export * from "./create-button";
 export * from "./create";
 export * from "./data-table";
