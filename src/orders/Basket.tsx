@@ -35,7 +35,9 @@ export const Basket = () => {
 
   return (
     <>
-      <Label>{translate("resources.orders.section.items")}</Label>
+      <Label className="mt-2">
+        {translate("resources.orders.section.items")}
+      </Label>
       <Table>
         <TableHeader>
           <TableRow>

@@ -10,7 +10,9 @@ export const Totals = () => {
 
   return (
     <>
-      <Label>{translate("resources.orders.section.total")}</Label>
+      <Label className="mt-2">
+        {translate("resources.orders.section.total")}
+      </Label>
       <Table>
         <TableBody>
           <TableRow>
