@@ -3,6 +3,7 @@ export * from "./app-sidebar";
 export * from "./array-field";
 export * from "./autocomplete-input";
 export * from "./badge-field";
+export * from "./boolean-input";
 export * from "./breadcrumb";
 export * from "./bulk-actions-toolbar";
 export * from "./bulk-delete-button";

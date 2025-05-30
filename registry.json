@@ -27,6 +27,7 @@
         "separator",
         "sheet",
         "sidebar",
+        "switch",
         "skeleton",
         "sonner",
         "table",
@@ -66,6 +67,10 @@
         },
         {
           "path": "src/components/admin/badge-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/boolean-input.tsx",
           "type": "registry:component"
         },
         {

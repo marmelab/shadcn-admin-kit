@@ -12,6 +12,7 @@ import { capitalize, singularize } from "inflection";
 import { EditView } from "@/components/admin/edit";
 import { SimpleForm } from "@/components/admin/simple-form";
 import { TextInput } from "@/components/admin/text-input";
+import { BooleanInput } from "@/components/admin/boolean-input";
 import { ReferenceInput } from "@/components/admin/reference-input";
 import { AutocompleteInput } from "@/components/admin/autocomplete-input";
 
@@ -110,6 +111,10 @@ ${children
       `<ReferenceInput source="${props.source}" reference="${props.reference}">
                   <AutocompleteInput />
               </ReferenceInput>`,
+  },
+  boolean: {
+    component: (props: any) => <BooleanInput {...props} />,
+    representation: (props: any) => `<BooleanInput source="${props.source}" />`,
   },
   string: {
     component: (props: any) => <TextInput {...props} />,
