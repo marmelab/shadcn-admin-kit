@@ -178,6 +178,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/reference-many-field.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/refresh-button.tsx",
           "type": "registry:component"
         },
