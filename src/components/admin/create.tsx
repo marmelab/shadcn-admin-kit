@@ -52,7 +52,7 @@ export const CreateView = ({ children }: { children: ReactNode }) => {
           <Translate i18nKey="ra.action.create">Create</Translate>
         </BreadcrumbItem>
       </Breadcrumb>
-      <div className="flex justify-between items-start flex-wrap gap-2 mb-2">
+      <div className="flex justify-between items-start flex-wrap gap-2 my-2">
         <h2 className="text-2xl font-bold tracking-tight">
           {context.defaultTitle}
         </h2>

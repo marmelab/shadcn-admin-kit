@@ -31,7 +31,7 @@ export const Layout = (props: CoreLayoutProps) => {
           <RefreshButton />
           <UserMenu />
         </header>
-        <div className="flex flex-1 flex-col p-4">{props.children}</div>
+        <div className="flex flex-1 flex-col px-4 ">{props.children}</div>
       </main>
       <Notification />
     </SidebarProvider>

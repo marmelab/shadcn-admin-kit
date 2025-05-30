@@ -89,7 +89,7 @@ export const ListView = (props: ListViewProps) => {
         )}
         <BreadcrumbItem>{resourceLabel}</BreadcrumbItem>
       </Breadcrumb>
-      <div className="flex justify-between items-start flex-wrap gap-2 mb-2">
+      <div className="flex justify-between items-start flex-wrap gap-2 my-2">
         <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
         <div className="flex items-center gap-2">
           {hasCreate ? <CreateButton /> : null}
