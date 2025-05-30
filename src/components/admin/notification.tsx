@@ -80,7 +80,7 @@ export const Notification = () => {
 
   return (
     <CloseNotificationContext.Provider value={handleRequestClose}>
-      <Toaster richColors theme={theme} />
+      <Toaster richColors theme={theme} closeButton />
     </CloseNotificationContext.Provider>
   );
 };
