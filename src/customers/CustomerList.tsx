@@ -2,17 +2,15 @@ import { useRecordContext } from "ra-core";
 import { DataTable, List } from "@/components/admin";
 import { Badge } from "@/components/ui/badge";
 
+import { FullNameField } from "./FullNameField";
+
 export const CustomerList = () => (
   <List>
     <DataTable>
-      <DataTable.Col
-        label="resources.customers.fields.name"
-        render={(record) => (
-          <>
-            {record.first_name} {record.last_name}
-          </>
-        )}
-      />
+      <DataTable.Col label="resources.customers.fields.name">
+        <FullNameField />
+      </DataTable.Col>
+
       <DataTable.NumberCol source="nb_orders" />
       <DataTable.NumberCol
         source="total_spent"

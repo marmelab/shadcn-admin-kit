@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 
 import { AddressField } from "../customers/AddressField";
+import { FullNameField } from "../customers/FullNameField";
 
 const storeKeyByStatus = {
   ordered: "orders.list1",
@@ -104,7 +105,9 @@ const OrdersTable = ({ storeKey }: { storeKey: string }) => (
     />
     <DataTable.Col source="reference" />
     <DataTable.Col source="customer_id">
-      <ReferenceField source="customer_id" reference="customers" />
+      <ReferenceField source="customer_id" reference="customers">
+        <FullNameField />
+      </ReferenceField>
     </DataTable.Col>
     <DataTable.NumberCol
       source="basket.length"
