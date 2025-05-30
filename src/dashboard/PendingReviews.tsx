@@ -63,7 +63,7 @@ const PendingReviews = () => {
                 </div>
               </ReferenceField>
 
-              <div className="flex-1 overflow-hidden h-12 line-clamp-2 pr-0">
+              <div className="flex-1 overflow-hidden h-10 line-clamp-2 pr-0 text-sm">
                 {/*<StarRatingField record={record} />*/}
                 {record.comment}
               </div>

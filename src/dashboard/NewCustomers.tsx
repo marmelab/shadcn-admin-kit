@@ -42,7 +42,7 @@ const NewCustomers = () => {
                 <Link
                   key={record.id}
                   className="flex-1 flex flex-row"
-                  to={`/customers/${record.id}`}
+                  to={`/customers/${record.id}/show`}
                 >
                   <div className="w-12 mt-2">
                     <Avatar>
@@ -52,7 +52,7 @@ const NewCustomers = () => {
                       />
                     </Avatar>
                   </div>
-                  <div className="flex-1 flex flex-col items-start justify-center">
+                  <div className="flex-1 flex flex-col items-start justify-center text-sm">
                     <div>{`${record.first_name} ${record.last_name}`}</div>
                     <div className="text-muted-foreground">
                       {new Date(record.first_seen).toLocaleDateString()}

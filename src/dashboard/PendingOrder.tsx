@@ -30,7 +30,7 @@ export const PendingOrder = (props: Props) => {
           </Avatar>
         )}
       </div>
-      <div className="flex-1 flex flex-col flex-1 items-start justify-center">
+      <div className="flex-1 flex flex-col flex-1 items-start justify-center text-sm">
         <div>{new Date(order.date).toLocaleString("en-GB")}</div>
         <div className="text-muted-foreground">
           {translate("pos.dashboard.order.items", {
