@@ -106,15 +106,18 @@ const OrdersTable = ({ storeKey }: { storeKey: string }) => (
     <DataTable.Col source="customer_id">
       <ReferenceField source="customer_id" reference="customers" />
     </DataTable.Col>
+    <DataTable.NumberCol
+      source="basket.length"
+      label="resources.orders.fields.nb_items"
+    />
+    <DataTable.NumberCol
+      source="total"
+      options={{ style: "currency", currency: "USD" }}
+    />
     <DataTable.Col label="resources.orders.fields.address">
       <ReferenceField source="customer_id" reference="customers" link={false}>
         <AddressField />
       </ReferenceField>
     </DataTable.Col>
-    <DataTable.NumberCol
-      source="basket.length"
-      label="resources.orders.fields.nb_items"
-    />
-    <DataTable.NumberCol source="total" />
   </DataTable>
 );
