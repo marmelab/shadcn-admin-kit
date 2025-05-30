@@ -92,7 +92,7 @@ const DataTableHead = ({ children }: { children: ReactNode }) => {
   return (
     <TableHeader>
       <TableRow>
-        <TableHead className="flex items-center w-4">
+        <TableHead className="w-8">
           <Checkbox
             onCheckedChange={handleToggleSelectAll}
             checked={
@@ -101,7 +101,7 @@ const DataTableHead = ({ children }: { children: ReactNode }) => {
               selectableIds.length > 0 &&
               selectableIds.every((id) => selectedIds.includes(id))
             }
-            className="grow-0 shrink-0"
+            className="mb-2"
           />
         </TableHead>
         {children}
@@ -175,11 +175,10 @@ const DataTableRow = ({ children }: { children: ReactNode }) => {
 
   return (
     <TableRow key={record.id} onClick={handleClick}>
-      <TableCell className="flex items-center w-4" onClick={handleToggle}>
+      <TableCell className="flex w-8" onClick={handleToggle}>
         <Checkbox
           checked={selectedIds?.includes(record.id)}
           onClick={handleToggle}
-          className="grow-0 shrink-0"
         />
       </TableCell>
       {children}
