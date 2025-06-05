@@ -1,0 +1,85 @@
+---
+description: Rules for using components from the registry
+globs: 
+alwaysApply: true
+---
+
+
+## Rules for using components from Shadcn Admin Kit
+
+Here are some rules to follow when using components in this project:
+
+- If using shadcn-admin-kit mcp and a registry url is provided, always check the mcp for components before creating your own.
+- If asked to create a new Admin, or to customize the resources, use the usage section below as guide to create or edit the Admin component.
+
+## Steps to follow in project initialization:
+
+When you initialize a new project:
+
+Make sure to set the `verbatimModuleSyntax` option to `false` in the `tsconfig.app.json` file to avoid an issue with the latest version of TypeScript.
+
+```json
+{
+  "compilerOptions": {
+    // ...
+    "verbatimModuleSyntax": false
+  }
+}
+```
+
+## Usage 
+
+### Use `<Admin>` As Root Component
+
+The entry point of your application is the `<Admin>` component. It allows to configure the application adapters, routes, and UI.
+
+You'll need to specify a Data Provider to let the Admin know how to fetch data from your API. A Data Provider is an abstraction that allows you to connect your Admin to any API, whether it's REST, GraphQL, or any other protocol. You can choose from any of the 50+ Data Providers supported by React Admin.
+
+The following example uses a simple adapter called `ra-data-json-server`, and typicode's json placeholder as endpoint:
+
+```tsx
+import { Admin } from "@/components/admin/admin";
+import jsonServerProvider from 'ra-data-json-server';
+
+const dataProvider = jsonServerProvider(
+  "https://jsonplaceholder.typicode.com/"
+);
+
+export const App = () => (
+  <Admin dataProvider={dataProvider}>
+    {/* Resources go here */}
+  </Admin>
+);
+```
+
+### Declare Resources
+
+Then, you'll need to declare the routes of the application. `shadcn-admin-kit` allows to define CRUD routes (list, edit, create, show), and custom routes. Use the `<Resource>` component from `ra-core` (which was automatically added to your dependencies) to define CRUD routes.
+
+For each resource, you can specify a `name` (which will map to the API endpoint) and the `list`, `edit`, `create` and `show` components to use.
+
+If you don't know where to start, you can use the built-in **guessers** to configure the admin for you! The guessers will automatically generate code based on the data returned by your API.
+
+```tsx
+import { Resource } from "ra-core";
+import jsonServerProvider from 'ra-data-json-server';
+import { Admin } from "@/components/admin/admin";
+import { ListGuesser } from "@/components/admin/list-guesser";
+import { ShowGuesser } from "@/components/admin/show-guesser";
+import { EditGuesser } from "@/components/admin/edit-guesser";
+
+const dataProvider = jsonServerProvider(
+  "https://jsonplaceholder.typicode.com/"
+);
+
+export const App = () => (
+  <Admin dataProvider={dataProvider}>
+    <Resource
+      name="posts"
+      list={ListGuesser}
+      edit={EditGuesser}
+      show={ShowGuesser}
+    />
+  </Admin>
+);
+```

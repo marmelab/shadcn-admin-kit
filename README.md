@@ -97,8 +97,6 @@ export const App = () => (
     {/* Resources go here */}
   </Admin>
 );
-
-export default App;
 ```
 
 ### Declare Resources
