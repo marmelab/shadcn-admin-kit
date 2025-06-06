@@ -59,8 +59,10 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
     ```bash
     # pnpm
     pnpm dlx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
-    # yarn
+    # yarn > v2
     yarn dlx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
+    # yarn v1
+    yarn dlx shadcn add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
     # bun
     bunx --bun shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
     ```
