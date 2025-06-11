@@ -11,13 +11,25 @@ import {
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
-export const Create = ({ children }: { children: ReactNode }) => (
+export const Create = ({
+  title,
+  children,
+}: {
+  title?: ReactNode | string | false;
+  children: ReactNode;
+}) => (
   <CreateBase>
-    <CreateView>{children}</CreateView>
+    <CreateView title={title}>{children}</CreateView>
   </CreateBase>
 );
 
-export const CreateView = ({ children }: { children: ReactNode }) => {
+export const CreateView = ({
+  title,
+  children,
+}: {
+  title?: ReactNode | string | false;
+  children: ReactNode;
+}) => {
   const context = useCreateContext();
 
   const resource = useResourceContext();
@@ -54,7 +66,7 @@ export const CreateView = ({ children }: { children: ReactNode }) => {
       </Breadcrumb>
       <div className="flex justify-between items-start flex-wrap gap-2 my-2">
         <h2 className="text-2xl font-bold tracking-tight">
-          {context.defaultTitle}
+          {title !== undefined ? title : context.defaultTitle}
         </h2>
       </div>
       <div className="my-2">{children}</div>

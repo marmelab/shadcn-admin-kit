@@ -14,13 +14,25 @@ import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { EditButton } from "@/components/admin/edit-button";
 
-export const Show = ({ children }: { children: ReactNode }) => (
+export const Show = ({
+  title,
+  children,
+}: {
+  title?: ReactNode | string | false;
+  children: ReactNode;
+}) => (
   <ShowBase>
-    <ShowView>{children}</ShowView>
+    <ShowView title={title}>{children}</ShowView>
   </ShowBase>
 );
 
-export const ShowView = ({ children }: { children: ReactNode }) => {
+export const ShowView = ({
+  title,
+  children,
+}: {
+  title?: ReactNode | string | false;
+  children: ReactNode;
+}) => {
   const context = useShowContext();
 
   const resource = useResourceContext();
@@ -64,7 +76,7 @@ export const ShowView = ({ children }: { children: ReactNode }) => {
       </Breadcrumb>
       <div className="flex justify-between items-start flex-wrap gap-2 my-2">
         <h2 className="text-2xl font-bold tracking-tight">
-          {context.defaultTitle}
+          {title !== undefined ? title : context.defaultTitle}
         </h2>
         <div className="flex justify-end items-center">
           {hasEdit ? <EditButton /> : null}
