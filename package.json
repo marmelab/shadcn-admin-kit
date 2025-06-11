@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "registry:build": "shadcn build",
+    "registry:build": "shadcn registry:build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -62,7 +62,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
-    "shadcn": "^2.5.0",
+    "shadcn": "2.6.0-canary.3",
     "tw-animate-css": "^1.2.8",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
