@@ -61,7 +61,7 @@ export interface ListProps<RecordType extends RaRecord = RaRecord>
     ListViewProps {}
 
 export const ListView = (props: ListViewProps) => {
-  const { filters, children } = props;
+  const { filters, title, children } = props;
   const translate = useTranslate();
   const resource = useResourceContext();
   if (!resource) {
@@ -71,9 +71,12 @@ export const ListView = (props: ListViewProps) => {
   }
   const getResourceLabel = useGetResourceLabel();
   const resourceLabel = getResourceLabel(resource, 2);
-  const title = translate("ra.page.list", {
-    name: resourceLabel,
-  });
+  const customTitle =
+    title !== undefined
+      ? title
+      : translate("ra.page.list", {
+          name: resourceLabel,
+        });
   const { hasCreate } = useResourceDefinition({ resource });
   const hasDashboard = useHasDashboard();
 
@@ -90,7 +93,7 @@ export const ListView = (props: ListViewProps) => {
         <BreadcrumbItem>{resourceLabel}</BreadcrumbItem>
       </Breadcrumb>
       <div className="flex justify-between items-start flex-wrap gap-2 my-2">
-        <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
+        <h2 className="text-2xl font-bold tracking-tight">{customTitle}</h2>
         <div className="flex items-center gap-2">
           {hasCreate ? <CreateButton /> : null}
           {<ExportButton />}
@@ -119,4 +122,5 @@ export const ListView = (props: ListViewProps) => {
 export interface ListViewProps {
   children: ReactNode;
   filters?: ReactElement[];
+  title?: ReactNode | string | false;
 }
