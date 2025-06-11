@@ -71,7 +71,7 @@ export const ListView = (props: ListViewProps) => {
   }
   const getResourceLabel = useGetResourceLabel();
   const resourceLabel = getResourceLabel(resource, 2);
-  const customTitle =
+  const finalTitle =
     title !== undefined
       ? title
       : translate("ra.page.list", {
@@ -93,7 +93,7 @@ export const ListView = (props: ListViewProps) => {
         <BreadcrumbItem>{resourceLabel}</BreadcrumbItem>
       </Breadcrumb>
       <div className="flex justify-between items-start flex-wrap gap-2 my-2">
-        <h2 className="text-2xl font-bold tracking-tight">{customTitle}</h2>
+        <h2 className="text-2xl font-bold tracking-tight">{finalTitle}</h2>
         <div className="flex items-center gap-2">
           {hasCreate ? <CreateButton /> : null}
           {<ExportButton />}
