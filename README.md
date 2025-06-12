@@ -4,11 +4,10 @@
 
 A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/).
 
-[![Online Demo]][OnlineDemoLink] 
+[![Online Demo]][OnlineDemoLink]
 
 [Online Demo]: https://img.shields.io/badge/Online_Demo-blue?style=for-the-badge
-
-[OnlineDemoLink]: https://marmelab.com/shadcn-admin-kit/ 'Online Demo'
+[OnlineDemoLink]: https://marmelab.com/shadcn-admin-kit/ "Online Demo"
 
 ## Features
 
@@ -19,7 +18,7 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 - Sidebar menu
 - Login page (compatible with any authentication backend)
 - Dashboard page
-- Automatically guess the code based on the data, using *Guessers*
+- Automatically guess the code based on the data, using _Guessers_
 - i18n support
 - Light/dark mode
 - Responsive
@@ -42,43 +41,43 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 
 1. Create a [Vite](https://vite.dev/) single-page app
 
-    ```bash
-    npm create vite@latest my-shadcn-admin-app -- --template react-ts
-    ```
+   ```bash
+   npm create vite@latest my-shadcn-admin-app -- --template react-ts
+   ```
 
 2. [Install shadcn/ui](https://ui.shadcn.com/docs/installation/vite) in your project.
 
 3. Download the `shadcn-admin-kit` components and add them to your project using the `shadcn` CLI.
 
-    ```bash
-    npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
-    ```
+   ```bash
+   npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
+   ```
 
-    If you use another package manager than npm, use the appropriate command:
+   If you use another package manager than npm, use the appropriate command:
 
-    ```bash
-    # pnpm
-    pnpm dlx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
-    # yarn > v2
-    yarn dlx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
-    # yarn v1
-    yarn dlx shadcn add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
-    # bun
-    bunx --bun shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
-    ```
+   ```bash
+   # pnpm
+   pnpm dlx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
+   # yarn > v2
+   yarn dlx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
+   # yarn v1
+   yarn dlx shadcn add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
+   # bun
+   bunx --bun shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
+   ```
 
 4. Set the `verbatimModuleSyntax` option to `false` in your `tsconfig.app.json` file to avoid an [issue](https://github.com/shadcn-ui/ui/issues/6618) with the latest version of TypeScript.
 
-    ```json
-    {
-      "compilerOptions": {
-        // ...
-        "verbatimModuleSyntax": false
-      }
-    }
-    ```
+   ```json
+   {
+     "compilerOptions": {
+       // ...
+       "verbatimModuleSyntax": false
+     }
+   }
+   ```
 
-## Usage 
+## Usage
 
 ### Use `<Admin>` As Root Component
 
@@ -90,14 +89,12 @@ The following example uses a simple REST adapter called `ra-data-simple-rest`:
 
 ```tsx
 import { Admin } from "@/components/admin/admin";
-import simpleRestProvider from 'ra-data-simple-rest';
+import simpleRestProvider from "ra-data-simple-rest";
 
-const dataProvider = simpleRestProvider('http://path.to.my.api');
+const dataProvider = simpleRestProvider("http://path.to.my.api");
 
 export const App = () => (
-  <Admin dataProvider={dataProvider}>
-    {/* Resources go here */}
-  </Admin>
+  <Admin dataProvider={dataProvider}>{/* Resources go here */}</Admin>
 );
 
 export default App;
@@ -113,13 +110,13 @@ If you don't know where to start, you can use the built-in **guessers** to confi
 
 ```tsx
 import { Resource } from "ra-core";
-import simpleRestProvider from 'ra-data-simple-rest';
+import simpleRestProvider from "ra-data-simple-rest";
 import { Admin } from "@/components/admin/admin";
 import { ListGuesser } from "@/components/admin/list-guesser";
 import { ShowGuesser } from "@/components/admin/show-guesser";
 import { EditGuesser } from "@/components/admin/edit-guesser";
 
-const dataProvider = simpleRestProvider('http://path.to.my.api');
+const dataProvider = simpleRestProvider("http://path.to.my.api");
 
 export const App = () => (
   <Admin dataProvider={dataProvider}>
@@ -162,20 +159,17 @@ Once your authProvider is set up, you can pass it to the `authProvider` prop, an
 
 ```tsx
 import { Resource } from "ra-core";
-import simpleRestProvider from 'ra-data-simple-rest';
+import simpleRestProvider from "ra-data-simple-rest";
 import { Admin } from "@/components/admin/admin";
 import { ListGuesser } from "@/components/admin/list-guesser";
-import { authProvider } from './authProvider';
+import { authProvider } from "./authProvider";
 
 export const App = () => (
   <Admin
-    dataProvider={simpleRestProvider('http://path.to.my.api')}
+    dataProvider={simpleRestProvider("http://path.to.my.api")}
     authProvider={authProvider}
   >
-    <Resource
-      name="posts"
-      list={ListGuesser}
-    />
+    <Resource name="posts" list={ListGuesser} />
   </Admin>
 );
 ```
@@ -186,7 +180,7 @@ You can add a dashboard to your Admin by using the `dashboard` prop. The dashboa
 
 ```tsx
 import { Resource } from "ra-core";
-import simpleRestProvider from 'ra-data-simple-rest';
+import simpleRestProvider from "ra-data-simple-rest";
 import { Admin } from "@/components/admin/admin";
 import { ListGuesser } from "@/components/admin/list-guesser";
 
@@ -198,13 +192,10 @@ const Dashboard = () => (
 
 export const App = () => (
   <Admin
-    dataProvider={simpleRestProvider('http://path.to.my.api')}
+    dataProvider={simpleRestProvider("http://path.to.my.api")}
     dashboard={Dashboard}
   >
-    <Resource
-      name="posts"
-      list={ListGuesser}
-    />
+    <Resource name="posts" list={ListGuesser} />
   </Admin>
 );
 ```
@@ -231,11 +222,7 @@ const filters = [
 ];
 
 export const ProductList = () => {
-  return (
-    <List filters={filters}>
-      ...
-    </List>
-  );
+  return <List filters={filters}>...</List>;
 };
 ```
 
@@ -245,31 +232,35 @@ To register your own routes, pass one or several [`<CustomRoutes>`](https://marm
 
 ```tsx
 // in src/App.tsx
-import { Resource, CustomRoutes } from 'ra-core';
+import { Resource, CustomRoutes } from "ra-core";
 import { Route } from "react-router-dom";
 import { Admin } from "@/components/admin/admin";
 
-import { dataProvider } from './dataProvider';
-import posts from './posts';
-import comments from './comments';
-import { Settings } from './Settings';
-import { Profile } from './Profile';
+import { dataProvider } from "./dataProvider";
+import posts from "./posts";
+import comments from "./comments";
+import { Settings } from "./Settings";
+import { Profile } from "./Profile";
 
 export const App = () => (
-    <Admin dataProvider={dataProvider}>
-        <Resource name="posts" {...posts} />
-        <Resource name="comments" {...comments} />
-        <CustomRoutes>
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/profile" element={<Profile />} />
-        </CustomRoutes>
-    </Admin>
+  <Admin dataProvider={dataProvider}>
+    <Resource name="posts" {...posts} />
+    <Resource name="comments" {...comments} />
+    <CustomRoutes>
+      <Route path="/settings" element={<Settings />} />
+      <Route path="/profile" element={<Profile />} />
+    </CustomRoutes>
+  </Admin>
 );
 ```
 
 Now, when a user browses to `/settings` or `/profile`, the components you defined will appear in the main part of the screen.
 
 **Tip:** Custom routes don’t automatically appear in the menu. You'll need to customize the [`<AppSidebar>` component](https://github.com/marmelab/shadcn-admin-kit/blob/main/src/components/admin/app-sidebar.tsx) if you want custom routes to be accessible from the menu.
+
+### Using with Next.js
+
+The complete tutorial on how to use Shadcn Admin Kit with Next.js is available [here](./doc/using-with-next.md).
 
 ## Local Development
 
