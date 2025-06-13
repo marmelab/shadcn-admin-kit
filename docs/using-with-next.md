@@ -58,25 +58,25 @@ Once our project has been initialized, we can pull the `shadcn-admin-kit` compon
 npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
 ```
 
-This will create install the `Shadcn` components inside the `components/ui` directory, the `Shadcn Admin Kit` insite the `components/admin` directory, and utilities inside the `hooks` and `lib` directories.
-
-| Admin components                                               | Utilities                                                     |
-| -------------------------------------------------------------- | ------------------------------------------------------------- |
-| ![](./images/shadcn-admin-kit-next/source-code-components.png) | ![](./images/shadcn-admin-kit-next/source-code-utilities.png) |
+This will create install the `Shadcn Admin Kit` inside the `components/admin` directory, and utilities inside the `hooks` and `lib` directories.
 
 ## Configure the Admin App
 
-The `components/admin/admin.tsx` component supports the same data providers as the traditional [React Admin version](https://marmelab.com/react-admin/DataProviders.html). The list of [supported backends](https://marmelab.com/react-admin/DataProviderList.html) is available on the React Admin documentation. In this example, we will use the `ra-data-json-server` with fake data for the admin.
+The `<Admin>` component (`components/admin/admin.tsx`) requires a **dataProvider** to communicate with you API. We'll use a third-party package, `ra-data-json-server` to map the [JSONPlaceholder](https://jsonplaceholder.typicode.com/) API to the admin CRUD API. There are [dozens of data provider packages](./DataProviderList.md) for various APIs and databases. You can also create your own if necessary. For now, let's make sure the app connects to JSONPlaceholder. To install the JSONPlaceholder dataprovider, you can run the following command:
 
-First, we will create the `components/AdminApp.tsx` file that will contain our admin app. we use the installed `ListGuesser` and `EditGuessers` from `Shadcn Admin Kit` in our two resources.
+```sh
+npm install ra-data-json-server
+```
+
+First, we will create the `app/admin/AdminApp.tsx` file that will contain our admin app. We will leverage the `ListGuesser` and `EditGuesser` components provided by `Shadcn Admin Kit` in our two resources.
 
 ```tsx
-// components/AdminApp.tsx
+// app/admin/AdminApp.tsx
+"use client";
 
-"use client"; // remove this line if you choose Pages Router
+import { Admin, EditGuesser, ListGuesser } from "@/components/admin";
 import { Resource } from "ra-core";
 import jsonServerProvider from "ra-data-json-server";
-import { Admin, EditGuesser, ListGuesser } from "./admin";
 
 const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
 
@@ -99,37 +99,31 @@ const AdminApp = () => (
 );
 
 export default AdminApp;
+
 ```
 
-Then we can create the `components/Admin.tsx` by using the same code as the [React Admin Next.js](https://marmelab.com/react-admin/NextJs.html) integration tutorial.
+**Tip:** You can use the  [`recordrepresentation`](https://marmelab.com/react-admin/Resource.html#recordrepresentation) with resources to configure how the record will be rendered by Shadcn Admin Kit.
+
+## Create the Admin Page
+
+Once the <AdminApp /> has been configured, we can create the admin page at `app/admin/page.tsx` to dynamically import our admin component and render it with SSR disabled (since it's a SPA).
 
 ```tsx
-// components/Admin.tsx
-
+// app/admin/page.tsx
 "use client";
+
 import dynamic from "next/dynamic";
 
 const Admin = dynamic(() => import("./AdminApp"), {
   ssr: false, // Required to avoid react-router related errors
 });
 
-export default Admin;
-```
-
-## Create the Admin Page
-
-Once the components have been configured, you can create the admin page at `app/admin/page.tsx`:
-
-```tsx
-// app/admin/page.tsx
-
-import Admin from "@/components/Admin";
-
 export default function Page() {
   return <Admin />;
 }
+
 ```
 
 Then, run `npm run dev` and go to `http://localhost:3000/admin` to access your admin app!
 
-![](./images/shadcn-admin-kit-next/demo.png)
+![A Demo Admin Build with Shadcn Admin Kit](./images/shadcn-admin-kit-next/demo.jpg)
