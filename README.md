@@ -5,10 +5,13 @@
 A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/).
 
 [![Online Demo]][OnlineDemoLink] 
+[![Tutorial]][TutorialLink]
 
 [Online Demo]: https://img.shields.io/badge/Online_Demo-blue?style=for-the-badge
+[Tutorial]: https://img.shields.io/badge/Tutorial-blueviolet?style=for-the-badge
 
 [OnlineDemoLink]: https://marmelab.com/shadcn-admin-kit/ 'Online Demo'
+[TutorialLink]: ./docs/Tutorial.md
 
 ## Features
 
@@ -37,6 +40,10 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 - Admin Framework: [React Admin](https://marmelab.com/react-admin/)
 - Type safety: [TypeScript](https://www.typescriptlang.org/)
 - Build tool: [Vite](https://vitejs.dev/) (SPA mode)
+
+## Getting started
+
+If this is your first `shadcn-admin-kit` project, you may want to follow [our full tutorial][TutorialLink] to get started with React-admin using `shadcn-admin-kit`.
 
 ## Installation
 
