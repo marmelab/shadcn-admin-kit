@@ -17,13 +17,9 @@ Then, [install shadcn/ui](https://ui.shadcn.com/docs/installation/vite) in your 
 Add tailwind CSS.
 
 ```shell
-pnpm add tailwindcss @tailwindcss/vite
-# or
 npm install tailwindcss @tailwindcss/vite
 # or
 yarn add tailwindcss @tailwindcss/vite
-# or
-bun add tailwindcss @tailwindcss/vite
 ```
 
 Replace everything in `src/index.css` with the following:
@@ -74,13 +70,9 @@ Add the following code to the `tsconfig.app.json` file to resolve paths, for you
 Install node types and add the following code to the `vite.config.ts` so your app can resolve paths without error:
 
 ```shell
-pnpm add -D @types/node
-# or
 npm install -D @types/node
 # or
 yarn add -D @types/node
-# or
-bun add -D @types/node
 ```
 
 ```diff
@@ -103,13 +95,9 @@ export default defineConfig({
 Run the `shadcn` init command to setup your project:
 
 ```shell
-pnpm dlx shadcn@latest init
-# or
 npx shadcn@latest init
 # or
 yarn shadcn@latest init
-# or
-bunx --bun shadcn@latest init
 ```
 
 You will be asked a few questions to configure `components.json`.
