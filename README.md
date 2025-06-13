@@ -8,7 +8,7 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 [![Tutorial]][TutorialLink]
 
 [Online Demo]: https://img.shields.io/badge/Online_Demo-blue?style=for-the-badge
-[Tutorial]: https://img.shields.io/badge/Tutorial-blue?style=for-the-badge
+[Tutorial]: https://img.shields.io/badge/Tutorial-blueviolet?style=for-the-badge
 
 [OnlineDemoLink]: https://marmelab.com/shadcn-admin-kit/ 'Online Demo'
 [TutorialLink]: ./docs/Tutorial.md
