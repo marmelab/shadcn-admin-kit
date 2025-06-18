@@ -14,13 +14,25 @@ import { Link } from "react-router-dom";
 import { Breadcrumb, BreadcrumbItem } from "@/components/admin/breadcrumb";
 import { ShowButton } from "@/components/admin/show-button";
 
-export const Edit = ({ children }: { children: ReactNode }) => (
+export const Edit = ({
+  title,
+  children,
+}: {
+  title?: ReactNode | string | false;
+  children: ReactNode;
+}) => (
   <EditBase>
-    <EditView>{children}</EditView>
+    <EditView title={title}>{children}</EditView>
   </EditBase>
 );
 
-export const EditView = ({ children }: { children: ReactNode }) => {
+export const EditView = ({
+  title,
+  children,
+}: {
+  title?: ReactNode | string | false;
+  children: ReactNode;
+}) => {
   const context = useEditContext();
 
   const resource = useResourceContext();
@@ -64,7 +76,7 @@ export const EditView = ({ children }: { children: ReactNode }) => {
       </Breadcrumb>
       <div className="flex justify-between items-start flex-wrap gap-2 my-2">
         <h2 className="text-2xl font-bold tracking-tight">
-          {context.defaultTitle}
+          {title !== undefined ? title : context.defaultTitle}
         </h2>
         <div className="flex justify-end items-center">
           {hasShow ? <ShowButton /> : null}
