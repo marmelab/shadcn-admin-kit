@@ -1,8 +1,3 @@
----
-layout: default
-title: "Supported Data Provider Backends"
----
-
 # Supported Data Provider Backends
 
 Thanks to the Data Provider architecture, shadcn-admin-kit supports a lot of API backends. Check the list below for open-source packages developed and maintained by the core team and developers from the community.
