@@ -20,7 +20,10 @@ Set the `verbatimModuleSyntax` option to `false` in the `tsconfig.app.json` file
 
 ```json
 {
+  // ...
   "compilerOptions": {
+    // ...
+    // (keep the other options)
     // ...
     "verbatimModuleSyntax": false
   }
