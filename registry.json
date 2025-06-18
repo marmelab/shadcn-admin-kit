@@ -162,6 +162,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/ready.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/record-field.tsx",
           "type": "registry:component"
         },

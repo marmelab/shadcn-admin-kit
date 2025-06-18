@@ -156,7 +156,7 @@ yarn dev
 
 You should see this:
 
-![Welcome to React-admin!](images/welcome-to-react-admin.png)
+![Welcome to shadcn-admin-kit!](images/welcome.png)
 
 ## Using an API as the Data Source
 
