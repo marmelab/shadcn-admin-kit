@@ -43,7 +43,15 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 
 ## Getting started
 
+### Full Tutorial
+
 If this is your first `shadcn-admin-kit` project, you may want to follow [our full tutorial][TutorialLink] to get started with React-admin using `shadcn-admin-kit`.
+
+### MCP Server
+
+This project is compatible with the new `shadcn@canary registry:mcp` command, and contains cursor rules to instruct the LLM how to setup the `<Admin>` component, the Data Provider, and the resources.
+
+Check out the [MCP documentation](./docs/MCP.md) for more information on how to use the MCP server.
 
 ## Installation
 
