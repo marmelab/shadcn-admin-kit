@@ -236,7 +236,13 @@
         {
           "path": "src/lib/utils.ts",
           "type": "registry:lib"
-        },
+        }
+      ]
+    },
+    {
+      "name": "shadcn-admin-kit",
+      "type": "registry:style",
+      "files": [
         {
           "path": "rules/registry.mdc",
           "type": "registry:file",
