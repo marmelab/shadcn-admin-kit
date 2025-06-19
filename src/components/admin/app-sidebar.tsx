@@ -17,12 +17,19 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { List, House, Shell } from "lucide-react";
 
 export function AppSidebar() {
   const hasDashboard = useHasDashboard();
   const resources = useResourceDefinitions();
+  const { openMobile, setOpenMobile } = useSidebar();
+  const handleClick = () => {
+    if (openMobile) {
+      setOpenMobile(false);
+    }
+  };
   return (
     <Sidebar variant="floating" collapsible="icon">
       <SidebarHeader>
@@ -44,11 +51,17 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {hasDashboard ? <DashboardMenuItem /> : null}
+              {hasDashboard ? (
+                <DashboardMenuItem onClick={handleClick} />
+              ) : null}
               {Object.keys(resources)
                 .filter((name) => resources[name].hasList)
                 .map((name) => (
-                  <ResourceMenuItem key={name} name={name} />
+                  <ResourceMenuItem
+                    key={name}
+                    name={name}
+                    onClick={handleClick}
+                  />
                 ))}
             </SidebarMenu>
           </SidebarGroupContent>
@@ -59,7 +72,7 @@ export function AppSidebar() {
   );
 }
 
-export const DashboardMenuItem = () => {
+export const DashboardMenuItem = ({ onClick }: { onClick?: () => void }) => {
   const translate = useTranslate();
   const label = translate("ra.page.dashboard", {
     _: "Dashboard",
@@ -68,7 +81,7 @@ export const DashboardMenuItem = () => {
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild isActive={!!match}>
-        <Link to="/">
+        <Link to="/" onClick={onClick}>
           <House />
           {label}
         </Link>
@@ -77,7 +90,13 @@ export const DashboardMenuItem = () => {
   );
 };
 
-export const ResourceMenuItem = ({ name }: { name: string }) => {
+export const ResourceMenuItem = ({
+  name,
+  onClick,
+}: {
+  name: string;
+  onClick?: () => void;
+}) => {
   const resources = useResourceDefinitions();
   const getResourceLabel = useGetResourceLabel();
   const createPath = useCreatePath();
@@ -91,7 +110,7 @@ export const ResourceMenuItem = ({ name }: { name: string }) => {
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild isActive={!!match}>
-        <Link to={to} state={{ _scrollToTop: true }}>
+        <Link to={to} state={{ _scrollToTop: true }} onClick={onClick}>
           {resources[name].icon ? (
             createElement(resources[name].icon)
           ) : (
