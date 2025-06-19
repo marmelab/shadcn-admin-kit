@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -29,6 +30,7 @@ import {
   useInput,
   useTranslate,
   FieldTitle,
+  useEvent,
 } from "ra-core";
 import { FormError } from "@/components/admin/form-error";
 
@@ -38,15 +40,18 @@ export const AutocompleteInput = (
     ChoicesProps & {
       className?: string;
       disableValue?: string;
+      filterToQuery?: (searchText: string) => any;
       translateChoice?: boolean;
       placeholder?: string;
     }
 ) => {
+  const { filterToQuery = DefaultFilterToQuery } = props;
   const {
     allChoices = [],
     source,
     resource,
     isFromReference,
+    setFilters,
   } = useChoicesContext(props);
   const { field, fieldState, isRequired } = useInput({ ...props, source });
   const translate = useTranslate();
@@ -67,6 +72,14 @@ export const AutocompleteInput = (
     (choice) => getChoiceValue(choice) === field.value
   );
 
+  const handleOpenChange = useEvent((isOpen: boolean) => {
+    setOpen(isOpen);
+    // Reset the filter when the popover is closed
+    if (!isOpen) {
+      setFilters(filterToQuery(""));
+    }
+  });
+
   return (
     <FormItem className={props.className}>
       {props.label !== false && (
@@ -80,7 +93,7 @@ export const AutocompleteInput = (
         </FormLabel>
       )}
       <FormControl>
-        <Popover open={open} onOpenChange={setOpen}>
+        <Popover open={open} onOpenChange={handleOpenChange}>
           <PopoverTrigger asChild>
             <Button
               variant="outline"
@@ -93,8 +106,14 @@ export const AutocompleteInput = (
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-[200px] p-0">
-            <Command>
-              <CommandInput placeholder="Search..." />
+            {/* We handle the filtering ourselves */}
+            <Command shouldFilter={false}>
+              <CommandInput
+                placeholder="Search..."
+                onValueChange={(filter) => {
+                  setFilters(filterToQuery(filter));
+                }}
+              />
               <CommandEmpty>No matching item found.</CommandEmpty>
               <CommandGroup>
                 {allChoices.map((choice) => (
@@ -137,3 +156,5 @@ export const AutocompleteInput = (
     </FormItem>
   );
 };
+
+const DefaultFilterToQuery = (searchText: string) => ({ q: searchText });
