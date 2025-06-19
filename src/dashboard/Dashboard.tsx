@@ -79,7 +79,7 @@ export const Dashboard = () => {
       </Breadcrumb>
       <Welcome />
       <div className="flex flex-col md:flex-row gap-4 mb-4">
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 md:basis-1/2">
           <div className="flex flex-col md:flex-row gap-4">
             <MonthlyRevenue value={revenue} />
             <NbNewOrders value={nbNewOrders} />
@@ -91,7 +91,7 @@ export const Dashboard = () => {
             <PendingOrders orders={pendingOrders} />
           </div>
         </div>
-        <div>
+        <div className="md:basis-1/2">
           <div className="flex flex-col md:flex-row gap-4">
             <PendingReviews />
             <NewCustomers />
