@@ -13,10 +13,10 @@ const Welcome = () => {
         <h1 className="text-xl mb-2">
           {translate("pos.dashboard.welcome.title")}
         </h1>
-        <div className="max-w-[40em]">
+        <div className="max-w-[40em] text-justify md:text-left">
           <p>{translate("pos.dashboard.welcome.subtitle")}</p>
         </div>
-        <div className="flex flex-wrap gap-2 mt-4">
+        <div className="flex flex-col md:flex-row flex-wrap gap-2 mt-4">
           <a
             className={buttonVariants({
               variant: "outline",

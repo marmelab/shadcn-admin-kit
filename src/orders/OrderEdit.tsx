@@ -12,9 +12,9 @@ import { Totals } from "./Totals";
 export const OrderEdit = () => (
   <Edit>
     <SimpleForm>
-      <div className="flex flex-row gap-8">
+      <div className="flex flex-col md:flex-row gap-8">
         <div className="flex-2">
-          <div className="flex gap-4 mb-4">
+          <div className="flex flex-col md:flex-row gap-4 mb-4">
             <RecordField
               source="date"
               render={(record) => new Date(record.date).toLocaleString()}

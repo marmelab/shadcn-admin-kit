@@ -26,16 +26,6 @@ interface State {
   revenue?: string;
 }
 
-const styles = {
-  flex: { display: "flex" },
-  flexColumn: { display: "flex", flexDirection: "column" },
-  leftCol: { flex: 1, marginRight: "0.5em" },
-  rightCol: { flex: 1, marginLeft: "0.5em" },
-  singleCol: { marginTop: "1em", marginBottom: "1em" },
-};
-
-const Spacer = () => <span style={{ width: "1em" }} />;
-
 export const Dashboard = () => {
   const aMonthAgo = useMemo(() => subDays(startOfDay(new Date()), 30), []);
 
@@ -88,24 +78,22 @@ export const Dashboard = () => {
         </BreadcrumbItem>
       </Breadcrumb>
       <Welcome />
-      <div style={styles.flex}>
-        <div style={styles.leftCol}>
-          <div style={styles.flex}>
+      <div className="flex flex-col md:flex-row gap-4 mb-4">
+        <div className="flex flex-col gap-4 md:basis-1/2">
+          <div className="flex flex-col md:flex-row gap-4">
             <MonthlyRevenue value={revenue} />
-            <Spacer />
             <NbNewOrders value={nbNewOrders} />
           </div>
-          <div style={styles.singleCol}>
+          <div>
             <OrderChart orders={recentOrders} />
           </div>
-          <div style={styles.singleCol}>
+          <div>
             <PendingOrders orders={pendingOrders} />
           </div>
         </div>
-        <div style={styles.rightCol}>
-          <div style={styles.flex}>
+        <div className="md:basis-1/2">
+          <div className="flex flex-col md:flex-row gap-4">
             <PendingReviews />
-            <Spacer />
             <NewCustomers />
           </div>
         </div>
