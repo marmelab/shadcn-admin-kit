@@ -126,6 +126,7 @@ export const AutocompleteInput = (
                         !isRequired
                       ) {
                         field.onChange("");
+                        setFilters(filterToQuery(""));
                         setOpen(false);
                         return;
                       }
