@@ -8,11 +8,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Translate, useGetIdentity, useLogout } from "ra-core";
+import { Translate, useAuthProvider, useGetIdentity, useLogout } from "ra-core";
 
 export function UserMenu() {
+  const authProvider = useAuthProvider();
   const { data: identity } = useGetIdentity();
   const logout = useLogout();
+
+  if (!authProvider) return null;
 
   return (
     <DropdownMenu>
