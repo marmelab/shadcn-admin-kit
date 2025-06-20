@@ -53,6 +53,10 @@ This project is compatible with the new `shadcn@canary registry:mcp` command, an
 
 Check out the [MCP documentation](./docs/MCP.md) for more information on how to use the MCP server.
 
+### Using with Next.js
+
+Learn how to use Shadcn Admin Kit with Next.js by following this [guide](./docs/using-with-next.md).
+
 ## Installation
 
 1. Create a [Vite](https://vite.dev/) single-page app
@@ -283,10 +287,6 @@ export const App = () => (
 Now, when a user browses to `/settings` or `/profile`, the components you defined will appear in the main part of the screen.
 
 **Tip:** Custom routes don’t automatically appear in the menu. You'll need to customize the [`<AppSidebar>` component](https://github.com/marmelab/shadcn-admin-kit/blob/main/src/components/admin/app-sidebar.tsx) if you want custom routes to be accessible from the menu.
-
-### Using with Next.js
-
-Learn how to use Shadcn Admin Kit with Next.js by following this [guide](./doc/using-with-next.md).
 
 ## Local Development
 
