@@ -68,7 +68,7 @@ The `<Admin>` component (`components/admin/admin.tsx`) requires a **dataProvider
 npm install ra-data-json-server
 ```
 
-First, we will create the `app/admin/AdminApp.tsx` file that will contain our admin app. We will leverage the `ListGuesser` and `EditGuesser` components provided by `Shadcn Admin Kit` in our two resources.
+First, we will create the `app/admin/AdminApp.tsx` file that will contain our admin app. We will leverage the `ListGuesser` and `EditGuesser` components provided by `Shadcn Admin Kit` in our three resources.
 
 ```tsx
 // app/admin/AdminApp.tsx
@@ -126,4 +126,4 @@ export default function Page() {
 
 Then, run `npm run dev` and go to `http://localhost:3000/admin` to access your admin app!
 
-![A Demo Admin Build with Shadcn Admin Kit](./images/shadcn-admin-kit-next/demo.jpg)
+![A Demo Admin Built with Shadcn Admin Kit](./images/shadcn-admin-kit-next/demo.jpg)
