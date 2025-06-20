@@ -284,6 +284,10 @@ Now, when a user browses to `/settings` or `/profile`, the components you define
 
 **Tip:** Custom routes don’t automatically appear in the menu. You'll need to customize the [`<AppSidebar>` component](https://github.com/marmelab/shadcn-admin-kit/blob/main/src/components/admin/app-sidebar.tsx) if you want custom routes to be accessible from the menu.
 
+### Using with Next.js
+
+Learn how to use Shadcn Admin Kit with Next.js by following this [guide](./doc/using-with-next.md).
+
 ## Local Development
 
 This project requires [Node.js](https://nodejs.org/) and [pnpm](https://pnpm.io/).
