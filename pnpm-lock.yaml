@@ -157,8 +157,8 @@ importers:
         specifier: ^16.0.0
         version: 16.1.0
       shadcn:
-        specifier: ^2.5.0
-        version: 2.5.0(@types/node@22.15.18)(typescript@5.7.3)
+        specifier: 2.6.0-canary.3
+        version: 2.6.0-canary.3(@types/node@22.15.18)(typescript@5.7.3)
       tw-animate-css:
         specifier: ^1.2.8
         version: 1.3.0
@@ -2757,8 +2757,8 @@ packages:
   setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
 
-  shadcn@2.5.0:
-    resolution: {integrity: sha512-kqbTpDWIYE8spytMiJFoKyzOTHb+DzNLjMXzz+ifDFTBgTPv6gIydmirTZwwfFb23XvenrTSVHsZHUjGsllcHw==}
+  shadcn@2.6.0-canary.3:
+    resolution: {integrity: sha512-8hz9FJfxgBTBQVLuOb58Lrr4ZRLiG0mm/wu5yC5q2q7oQ2uDbYNIr1jBfq0Mz2F2Jz2H46tai6JFZPtD/AQLFQ==}
     hasBin: true
 
   shebang-command@2.0.0:
@@ -5682,12 +5682,13 @@ snapshots:
 
   setprototypeof@1.2.0: {}
 
-  shadcn@2.5.0(@types/node@22.15.18)(typescript@5.7.3):
+  shadcn@2.6.0-canary.3(@types/node@22.15.18)(typescript@5.7.3):
     dependencies:
       '@antfu/ni': 23.3.1
       '@babel/core': 7.27.1
       '@babel/parser': 7.27.2
       '@babel/plugin-transform-typescript': 7.27.1(@babel/core@7.27.1)
+      '@modelcontextprotocol/sdk': 1.11.3
       commander: 10.0.1
       cosmiconfig: 8.3.6(typescript@5.7.3)
       deepmerge: 4.3.1
@@ -5707,6 +5708,7 @@ snapshots:
       ts-morph: 18.0.0
       tsconfig-paths: 4.2.0
       zod: 3.24.4
+      zod-to-json-schema: 3.24.5(zod@3.24.4)
     transitivePeerDependencies:
       - '@types/node'
       - supports-color

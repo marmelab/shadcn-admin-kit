@@ -21,3 +21,8 @@ build-registry: ## Build the UI registry
 test-registry: ## Test the UI registry
 	./scripts/test_registry.sh
 
+serve-registry: ## Serve the UI registry locally
+	python3 -m http.server -d ./public 8080
+
+clear-registry: ## Clear the UI registry
+	rm -rf ./public/r
