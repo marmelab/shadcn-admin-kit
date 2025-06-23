@@ -4,14 +4,14 @@
 
 A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/).
 
-[![Online Demo]][OnlineDemoLink] 
-[![Tutorial]][TutorialLink]
+[![Online Demo]][OnlineDemoLink]
+[![Documentation]][DocumentationLink]
 
 [Online Demo]: https://img.shields.io/badge/Online_Demo-blue?style=for-the-badge
-[Tutorial]: https://img.shields.io/badge/Tutorial-blueviolet?style=for-the-badge
+[Documentation]: https://img.shields.io/badge/Documentation-blueviolet?style=for-the-badge
 
 [OnlineDemoLink]: https://marmelab.com/shadcn-admin-kit/ 'Online Demo'
-[TutorialLink]: ./docs/Tutorial.md
+[DocumentationLink]: ./docs/1-Install.md 'Documentation'
 
 ## Features
 
@@ -97,7 +97,7 @@ Learn how to use Shadcn Admin Kit with Next.js by following this [guide](./docs/
     }
     ```
 
-## Usage 
+## Usage
 
 ### Use `<Admin>` As Root Component
 

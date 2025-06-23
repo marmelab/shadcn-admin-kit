@@ -1,160 +1,12 @@
-# Shadcn Admin Kit
+# Shadcn-Admin-Kit Quick Start Guide
 
 In this tutorial, you will learn to create a web application with `shadcn-admin-kit` based on an existing REST API.
 
 ## Setting Up
 
-`shadcn-admin-kit` is built on React, so you need to create a Vite single-page app.
+Follow the [installation instructions](./1-Install.md) to install `shadcn-admin-kit` in your project with Next.js, Vite.js, Remix, or any other framework of your choice.
 
-```shell
-npm create vite@latest my-shadcn-admin-app -- --template react-ts
-or
-yarn create vite my-shadcn-admin-app --template react-ts
-```
-
-Then, [install shadcn/ui](https://ui.shadcn.com/docs/installation/vite) in your project.
-
-Add tailwind CSS.
-
-```shell
-npm install tailwindcss @tailwindcss/vite
-# or
-yarn add tailwindcss @tailwindcss/vite
-```
-
-Replace everything in `src/index.css` with the following:
-
-```shell
-@import "tailwindcss";
-```
-
-Edit `tsconfig.json` file. Add the `baseUrl` and `paths` properties to the `compilerOptions` section of the `tsconfig.json` and `tsconfig.app.json` files:
-
-```diff
-{
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ],
-+ "compilerOptions": {
-+   "baseUrl": ".",
-+   "paths": {
-+     "@/*": ["./src/*"]
-+   }
-+ }
-}
-```
-
-Add the following code to the `tsconfig.app.json` file to resolve paths, for your IDE:
-
-```diff
-{
-  "compilerOptions": {
-    // ...
-+   "baseUrl": ".",
-+   "paths": {
-+     "@/*": [
-+       "./src/*"
-+     ]
-+   }
-    // ...
-  }
-}
-```
-
-Install node types and add the following code to the `vite.config.ts` so your app can resolve paths without error:
-
-```shell
-npm install -D @types/node
-# or
-yarn add -D @types/node
-```
-
-```diff
-+import path from "path"
-+import tailwindcss from "@tailwindcss/vite"
-import react from "@vitejs/plugin-react"
-import { defineConfig } from "vite"
- 
-// https://vite.dev/config/
-export default defineConfig({
-+ plugins: [react(), tailwindcss()],
-+ resolve: {
-+   alias: {
-+     "@": path.resolve(__dirname, "./src"),
-+   },
-+ },
-})
-```
-
-Run the `shadcn` init command to setup your project:
-
-```shell
-npx shadcn@latest init
-# or
-yarn shadcn@latest init
-```
-
-You will be asked a few questions to configure `components.json`.
-
-You can now start adding components to your project. Let's start with the `shadcn-admin-kit` components.
-
-```shell
-npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
-```
-
-**Warning**: you need to set the `verbatimModuleSyntax` option to `false` in your `tsconfig.app.json` file to avoid an [issue](https://github.com/shadcn-ui/ui/issues/6618) with the latest version of TypeScript.
-
-```diff
-{
-  "compilerOptions": {
-    // ...
-+   "verbatimModuleSyntax": false
-  }
-}
-```
-
-The main entry point of your new application is `main.tsx`, which renders the `App` component into the DOM.
-
-```tsx
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App.tsx";
-
-createRoot(document.getElementById("root")!).render(
-    <StrictMode>
-        <App />
-    </StrictMode>,
-);
-```
-
-The `<App>` component currently renders a default Vite application. You can replace all its content by the following to serve your new `shadcn-admin-kit` application.
-
-```tsx
-import { Admin } from "@/components/admin";
-
-function App() {
-    return <Admin></Admin>;
-}
-
-export default App;
-```
-
-It's time to test! Run the following command to run your project.
-
-```shell
-npm run dev
-# or
-yarn dev
-```
-
-You should see this:
+You should end up with a welcom screen like this:
 
 ![Welcome to shadcn-admin-kit!](images/welcome.png)
 
@@ -216,7 +68,6 @@ export const dataProvider = jsonServerProvider(
 
 The `import.meta.env.VITE_JSON_SERVER_URL` expression is a [Vite environment variable](https://vitejs.dev/guide/env-and-mode.html), which must be set to `https://jsonplaceholder.typicode.com` in the `.env` file located at the project root.
 
-
 ```dotenv
 VITE_JSON_SERVER_URL="https://jsonplaceholder.typicode.com"
 ```
@@ -256,7 +107,7 @@ export default App;
 
 The `<Resource name="users" />` line instructs `shadcn-admin-kit` to fetch "users" from the [https://jsonplaceholder.typicode.com/users](https://jsonplaceholder.typicode.com/users) URL. The `<Resource>` component also defines which React components to use for each CRUD operation (`list`, `create`, `edit`, and `show`).
 
-`list={ListGuesser}` tells `shadcn-admin-kit` to use the [`<ListGuesser>`](https://marmelab.com/react-admin/ListGuesser.html) component to display the list of users. This component *guesses* the configuration for the list, including column names and types, based on the data fetched from the API.
+`list={ListGuesser}` tells `shadcn-admin-kit` to use the [`<ListGuesser>`](https://marmelab.com/react-admin/ListGuesser.html) component to display the list of users. This component _guesses_ the configuration for the list, including column names and types, based on the data fetched from the API.
 
 Now, your app can display a list of users:
 
@@ -349,7 +200,7 @@ The root component, [`<List>`](https://marmelab.com/react-admin/List.html), read
 
 This demonstrates the goal of `shadcn-admin-kit`: helping developers build sophisticated applications with simple syntax.
 
-In most frameworks, "simple" often implies limited capabilities, making it challenging to extend beyond basic features. `shadcn-admin-kit` addresses this through *composition*. `<List>` handles data fetching, while rendering is delegated to its child—in this case, [`<DataTable>`](https://marmelab.com/react-admin/DataTable.html). Essentially, the code composes the functionalities of `<List>` and `<DataTable>` functionalities.
+In most frameworks, "simple" often implies limited capabilities, making it challenging to extend beyond basic features. `shadcn-admin-kit` addresses this through _composition_. `<List>` handles data fetching, while rendering is delegated to its child—in this case, [`<DataTable>`](https://marmelab.com/react-admin/DataTable.html). Essentially, the code composes the functionalities of `<List>` and `<DataTable>` functionalities.
 
 ## Selecting Columns
 
@@ -514,7 +365,7 @@ When displaying the posts list, `shadcn-admin-kit` is smart enough to display th
 
 The `<ReferenceField>` component fetches the reference data, creates a `RecordContext` with the result, and renders the record representation (or its children).
 
-**Tip**: Look at the network tab of your browser again: `shadcn-admin-kit` deduplicates requests for users and aggregates them in order to make only *one* HTTP request to the `/users` endpoint for the whole DataTable. That's one of many optimizations that keep the UI fast and responsive.
+**Tip**: Look at the network tab of your browser again: `shadcn-admin-kit` deduplicates requests for users and aggregates them in order to make only _one_ HTTP request to the `/users` endpoint for the whole DataTable. That's one of many optimizations that keep the UI fast and responsive.
 
 To finish the post list, place the post `id` field as the first column, and remove the `body` field.
 From a UX point of view, fields containing large chunks of text should not appear in a DataTable, only in detail views.
@@ -575,7 +426,7 @@ export default App;
 
 Now you can click on a user in the list to see their details:
 
-https://github.com/user-attachments/assets/26dd16e2-8da8-4ee4-9f0d-4353af8a2298
+<https://github.com/user-attachments/assets/26dd16e2-8da8-4ee4-9f0d-4353af8a2298>
 
 Just like for other guessed components, you can customize the show view by copying the code dumped by the `<ShowGuesser>` and modifying it to suit your needs. This is out of scope for this tutorial, so we'll leave it as is.
 
@@ -633,7 +484,7 @@ function App() {
 export default App;
 ```
 
-https://github.com/user-attachments/assets/3642747a-9155-4e5d-8cdc-9dbb3c936e8b
+<https://github.com/user-attachments/assets/3642747a-9155-4e5d-8cdc-9dbb3c936e8b>
 
 Users can display the edit page just by clicking on the Edit button. The form is already functional; it issues `PUT` requests to the REST API upon submission. The user is already editable and displayed thanks to the `recordRepresentation` of the "users" resource.
 
@@ -712,7 +563,7 @@ export const PostEdit = () => (
 );
 ```
 
-If you've understood the `<List>` component, the `<Edit>` component will be no surprise. It's responsible for fetching the record and displaying the page title. It passes the record down to the [`<SimpleForm>`](https://marmelab.com/react-admin/SimpleForm.html) component, which is responsible for the form layout, default values, and validation. Just like `<DataTable>`, `<SimpleForm>` uses its children to determine the form inputs to display. It expects [*input components*](https://marmelab.com/react-admin/Inputs.html) as children. `<TextInput>` and `<ReferenceInput>` are such inputs.
+If you've understood the `<List>` component, the `<Edit>` component will be no surprise. It's responsible for fetching the record and displaying the page title. It passes the record down to the [`<SimpleForm>`](https://marmelab.com/react-admin/SimpleForm.html) component, which is responsible for the form layout, default values, and validation. Just like `<DataTable>`, `<SimpleForm>` uses its children to determine the form inputs to display. It expects [_input components_](https://marmelab.com/react-admin/Inputs.html) as children. `<TextInput>` and `<ReferenceInput>` are such inputs.
 
 The `<ReferenceInput>` takes the same props as the `<ReferenceField>` (used earlier in the `<PostList>` page). `<ReferenceInput>` uses these props to fetch the API for possible references related to the current record (in this case, possible `users` for the current `post`). It then creates a context with the possible choices and renders an `<AutocompleteInput>`, which is responsible for displaying the choices and letting the user select one.
 
@@ -786,7 +637,7 @@ function App() {
 export default App;
 ```
 
-https://github.com/user-attachments/assets/7a4cb133-9243-47bd-adb0-8e0e90a73193
+<https://github.com/user-attachments/assets/7a4cb133-9243-47bd-adb0-8e0e90a73193>
 
 `shadcn-admin-kit` automatically adds a "create" button on top of the posts list to give access to the `create` component. And the creation form works; it issues a `POST` request to the REST API upon submission.
 
@@ -796,11 +647,11 @@ Unfortunately, JSONPlaceholder is a read-only API; although it seems to accept `
 
 But then, how come the newly created post appears in the list just after creation in the screencast above?
 
-That's because `shadcn-admin-kit` uses *optimistic updates*. When a user edits a record and hits the "Save" button, the UI shows a confirmation and displays the updated data *before sending the update query to the server*. The main benefit is that UI changes are immediate—no need to wait for the server response. It's a great comfort for users.
+That's because `shadcn-admin-kit` uses _optimistic updates_. When a user edits a record and hits the "Save" button, the UI shows a confirmation and displays the updated data _before sending the update query to the server_. The main benefit is that UI changes are immediate—no need to wait for the server response. It's a great comfort for users.
 
 But there is an additional benefit: it also allows the "Undo" feature. Undo is already functional in the admin at this point. Try editing a record, then hit the "Undo" link in the black confirmation box before it slides out. You'll see that the app does not send the `UPDATE` query to the API and displays the non-modified data.
 
-https://github.com/user-attachments/assets/9e5fd3ad-b585-4ee6-af50-655ec5a01b5a
+<https://github.com/user-attachments/assets/9e5fd3ad-b585-4ee6-af50-655ec5a01b5a>
 
 Even though updates appear immediately due to optimistic rendering, `shadcn-admin-kit` only sends them to the server after a short delay (about 5 seconds). During this delay, the user can undo the action, and `shadcn-admin-kit` will never send the update.
 
@@ -831,7 +682,7 @@ export const PostList = () => (
 
 The first filter, 'q', takes advantage of a full-text functionality offered by JSONPlaceholder. There is a second filter with `userId`, and since it's a `<ReferenceInput>`, it's already populated with possible users.
 
-https://github.com/user-attachments/assets/d5786c07-d23f-4990-9e2a-62d07504e018
+<https://github.com/user-attachments/assets/d5786c07-d23f-4990-9e2a-62d07504e018>
 
 Filters are "search-as-you-type", meaning that when the user enters new values in the filter form, the list refreshes (via an API request) immediately.
 
@@ -872,7 +723,7 @@ function App() {
 export default App;
 ```
 
-https://github.com/user-attachments/assets/26ec2d40-df9f-4a68-822c-c69cf008680e
+<https://github.com/user-attachments/assets/26ec2d40-df9f-4a68-822c-c69cf008680e>
 
 ## Using a Custom Home Page
 

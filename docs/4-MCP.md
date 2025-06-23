@@ -1,6 +1,6 @@
-# Shadcn Admin Kit + MCP
+# Shadcn Admin Kit MCP Server
 
-This project is compatible with the new `shadcn@canary registry:mcp` command, and contains cursor rules to instruct the LLM how to setup the `<Admin>` component, the Data Provider, and the resources.
+This project is compatible with the new `shadcn@canary registry:mcp` command, and contains Cursor rules to instruct the LLM how to setup the `<Admin>` component, the Data Provider, and the resources.
 
 ## Prerequisites
 
@@ -26,7 +26,7 @@ Replace everything in `src/index.css` with the following:
 
 Make sure to also properly configure the `tsconfig.json` and `tsconfig.app.json` files as instructed here:
 
-https://ui.shadcn.com/docs/installation/vite
+<https://ui.shadcn.com/docs/installation/vite>
 
 ## Setup the registry MCP
 
