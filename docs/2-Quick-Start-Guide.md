@@ -6,7 +6,7 @@ In this tutorial, you will learn to create a web application with `shadcn-admin-
 
 Follow the [installation instructions](./1-Install.md) to install `shadcn-admin-kit` in your project with Next.js, Vite.js, Remix, or any other framework of your choice.
 
-You should end up with a welcom screen like this:
+You should end up with a welcome screen like this:
 
 ![Welcome to shadcn-admin-kit!](images/welcome.png)
 
@@ -369,7 +369,9 @@ The `<ReferenceField>` component fetches the reference data, creates a `RecordCo
 **Tip**: Look at the network tab of your browser again: `shadcn-admin-kit` deduplicates requests for users and aggregates them in order to make only _one_ HTTP request to the `/users` endpoint for the whole DataTable. That's one of many optimizations that keep the UI fast and responsive.
 
 To finish the post list, place the post `id` field as the first column, and remove the `body` field.
+
 From a UX point of view, fields containing large chunks of text should not appear in a DataTable, only in detail views.
+
 Also, to make the Edit action stand out, let's replace the default `rowClick` action with an explicit action button:
 
 ```diff
