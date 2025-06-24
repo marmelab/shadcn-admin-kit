@@ -1,9 +1,79 @@
-# Supported Data Provider Backends
+# Data Fetching with Data Providers
+
+In a shadcn-admin-kit app, you don’t write API calls using `fetch` or axios. Instead, you communicate with your API through an object called the `dataProvider`.
+
+This documentation will explain the following concepts:
+
+- [What is a Data Provider?](#the-dataprovider)
+- [How to set up a Data Provider](#setup)
+- [Supported Data Provider backends](#supported-data-provider-backends)
+- [How to write a Data Provider](#writing-a-data-provider)
+- [How to query the API using hooks](#querying-the-api)
+
+## The `dataProvider`
+
+Shadcn-admin-kit streamlines data fetching for administrative interfaces through its Data Provider object, which unifies interactions across diverse APIs such as REST and GraphQL. This abstraction allows developers to focus on UI development rather than intricate API calls. It employs specialized hooks, like `useGetList` and `useGetOne`, and integrates [TanStack Query](https://tanstack.com/query/latest) to manage data efficiently, offering features such as caching and optimistic updates.
+
+The framework also simplifies working with relational APIs and incorporates real-time capabilities for collaborative applications. Authentication is handled by an `authProvider`, which manages user logins and tokens, subsequently utilized by the `dataProvider` for secure API requests.
+
+To learn more about the Data Provider, refer to the [Data Fetching documentation](https://marmelab.com/react-admin/DataFetchingGuide.html).
+
+## Setup
+
+The first step to using a Data Provider is to pass it to the `<Admin>` component via the `dataProvider` prop.
+
+For example, let’s use the [Simple REST data provider](https://github.com/marmelab/react-admin/tree/master/packages/ra-data-simple-rest). This provider is suitable for REST APIs using simple GET parameters for filters and sorting.
+
+First, install the `ra-data-simple-rest` package:
+
+```
+npm install ra-data-simple-rest
+```
+
+Then, initialize the provider with the REST backend URL, and pass it as the `<Admin dataProvider>`:
+
+```jsx
+// in src/App.js
+import { Admin } from "@/components/admin";
+import { Resource } from 'ra-core';
+import simpleRestProvider from 'ra-data-simple-rest';
+
+import { PostList } from './posts';
+
+const dataProvider = simpleRestProvider('http://path.to.my.api/');
+
+const App = () => (
+    <Admin dataProvider={dataProvider}>
+        <Resource name="posts" list={PostList} />
+    </Admin>
+);
+
+export default App;
+```
+
+That’s all it takes to make all shadcn-admin-kit components work with your API. They will call the data provider methods, which will in turn call the API. Here’s how the Simple REST data provider maps shadcn-admin-kit calls to API calls:
+
+| Method name        | API call                                                                                |
+| ------------------ | --------------------------------------------------------------------------------------- |
+| `getList`          | `GET http://my.api.url/posts?sort=["title","ASC"]&range=[0, 24]&filter={"title":"bar"}` |
+| `getOne`           | `GET http://my.api.url/posts/123`                                                       |
+| `getMany`          | `GET http://my.api.url/posts?filter={"ids":[123,456,789]}`                              |
+| `getManyReference` | `GET http://my.api.url/posts?filter={"author_id":345}`                                  |
+| `create`           | `POST http://my.api.url/posts`                                                          |
+| `update`           | `PUT http://my.api.url/posts/123`                                                       |
+| `updateMany`       | Multiple calls to `PUT http://my.api.url/posts/123`                                     |
+| `delete`           | `DELETE http://my.api.url/posts/123`                                                    |
+| `deleteMany`       | Multiple calls to `DELETE http://my.api.url/posts/123`                                  |
+
+For your own API, look for a compatible data provider in the list of [supported API backends](#supported-data-provider-backends) or write your own.
+
+For more details about the data provider setup, refer to the [Data Provider Setup documentation](https://marmelab.com/react-admin/DataProviders.html).
+
+## Supported Data Provider Backends
 
 Thanks to the Data Provider architecture, shadcn-admin-kit supports a lot of API backends. Check the list below for open-source packages developed and maintained by the core team and developers from the community.
 
-If you can't find a Data Provider for your backend below, no worries! [Writing a Data Provider](https://marmelab.com/react-admin/DataProviderWriting.html) takes a couple of hours, and won't prevent you from using react-admin.
-
+If you can't find a Data Provider for your backend below, no worries! [Writing a Data Provider](https://marmelab.com/react-admin/DataProviderWriting.html) takes a couple of hours, and won't prevent you from using shadcn-admin-kit.
 
 * <img src="./images/backend-logos/appwrite.svg" title="Appwrite Logo" style="width:16px;height:16px;"/> **[Appwrite](https://appwrite.io/)**: [marmelab/ra-appwrite](https://github.com/marmelab/ra-appwrite)
 * <img src="./images/backend-logos/amplify.svg" title="AWS Amplify Logo" style="width:16px;height:16px;"/>**[AWS Amplify](https://docs.amplify.aws)**: [MrHertal/react-admin-amplify](https://github.com/MrHertal/react-admin-amplify)
@@ -89,3 +159,113 @@ If you don't know where to start, use any of the following:
 **Tip**: Since dataProviders all present the same interface, you can use one dataProvider during early prototyping / development phases, then switch to the dataProvider that fits your production infrastructure.
 
 If you've written a Data Provider for another backend, and open-sourced it, please help complete this list with your package.
+
+## Writing a Data Provider
+
+APIs are so diverse that quite often, none of the available Data Providers suit you API. In such cases, you’ll have to write your own Data Provider. Don’t worry, it usually takes only a couple of hours.
+
+A data provider must implement the following methods:
+
+```jsx
+const dataProvider = {
+    // get a list of records based on sort, filter, and pagination
+    getList:    (resource, params) => Promise,
+    // get a single record by id
+    getOne:     (resource, params) => Promise, 
+    // get a list of records based on an array of ids
+    getMany:    (resource, params) => Promise, 
+    // get the records referenced to another record, e.g. comments for a post
+    getManyReference: (resource, params) => Promise, 
+    // create a record
+    create:     (resource, params) => Promise, 
+    // update a record based on a patch
+    update:     (resource, params) => Promise, 
+    // update a list of records based on an array of ids and a common patch
+    updateMany: (resource, params) => Promise, 
+    // delete a record by id
+    delete:     (resource, params) => Promise, 
+    // delete a list of records based on an array of ids
+    deleteMany: (resource, params) => Promise, 
+}
+```
+
+To call the data provider, shadcn-admin-kit combines a *method* (e.g. `getOne`), a *resource* (e.g. ‘posts’) and a set of parameters.
+
+**Tip**: In comparison, HTTP requests require a *verb* (e.g. ‘GET’), an *url* (e.g. ‘http://myapi.com/posts’), a list of *headers* (like Content-Type) and a *body*.
+
+To learn more about writing a Data Provider, refer to the [Data Provider Writing documentation](https://marmelab.com/react-admin/DataProviderWriting.html).
+
+## Querying The API
+
+Shadcn-admin-kit provides special hooks to emit read and write queries to the `dataProvider`, which in turn sends requests to your API. Under the hood, it uses React Query to call the `dataProvider` and cache the results.
+
+Shadcn-admin-kit provides one query hook for each of the Data Provider read methods. They are useful shortcuts that make your code more readable and more robust. The query hooks execute on mount. They return an object with the following properties: { data, isPending, error }. Query hooks are:
+
+- `useGetList` calls `dataProvider.getList()`
+- `useGetOne` calls `dataProvider.getOne()`
+- `useGetMany` calls `dataProvider.getMany()`
+- `useGetManyReference` calls `dataProvider.getManyReference()`
+
+Their input signature is the same as the related dataProvider method, i.e. they expect the resource name and the query parameters:
+
+```jsx
+const { isPending, error, data } = useGetOne(resource, { id });
+// calls dataProvider.getOne(resource, { id })
+```
+
+For instance, here is how to fetch one User record on mount using the useGetOne hook:
+
+```jsx
+import { useGetOne } from 'ra-core';
+import { Loading, Error } from './MyComponents';
+
+const UserProfile = ({ userId }) => {
+    const { isPending, error, data: user } = useGetOne('users', { id: userId });
+
+    if (isPending) return <Loading />;
+    if (error) return <Error />;
+    if (!user) return null;
+
+    return (
+        <ul>
+            <li>Name: {user.name}</li>
+            <li>Email: {user.email}</li>
+        </ul>
+    )
+};
+```
+
+Shadcn-admin-kit also provides one mutation hook for each of the Data Provider write methods. These hooks execute the query when you call a callback. They return an array with the following items: `[mutate, { data, isPending, error }]`. `mutate` is a callback that you can call to execute the mutation.
+
+Mutation hooks are:
+
+- `useCreate` calls `dataProvider.create()`
+- `useUpdate` calls `dataProvider.update()`
+- `useUpdateMany` calls `dataProvider.updateMany()`
+- `useDelete` calls `dataProvider.delete()`
+- `useDeleteMany` calls `dataProvider.deleteMany()`
+
+Their input signature is the same as the related dataProvider method, e.g.:
+
+```jsx
+const [update, { isPending, error, data }] = useUpdate(resource, { id, data, previousData });
+// calls dataProvider.update(resource, { id, data, previousData })
+```
+
+For instance, here is a button that updates a comment record when clicked, using the useUpdate hook:
+
+```jsx
+import { useUpdate, useRecordContext } from 'ra-core';
+
+const ApproveButton = () => {
+    const record = useRecordContext();
+    const [approve, { isPending }] = useUpdate('comments', {
+        id: record.id,
+        data: { isApproved: true },
+        previousData: record
+    });
+    return <button onClick={() => approve()} disabled={isPending}>Approve</button>;
+};
+```
+
+For more information and examples, refer to the [Data Fetching documentation](https://marmelab.com/react-admin/Actions.html).

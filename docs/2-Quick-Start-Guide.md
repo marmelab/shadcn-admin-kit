@@ -90,8 +90,9 @@ Let's add a list of users.
 The `<Admin>` component expects one or more [`<Resource>`](https://marmelab.com/react-admin/Resource.html) child components. Each resource maps a name to an API endpoint. To add a resource named `users`, edit the `App.tsx` file as follows:
 
 ```diff
-import { Resource } from "ra-core";
-import { Admin, ListGuesser } from "@/components/admin";
++import { Resource } from "ra-core";
+-import { Admin } from "@/components/admin";
++import { Admin, ListGuesser } from "@/components/admin";
 import { dataProvider } from "@/dataProvider.ts";
 
 function App() {

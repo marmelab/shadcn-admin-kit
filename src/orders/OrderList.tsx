@@ -36,6 +36,7 @@ export const OrderList = () => (
     sort={{ field: "date", order: "DESC" }}
     filterDefaultValues={{ status: "ordered" }}
     filters={filters}
+    perPage={25}
   >
     <TabbedDataTable />
   </List>
