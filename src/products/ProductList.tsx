@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import {
   List,
   ListPagination,
@@ -17,24 +18,7 @@ import {
 import { Link } from "react-router-dom";
 import { DollarSign, ChartNoAxesColumn, Tag } from "lucide-react";
 import { humanize } from "inflection";
-
-type Product = {
-  id: number;
-  reference: string;
-  description: string;
-  category_id: number;
-  width: number;
-  height: number;
-  price: number;
-  stock: number;
-  thumbnail: string;
-  image: string;
-};
-
-type Category = {
-  id: number;
-  name: string;
-};
+import type { Product, Category } from "@/types";
 
 export const ProductList = () => {
   return (
@@ -121,11 +105,10 @@ const SidebarFilters = () => {
           className="mb-6"
         />
       </FilterLiveForm>
-      <h3 className="flex flex-row items-center gap-2 mb-1 font-bold text-sm">
-        <DollarSign size={16} />
-        {translate("resources.products.filters.sales")}
-      </h3>
-      <div className="flex flex-col items-start ml-3 mb-4">
+      <FilterCategory
+        icon={<DollarSign size={16} />}
+        label="resources.products.filters.sales"
+      >
         <ToggleFilterButton
           label="resources.products.filters.best_sellers"
           value={{
@@ -158,12 +141,11 @@ const SidebarFilters = () => {
             sales: 0,
           }}
         />
-      </div>
-      <h3 className="flex flex-row items-center gap-2 mb-1 font-bold text-sm">
-        <ChartNoAxesColumn size={16} />
-        {translate("resources.products.filters.stock")}
-      </h3>
-      <div className="flex flex-col items-start ml-3 mb-4">
+      </FilterCategory>
+      <FilterCategory
+        icon={<ChartNoAxesColumn size={16} />}
+        label="resources.products.filters.stock"
+      >
         <ToggleFilterButton
           label="resources.products.filters.no_stock"
           value={{
@@ -196,12 +178,11 @@ const SidebarFilters = () => {
             stock: undefined,
           }}
         />
-      </div>
-      <h3 className="flex flex-row items-center gap-2 mb-1 font-bold text-sm">
-        <Tag size={16} />
-        {translate("resources.products.filters.categories")}
-      </h3>
-      <div className="flex flex-col items-start ml-3 mb-4">
+      </FilterCategory>
+      <FilterCategory
+        icon={<Tag size={16} />}
+        label="resources.products.filters.categories"
+      >
         {data &&
           data.map((record) => (
             <ToggleFilterButton
@@ -210,7 +191,28 @@ const SidebarFilters = () => {
               value={{ category_id: record.id }}
             />
           ))}
-      </div>
+      </FilterCategory>
     </div>
+  );
+};
+
+const FilterCategory = ({
+  icon,
+  label,
+  children,
+}: {
+  icon: ReactNode;
+  label: string;
+  children?: ReactNode;
+}) => {
+  const translate = useTranslate();
+  return (
+    <>
+      <h3 className="flex flex-row items-center gap-2 mb-1 font-bold text-sm">
+        {icon}
+        {translate(label)}
+      </h3>
+      <div className="flex flex-col items-start ml-3 mb-4">{children}</div>
+    </>
   );
 };
