@@ -16,7 +16,13 @@ import {
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { useListPaginationContext, Translate, useTranslate } from "ra-core";
 
-export const ListPagination = () => {
+export const ListPagination = ({
+  rowsPerPageOptions = [5, 10, 25, 50],
+  className,
+}: {
+  rowsPerPageOptions?: number[];
+  className?: string;
+}) => {
   const translate = useTranslate();
   const {
     hasPreviousPage,
@@ -78,7 +84,9 @@ export const ListPagination = () => {
   };
 
   return (
-    <div className="flex items-center justify-end space-x-2 gap-4">
+    <div
+      className={`flex items-center justify-end space-x-2 gap-4 ${className}`}
+    >
       <div className="hidden md:flex items-center space-x-2">
         <p className="text-sm font-medium">
           <Translate i18nKey="ra.navigation.page_rows_per_page">
@@ -95,7 +103,7 @@ export const ListPagination = () => {
             <SelectValue placeholder={perPage} />
           </SelectTrigger>
           <SelectContent side="top">
-            {[5, 10, 25, 50].map((pageSize) => (
+            {rowsPerPageOptions.map((pageSize) => (
               <SelectItem key={pageSize} value={`${pageSize}`}>
                 {pageSize}
               </SelectItem>

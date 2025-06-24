@@ -4,10 +4,16 @@ import { Save } from "lucide-react";
 import { ReactNode } from "react";
 import { DeleteButton } from "@/components/admin/delete-button";
 
-export const SimpleForm = ({ children }: { children: ReactNode }) => {
+export const SimpleForm = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) => {
   return (
     <Form>
-      <div className="flex flex-col gap-4 w-full max-w-lg">
+      <div className={`flex flex-col gap-4 w-full max-w-lg ${className}`}>
         {children}
         <div className="flex flex-row gap-4 justify-between">
           <Button className="btn btn-primary" type="submit">

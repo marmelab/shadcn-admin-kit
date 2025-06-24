@@ -11,16 +11,16 @@ import { Totals } from "./Totals";
 
 export const OrderEdit = () => (
   <Edit>
-    <SimpleForm>
+    <SimpleForm className="max-w-xl">
       <div className="flex flex-col md:flex-row gap-8">
         <div className="flex-2">
           <div className="flex flex-col md:flex-row gap-4 mb-4">
             <RecordField
               source="date"
               render={(record) => new Date(record.date).toLocaleString()}
-              className="flex-1"
+              className="flex-1 md:text-sm"
             />
-            <RecordField source="reference" className="flex-1" />
+            <RecordField source="reference" className="flex-1 md:text-sm" />
           </div>
           <AutocompleteInput
             source="status"
@@ -42,10 +42,14 @@ export const OrderEdit = () => (
             <RecordField
               label="Customer"
               render={(record) => `${record.first_name} ${record.last_name}`}
+              className="md:text-sm"
             />
             <RecordField
               render={(record) => (
-                <a className="underline" href={`mailto:${record.email}`}>
+                <a
+                  className="underline md:text-sm"
+                  href={`mailto:${record.email}`}
+                >
                   {record.email}
                 </a>
               )}
@@ -55,12 +59,18 @@ export const OrderEdit = () => (
             <RecordField
               label="Shipping Address"
               render={(record) => `${record.first_name} ${record.last_name}`}
+              className="md:text-sm"
             />
-            <RecordField label={false} source="address" />
+            <RecordField
+              label={false}
+              source="address"
+              className="md:text-sm"
+            />
             <RecordField
               render={(record) =>
                 `${record?.city}, ${record?.stateAbbr} ${record?.zipcode}`
               }
+              className="md:text-sm"
             />
           </ReferenceField>
         </div>

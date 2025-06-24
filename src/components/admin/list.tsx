@@ -61,7 +61,7 @@ export interface ListProps<RecordType extends RaRecord = RaRecord>
     ListViewProps {}
 
 export const ListView = (props: ListViewProps) => {
-  const { filters, title, children } = props;
+  const { filters, pagination = defaultPagination, title, children } = props;
   const translate = useTranslate();
   const resource = useResourceContext();
   if (!resource) {
@@ -113,14 +113,17 @@ export const ListView = (props: ListViewProps) => {
         <span />
       )}
       <div className="my-2">{children}</div>
-      <ListPagination />
+      {pagination}
       <BulkActionsToolbar />
     </>
   );
 };
 
+const defaultPagination = <ListPagination />;
+
 export interface ListViewProps {
   children: ReactNode;
   filters?: ReactElement[];
+  pagination?: ReactNode;
   title?: ReactNode | string | false;
 }
