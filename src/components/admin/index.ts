@@ -40,6 +40,7 @@ export * from "./simple-show-layout";
 export * from "./single-field-list";
 export * from "./text-field";
 export * from "./text-input";
+export * from "./toggle-filter-button";
 export * from "./theme-mode-toggle";
 export * from "./theme-provider";
 export * from "./user-menu";

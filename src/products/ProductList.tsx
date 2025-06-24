@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   List,
   ListPagination,
   NumberField,
   TextField,
   TextInput,
+  ToggleFilterButton,
 } from "@/components/admin";
-import { Button } from "@/components/ui/button";
 import {
   FilterLiveForm,
   RecordContextProvider,
@@ -16,8 +15,6 @@ import {
   useTranslate,
 } from "ra-core";
 import { Link } from "react-router-dom";
-import matches from "lodash/matches";
-import pickBy from "lodash/pickBy";
 import { DollarSign, ChartNoAxesColumn, Tag } from "lucide-react";
 import { humanize } from "inflection";
 
@@ -65,7 +62,7 @@ const ImageGrid = () => {
     return null; // Handle loading or error state
   }
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-6">
+    <div className="grid auto-rows-max grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-6">
       {data.map((product) => (
         <RecordContextProvider key={product.id} value={product}>
           <Link to={`/products/${product.id}`}>
@@ -121,14 +118,14 @@ const SidebarFilters = () => {
           source="q"
           placeholder={translate("ra.action.search")}
           label={false}
-          className="mb-3"
+          className="mb-6"
         />
       </FilterLiveForm>
-      <h3 className="flex flex-row items-center gap-2 mb-1 font-bold">
+      <h3 className="flex flex-row items-center gap-2 mb-1 font-bold text-sm">
         <DollarSign size={16} />
         {translate("resources.products.filters.sales")}
       </h3>
-      <div className="flex flex-col items-start ml-3 mb-2">
+      <div className="flex flex-col items-start ml-3 mb-4">
         <ToggleFilterButton
           label="resources.products.filters.best_sellers"
           value={{
@@ -162,11 +159,11 @@ const SidebarFilters = () => {
           }}
         />
       </div>
-      <h3 className="flex flex-row items-center gap-2 mb-1 font-bold">
+      <h3 className="flex flex-row items-center gap-2 mb-1 font-bold text-sm">
         <ChartNoAxesColumn size={16} />
         {translate("resources.products.filters.stock")}
       </h3>
-      <div className="flex flex-col items-start ml-3 mb-2">
+      <div className="flex flex-col items-start ml-3 mb-4">
         <ToggleFilterButton
           label="resources.products.filters.no_stock"
           value={{
@@ -200,13 +197,13 @@ const SidebarFilters = () => {
           }}
         />
       </div>
-      <h3 className="flex flex-row items-center gap-2 mb-1 font-bold">
+      <h3 className="flex flex-row items-center gap-2 mb-1 font-bold text-sm">
         <Tag size={16} />
         {translate("resources.products.filters.categories")}
       </h3>
-      <div className="flex flex-col items-start ml-3 mb-2">
+      <div className="flex flex-col items-start ml-3 mb-4">
         {data &&
-          data.map((record: any) => (
+          data.map((record) => (
             <ToggleFilterButton
               label={humanize(record.name)}
               key={record.id}
@@ -217,48 +214,3 @@ const SidebarFilters = () => {
     </div>
   );
 };
-
-const ToggleFilterButton = ({
-  label,
-  value,
-  className,
-}: {
-  label: string;
-  value: any;
-  className?: string;
-}) => {
-  const { filterValues, setFilters } = useListContext();
-  const translate = useTranslate();
-  const isSelected = getIsSelected(value, filterValues);
-  const handleClick = () => setFilters(toggleFilter(value, filterValues));
-  return (
-    <Button
-      variant={isSelected ? "secondary" : "ghost"}
-      onClick={handleClick}
-      className={className}
-      size="sm"
-    >
-      {translate(label, { _: label })}
-    </Button>
-  );
-};
-
-const toggleFilter = (value: any, filters: any) => {
-  const isSelected = matches(
-    pickBy(value, (val) => typeof val !== "undefined")
-  )(filters);
-
-  if (isSelected) {
-    const keysToRemove = Object.keys(value);
-    return Object.keys(filters).reduce(
-      (acc, key) =>
-        keysToRemove.includes(key) ? acc : { ...acc, [key]: filters[key] },
-      {}
-    );
-  }
-
-  return { ...filters, ...value };
-};
-
-const getIsSelected = (value: any, filters: any) =>
-  matches(pickBy(value, (val) => typeof val !== "undefined"))(filters);
