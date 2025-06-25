@@ -1,6 +1,7 @@
 import { Breadcrumb, BreadcrumbItem } from "@/components/admin/breadcrumb";
 import {
   CreateBase,
+  type CreateBaseProps,
   useCreatePath,
   useCreateContext,
   useGetResourceLabel,
@@ -14,11 +15,12 @@ import { Link } from "react-router-dom";
 export const Create = ({
   title,
   children,
+  ...rest
 }: {
   title?: ReactNode | string | false;
   children: ReactNode;
-}) => (
-  <CreateBase>
+} & CreateBaseProps) => (
+  <CreateBase {...rest}>
     <CreateView title={title}>{children}</CreateView>
   </CreateBase>
 );
