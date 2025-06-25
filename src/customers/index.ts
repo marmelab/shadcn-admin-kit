@@ -1,13 +1,12 @@
 import { ResourceProps } from "ra-core";
 import { CustomerList } from "./CustomerList";
-import { EditGuesser, ShowGuesser } from "@/components/admin";
+import { CustomerEdit } from "./CustomerEdit";
 import { Users } from "lucide-react";
 
 export const customers: ResourceProps = {
   name: "customers",
   list: CustomerList,
-  edit: EditGuesser,
-  show: ShowGuesser,
+  edit: CustomerEdit,
   recordRepresentation: (record) => `${record.first_name} ${record.last_name}`,
   icon: Users,
 };
