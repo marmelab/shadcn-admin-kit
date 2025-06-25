@@ -61,6 +61,7 @@ export const CustomerEdit = () => (
           <TextInput
             source="birthday"
             type="date"
+            format={(value) => value?.split("T")[0]} // Format date to YYYY-MM-DD
             className="[&>input]:bg-white"
           />
           <TextInput source="groups" />
