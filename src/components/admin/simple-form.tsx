@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Form, Translate } from "ra-core";
+import { Form, type FormProps, Translate, WithRecord } from "ra-core";
 import { Save } from "lucide-react";
 import { ReactNode } from "react";
 import { DeleteButton } from "@/components/admin/delete-button";
@@ -9,13 +9,17 @@ export const SimpleForm = ({
   children,
   className,
   toolbar = defaultFormToolbar,
+  ...rest
 }: {
   children: ReactNode;
   className?: string;
   toolbar?: ReactNode;
-}) => {
+} & FormProps) => {
   return (
-    <Form className={cn(`flex flex-col gap-4 w-full max-w-lg`, className)}>
+    <Form
+      className={cn(`flex flex-col gap-4 w-full max-w-lg`, className)}
+      {...rest}
+    >
       {children}
       {toolbar}
     </Form>
@@ -28,7 +32,7 @@ export const FormToolbar = ({ className }: { className?: string }) => (
       <Save />
       <Translate i18nKey="ra.action.save">Save</Translate>
     </Button>
-    <DeleteButton />
+    <WithRecord render={(record) => record.id !== null && <DeleteButton />} />
   </div>
 );
 

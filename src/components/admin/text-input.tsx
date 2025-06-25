@@ -27,6 +27,7 @@ export const TextInput = (props: TextInputProps) => {
     multiline,
     className,
     validate: _validateProp,
+    format: _formatProp,
     ...rest
   } = props;
   const { field, fieldState, isRequired } = useInput(props);
