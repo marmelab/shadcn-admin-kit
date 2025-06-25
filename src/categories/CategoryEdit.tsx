@@ -4,7 +4,7 @@ import {
   SimpleForm,
   TextInput,
 } from "@/components/admin";
-import { required } from "ra-core";
+import { required, Translate } from "ra-core";
 import { Link } from "react-router-dom";
 
 export const CategoryEdit = () => (
@@ -13,26 +13,35 @@ export const CategoryEdit = () => (
       <SimpleForm>
         <TextInput source="name" label="Name" validate={required()} />
       </SimpleForm>
+
       <ReferenceManyField
         reference="products"
         target="category_id"
         perPage={100}
         render={({ data }) =>
           data && (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-lg mt-6">
-              {data.map((product) => (
-                <Link
-                  className="border"
-                  key={product.id}
-                  to={`/products/${product.id}`}
-                >
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-32 object-cover"
-                  />
-                </Link>
-              ))}
+            <div className="mt-6">
+              <h3 className="font-semibold text-sm mb-2">
+                <Translate
+                  i18nKey="resources.products.name"
+                  options={{ smart_count: 10 }}
+                />
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-lg">
+                {data.map((product) => (
+                  <Link
+                    className="border"
+                    key={product.id}
+                    to={`/products/${product.id}`}
+                  >
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-32 object-cover"
+                    />
+                  </Link>
+                ))}
+              </div>
             </div>
           )
         }

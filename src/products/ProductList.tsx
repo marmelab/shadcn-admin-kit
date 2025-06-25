@@ -17,7 +17,7 @@ import {
   Translate,
 } from "ra-core";
 import { Link } from "react-router-dom";
-import { DollarSign, ChartNoAxesColumn, Tag } from "lucide-react";
+import { DollarSign, ChartNoAxesColumn, Bookmark } from "lucide-react";
 import { humanize } from "inflection";
 import type { Product, Category } from "@/types";
 
@@ -179,7 +179,7 @@ const SidebarFilters = () => {
         />
       </FilterCategory>
       <FilterCategory
-        icon={<Tag size={16} />}
+        icon={<Bookmark size={16} />}
         label="resources.products.filters.categories"
       >
         {data &&
