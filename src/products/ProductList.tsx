@@ -14,6 +14,7 @@ import {
   useListContext,
   useRecordContext,
   useTranslate,
+  Translate,
 } from "ra-core";
 import { Link } from "react-router-dom";
 import { DollarSign, ChartNoAxesColumn, Tag } from "lucide-react";
@@ -43,15 +44,13 @@ export const ProductList = () => {
 const ImageGrid = () => {
   const { isPending, error, data } = useListContext<Product>();
   if (isPending || error) {
-    return null; // Handle loading or error state
+    return null;
   }
   return (
     <div className="grid auto-rows-max grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-6">
       {data.map((product) => (
         <RecordContextProvider key={product.id} value={product}>
-          <Link to={`/products/${product.id}`}>
-            <ImageThumbnail />
-          </Link>
+          <ImageThumbnail />
         </RecordContextProvider>
       ))}
     </div>
@@ -62,7 +61,7 @@ const ImageThumbnail = () => {
   const product = useRecordContext<Product>();
   if (!product) return null;
   return (
-    <div>
+    <Link to={`/products/${product.id}`}>
       <div className="image-container overflow-hidden">
         <img
           src={product.thumbnail || product.image}
@@ -85,7 +84,7 @@ const ImageThumbnail = () => {
         source="description"
         className="block text-sm text-gray-600 truncate"
       />
-    </div>
+    </Link>
   );
 };
 
@@ -204,15 +203,12 @@ const FilterCategory = ({
   icon: ReactNode;
   label: string;
   children?: ReactNode;
-}) => {
-  const translate = useTranslate();
-  return (
-    <>
-      <h3 className="flex flex-row items-center gap-2 mb-1 font-bold text-sm">
-        {icon}
-        {translate(label)}
-      </h3>
-      <div className="flex flex-col items-start ml-3 mb-4">{children}</div>
-    </>
-  );
-};
+}) => (
+  <>
+    <h3 className="flex flex-row items-center gap-2 mb-1 font-bold text-sm">
+      {icon}
+      <Translate i18nKey={label} />
+    </h3>
+    <div className="flex flex-col items-start ml-3 mb-4">{children}</div>
+  </>
+);
