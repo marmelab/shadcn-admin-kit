@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useCallback, useEffect } from "react";
-import { Toaster, toast } from "sonner";
+import { Toaster, type ToasterProps, toast } from "sonner";
 import { useTheme } from "@/components/admin/theme-provider";
 import {
   CloseNotificationContext,
@@ -9,7 +9,7 @@ import {
   useTranslate,
 } from "ra-core";
 
-export const Notification = () => {
+export const Notification = (props: ToasterProps) => {
   const translate = useTranslate();
   const { notifications, takeNotification } = useNotificationContext();
   const takeMutation = useTakeUndoableMutation();
@@ -80,7 +80,13 @@ export const Notification = () => {
 
   return (
     <CloseNotificationContext.Provider value={handleRequestClose}>
-      <Toaster richColors theme={theme} closeButton />
+      <Toaster
+        richColors
+        theme={theme}
+        closeButton
+        position="bottom-center"
+        {...props}
+      />
     </CloseNotificationContext.Provider>
   );
 };
