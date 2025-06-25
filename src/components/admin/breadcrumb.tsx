@@ -55,7 +55,11 @@ export const BreadcrumbItem = React.forwardRef<
 >(({ children, className, ...props }, forwardedRef) => {
   return (
     <li
-      className={cn("inline-flex items-center text-sm", className)}
+      className={cn(
+        "inline-flex items-center text-sm",
+        "[&>a]:text-muted-foreground [&>a:hover]:text-primary",
+        className
+      )}
       {...props}
       ref={forwardedRef}
     >
