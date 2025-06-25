@@ -6,31 +6,37 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { FormError } from "@/components/admin/form-error";
 
 export type TextInputProps = InputProps & {
-  placeholder?: string;
-  className?: string;
-};
+  multiline?: boolean;
+} & React.ComponentProps<"textarea"> &
+  React.ComponentProps<"input">;
 
 export const TextInput = (props: TextInputProps) => {
   const resource = useResourceContext(props);
+  const { label, source, multiline, className, ...rest } = props;
   const { field, fieldState, isRequired } = useInput(props);
 
   return (
-    <FormItem className={props.className}>
-      {props.label !== false && (
+    <FormItem className={className}>
+      {label !== false && (
         <FormLabel>
           <FieldTitle
-            label={props.label}
-            source={props.source}
+            label={label}
+            source={source}
             resource={resource}
             isRequired={isRequired}
           />
         </FormLabel>
       )}
       <FormControl>
-        <Input type={props.type} placeholder={props.placeholder} {...field} />
+        {multiline ? (
+          <Textarea {...rest} {...field} />
+        ) : (
+          <Input {...rest} {...field} />
+        )}
       </FormControl>
       {props.helperText && (
         <FormDescription>{props.helperText}</FormDescription>

@@ -12,16 +12,14 @@ export const SimpleForm = ({
   className?: string;
 }) => {
   return (
-    <Form>
-      <div className={`flex flex-col gap-4 w-full max-w-lg ${className}`}>
-        {children}
-        <div className="flex flex-row gap-4 justify-between">
-          <Button className="btn btn-primary" type="submit">
-            <Save />
-            <Translate i18nKey="ra.action.save">Save</Translate>
-          </Button>
-          <DeleteButton />
-        </div>
+    <Form className={`flex flex-col gap-4 w-full max-w-lg ${className}`}>
+      {children}
+      <div className="flex flex-row gap-4 justify-between">
+        <Button className="btn btn-primary" type="submit">
+          <Save />
+          <Translate i18nKey="ra.action.save">Save</Translate>
+        </Button>
+        <DeleteButton />
       </div>
     </Form>
   );
