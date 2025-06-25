@@ -45,6 +45,10 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 
 Check the [Quick Start Guide](./docs/2-Quick-Start-Guide.md) for a step-by-step guide to set up your first Admin app with `shadcn-admin-kit`.
 
+## Exploring Components
+
+`shadcn-admin-kit` provides a set of components that you can use to build your Admin app. The components are organized in the [`src/components/admin`](./src/components/admin/) directory, and you can find the documentation for each component in its respective file.
+
 ## Usage
 
 Read the [documentation](./docs/1-Install.md) to learn how to use `shadcn-admin-kit` in your project. The following sections provide a brief overview of the main concepts.
