@@ -29,7 +29,10 @@ export const CustomerList = () => (
     <div className="flex flex-row gap-4 mb-4">
       <SidebarFilters />
       <DataTable className="flex-1">
-        <DataTable.Col label="resources.customers.fields.name">
+        <DataTable.Col
+          label="resources.customers.fields.name"
+          source="last_name"
+        >
           <FullNameField />
         </DataTable.Col>
         <DataTable.Col
