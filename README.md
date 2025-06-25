@@ -236,7 +236,7 @@ Now, when a user browses to `/settings` or `/profile`, the components you define
 
 **Tip:** Custom routes don’t automatically appear in the menu. You'll need to customize the [`<AppSidebar>` component](https://github.com/marmelab/shadcn-admin-kit/blob/main/src/components/admin/app-sidebar.tsx) if you want custom routes to be accessible from the menu.
 
-## Local Development
+## Contributing
 
 This project requires [Node.js](https://nodejs.org/) and [pnpm](https://pnpm.io/).
 
@@ -266,4 +266,4 @@ make test-registry
 
 ## License
 
-This project is licensed under the [MIT License](./LICENSE).
+This project is licensed under the [MIT License](./LICENSE), courtesy of [Marmelab](https://marmelab.com/).
