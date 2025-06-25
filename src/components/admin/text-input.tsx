@@ -1,4 +1,9 @@
-import { InputProps, useInput, useResourceContext, FieldTitle } from "ra-core";
+import {
+  type InputProps,
+  useInput,
+  useResourceContext,
+  FieldTitle,
+} from "ra-core";
 import {
   FormControl,
   FormDescription,
@@ -16,7 +21,14 @@ export type TextInputProps = InputProps & {
 
 export const TextInput = (props: TextInputProps) => {
   const resource = useResourceContext(props);
-  const { label, source, multiline, className, ...rest } = props;
+  const {
+    label,
+    source,
+    multiline,
+    className,
+    validate: _validateProp,
+    ...rest
+  } = props;
   const { field, fieldState, isRequired } = useInput(props);
 
   return (
