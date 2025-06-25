@@ -47,7 +47,7 @@ import get from "lodash/get";
 export function DataTable<RecordType extends RaRecord = RaRecord>(
   props: DataTableProps<RecordType>
 ) {
-  const { children, ...rest } = props;
+  const { children, className, ...rest } = props;
   return (
     <DataTableBase<RecordType>
       hasBulkActions={false}
@@ -55,7 +55,7 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
       empty={<DataTableEmpty />}
       {...rest}
     >
-      <div className="rounded-md border">
+      <div className={cn("rounded-md border", className)}>
         <Table>
           <DataTableRenderContext.Provider value="header">
             <DataTableHead>{children}</DataTableHead>
@@ -201,6 +201,7 @@ const DataTableEmpty = () => {
 export interface DataTableProps<RecordType extends RaRecord = RaRecord>
   extends Partial<DataTableBaseProps<RecordType>> {
   children: ReactNode;
+  className?: string;
 }
 
 export function DataTableColumn<
@@ -301,7 +302,14 @@ const oppositeOrder: Record<SortPayload["order"], SortPayload["order"]> = {
 function DataTableCell<
   RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
 >(props: DataTableColumnProps<RecordType>) {
-  const { children, render, field, source, cellClassName } = props;
+  const {
+    children,
+    render,
+    field,
+    source,
+    cellClassName,
+    conditionalClassName,
+  } = props;
 
   const record = useRecordContext<RecordType>();
   if (!render && !field && !children && !source) {
@@ -311,7 +319,13 @@ function DataTableCell<
   }
 
   return (
-    <TableCell className={cn("py-1", cellClassName)}>
+    <TableCell
+      className={cn(
+        "py-1",
+        cellClassName,
+        record && conditionalClassName?.(record)
+      )}
+    >
       {children ??
         (render
           ? record && render(record)
@@ -327,6 +341,7 @@ export interface DataTableColumnProps<
 > {
   cellClassName?: string;
   headerClassName?: string;
+  conditionalClassName?: (record: RecordType) => string | false | undefined;
   children?: ReactNode;
   render?: (record: RecordType) => React.ReactNode;
   field?: React.ElementType;
