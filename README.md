@@ -43,61 +43,11 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 
 ## Getting started
 
-### Full Tutorial
-
-If this is your first `shadcn-admin-kit` project, you may want to follow [our full tutorial][TutorialLink] to get started with React-admin using `shadcn-admin-kit`.
-
-### MCP Server
-
-This project is compatible with the new `shadcn@canary registry:mcp` command, and contains cursor rules to instruct the LLM how to setup the `<Admin>` component, the Data Provider, and the resources.
-
-Check out the [MCP documentation](./docs/MCP.md) for more information on how to use the MCP server.
-
-### Using with Next.js
-
-Learn how to use Shadcn Admin Kit with Next.js by following this [guide](./docs/using-with-next.md).
-
-## Installation
-
-1. Create a [Vite](https://vite.dev/) single-page app
-
-    ```bash
-    npm create vite@latest my-shadcn-admin-app -- --template react-ts
-    ```
-
-2. [Install shadcn/ui](https://ui.shadcn.com/docs/installation/vite) in your project.
-
-3. Download the `shadcn-admin-kit` components and add them to your project using the `shadcn` CLI.
-
-    ```bash
-    npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
-    ```
-
-    If you use another package manager than npm, use the appropriate command:
-
-    ```bash
-    # pnpm
-    pnpm dlx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
-    # yarn > v2
-    yarn dlx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
-    # yarn v1
-    yarn dlx shadcn add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
-    # bun
-    bunx --bun shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
-    ```
-
-4. Set the `verbatimModuleSyntax` option to `false` in your `tsconfig.app.json` file to avoid an [issue](https://github.com/shadcn-ui/ui/issues/6618) with the latest version of TypeScript.
-
-    ```json
-    {
-      "compilerOptions": {
-        // ...
-        "verbatimModuleSyntax": false
-      }
-    }
-    ```
+Check the [Quick Start Guide](./docs/2-Quick-Start-Guide.md) for a step-by-step guide to set up your first Admin app with `shadcn-admin-kit`.
 
 ## Usage
+
+Read the [documentation](./docs/1-Install.md) to learn how to use `shadcn-admin-kit` in your project. The following sections provide a brief overview of the main concepts.
 
 ### Use `<Admin>` As Root Component
 
@@ -152,7 +102,7 @@ export const App = () => (
 
 The guessers will print out the guessed component code in the console. You can then copy and paste it into your code to create the components to use as list, edit and show view.
 
-```
+```jsx
 // Example output
 Guessed List:
 
@@ -168,8 +118,6 @@ export const CategoryList = () => (
     </List>
 );
 ```
-
-## Advanced usage
 
 ### Adding Authentication
 
