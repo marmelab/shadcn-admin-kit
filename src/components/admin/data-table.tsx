@@ -174,7 +174,11 @@ const DataTableRow = ({ children }: { children: ReactNode }) => {
   }, [record, resource, rowClick, navigate, getPathForRecord]);
 
   return (
-    <TableRow key={record.id} onClick={handleClick}>
+    <TableRow
+      key={record.id}
+      onClick={handleClick}
+      className={cn(rowClick !== false && "cursor-pointer")}
+    >
       <TableCell className="flex w-8" onClick={handleToggle}>
         <Checkbox
           checked={selectedIds?.includes(record.id)}

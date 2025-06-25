@@ -6,6 +6,7 @@ import {
   ReferenceField,
   SimpleForm,
 } from "@/components/admin";
+import { RecordRepresentation } from "ra-core";
 import { Basket } from "./Basket";
 import { Totals } from "./Totals";
 
@@ -41,9 +42,10 @@ export const OrderEdit = () => (
           >
             <RecordField
               label="Customer"
-              render={(record) => `${record.first_name} ${record.last_name}`}
-              className="md:text-sm"
-            />
+              className="md:text-sm [&>span]:underline"
+            >
+              <RecordRepresentation />
+            </RecordField>
             <RecordField
               render={(record) => (
                 <a

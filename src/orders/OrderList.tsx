@@ -106,7 +106,7 @@ const OrdersTable = ({ storeKey }: { storeKey: string }) => (
     />
     <DataTable.Col source="reference" />
     <DataTable.Col source="customer_id">
-      <ReferenceField source="customer_id" reference="customers">
+      <ReferenceField source="customer_id" reference="customers" link={false}>
         <FullNameField />
       </ReferenceField>
     </DataTable.Col>
