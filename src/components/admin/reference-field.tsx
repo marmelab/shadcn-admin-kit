@@ -44,6 +44,7 @@ export interface ReferenceFieldProps<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     meta?: any;
   };
+  record?: RecordType;
   reference: string;
   translateChoice?: ((record: ReferenceRecordType) => string) | boolean;
   link?: LinkToType;
