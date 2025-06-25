@@ -13,10 +13,12 @@ export const ProductEdit = () => {
   return (
     <Edit>
       <SimpleForm
-        className="min-w-xl"
-        toolbar={<FormToolbar className="ml-32 pl-4" />}
+        className="max-w-xl"
+        toolbar={
+          <FormToolbar className="md:ml-32 md:pl-4 pt-4 pb-4 sticky bottom-0 bg-background" />
+        }
       >
-        <div className="flex flex-row gap-4 mb-4">
+        <div className="flex flex-col md:flex-row gap-4 mb-4">
           <h3 className="min-w-32 text-sm font-semibold">
             {translate("resources.products.tabs.image")}
           </h3>
@@ -42,11 +44,11 @@ export const ProductEdit = () => {
             />
           </div>
         </div>
-        <div className="flex flex-row gap-4 mb-4">
+        <div className="flex flex-col md:flex-row gap-4 mb-4">
           <h3 className="min-w-32 text-sm font-semibold">
             {translate("resources.products.tabs.details")}
           </h3>
-          <div className="border rounded-sm p-4 bg-secondary flex-1 grid grid-cols-2 gap-4">
+          <div className="border rounded-sm p-4 bg-secondary flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
             <TextInput
               source="reference"
               label="Reference"
@@ -79,7 +81,7 @@ export const ProductEdit = () => {
             />
           </div>
         </div>
-        <div className="flex flex-row gap-4 mb-4">
+        <div className="flex flex-col md:flex-row gap-4 mb-4">
           <h3 className="min-w-32 text-sm font-semibold">
             {translate("resources.products.tabs.description")}
           </h3>
