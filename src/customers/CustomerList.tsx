@@ -25,14 +25,20 @@ import segments from "../segments/data";
 import { FullNameField } from "./FullNameField";
 
 export const CustomerList = () => (
-  <List perPage={25}>
+  <List perPage={25} sort={{ field: "last_seen", order: "DESC" }}>
     <div className="flex flex-row gap-4 mb-4">
       <SidebarFilters />
       <DataTable className="flex-1">
         <DataTable.Col label="resources.customers.fields.name">
           <FullNameField />
         </DataTable.Col>
-        <DataTable.NumberCol source="nb_orders" />
+        <DataTable.Col
+          source="nb_orders"
+          label="resources.customers.fields.orders"
+          headerClassName="text-right"
+          cellClassName="text-right"
+          render={(record) => (record.nb_orders > 0 ? record.nb_orders : "")}
+        />
         <DataTable.NumberCol
           source="total_spent"
           options={{ style: "currency", currency: "USD" }}

@@ -21,7 +21,7 @@ const storeKeyByStatus = {
 };
 
 const filters = [
-  <TextInput source="q" placeholder="Search..." label={false} />,
+  <TextInput source="q" placeholder="Search" label={false} />,
   <ReferenceInput
     source="customer_id"
     reference="customers"
