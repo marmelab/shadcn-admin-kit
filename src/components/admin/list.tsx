@@ -61,7 +61,13 @@ export interface ListProps<RecordType extends RaRecord = RaRecord>
     ListViewProps {}
 
 export const ListView = (props: ListViewProps) => {
-  const { filters, pagination = defaultPagination, title, children } = props;
+  const {
+    filters,
+    pagination = defaultPagination,
+    title,
+    children,
+    actions,
+  } = props;
   const translate = useTranslate();
   const resource = useResourceContext();
   if (!resource) {
@@ -94,10 +100,12 @@ export const ListView = (props: ListViewProps) => {
       </Breadcrumb>
       <div className="flex justify-between items-start flex-wrap gap-2 my-2">
         <h2 className="text-2xl font-bold tracking-tight">{finalTitle}</h2>
-        <div className="flex items-center gap-2">
-          {hasCreate ? <CreateButton /> : null}
-          {<ExportButton />}
-        </div>
+        {actions ?? (
+          <div className="flex items-center gap-2">
+            {hasCreate ? <CreateButton /> : null}
+            {<ExportButton />}
+          </div>
+        )}
       </div>
       {filters && filters.length ? (
         <FilterLiveForm>
@@ -123,6 +131,7 @@ const defaultPagination = <ListPagination />;
 
 export interface ListViewProps {
   children: ReactNode;
+  actions?: ReactNode;
   filters?: ReactElement[];
   pagination?: ReactNode;
   title?: ReactNode | string | false;
