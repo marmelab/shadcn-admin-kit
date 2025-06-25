@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReactElement, ReactNode } from "react";
 import {
   useReferenceManyFieldController,
@@ -7,6 +6,7 @@ import {
   useRecordContext,
   RaRecord,
   UseReferenceManyFieldControllerParams,
+  ListControllerResult,
 } from "ra-core";
 
 export const ReferenceManyField = <
@@ -23,6 +23,7 @@ export const ReferenceManyField = <
     pagination = null,
     perPage = 25,
     reference,
+    render,
     resource,
     sort = defaultSort,
     source = "id",
@@ -53,6 +54,7 @@ export const ReferenceManyField = <
   return (
     <ResourceContextProvider value={reference}>
       <ListContextProvider value={controllerProps}>
+        {render && render(controllerProps)}
         {children}
         {pagination}
       </ListContextProvider>
@@ -61,13 +63,14 @@ export const ReferenceManyField = <
 };
 
 export interface ReferenceManyFieldProps<
-  RecordType extends Record<string, any> = Record<string, any>,
-  ReferenceRecordType extends Record<string, any> = Record<string, any>
+  RecordType extends RaRecord = RaRecord,
+  ReferenceRecordType extends RaRecord = RaRecord
 > extends UseReferenceManyFieldControllerParams<
     RecordType,
     ReferenceRecordType
   > {
-  children: ReactNode;
+  children?: ReactNode;
+  render?: (props: ListControllerResult<ReferenceRecordType>) => ReactNode;
   pagination?: ReactElement;
 }
 

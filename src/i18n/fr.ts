@@ -225,6 +225,8 @@ const customFrenchMessages: TranslationMessages = {
     reviews: {
       name: "Commentaire |||| Commentaires",
       amount: "1 commentaire |||| %{smart_count} commentaires",
+      based_on:
+        "basé sur 1 commentaire |||| basé sur %{smart_count} commentaires",
       relative_to_poster: "Commentaire sur",
       detail: "Détail du commentaire",
       fields: {

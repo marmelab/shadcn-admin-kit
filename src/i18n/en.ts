@@ -207,6 +207,7 @@ const customEnglishMessages: TranslationMessages = {
     reviews: {
       name: "Review |||| Reviews",
       amount: "1 review |||| %{smart_count} reviews",
+      based_on: "based on 1 review |||| based on %{smart_count} reviews",
       relative_to_poster: "Review on poster",
       detail: "Review detail",
       fields: {

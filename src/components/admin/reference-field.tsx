@@ -6,14 +6,20 @@ import {
   useGetRecordRepresentation,
   useReferenceFieldContext,
   useTranslate,
+  ExtractRecordPaths,
 } from "ra-core";
-import { ReactNode, memo } from "react";
+import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { UseQueryOptions } from "@tanstack/react-query";
 
-export const ReferenceField = (props: ReferenceFieldProps) => {
+export const ReferenceField = <
+  RecordType extends RaRecord = RaRecord,
+  ReferenceRecordType extends RaRecord = RaRecord
+>(
+  props: ReferenceFieldProps<RecordType, ReferenceRecordType>
+) => {
   const { empty } = props;
-  const id = useFieldValue(props);
+  const id = useFieldValue<RecordType>(props);
   const translate = useTranslate();
 
   return id == null ? (
@@ -24,29 +30,43 @@ export const ReferenceField = (props: ReferenceFieldProps) => {
     )
   ) : (
     <ReferenceFieldBase {...props}>
-      <PureReferenceFieldView {...props} />
+      <ReferenceFieldView<ReferenceRecordType> {...props} />
     </ReferenceFieldBase>
   );
 };
 
-export interface ReferenceFieldProps extends Partial<ReferenceFieldViewProps> {
+export interface ReferenceFieldProps<
+  RecordType extends RaRecord = RaRecord,
+  ReferenceRecordType extends RaRecord = RaRecord
+> extends Partial<ReferenceFieldViewProps<ReferenceRecordType>> {
   children?: ReactNode;
   queryOptions?: UseQueryOptions<RaRecord[], Error> & {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     meta?: any;
   };
   reference: string;
-  translateChoice?: ((record: RaRecord) => string) | boolean;
+  translateChoice?: ((record: ReferenceRecordType) => string) | boolean;
   link?: LinkToType;
-  source: string;
+  source: ExtractRecordPaths<RecordType>;
 }
 
 // useful to prevent click bubbling in a datagrid with rowClick
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const stopPropagation = (e: any) => e.stopPropagation();
 
-export const ReferenceFieldView = (props: ReferenceFieldViewProps) => {
-  const { children, className, empty, reference, loading = null } = props;
+export const ReferenceFieldView = <
+  ReferenceRecordType extends RaRecord = RaRecord
+>(
+  props: ReferenceFieldViewProps<ReferenceRecordType>
+) => {
+  const {
+    children,
+    className,
+    empty,
+    render,
+    reference,
+    loading = null,
+  } = props;
   const { error, link, isLoading, referenceRecord } =
     useReferenceFieldContext();
   const getRecordRepresentation = useGetRecordRepresentation(reference);
@@ -66,9 +86,9 @@ export const ReferenceFieldView = (props: ReferenceFieldViewProps) => {
     );
   }
 
-  const child = children || (
-    <span>{getRecordRepresentation(referenceRecord)}</span>
-  );
+  const child = render
+    ? render(referenceRecord as ReferenceRecordType)
+    : children || <span>{getRecordRepresentation(referenceRecord)}</span>;
 
   if (link) {
     return (
@@ -83,18 +103,18 @@ export const ReferenceFieldView = (props: ReferenceFieldViewProps) => {
   return <>{child}</>;
 };
 
-export interface ReferenceFieldViewProps {
+export interface ReferenceFieldViewProps<
+  ReferenceRecordType extends RaRecord = RaRecord
+> {
   children?: ReactNode;
   className?: string;
   empty?: ReactNode;
   loading?: ReactNode;
-  record?: RaRecord;
+  render?: (record: ReferenceRecordType) => ReactNode;
   reference: string;
   source: string;
   resource?: string;
-  translateChoice?: ((record: RaRecord) => string) | boolean;
+  translateChoice?: ((record: ReferenceRecordType) => string) | boolean;
   resourceLinkPath?: LinkToType;
   error?: ReactNode;
 }
-
-const PureReferenceFieldView = memo(ReferenceFieldView);
