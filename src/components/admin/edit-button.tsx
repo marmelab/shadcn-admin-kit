@@ -6,11 +6,12 @@ import {
   useRecordContext,
   useResourceContext,
   Translate,
+  type RaRecord,
 } from "ra-core";
 
-export const EditButton = () => {
-  const resource = useResourceContext();
-  const record = useRecordContext();
+export const EditButton = (props: { record?: RaRecord; resource?: string }) => {
+  const resource = useResourceContext(props);
+  const record = useRecordContext(props);
   const createPath = useCreatePath();
   const link = createPath({
     resource,
