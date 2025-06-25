@@ -30,7 +30,7 @@ export const ProductEdit = () => {
             <FormToolbar className="md:pl-36 pt-4 pb-4 sticky bottom-0 bg-linear-to-b from-transparent to-background to-10%" />
           }
         >
-          <div className="flex flex-col md:flex-row gap-4 mb-4">
+          <div className="flex flex-col md:flex-row gap-4 mb-2">
             <h3 className="min-w-32 text-sm font-semibold">
               <Translate i18nKey="resources.products.tabs.image" />
             </h3>
@@ -56,7 +56,7 @@ export const ProductEdit = () => {
               />
             </div>
           </div>
-          <div className="flex flex-col md:flex-row gap-4 mb-4">
+          <div className="flex flex-col md:flex-row gap-4 mb-2">
             <h3 className="min-w-32 text-sm font-semibold">
               <Translate i18nKey="resources.products.tabs.details" />
             </h3>
@@ -93,7 +93,7 @@ export const ProductEdit = () => {
               />
             </div>
           </div>
-          <div className="flex flex-col md:flex-row gap-4 mb-4">
+          <div className="flex flex-col md:flex-row gap-4">
             <h3 className="min-w-32 text-sm font-semibold">
               <Translate i18nKey="resources.products.tabs.description" />
             </h3>

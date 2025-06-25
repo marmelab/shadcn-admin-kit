@@ -43,7 +43,7 @@ export const CustomerList = () => (
           source="total_spent"
           options={{ style: "currency", currency: "USD" }}
           conditionalClassName={(record) =>
-            record.total_spent > 500 && "text-red-500"
+            record.total_spent > 500 && "dark:text-green-500 text-lime-700"
           }
         />
         <DataTable.Col

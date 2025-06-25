@@ -87,6 +87,7 @@ const customFrenchMessages: TranslationMessages = {
       fieldGroups: {
         identity: "Identité",
         address: "Adresse",
+        misc: "Divers",
         stats: "Statistiques",
         history: "Historique",
         password: "Mot de passe",

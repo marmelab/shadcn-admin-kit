@@ -78,6 +78,7 @@ const customEnglishMessages: TranslationMessages = {
       fieldGroups: {
         identity: "Identity",
         address: "Address",
+        misc: "Misc",
         stats: "Stats",
         history: "History",
         password: "Password",
