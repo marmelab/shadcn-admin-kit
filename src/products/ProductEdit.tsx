@@ -25,7 +25,7 @@ export const ProductEdit = () => {
     <Edit>
       <div className="flex items-start justify-between gap-2 mb-4">
         <SimpleForm
-          className="max-w-xl"
+          className="max-w-2xl"
           toolbar={
             <FormToolbar className="md:pl-36 pt-4 pb-4 sticky bottom-0 bg-linear-to-b from-transparent to-background to-10%" />
           }

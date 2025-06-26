@@ -20,7 +20,7 @@ export const CategoryEdit = () => (
         perPage={100}
         render={({ data }) =>
           data && (
-            <div className="mt-6">
+            <div>
               <h3 className="font-semibold text-sm mb-2">
                 <Translate
                   i18nKey="resources.products.name"
