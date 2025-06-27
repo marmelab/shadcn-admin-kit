@@ -1,10 +1,12 @@
 import {
+  AutocompleteArrayInput,
   BooleanInput,
   Edit,
   SimpleForm,
   TextInput,
   FormToolbar,
 } from "@/components/admin";
+import segments from "@/segments/data";
 import { required, email, Translate } from "ra-core";
 
 export const CustomerEdit = () => (
@@ -68,7 +70,7 @@ export const CustomerEdit = () => (
             format={(value) => value?.split("T")[0]} // Format date to YYYY-MM-DD
             className="[&>input]:bg-white"
           />
-          <TextInput source="groups" />
+          <AutocompleteArrayInput source="groups" choices={segments} />
         </div>
       </div>
     </SimpleForm>

@@ -26,3 +26,6 @@ serve-registry: ## Serve the UI registry locally
 
 clear-registry: ## Clear the UI registry
 	rm -rf ./public/r
+
+storybook: ## Start the storybook
+	pnpm run storybook

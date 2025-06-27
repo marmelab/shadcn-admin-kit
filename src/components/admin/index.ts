@@ -2,6 +2,7 @@ export * from "./admin";
 export * from "./app-sidebar";
 export * from "./array-field";
 export * from "./autocomplete-input";
+export * from "./autocomplete-array-input";
 export * from "./badge-field";
 export * from "./boolean-input";
 export * from "./breadcrumb";

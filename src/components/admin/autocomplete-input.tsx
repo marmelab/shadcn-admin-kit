@@ -67,6 +67,8 @@ export const AutocompleteInput = (
     translateChoice: props.translateChoice ?? !isFromReference,
   });
 
+  const [filterValue, setFilterValue] = React.useState("");
+
   const [open, setOpen] = React.useState(false);
   const selectedChoice = allChoices.find(
     (choice) => getChoiceValue(choice) === field.value
@@ -107,11 +109,17 @@ export const AutocompleteInput = (
           </PopoverTrigger>
           <PopoverContent className="w-[200px] p-0">
             {/* We handle the filtering ourselves */}
-            <Command shouldFilter={false}>
+            <Command shouldFilter={!isFromReference}>
               <CommandInput
                 placeholder="Search..."
+                value={filterValue}
                 onValueChange={(filter) => {
-                  setFilters(filterToQuery(filter));
+                  setFilterValue(filter);
+                  // We don't want the ChoicesContext to filter the choices if the input
+                  // is not from a reference as it would also filter out the selected values
+                  if (isFromReference) {
+                    setFilters(filterToQuery(filter));
+                  }
                 }}
               />
               <CommandEmpty>No matching item found.</CommandEmpty>
@@ -126,7 +134,10 @@ export const AutocompleteInput = (
                         !isRequired
                       ) {
                         field.onChange("");
-                        setFilters(filterToQuery(""));
+                        setFilterValue("");
+                        if (isFromReference) {
+                          setFilters(filterToQuery(""));
+                        }
                         setOpen(false);
                         return;
                       }
