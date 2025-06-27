@@ -114,7 +114,7 @@ export const AutocompleteArrayInput = (
           <div className="group rounded-md bg-transparent dark:bg-input/30 border border-input px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
             <div className="flex flex-wrap gap-1">
               {selectedChoices.map((choice) => (
-                <Badge key={getChoiceValue(choice)} variant="default">
+                <Badge key={getChoiceValue(choice)} variant="outline">
                   {getChoiceText(choice)}
                   <button
                     className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
