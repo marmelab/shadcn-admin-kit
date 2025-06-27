@@ -67,6 +67,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/autocomplete-array-input.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/badge-field.tsx",
           "type": "registry:component"
         },
