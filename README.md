@@ -256,6 +256,12 @@ To serve the demo locally, run:
 make run
 ```
 
+To start the storybook, run:
+
+```bash
+make storybook
+```
+
 To build the project, run:
 
 ```bash

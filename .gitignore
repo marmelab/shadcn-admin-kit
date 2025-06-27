@@ -25,3 +25,6 @@ dist-ssr
 
 public/r
 temp
+
+*storybook.log
+storybook-static
