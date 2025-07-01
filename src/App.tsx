@@ -1,11 +1,5 @@
 import { Resource } from "ra-core";
-import {
-  Admin,
-  ListGuesser,
-  ShowGuesser,
-  EditGuesser,
-} from "@/components/admin";
-import { MessageSquareText } from "lucide-react";
+import { Admin } from "@/components/admin";
 
 import { dataProvider } from "./dataProvider";
 import { authProvider } from "./authProvider";
@@ -14,6 +8,7 @@ import { products } from "./products";
 import { categories } from "./categories";
 import { orders } from "./orders";
 import { customers } from "./customers";
+import { reviews } from "./reviews";
 import { Dashboard } from "./dashboard/Dashboard";
 
 function App() {
@@ -28,13 +23,7 @@ function App() {
       <Resource {...products} />
       <Resource {...categories} />
       <Resource {...customers} />
-      <Resource
-        name="reviews"
-        list={ListGuesser}
-        show={ShowGuesser}
-        edit={EditGuesser}
-        icon={MessageSquareText}
-      />
+      <Resource {...reviews} />
     </Admin>
   );
 }

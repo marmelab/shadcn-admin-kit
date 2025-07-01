@@ -47,7 +47,7 @@ import get from "lodash/get";
 export function DataTable<RecordType extends RaRecord = RaRecord>(
   props: DataTableProps<RecordType>
 ) {
-  const { children, className, ...rest } = props;
+  const { children, className, rowClassName, ...rest } = props;
   return (
     <DataTableBase<RecordType>
       hasBulkActions={false}
@@ -60,7 +60,9 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
           <DataTableRenderContext.Provider value="header">
             <DataTableHead>{children}</DataTableHead>
           </DataTableRenderContext.Provider>
-          <DataTableBody>{children}</DataTableBody>
+          <DataTableBody<RecordType> rowClassName={rowClassName}>
+            {children}
+          </DataTableBody>
         </Table>
       </div>
     </DataTableBase>
@@ -110,7 +112,13 @@ const DataTableHead = ({ children }: { children: ReactNode }) => {
   );
 };
 
-const DataTableBody = ({ children }: { children: ReactNode }) => {
+const DataTableBody = <RecordType extends RaRecord = RaRecord>({
+  children,
+  rowClassName,
+}: {
+  children: ReactNode;
+  rowClassName?: (record: RecordType) => string | undefined;
+}) => {
   const data = useDataTableDataContext();
   return (
     <TableBody>
@@ -119,14 +127,22 @@ const DataTableBody = ({ children }: { children: ReactNode }) => {
           value={record}
           key={record.id ?? `row${rowIndex}`}
         >
-          <DataTableRow>{children}</DataTableRow>
+          <DataTableRow className={rowClassName?.(record)}>
+            {children}
+          </DataTableRow>
         </RecordContextProvider>
       ))}
     </TableBody>
   );
 };
 
-const DataTableRow = ({ children }: { children: ReactNode }) => {
+const DataTableRow = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) => {
   const { rowClick, handleToggleItem } = useDataTableCallbacksContext();
   const selectedIds = useDataTableSelectedIdsContext();
 
@@ -177,7 +193,7 @@ const DataTableRow = ({ children }: { children: ReactNode }) => {
     <TableRow
       key={record.id}
       onClick={handleClick}
-      className={cn(rowClick !== false && "cursor-pointer")}
+      className={cn(rowClick !== false && "cursor-pointer", className)}
     >
       <TableCell className="flex w-8" onClick={handleToggle}>
         <Checkbox
@@ -206,6 +222,7 @@ export interface DataTableProps<RecordType extends RaRecord = RaRecord>
   extends Partial<DataTableBaseProps<RecordType>> {
   children: ReactNode;
   className?: string;
+  rowClassName?: (record: RecordType) => string | undefined;
 }
 
 export function DataTableColumn<
