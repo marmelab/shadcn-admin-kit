@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { useCallback } from "react";
 import {
   DataTable,
   List,
@@ -6,11 +8,22 @@ import {
   ReferenceInput,
   AutocompleteInput,
 } from "@/components/admin";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarHeader,
+  SidebarProvider,
+} from "@/components/ui/sidebar";
+import { Button } from "@/components/ui/button";
+import { matchPath, useLocation, useNavigate } from "react-router-dom";
+import { useCreatePath, useTranslate } from "ra-core";
+import { cn } from "@/lib/utils";
+import { X } from "lucide-react";
 
 import { FullNameField } from "../customers/FullNameField";
 import { StarRatingField } from "./StarRatingField";
+import { ReviewEdit } from "./ReviewEdit";
 import type { Review } from "../types";
-import { cn } from "@/lib/utils";
 
 const filters = [
   <TextInput source="q" placeholder="Search" label={false} />,
@@ -55,41 +68,114 @@ const filters = [
   />,
 ];
 
-export const ReviewList = () => (
-  <List sort={{ field: "date", order: "DESC" }} perPage={25} filters={filters}>
-    <DataTable
-      rowClassName={(record: Review) => {
-        if (record.status === "accepted") {
-          return "border-l-green-400 dark:border-l-green-800 border-l-5";
-        }
-        if (record.status === "rejected") {
-          return "border-l-red-400 dark:border-l-red-800 border-l-5";
-        }
-        return "border-l-yellow-400 dark:border-l-yellow-800 border-l-5";
-      }}
-      className="[&_thead_tr]:border-l-transparent [&_thead_tr]:border-l-5"
-    >
-      <DataTable.Col
-        source="date"
-        render={(record) => new Date(record.date).toLocaleDateString()}
-      />
-      <DataTable.Col source="customer_id">
-        <ReferenceField source="customer_id" reference="customers">
-          <FullNameField />
-        </ReferenceField>
-      </DataTable.Col>
-      <DataTable.Col source="product_id">
-        <ReferenceField source="product_id" reference="products" />
-      </DataTable.Col>
-      <DataTable.Col
-        source="rating"
-        render={() => <StarRatingField size="small" />}
-      />
-      <DataTable.Col
-        source="comment"
-        cellClassName="max-w-[18em] overflow-hidden text-ellipsis whitespace-nowrap"
-      />
-      <DataTable.Col source="status" />
-    </DataTable>
-  </List>
-);
+export const ReviewList = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const createPath = useCreatePath();
+  const translate = useTranslate();
+
+  const handleClose = useCallback(() => {
+    navigate("/reviews");
+  }, [navigate]);
+  const match = matchPath("/reviews/:id", location.pathname);
+  return (
+    <>
+      <List
+        sort={{ field: "date", order: "DESC" }}
+        perPage={25}
+        filters={filters}
+      >
+        <DataTable
+          rowClick={(id, resource) => {
+            // As we display the edit view in a drawer, we don't the default rowClick behavior that will scroll to the top of the page
+            // So we navigate manually without specifying the _scrollToTop state
+            navigate(
+              createPath({
+                resource,
+                id,
+                type: "edit",
+              })
+            );
+            // Disable the default rowClick behavior
+            return false;
+          }}
+          rowClassName={(record: Review) => {
+            if (record.status === "accepted") {
+              return "border-l-green-400 dark:border-l-green-800 border-l-5";
+            }
+            if (record.status === "rejected") {
+              return "border-l-red-400 dark:border-l-red-800 border-l-5";
+            }
+            return "border-l-yellow-400 dark:border-l-yellow-800 border-l-5";
+          }}
+          className="[&_thead_tr]:border-l-transparent [&_thead_tr]:border-l-5"
+        >
+          <DataTable.Col
+            source="date"
+            render={(record) => new Date(record.date).toLocaleDateString()}
+          />
+          <DataTable.Col source="customer_id">
+            <ReferenceField
+              source="customer_id"
+              reference="customers"
+              link={false}
+            >
+              <FullNameField />
+            </ReferenceField>
+          </DataTable.Col>
+          <DataTable.Col source="product_id">
+            <ReferenceField
+              source="product_id"
+              reference="products"
+              link={false}
+            />
+          </DataTable.Col>
+          <DataTable.Col
+            source="rating"
+            render={() => <StarRatingField size="small" />}
+          />
+          <DataTable.Col
+            source="comment"
+            cellClassName="max-w-[18em] overflow-hidden text-ellipsis whitespace-nowrap"
+          />
+          <DataTable.Col source="status" />
+        </DataTable>
+      </List>
+      <SidebarProvider
+        open={!!match}
+        style={{
+          // @ts-ignore
+          "--sidebar-width": "25rem",
+          "--sidebar-width-mobile": "20rem",
+        }}
+      >
+        <Sidebar collapsible="offcanvas" variant="sidebar" side="right">
+          {!!match && (
+            <>
+              <SidebarHeader>
+                <h3 className="flex justify-between items-center text-lg font-semibold mb-1 ml-1">
+                  {translate("resources.reviews.detail")}
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={handleClose}
+                    className="cursor-pointer"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </h3>
+              </SidebarHeader>
+              <SidebarContent className="px-4 pt-1 pb-4">
+                <ReviewEdit
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  id={(match as any).params.id}
+                  onCancel={handleClose}
+                />
+              </SidebarContent>
+            </>
+          )}
+        </Sidebar>
+      </SidebarProvider>
+    </>
+  );
+};
