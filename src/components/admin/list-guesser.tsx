@@ -10,7 +10,7 @@ import {
   useResourceContext,
   RaRecord,
 } from "ra-core";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 import { ListProps, ListView, ListViewProps } from "@/components/admin/list";
 import { capitalize, singularize } from "inflection";
 import { DataTable } from "@/components/admin/data-table";

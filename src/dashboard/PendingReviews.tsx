@@ -1,7 +1,7 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 import { WithRecord, useGetList, useTranslate } from "ra-core";
 import { ReferenceField } from "@/components/admin/reference-field";

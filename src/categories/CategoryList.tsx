@@ -2,7 +2,7 @@ import { List } from "@/components/admin";
 import { WithListContext } from "ra-core";
 import type { Category } from "@/types";
 import { humanize } from "inflection";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Plus } from "lucide-react";
 
 export const CategoryList = () => (

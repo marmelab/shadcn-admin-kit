@@ -15,7 +15,7 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { matchPath, useLocation, useNavigate } from "react-router-dom";
+import { matchPath, useLocation, useNavigate } from "react-router";
 import { useCreatePath, useTranslate } from "ra-core";
 import { cn } from "@/lib/utils";
 import { X } from "lucide-react";

@@ -210,12 +210,12 @@ export const ProductList = () => {
 
 ### Adding Custom Routes
 
-To register your own routes, pass one or several [`<CustomRoutes>`](https://marmelab.com/react-admin/CustomRoutes.html) elements as children of `<Admin>`. Declare as many [react-router-dom](https://reactrouter.com/en/6/start/concepts#defining-routes) `<Route>` as you want inside them.
+To register your own routes, pass one or several [`<CustomRoutes>`](https://marmelab.com/react-admin/CustomRoutes.html) elements as children of `<Admin>`. Declare as many [react-router](https://reactrouter.com/en/6/start/concepts#defining-routes) `<Route>` as you want inside them.
 
 ```tsx
 // in src/App.tsx
 import { Resource, CustomRoutes } from 'ra-core';
-import { Route } from "react-router-dom";
+import { Route } from "react-router";
 import { Admin } from "@/components/admin/admin";
 
 import { dataProvider } from './dataProvider';

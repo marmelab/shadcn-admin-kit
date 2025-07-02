@@ -17,7 +17,7 @@ import {
 } from "ra-core";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { Product, Review, Customer } from "@/types";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { StarRatingField, StarArray } from "../reviews/StarRatingField";
 
 export const ProductEdit = () => {

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Plus } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { useCreatePath, useResourceContext, Translate } from "ra-core";

@@ -11,7 +11,7 @@ import {
   useResourceDefinition,
 } from "ra-core";
 import { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { EditButton } from "@/components/admin/edit-button";
 
 export const Show = ({

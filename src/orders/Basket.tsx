@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/table";
 import { Label } from "@/components/ui/label";
 import { useTranslate, useGetMany, useRecordContext } from "ra-core";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 import { Order, Product } from "../types";
 

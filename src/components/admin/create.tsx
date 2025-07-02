@@ -10,7 +10,7 @@ import {
   Translate,
 } from "ra-core";
 import { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 export const Create = ({
   title,

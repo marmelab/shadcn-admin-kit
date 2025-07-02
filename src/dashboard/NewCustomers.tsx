@@ -1,7 +1,7 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
 import { UserPlus } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { ListBase, WithListContext, useTranslate } from "ra-core";
 import { subDays } from "date-fns";
 

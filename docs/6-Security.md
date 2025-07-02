@@ -39,7 +39,7 @@ You can use an existing Auth Provider from the List of Available Auth Providers 
 Once you set an `<Admin authProvider>`, shadcn-admin-kit enables authentication automatically. For example, to use Auth0, you can set up the `authProvider` like this:
 
 ```js
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router';
 import { Auth0AuthProvider } from 'ra-auth-auth0';
 import { Auth0Client } from '@auth0/auth0-spa-js';
 import { Admin } from '@/components/admin';

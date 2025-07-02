@@ -130,15 +130,15 @@ To learn more about these props, refer to [the `<Resource>` component documentat
 
 ## `<CustomRoutes>`
 
-`<CustomRoutes>` Lets you define custom pages in your shadcn-admin-kit application, using react-router-dom `<Routes>` elements.
+`<CustomRoutes>` Lets you define custom pages in your shadcn-admin-kit application, using react-router `<Routes>` elements.
 
-To register your own routes, pass one or several `<CustomRoutes>` elements as children of `<Admin>`. Declare as many react-router-dom `<Route>` as you want inside them. Alternatively, you can add your custom routes to resources. They will be available under the resource prefix.
+To register your own routes, pass one or several `<CustomRoutes>` elements as children of `<Admin>`. Declare as many react-router `<Route>` as you want inside them. Alternatively, you can add your custom routes to resources. They will be available under the resource prefix.
 
 ```jsx
 // in src/App.js
 import { Admin } from "@/components/admin";
 import { Resource, CustomRoutes } from 'ra-core';
-import { Route } from "react-router-dom";
+import { Route } from "react-router";
 
 import { dataProvider } from './dataProvider';
 import posts from './posts';

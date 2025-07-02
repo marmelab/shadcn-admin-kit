@@ -10,7 +10,7 @@ import {
   useResourceDefinition,
 } from "ra-core";
 import { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Breadcrumb, BreadcrumbItem } from "@/components/admin/breadcrumb";
 import { ShowButton } from "@/components/admin/show-button";
 

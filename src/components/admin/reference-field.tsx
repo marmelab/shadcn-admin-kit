@@ -9,7 +9,7 @@ import {
   ExtractRecordPaths,
 } from "ra-core";
 import { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { UseQueryOptions } from "@tanstack/react-query";
 
 export const ReferenceField = <

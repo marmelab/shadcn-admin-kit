@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { buttonVariants } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import {

@@ -45,7 +45,7 @@
         "ra-i18n-polyglot",
         "ra-language-english",
         "react-hook-form",
-        "react-router-dom",
+        "react-router",
         "tailwind-merge",
         "tw-animate-css"
       ],

@@ -7,7 +7,7 @@ import {
 } from "ra-core";
 import { CircleX, LoaderCircle } from "lucide-react";
 
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 /**
  * Fetch and render the number of records of a given resource

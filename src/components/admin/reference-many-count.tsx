@@ -5,7 +5,7 @@ import {
   useRecordContext,
   useReferenceManyFieldController,
 } from "ra-core";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 export const ReferenceManyCount = <RecordType extends RaRecord = RaRecord>(
   props: ReferenceManyCountProps<RecordType>

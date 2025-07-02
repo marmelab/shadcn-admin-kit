@@ -16,7 +16,7 @@ import {
   useTranslate,
   Translate,
 } from "ra-core";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { DollarSign, ChartNoAxesColumn, Bookmark } from "lucide-react";
 import { humanize } from "inflection";
 import type { Product, Category } from "@/types";

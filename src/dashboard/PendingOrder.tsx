@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useTranslate, useReference } from "ra-core";
 

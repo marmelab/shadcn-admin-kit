@@ -12,7 +12,7 @@ import {
   useTranslate,
 } from "ra-core";
 import { cloneElement, ReactElement, ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { CreateButton } from "@/components/admin/create-button";
 import { ExportButton } from "@/components/admin/export-button";
 import { ListPagination } from "@/components/admin/list-pagination";

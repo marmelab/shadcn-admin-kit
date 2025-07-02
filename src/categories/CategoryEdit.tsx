@@ -5,7 +5,7 @@ import {
   TextInput,
 } from "@/components/admin";
 import { required, Translate } from "ra-core";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 export const CategoryEdit = () => (
   <Edit>
