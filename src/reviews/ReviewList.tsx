@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useCallback } from "react";
 import { useCreatePath, useTranslate } from "ra-core";
@@ -100,7 +101,15 @@ export const ReviewList = () => {
           </BulkActionsToolbar>
         }
       >
-        {isMobile ? <ReviewListMobile /> : <ReviewListDesktop />}
+        {isMobile ? (
+          <ReviewListMobile />
+        ) : (
+          <ReviewListDesktop
+            selectedRow={
+              match ? parseInt((match as any).params.id, 10) : undefined
+            }
+          />
+        )}
       </List>
       <SidebarProvider
         open={!!match}
@@ -128,7 +137,6 @@ export const ReviewList = () => {
               </SidebarHeader>
               <SidebarContent className="px-4 pt-1 pb-4">
                 <ReviewEdit
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   id={(match as any).params.id}
                   onCancel={handleClose}
                 />
@@ -182,15 +190,10 @@ const ReviewListMobile = () => {
       />
     );
   }
-  return (
-    <ReviewEdit
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      id={(match as any).params.id}
-    />
-  );
+  return <ReviewEdit id={(match as any).params.id} />;
 };
 
-const ReviewListDesktop = () => {
+const ReviewListDesktop = ({ selectedRow }: { selectedRow?: number }) => {
   const navigate = useNavigate();
   const createPath = useCreatePath();
   return (
@@ -209,13 +212,28 @@ const ReviewListDesktop = () => {
         return false;
       }}
       rowClassName={(record: Review) => {
-        if (record.status === "accepted") {
-          return "border-l-green-400 dark:border-l-green-800 border-l-5";
+        let className = "";
+        if (selectedRow != undefined && record.id === selectedRow) {
+          className = "bg-input";
         }
-        if (record.status === "rejected") {
-          return "border-l-red-400 dark:border-l-red-800 border-l-5";
+        switch (record.status) {
+          case "accepted":
+            className +=
+              " border-l-green-400 dark:border-l-green-800 border-l-5";
+            break;
+          case "pending":
+            className +=
+              " border-l-yellow-400 dark:border-l-yellow-800 border-l-5";
+            break;
+          case "rejected":
+            className += " border-l-red-400 dark:border-l-red-800 border-l-5";
+            break;
+          default:
+            throw new Error(
+              `Unknown status: ${record.status}. Please check your data.`
+            );
         }
-        return "border-l-yellow-400 dark:border-l-yellow-800 border-l-5";
+        return className;
       }}
       className="[&_thead_tr]:border-l-transparent [&_thead_tr]:border-l-5"
     >
