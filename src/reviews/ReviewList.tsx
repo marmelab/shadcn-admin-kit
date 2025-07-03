@@ -30,7 +30,7 @@ import { StarRatingField } from "./StarRatingField";
 import { ReviewEdit } from "./ReviewEdit";
 import { BulkApproveButton } from "./BulkApproveButton";
 import { BulkRejectButton } from "./BulkRejectButton";
-import { useMediaQuery } from "../utils/useMediaQuery";
+import { useIsMobile } from "../hooks/use-mobile";
 import type { Review } from "../types";
 
 const filters = [
@@ -85,7 +85,7 @@ export const ReviewList = () => {
     navigate("/reviews");
   }, [navigate]);
   const match = matchPath("/reviews/:id", location.pathname);
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useIsMobile();
   return (
     <>
       <List
