@@ -1,18 +1,21 @@
 import { RecordContextProvider, useListContext } from "ra-core";
 
-export const SingleFieldList = ({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const SingleFieldList = <RecordType = any,>({
   children,
+  render,
   className,
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  render?: (record: RecordType, index: number) => React.ReactNode;
   className?: string;
 }) => {
   const { data } = useListContext();
   return (
-    <div className={`flex  gap-2 ${className}`}>
+    <div className={`flex gap-2 ${className}`}>
       {data?.map((record, index) => (
         <RecordContextProvider key={index} value={record}>
-          {children}
+          {render ? render(record, index) : children}
         </RecordContextProvider>
       ))}
     </div>

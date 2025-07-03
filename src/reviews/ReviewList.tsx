@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useCallback } from "react";
 import { useCreatePath, useTranslate } from "ra-core";
-import { matchPath, useLocation, useNavigate } from "react-router";
+import { Link, matchPath, useLocation, useNavigate } from "react-router";
 import { X } from "lucide-react";
 import {
   BulkActionsToolbar,
@@ -11,6 +11,7 @@ import {
   ReferenceField,
   TextInput,
   ReferenceInput,
+  SingleFieldList,
   AutocompleteInput,
 } from "@/components/admin";
 import {
@@ -20,6 +21,7 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 import { FullNameField } from "../customers/FullNameField";
@@ -27,6 +29,7 @@ import { StarRatingField } from "./StarRatingField";
 import { ReviewEdit } from "./ReviewEdit";
 import { BulkApproveButton } from "./BulkApproveButton";
 import { BulkRejectButton } from "./BulkRejectButton";
+import { useMediaQuery } from "../utils/useMediaQuery";
 import type { Review } from "../types";
 
 const filters = [
@@ -75,13 +78,13 @@ const filters = [
 export const ReviewList = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const createPath = useCreatePath();
   const translate = useTranslate();
 
   const handleClose = useCallback(() => {
     navigate("/reviews");
   }, [navigate]);
   const match = matchPath("/reviews/:id", location.pathname);
+  const isMobile = useMediaQuery("(max-width: 768px)");
   return (
     <>
       <List
@@ -96,70 +99,7 @@ export const ReviewList = () => {
           </BulkActionsToolbar>
         }
       >
-        <DataTable
-          rowClick={(id, resource) => {
-            // As we display the edit view in a drawer, we don't the default rowClick behavior that will scroll to the top of the page
-            // So we navigate manually without specifying the _scrollToTop state
-            navigate(
-              createPath({
-                resource,
-                id,
-                type: "edit",
-              })
-            );
-            // Disable the default rowClick behavior
-            return false;
-          }}
-          rowClassName={(record: Review) => {
-            if (record.status === "accepted") {
-              return "border-l-green-400 dark:border-l-green-800 border-l-5";
-            }
-            if (record.status === "rejected") {
-              return "border-l-red-400 dark:border-l-red-800 border-l-5";
-            }
-            return "border-l-yellow-400 dark:border-l-yellow-800 border-l-5";
-          }}
-          className="[&_thead_tr]:border-l-transparent [&_thead_tr]:border-l-5"
-        >
-          <DataTable.Col
-            source="date"
-            render={(record) => new Date(record.date).toLocaleDateString()}
-          />
-          <DataTable.Col source="customer_id">
-            <ReferenceField
-              source="customer_id"
-              reference="customers"
-              link={false}
-            >
-              <FullNameField />
-            </ReferenceField>
-          </DataTable.Col>
-          <DataTable.Col source="product_id">
-            <ReferenceField
-              source="product_id"
-              reference="products"
-              link={false}
-            />
-          </DataTable.Col>
-          <DataTable.Col
-            source="rating"
-            render={() => <StarRatingField size="small" />}
-          />
-          <DataTable.Col
-            source="comment"
-            cellClassName="max-w-[18em] overflow-hidden text-ellipsis whitespace-nowrap"
-          />
-          <DataTable.Col<Review>
-            source="status"
-            render={(record) =>
-              ({
-                accepted: "Approved",
-                rejected: "Rejected",
-                pending: "Pending",
-              }[record.status])
-            }
-          />
-        </DataTable>
+        {isMobile ? <ReviewListMobile /> : <ReviewListDesktop />}
       </List>
       <SidebarProvider
         open={!!match}
@@ -197,5 +137,100 @@ export const ReviewList = () => {
         </Sidebar>
       </SidebarProvider>
     </>
+  );
+};
+
+const ReviewListMobile = () => (
+  <SingleFieldList
+    className="flex-col"
+    render={(record) => (
+      <Link to={`/reviews/${record.id}`} className="no-underline">
+        <Card>
+          <CardContent>
+            <ReferenceField
+              source="customer_id"
+              reference="customers"
+              link={false}
+            >
+              <FullNameField />
+            </ReferenceField>
+            <div className="my-1 flex gap-2">
+              <StarRatingField /> on{" "}
+              <ReferenceField
+                source="product_id"
+                reference="products"
+                link={false}
+              />
+            </div>
+            <div className="max-w-[18em] overflow-hidden text-ellipsis whitespace-nowrap">
+              {record.comment}
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
+    )}
+  />
+);
+
+const ReviewListDesktop = () => {
+  const navigate = useNavigate();
+  const createPath = useCreatePath();
+  return (
+    <DataTable
+      rowClick={(id, resource) => {
+        // As we display the edit view in a drawer, we don't the default rowClick behavior that will scroll to the top of the page
+        // So we navigate manually without specifying the _scrollToTop state
+        navigate(
+          createPath({
+            resource,
+            id,
+            type: "edit",
+          })
+        );
+        // Disable the default rowClick behavior
+        return false;
+      }}
+      rowClassName={(record: Review) => {
+        if (record.status === "accepted") {
+          return "border-l-green-400 dark:border-l-green-800 border-l-5";
+        }
+        if (record.status === "rejected") {
+          return "border-l-red-400 dark:border-l-red-800 border-l-5";
+        }
+        return "border-l-yellow-400 dark:border-l-yellow-800 border-l-5";
+      }}
+      className="[&_thead_tr]:border-l-transparent [&_thead_tr]:border-l-5"
+    >
+      <DataTable.Col
+        source="date"
+        render={(record) => new Date(record.date).toLocaleDateString()}
+      />
+      <DataTable.Col source="customer_id">
+        <ReferenceField source="customer_id" reference="customers" link={false}>
+          <FullNameField />
+        </ReferenceField>
+      </DataTable.Col>
+      <DataTable.Col source="product_id">
+        <ReferenceField source="product_id" reference="products" link={false} />
+      </DataTable.Col>
+      <DataTable.Col
+        source="rating"
+        render={() => <StarRatingField size="small" />}
+      />
+      <DataTable.Col
+        source="comment"
+        cellClassName="max-w-[18em] overflow-hidden text-ellipsis whitespace-nowrap"
+      />
+      <DataTable.Col<Review>
+        source="status"
+        render={(record) =>
+          ({
+            accepted: "Approved",
+            rejected: "Rejected",
+            pending: "Pending",
+          }[record.status])
+        }
+      />
+    </DataTable>
   );
 };
