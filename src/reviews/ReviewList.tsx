@@ -90,7 +90,8 @@ export const ReviewList = () => {
       <List
         sort={{ field: "date", order: "DESC" }}
         perPage={25}
-        filters={filters}
+        filters={isMobile ? undefined : filters}
+        pagination={match ? false : undefined}
         bulkActionsToolbar={
           <BulkActionsToolbar>
             <BulkApproveButton />
@@ -140,37 +141,54 @@ export const ReviewList = () => {
   );
 };
 
-const ReviewListMobile = () => (
-  <SingleFieldList
-    className="flex-col"
-    render={(record) => (
-      <Link to={`/reviews/${record.id}`} className="no-underline">
-        <Card>
-          <CardContent>
-            <ReferenceField
-              source="customer_id"
-              reference="customers"
-              link={false}
-            >
-              <FullNameField />
-            </ReferenceField>
-            <div className="my-1 flex gap-2">
-              <StarRatingField /> on{" "}
-              <ReferenceField
-                source="product_id"
-                reference="products"
-                link={false}
-              />
-            </div>
-            <div className="max-w-[18em] overflow-hidden text-ellipsis whitespace-nowrap">
-              {record.comment}
-            </div>
-          </CardContent>
-        </Card>
-      </Link>
-    )}
-  />
-);
+const ReviewListMobile = () => {
+  const location = useLocation();
+  const match = matchPath("/reviews/:id", location.pathname);
+  console.log(match);
+  if (!match) {
+    return (
+      <SingleFieldList
+        className="flex-col"
+        render={(record) => (
+          <Link
+            to={`/reviews/${record.id}`}
+            state={{ _scrollToTop: true }}
+            className="no-underline"
+          >
+            <Card>
+              <CardContent>
+                <ReferenceField
+                  source="customer_id"
+                  reference="customers"
+                  link={false}
+                >
+                  <FullNameField />
+                </ReferenceField>
+                <div className="my-1 flex gap-2">
+                  <StarRatingField /> on{" "}
+                  <ReferenceField
+                    source="product_id"
+                    reference="products"
+                    link={false}
+                  />
+                </div>
+                <div className="max-w-[18em] overflow-hidden text-ellipsis whitespace-nowrap">
+                  {record.comment}
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        )}
+      />
+    );
+  }
+  return (
+    <ReviewEdit
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      id={(match as any).params.id}
+    />
+  );
+};
 
 const ReviewListDesktop = () => {
   const navigate = useNavigate();

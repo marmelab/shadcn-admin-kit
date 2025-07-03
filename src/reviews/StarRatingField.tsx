@@ -27,7 +27,6 @@ export const StarArray = ({
   size?: "large" | "small";
 }) => {
   if (!rating) return null;
-  console.log(rating);
   return (
     <>
       {Array(Math.round(rating))
