@@ -9,7 +9,7 @@ import { Link } from "react-router";
 
 export const CategoryEdit = () => (
   <Edit>
-    <div className="flex items-start justify-between">
+    <div className="flex flex-col lg:flex-row items-start justify-between">
       <SimpleForm>
         <TextInput source="name" label="Name" validate={required()} />
       </SimpleForm>

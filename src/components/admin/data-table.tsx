@@ -240,7 +240,14 @@ export function DataTableColumn<
 function DataTableHeadCell<
   RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
 >(props: DataTableColumnProps<RecordType>) {
-  const { disableSort, source, label, sortByOrder, headerClassName } = props;
+  const {
+    disableSort,
+    source,
+    label,
+    sortByOrder,
+    className,
+    headerClassName,
+  } = props;
 
   const sort = useDataTableSortContext();
   const { handleSort } = useDataTableCallbacksContext();
@@ -268,7 +275,7 @@ function DataTableHeadCell<
   });
 
   return (
-    <TableHead className={headerClassName}>
+    <TableHead className={cn(className, headerClassName)}>
       {handleSort && sort && !disableSort && source ? (
         <TooltipProvider>
           <Tooltip>
@@ -328,6 +335,7 @@ function DataTableCell<
     render,
     field,
     source,
+    className,
     cellClassName,
     conditionalClassName,
   } = props;
@@ -343,6 +351,7 @@ function DataTableCell<
     <TableCell
       className={cn(
         "py-1",
+        className,
         cellClassName,
         record && conditionalClassName?.(record)
       )}
@@ -360,6 +369,7 @@ function DataTableCell<
 export interface DataTableColumnProps<
   RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
 > {
+  className?: string;
   cellClassName?: string;
   headerClassName?: string;
   conditionalClassName?: (record: RecordType) => string | false | undefined;
@@ -373,13 +383,22 @@ export interface DataTableColumnProps<
 }
 
 export function DataTableNumberColumn(props: DataTableNumberColumnProps) {
-  const { source, options, locales, ...rest } = props;
+  const {
+    source,
+    options,
+    locales,
+    className,
+    headerClassName,
+    cellClassName,
+    ...rest
+  } = props;
   return (
     <DataTableColumn
       source={source}
       {...rest}
-      headerClassName="text-right"
-      cellClassName="text-right"
+      className={className}
+      headerClassName={cn("text-right", headerClassName)}
+      cellClassName={cn("text-right", cellClassName)}
     >
       <NumberField source={source} options={options} locales={locales} />
     </DataTableColumn>

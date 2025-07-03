@@ -19,23 +19,24 @@ export const BulkActionsToolbar = ({
     onUnselectItems();
   };
   return (
-    <Card className="flex flex-row items-center p-2 px-4 w-fit mx-auto sticky bottom-10 z-10 bg-zinc-100 dark:bg-zinc-900">
-      <Button
-        variant="ghost"
-        className="has-[>svg]:px-0"
-        onClick={handleUnselectAll}
-      >
-        <X />
-      </Button>
-
-      <span className="text-sm text-muted-foreground">
-        <Translate
-          i18nKey="ra.action.bulk_actions"
-          options={{ smart_count: selectedIds.length }}
+    <Card className="flex flex-col gap-2 md:gap-6 md:flex-row items-stretch sm:items-center p-2 px-4 w-[90%] sm:w-fit mx-auto sticky bottom-10 z-10 bg-zinc-100 dark:bg-zinc-900">
+      <div className="flex items-center gap-2">
+        <Button
+          variant="ghost"
+          className="has-[>svg]:px-0"
+          onClick={handleUnselectAll}
         >
-          {selectedIds.length} rows selected
-        </Translate>
-      </span>
+          <X />
+        </Button>
+        <span className="text-sm text-muted-foreground">
+          <Translate
+            i18nKey="ra.action.bulk_actions"
+            options={{ smart_count: selectedIds.length }}
+          >
+            {selectedIds.length} rows selected
+          </Translate>
+        </span>
+      </div>
       {children}
     </Card>
   );

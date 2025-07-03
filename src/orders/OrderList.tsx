@@ -53,7 +53,7 @@ const TabbedDataTable = () => {
       <TabsList className="w-full">
         <TabsTrigger value="ordered" onClick={handleChange("ordered")}>
           Ordered{" "}
-          <Badge variant="outline">
+          <Badge variant="outline" className="hidden md:inline-flex">
             <Count
               filter={{
                 ...filterValues,
@@ -64,7 +64,7 @@ const TabbedDataTable = () => {
         </TabsTrigger>
         <TabsTrigger value="delivered" onClick={handleChange("delivered")}>
           Delivered
-          <Badge variant="outline">
+          <Badge variant="outline" className="hidden md:inline-flex">
             <Count
               filter={{
                 ...filterValues,
@@ -75,7 +75,7 @@ const TabbedDataTable = () => {
         </TabsTrigger>
         <TabsTrigger value="cancelled" onClick={handleChange("cancelled")}>
           Cancelled{" "}
-          <Badge variant="outline">
+          <Badge variant="outline" className="hidden md:inline-flex">
             <Count
               filter={{
                 ...filterValues,
@@ -104,8 +104,8 @@ const OrdersTable = ({ storeKey }: { storeKey: string }) => (
       source="date"
       render={(record) => new Date(record.date).toLocaleString()}
     />
-    <DataTable.Col source="reference" />
-    <DataTable.Col source="customer_id">
+    <DataTable.Col source="reference" className="hidden md:table-cell" />
+    <DataTable.Col source="customer_id" className="hidden md:table-cell">
       <ReferenceField source="customer_id" reference="customers" link={false}>
         <FullNameField />
       </ReferenceField>
@@ -113,12 +113,16 @@ const OrdersTable = ({ storeKey }: { storeKey: string }) => (
     <DataTable.NumberCol
       source="basket.length"
       label="resources.orders.fields.nb_items"
+      className="hidden md:table-cell"
     />
     <DataTable.NumberCol
       source="total"
       options={{ style: "currency", currency: "USD" }}
     />
-    <DataTable.Col label="resources.orders.fields.address">
+    <DataTable.Col
+      label="resources.orders.fields.address"
+      className="hidden md:table-cell"
+    >
       <ReferenceField source="customer_id" reference="customers" link={false}>
         <AddressField />
       </ReferenceField>

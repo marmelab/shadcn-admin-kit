@@ -38,8 +38,7 @@ export const CustomerList = () => (
         <DataTable.Col
           source="nb_orders"
           label="resources.customers.fields.orders"
-          headerClassName="text-right"
-          cellClassName="text-right"
+          className="hidden md:table-cell text-right"
           render={(record) => (record.nb_orders > 0 ? record.nb_orders : "")}
         />
         <DataTable.NumberCol
@@ -48,12 +47,16 @@ export const CustomerList = () => (
           conditionalClassName={(record) =>
             record.total_spent > 500 && "dark:text-green-500 text-lime-700"
           }
+          className="hidden md:table-cell"
         />
         <DataTable.Col
           source="last_seen"
           render={(record) => new Date(record.last_seen).toLocaleString()}
         />
-        <DataTable.Col label="resources.customers.fields.groups">
+        <DataTable.Col
+          label="resources.customers.fields.groups"
+          className="hidden md:table-cell"
+        >
           <SegmentList />
         </DataTable.Col>
       </DataTable>
