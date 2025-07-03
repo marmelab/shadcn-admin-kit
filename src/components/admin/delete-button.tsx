@@ -10,7 +10,11 @@ import {
   Translate,
 } from "ra-core";
 
-export const DeleteButton = () => {
+export const DeleteButton = ({
+  size,
+}: {
+  size?: "default" | "sm" | "lg" | "icon";
+}) => {
   const resource = useResourceContext();
   const [deleteOne, { isPending }] = useDelete();
   const record = useRecordContext();
@@ -48,6 +52,7 @@ export const DeleteButton = () => {
       type="button"
       onClick={handleClick}
       disabled={isPending}
+      size={size}
     >
       <Trash />
       <Translate i18nKey="ra.action.delete">Delete</Translate>
