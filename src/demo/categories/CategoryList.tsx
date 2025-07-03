@@ -1,6 +1,6 @@
 import { List } from "@/components/admin";
 import { WithListContext } from "ra-core";
-import type { Category } from "@/types";
+import type { Category } from "@/demo/types";
 import { humanize } from "inflection";
 import { Link } from "react-router";
 import { Plus } from "lucide-react";

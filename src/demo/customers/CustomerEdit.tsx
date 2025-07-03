@@ -6,7 +6,7 @@ import {
   TextInput,
   FormToolbar,
 } from "@/components/admin";
-import segments from "@/segments/data";
+import segments from "@/demo/segments/data";
 import { required, email, Translate } from "ra-core";
 
 export const CustomerEdit = () => (

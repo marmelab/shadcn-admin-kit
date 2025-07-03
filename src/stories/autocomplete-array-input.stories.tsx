@@ -49,11 +49,7 @@ const choices = [
   { id: "travel", name: "Travel" },
 ];
 
-export const Basic = ({
-  theme,
-}: {
-  theme: "system" | "light" | "dark";
-}) => (
+export const Basic = ({ theme }: { theme: "system" | "light" | "dark" }) => (
   <StoryWrapper theme={theme}>
     <SimpleForm>
       <AutocompleteArrayInput source="tags" choices={choices} />

@@ -16,7 +16,7 @@ import {
   WithRecord,
 } from "ra-core";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import type { Product, Review, Customer } from "@/types";
+import type { Product, Review, Customer } from "@/demo/types";
 import { Link } from "react-router";
 import { StarRatingField, StarArray } from "../reviews/StarRatingField";
 

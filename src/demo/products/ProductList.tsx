@@ -19,7 +19,7 @@ import {
 import { Link } from "react-router";
 import { DollarSign, ChartNoAxesColumn, Bookmark } from "lucide-react";
 import { humanize } from "inflection";
-import type { Product, Category } from "@/types";
+import type { Product, Category } from "@/demo/types";
 
 export const ProductList = () => {
   return (
