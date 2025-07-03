@@ -20,8 +20,8 @@ cp -r ./public ./temp/public
 
 mkdir ./temp/src
 cp -r ./src/assets ./temp/src/assets
-cp ./src/authProvider.ts ./src/dataProvider.ts ./src/index.css ./src/main.tsx ./src/users.json ./src/vite-env.d.ts ./temp/src
-cp ./src/App.guessers.tsx ./temp/src/App.tsx
+cp ./src/demo/authProvider.ts ./src/demo/dataProvider.ts ./src/index.css ./src/main.tsx ./src/demo/users.json ./src/vite-env.d.ts ./temp/src
+cp ./src/demo/App.guessers.tsx ./temp/src/App.tsx
 
 echo "Installing dependencies"
 cd ./temp
