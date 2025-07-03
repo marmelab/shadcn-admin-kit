@@ -38,7 +38,7 @@ export const ReviewEdit = ({ id }: any) => (
       <AutocompleteInput
         source="status"
         choices={[
-          { id: "accepted", name: "Accepted" },
+          { id: "accepted", name: "Approved" },
           { id: "rejected", name: "Rejected" },
           { id: "pending", name: "Pending" },
         ]}

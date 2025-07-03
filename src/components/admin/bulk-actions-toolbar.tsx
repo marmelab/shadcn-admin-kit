@@ -1,10 +1,15 @@
+import type { ReactNode } from "react";
 import { useListContext, Translate } from "ra-core";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BulkDeleteButton } from "@/components/admin/bulk-delete-button";
 import { X } from "lucide-react";
 
-export const BulkActionsToolbar = () => {
+export const BulkActionsToolbar = ({
+  children = <BulkDeleteButton />,
+}: {
+  children?: ReactNode;
+}) => {
   const { selectedIds, onUnselectItems } = useListContext();
   if (!selectedIds?.length) {
     return null;
@@ -31,7 +36,7 @@ export const BulkActionsToolbar = () => {
           {selectedIds.length} rows selected
         </Translate>
       </span>
-      <BulkDeleteButton />
+      {children}
     </Card>
   );
 };

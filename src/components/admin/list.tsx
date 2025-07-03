@@ -62,6 +62,7 @@ export interface ListProps<RecordType extends RaRecord = RaRecord>
 
 export const ListView = (props: ListViewProps) => {
   const {
+    bulkActionsToolbar = defaultBulkActionsToolbar,
     filters,
     pagination = defaultPagination,
     title,
@@ -122,17 +123,19 @@ export const ListView = (props: ListViewProps) => {
       )}
       <div className="my-2">{children}</div>
       {pagination}
-      <BulkActionsToolbar />
+      {bulkActionsToolbar}
     </>
   );
 };
 
 const defaultPagination = <ListPagination />;
+const defaultBulkActionsToolbar = <BulkActionsToolbar />;
 
 export interface ListViewProps {
   children: ReactNode;
   actions?: ReactNode;
   filters?: ReactElement[];
   pagination?: ReactNode;
+  bulkActionsToolbar?: ReactNode;
   title?: ReactNode | string | false;
 }

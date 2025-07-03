@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useCallback } from "react";
+import { useCreatePath, useTranslate } from "ra-core";
+import { matchPath, useLocation, useNavigate } from "react-router";
+import { X } from "lucide-react";
 import {
+  BulkActionsToolbar,
+  BulkDeleteButton,
   DataTable,
   List,
   ReferenceField,
@@ -15,14 +20,13 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { matchPath, useLocation, useNavigate } from "react-router";
-import { useCreatePath, useTranslate } from "ra-core";
 import { cn } from "@/lib/utils";
-import { X } from "lucide-react";
 
 import { FullNameField } from "../customers/FullNameField";
 import { StarRatingField } from "./StarRatingField";
 import { ReviewEdit } from "./ReviewEdit";
+import { BulkApproveButton } from "./BulkApproveButton";
+import { BulkRejectButton } from "./BulkRejectButton";
 import type { Review } from "../types";
 
 const filters = [
@@ -45,7 +49,7 @@ const filters = [
     source="status"
     placeholder="Filter by status"
     choices={[
-      { id: "accepted", name: "Accepted" },
+      { id: "accepted", name: "Approved" },
       { id: "rejected", name: "Rejected" },
       { id: "pending", name: "Pending" },
     ]}
@@ -84,6 +88,13 @@ export const ReviewList = () => {
         sort={{ field: "date", order: "DESC" }}
         perPage={25}
         filters={filters}
+        bulkActionsToolbar={
+          <BulkActionsToolbar>
+            <BulkApproveButton />
+            <BulkRejectButton />
+            <BulkDeleteButton />
+          </BulkActionsToolbar>
+        }
       >
         <DataTable
           rowClick={(id, resource) => {
@@ -138,7 +149,16 @@ export const ReviewList = () => {
             source="comment"
             cellClassName="max-w-[18em] overflow-hidden text-ellipsis whitespace-nowrap"
           />
-          <DataTable.Col source="status" />
+          <DataTable.Col<Review>
+            source="status"
+            render={(record) =>
+              ({
+                accepted: "Approved",
+                rejected: "Rejected",
+                pending: "Pending",
+              }[record.status])
+            }
+          />
         </DataTable>
       </List>
       <SidebarProvider
