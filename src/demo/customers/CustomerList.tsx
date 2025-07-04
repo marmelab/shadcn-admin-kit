@@ -23,47 +23,63 @@ import {
 import segments from "../segments/data";
 
 import { FullNameField } from "./FullNameField";
+import { useIsMobile } from "@/hooks/use-mobile";
 
-export const CustomerList = () => (
-  <List perPage={25} sort={{ field: "last_seen", order: "DESC" }}>
-    <div className="flex flex-row gap-4 mb-4">
-      <SidebarFilters />
-      <DataTable className="flex-1">
-        <DataTable.Col
-          label="resources.customers.fields.name"
-          source="last_name"
-        >
-          <FullNameField />
-        </DataTable.Col>
-        <DataTable.Col
-          source="nb_orders"
-          label="resources.customers.fields.orders"
-          className="hidden md:table-cell text-right"
-          render={(record) => (record.nb_orders > 0 ? record.nb_orders : "")}
-        />
-        <DataTable.NumberCol
-          source="total_spent"
-          options={{ style: "currency", currency: "USD" }}
-          conditionalClassName={(record) =>
-            record.total_spent > 500 && "dark:text-green-500 text-lime-700"
-          }
-          className="hidden md:table-cell"
-        />
-        <DataTable.Col
-          source="last_seen"
-          className="hidden md:table-cell"
-          render={(record) => new Date(record.last_seen).toLocaleString()}
-        />
-        <DataTable.Col
-          label="resources.customers.fields.groups"
-          className="hidden md:table-cell"
-        >
-          <SegmentList />
-        </DataTable.Col>
-      </DataTable>
-    </div>
-  </List>
-);
+const dateTimeFormatter = new Intl.DateTimeFormat(undefined, {
+  dateStyle: "medium",
+  timeStyle: "short",
+});
+const smallDateTimeFormatter = new Intl.DateTimeFormat(undefined, {
+  dateStyle: "short",
+});
+
+export const CustomerList = () => {
+  const isMobile = useIsMobile();
+
+  return (
+    <List perPage={25} sort={{ field: "last_seen", order: "DESC" }}>
+      <div className="flex flex-row gap-4 mb-4">
+        <SidebarFilters />
+        <DataTable className="flex-1">
+          <DataTable.Col
+            label="resources.customers.fields.name"
+            source="last_name"
+          >
+            <FullNameField />
+          </DataTable.Col>
+          <DataTable.Col
+            source="nb_orders"
+            label="resources.customers.fields.orders"
+            className="hidden md:table-cell text-right"
+            render={(record) => (record.nb_orders > 0 ? record.nb_orders : "")}
+          />
+          <DataTable.NumberCol
+            source="total_spent"
+            options={{ style: "currency", currency: "USD" }}
+            conditionalClassName={(record) =>
+              record.total_spent > 500 && "dark:text-green-500 text-lime-700"
+            }
+            className="hidden md:table-cell"
+          />
+          <DataTable.Col
+            source="last_seen"
+            render={(record) =>
+              isMobile
+                ? smallDateTimeFormatter.format(new Date(record.last_seen))
+                : dateTimeFormatter.format(new Date(record.last_seen))
+            }
+          />
+          <DataTable.Col
+            label="resources.customers.fields.groups"
+            className="hidden md:table-cell"
+          >
+            <SegmentList />
+          </DataTable.Col>
+        </DataTable>
+      </div>
+    </List>
+  );
+};
 
 const SegmentList = () => {
   const record = useRecordContext();
