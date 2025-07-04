@@ -178,7 +178,7 @@ const ProductReview = () => {
   const review = useRecordContext<Review>();
   if (!review) return null;
   return (
-    <Link to={`/reviews/${review.id}`}>
+    <div>
       <div className="flex items-top gap-3 mb-2">
         <ReferenceField<Review, Customer>
           source="customer_id"
@@ -197,12 +197,15 @@ const ProductReview = () => {
           <ReferenceField source="customer_id" reference="customers" />
           <StarRatingField size="small" />
         </span>
-        <div className="flex-1" />
-        <span className="text-xs text-muted-foreground">
-          {new Date(review.date).toLocaleDateString()}
-        </span>
+        <Link className="flex-1 grow text-right" to={`/reviews/${review.id}`}>
+          <span className="text-xs text-muted-foreground">
+            {new Date(review.date).toLocaleDateString()}
+          </span>
+        </Link>
       </div>
-      <div className="text-sm">{review.comment}</div>
-    </Link>
+      <Link to={`/reviews/${review.id}`}>
+        <div className="text-sm">{review.comment}</div>
+      </Link>
+    </div>
   );
 };
