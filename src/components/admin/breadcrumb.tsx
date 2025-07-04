@@ -5,6 +5,7 @@ import {
   Breadcrumb as BaseBreadcrumb,
   BreadcrumbEllipsis,
   BreadcrumbItem,
+  BreadcrumbPage,
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
@@ -20,6 +21,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Translate } from "ra-core";
 
 export const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
   function Breadcrumb({ children }, forwardedRef) {
@@ -45,9 +47,15 @@ export const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
                     </DrawerTrigger>
                     <DrawerContent>
                       <DrawerHeader className="text-left">
-                        <DrawerTitle>Navigate to</DrawerTitle>
+                        <DrawerTitle>
+                          <Translate i18nKey="ra.navigation.breadcrumb_drawer_title">
+                            Navigate to
+                          </Translate>
+                        </DrawerTitle>
                         <DrawerDescription>
-                          Select a page to navigate to.
+                          <Translate i18nKey="ra.navigation.breadcrumb_drawer_instructions">
+                            Select a page to navigate to.
+                          </Translate>
                         </DrawerDescription>
                       </DrawerHeader>
                       <ol className="grid gap-1 px-4">
@@ -57,7 +65,11 @@ export const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
                       </ol>
                       <DrawerFooter className="pt-4">
                         <DrawerClose asChild>
-                          <Button variant="outline">Close</Button>
+                          <Button variant="outline">
+                            <Translate i18nKey="ra.action.close">
+                              Close
+                            </Translate>
+                          </Button>
                         </DrawerClose>
                       </DrawerFooter>
                     </DrawerContent>
@@ -84,6 +96,6 @@ export const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
   }
 );
 
-export { BreadcrumbItem };
+export { BreadcrumbItem, BreadcrumbPage };
 
 export type BreadcrumbProps = React.ComponentPropsWithoutRef<"nav">;
