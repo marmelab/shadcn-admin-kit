@@ -51,6 +51,7 @@ export const CustomerList = () => (
         />
         <DataTable.Col
           source="last_seen"
+          className="hidden md:table-cell"
           render={(record) => new Date(record.last_seen).toLocaleString()}
         />
         <DataTable.Col
