@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useGetList, Translate } from "ra-core";
 import { subDays, startOfDay } from "date-fns";
-import { Breadcrumb, BreadcrumbItem } from "@/components/admin";
+import { Breadcrumb, BreadcrumbPage } from "@/components/admin";
 
 import Welcome from "./Welcome";
 import MonthlyRevenue from "./MonthlyRevenue";
@@ -73,9 +73,9 @@ export const Dashboard = () => {
   return (
     <>
       <Breadcrumb>
-        <BreadcrumbItem>
+        <BreadcrumbPage>
           <Translate i18nKey="ra.page.dashboard">Home</Translate>
-        </BreadcrumbItem>
+        </BreadcrumbPage>
       </Breadcrumb>
       <Welcome />
       <div className="flex flex-col md:flex-row gap-4 mb-4">

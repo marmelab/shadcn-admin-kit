@@ -1,4 +1,4 @@
-import { Breadcrumb, BreadcrumbItem } from "@/components/admin/breadcrumb";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbPage } from "@/components/admin/breadcrumb";
 import {
   FilterLiveForm,
   ListBase,
@@ -97,7 +97,7 @@ export const ListView = (props: ListViewProps) => {
             </Link>
           </BreadcrumbItem>
         )}
-        <BreadcrumbItem>{resourceLabel}</BreadcrumbItem>
+        <BreadcrumbPage>{resourceLabel}</BreadcrumbPage>
       </Breadcrumb>
       <div className="flex justify-between items-start flex-wrap gap-2 my-2">
         <h2 className="text-2xl font-bold tracking-tight">{finalTitle}</h2>

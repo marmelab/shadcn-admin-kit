@@ -1,4 +1,4 @@
-import { Breadcrumb, BreadcrumbItem } from "@/components/admin/breadcrumb";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbPage } from "@/components/admin/breadcrumb";
 import {
   ShowBase,
   Translate,
@@ -72,7 +72,7 @@ export const ShowView = ({
         <BreadcrumbItem>
           <Link to={listLink}>{listLabel}</Link>
         </BreadcrumbItem>
-        <BreadcrumbItem>{recordRepresentation}</BreadcrumbItem>
+        <BreadcrumbPage>{recordRepresentation}</BreadcrumbPage>
       </Breadcrumb>
       <div className="flex justify-between items-start flex-wrap gap-2 my-2">
         <h2 className="text-2xl font-bold tracking-tight">

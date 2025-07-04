@@ -1,4 +1,4 @@
-import { Breadcrumb, BreadcrumbItem } from "@/components/admin/breadcrumb";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbPage } from "@/components/admin/breadcrumb";
 import {
   CreateBase,
   type CreateBaseProps,
@@ -62,9 +62,9 @@ export const CreateView = ({
         <BreadcrumbItem>
           <Link to={listLink}>{listLabel}</Link>
         </BreadcrumbItem>
-        <BreadcrumbItem>
+        <BreadcrumbPage>
           <Translate i18nKey="ra.action.create">Create</Translate>
-        </BreadcrumbItem>
+        </BreadcrumbPage>
       </Breadcrumb>
       <div className="flex justify-between items-start flex-wrap gap-2 my-2">
         <h2 className="text-2xl font-bold tracking-tight">
