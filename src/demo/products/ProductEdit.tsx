@@ -183,6 +183,7 @@ const ProductReview = () => {
         <ReferenceField<Review, Customer>
           source="customer_id"
           reference="customers"
+          link={false}
           render={(customer) => (
             <Avatar className="w-10 h-10">
               <AvatarImage src={customer.avatar} />
@@ -194,7 +195,11 @@ const ProductReview = () => {
           )}
         />
         <span className="text-sm font-semibold">
-          <ReferenceField source="customer_id" reference="customers" />
+          <ReferenceField
+            source="customer_id"
+            reference="customers"
+            link={false}
+          />
           <StarRatingField size="small" />
         </span>
         <div className="flex-1" />
