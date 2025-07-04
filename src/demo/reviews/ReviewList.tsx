@@ -152,7 +152,6 @@ export const ReviewList = () => {
 const ReviewListMobile = () => {
   const location = useLocation();
   const match = matchPath("/reviews/:id", location.pathname);
-  console.log(match);
   if (!match) {
     return (
       <SingleFieldList
