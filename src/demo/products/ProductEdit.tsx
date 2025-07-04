@@ -195,9 +195,14 @@ const ProductReview = () => {
           )}
         />
         <span className="text-sm font-semibold">
-          <ReferenceField source="customer_id" reference="customers" link={false} />
+          <ReferenceField
+            source="customer_id"
+            reference="customers"
+            link={false}
+          />
           <StarRatingField size="small" />
         </span>
+        <div className="flex-1" />
         <span className="text-xs text-muted-foreground">
           {new Date(review.date).toLocaleDateString()}
         </span>
