@@ -382,7 +382,9 @@ export interface DataTableColumnProps<
   sortByOrder?: SortPayload["order"];
 }
 
-export function DataTableNumberColumn(props: DataTableNumberColumnProps) {
+export function DataTableNumberColumn<
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+>(props: DataTableNumberColumnProps<RecordType>) {
   const {
     source,
     options,
