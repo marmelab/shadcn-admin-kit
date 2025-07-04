@@ -178,11 +178,12 @@ const ProductReview = () => {
   const review = useRecordContext<Review>();
   if (!review) return null;
   return (
-    <div>
+    <Link to={`/reviews/${review.id}`}>
       <div className="flex items-top gap-3 mb-2">
         <ReferenceField<Review, Customer>
           source="customer_id"
           reference="customers"
+          link={false}
           render={(customer) => (
             <Avatar className="w-10 h-10">
               <AvatarImage src={customer.avatar} />
@@ -194,18 +195,14 @@ const ProductReview = () => {
           )}
         />
         <span className="text-sm font-semibold">
-          <ReferenceField source="customer_id" reference="customers" />
+          <ReferenceField source="customer_id" reference="customers" link={false} />
           <StarRatingField size="small" />
         </span>
-        <Link className="flex-1 grow text-right" to={`/reviews/${review.id}`}>
-          <span className="text-xs text-muted-foreground">
-            {new Date(review.date).toLocaleDateString()}
-          </span>
-        </Link>
+        <span className="text-xs text-muted-foreground">
+          {new Date(review.date).toLocaleDateString()}
+        </span>
       </div>
-      <Link to={`/reviews/${review.id}`}>
-        <div className="text-sm">{review.comment}</div>
-      </Link>
-    </div>
+      <div className="text-sm">{review.comment}</div>
+    </Link>
   );
 };
