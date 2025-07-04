@@ -1,13 +1,31 @@
 import * as React from "react";
 import { createPortal } from "react-dom";
-import { ChevronRight } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
+import {
+  Breadcrumb as BaseBreadcrumb,
+  BreadcrumbEllipsis,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
-  function Breadcrumb({ className, children, ...props }, forwardedRef) {
-    const validChildren = getValidChildren(children);
+  function Breadcrumb({ children }, forwardedRef) {
     const breadcrumbPortal = document.getElementById("breadcrumb");
+    const isMobile = useIsMobile();
+    const [open, setOpen] = React.useState(false);
     if (!breadcrumbPortal) return null;
     return createPortal(
       <>
@@ -16,60 +34,56 @@ export const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
           orientation="vertical"
           className="data-[orientation=vertical]:h-4 mr-4"
         />
-        <nav
-          className={cn("relative break-words", className)}
-          aria-label="breadcrumb"
-          {...props}
-          ref={forwardedRef}
-        >
-          <ol className="flex items-center">
-            {validChildren.map((child, index) => (
-              <React.Fragment key={index}>
-                {child}
-                {index < validChildren.length - 1 ? (
-                  <li
-                    className="inline-flex mx-2 opacity-50 items-center"
-                    role="presentation"
-                  >
-                    <ChevronRight className="h-4 w-4" />
-                  </li>
-                ) : null}
+        <BaseBreadcrumb ref={forwardedRef}>
+          <BreadcrumbList>
+            {isMobile && React.Children.count(children) > 2 ? (
+              <React.Fragment>
+                <BreadcrumbItem>
+                  <Drawer open={open} onOpenChange={setOpen}>
+                    <DrawerTrigger aria-label="Toggle Menu">
+                      <BreadcrumbEllipsis className="h-4 w-4" />
+                    </DrawerTrigger>
+                    <DrawerContent>
+                      <DrawerHeader className="text-left">
+                        <DrawerTitle>Navigate to</DrawerTitle>
+                        <DrawerDescription>
+                          Select a page to navigate to.
+                        </DrawerDescription>
+                      </DrawerHeader>
+                      <ol className="grid gap-1 px-4">
+                        {React.Children.toArray(children)
+                          .slice(0, -1)
+                          .map((item) => item)}
+                      </ol>
+                      <DrawerFooter className="pt-4">
+                        <DrawerClose asChild>
+                          <Button variant="outline">Close</Button>
+                        </DrawerClose>
+                      </DrawerFooter>
+                    </DrawerContent>
+                  </Drawer>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                {React.Children.toArray(children).slice(-1)}
               </React.Fragment>
-            ))}
-          </ol>
-        </nav>
+            ) : (
+              React.Children.map(children, (child, index) => (
+                <React.Fragment key={index}>
+                  {child}
+                  {index < React.Children.count(children) - 1 ? (
+                    <BreadcrumbSeparator />
+                  ) : null}
+                </React.Fragment>
+              ))
+            )}
+          </BreadcrumbList>
+        </BaseBreadcrumb>
       </>,
       breadcrumbPortal
     );
   }
 );
 
-export interface BreadcrumbProps extends React.ComponentPropsWithoutRef<"nav"> {
-  /* The visual separator between each breadcrumb item */
-  separator?: React.ReactNode;
-}
+export { BreadcrumbItem };
 
-export const BreadcrumbItem = React.forwardRef<
-  HTMLLIElement,
-  React.ComponentPropsWithoutRef<"li">
->(({ children, className, ...props }, forwardedRef) => {
-  return (
-    <li
-      className={cn(
-        "inline-flex items-center text-sm",
-        "[&>a]:text-muted-foreground [&>a:hover]:text-primary",
-        className
-      )}
-      {...props}
-      ref={forwardedRef}
-    >
-      {children}
-    </li>
-  );
-});
-
-function getValidChildren(children: React.ReactNode) {
-  return React.Children.toArray(children).filter((child) =>
-    React.isValidElement(child)
-  ) as React.ReactElement[];
-}
+export type BreadcrumbProps = React.ComponentPropsWithoutRef<"nav">;
