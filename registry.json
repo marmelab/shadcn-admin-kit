@@ -185,6 +185,14 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/reference-array-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/reference-array-field.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/reference-many-count.tsx",
           "type": "registry:component"
         },

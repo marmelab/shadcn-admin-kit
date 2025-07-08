@@ -28,6 +28,8 @@ export * from "./notification";
 export * from "./number-field";
 export * from "./ready";
 export * from "./record-field";
+export * from "./reference-array-input";
+export * from "./reference-array-field";
 export * from "./reference-field";
 export * from "./reference-input";
 export * from "./reference-many-count";
