@@ -1,12 +1,9 @@
 import fakeRestProvider from "ra-data-fakerest";
-import { Resource } from "ra-core";
+import { Resource, TestMemoryRouter } from "ra-core";
 
 import { Admin } from "@/components/admin/admin";
 import { ListGuesser } from "@/components/admin/list-guesser";
-import { ReferenceArrayField } from "@/components/admin/reference-array-field";
-import { TextField } from "@/components/admin/text-field";
-import { Show } from "@/components/admin/show";
-import { SimpleShowLayout } from "@/components/admin/simple-show-layout";
+import { EditGuesser, ShowGuesser } from "@/components/admin";
 
 export default {
   title: "Fields/ReferenceArrayField",
@@ -19,7 +16,7 @@ export default {
 };
 
 const fakeData = {
-  bands: [{ id: 1, name: "The Beatles", members: [1, 2, 3, 4, 5, 6, 7, 8] }],
+  bands: [{ id: 1, name: "The Beatles", artists_ids: [1, 2, 3, 4] }],
   artists: [
     { id: 1, name: "John Lennon" },
     { id: 2, name: "Paul McCartney" },
@@ -34,18 +31,15 @@ const fakeData = {
 const dataProvider = fakeRestProvider(fakeData, true);
 
 export const Basic = () => (
-  <Admin dataProvider={dataProvider}>
-    <Resource
-      name="bands"
-      list={ListGuesser}
-      show={
-        <Show>
-          <SimpleShowLayout>
-            <TextField source="name" />
-            <ReferenceArrayField source="members" reference="artists" />
-          </SimpleShowLayout>
-        </Show>
-      }
-    />
-  </Admin>
+  <TestMemoryRouter initialEntries={["/bands/1/show"]}>
+    <Admin dataProvider={dataProvider}>
+      <Resource
+        name="bands"
+        list={ListGuesser}
+        show={ShowGuesser}
+        edit={EditGuesser}
+      />
+      <Resource name="artists" list={ListGuesser} />
+    </Admin>
+  </TestMemoryRouter>
 );

@@ -5,12 +5,11 @@ import fakeRestProvider from "ra-data-fakerest";
 
 import { Admin } from "@/components/admin/admin";
 import { Create } from "@/components/admin/create";
+import { EditGuesser } from "@/components/admin/edit-guesser";
+import { ListGuesser } from "@/components/admin/list-guesser";
+import { ShowGuesser } from "@/components/admin/show-guesser";
 import { SimpleForm } from "@/components/admin/simple-form";
-import { DataTable } from "@/components/admin/data-table";
-import { List } from "@/components/admin/list";
 import { ReferenceArrayInput } from "@/components/admin/reference-array-input";
-import { ReferenceArrayField } from "@/components/admin/reference-array-field";
-import { BadgeField, SingleFieldList } from "@/components/admin";
 
 export default {
   title: "Inputs/ReferenceArrayInput",
@@ -40,20 +39,7 @@ export const Basic = () => (
       <Resource name="tags" recordRepresentation={"name"} />
       <Resource
         name="posts"
-        list={
-          <List>
-            <DataTable>
-              <DataTable.Col source="id" />
-              <DataTable.Col source="tags_ids">
-                <ReferenceArrayField source="tags_ids" reference="tags">
-                  <SingleFieldList>
-                    <BadgeField source="name" />
-                  </SingleFieldList>
-                </ReferenceArrayField>
-              </DataTable.Col>
-            </DataTable>
-          </List>
-        }
+        list={ListGuesser}
         create={
           <Create resource="posts" record={{ tags_ids: [1, 3] }}>
             <SimpleForm>
@@ -65,6 +51,8 @@ export const Basic = () => (
             </SimpleForm>
           </Create>
         }
+        edit={EditGuesser}
+        show={ShowGuesser}
       />
     </Admin>
   </TestMemoryRouter>

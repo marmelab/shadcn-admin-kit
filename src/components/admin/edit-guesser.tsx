@@ -15,6 +15,7 @@ import { TextInput } from "@/components/admin/text-input";
 import { BooleanInput } from "@/components/admin/boolean-input";
 import { ReferenceInput } from "@/components/admin/reference-input";
 import { AutocompleteInput } from "@/components/admin/autocomplete-input";
+import { ReferenceArrayInput } from "./reference-array-input";
 
 export const EditGuesser = (props: { enableLog?: boolean }) => {
   return (
@@ -111,6 +112,11 @@ ${children
       `<ReferenceInput source="${props.source}" reference="${props.reference}">
                   <AutocompleteInput />
               </ReferenceInput>`,
+  },
+  referenceArray: {
+    component: (props: any) => <ReferenceArrayInput {...props} />,
+    representation: (props: any) =>
+      `<ReferenceArrayInput source="${props.source}" reference="${props.reference}" />`,
   },
   boolean: {
     component: (props: any) => <BooleanInput {...props} />,

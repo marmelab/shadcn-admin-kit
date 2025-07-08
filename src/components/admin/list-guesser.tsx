@@ -18,6 +18,7 @@ import { ArrayField } from "@/components/admin/array-field";
 import { BadgeField } from "@/components/admin/badge-field";
 import { ReferenceField } from "@/components/admin/reference-field";
 import { SingleFieldList } from "@/components/admin/single-field-list";
+import { ReferenceArrayField } from "./reference-array-field";
 
 export const ListGuesser = <RecordType extends RaRecord = RaRecord>(
   props: Omit<ListProps, "children"> & { enableLog?: boolean }
@@ -189,6 +190,17 @@ ${children
                         }" />
                    </SingleFieldList>
                 </ArrayField>
+            </DataTable.Col>`,
+  },
+  referenceArray: {
+    component: (props: any) => (
+      <DataTable.Col {...props}>
+        <ReferenceArrayField {...props} />
+      </DataTable.Col>
+    ),
+    representation: (props: any) =>
+      `<DataTable.Col source="${props.source}">
+                <ReferenceArrayField source="${props.source}" reference="${props.reference}" />
             </DataTable.Col>`,
   },
   string: {
