@@ -63,7 +63,7 @@ export const WithDataTable = () => (
               <RecordField source="name" />
               <RecordField source="artists_ids">
                 <ReferenceArrayField reference="artists" source="artists_ids">
-                  <DataTable>
+                  <DataTable hasBulkActions={false}>
                     <DataTable.Col source="id" />
                     <DataTable.Col source="name" />
                   </DataTable>
@@ -76,3 +76,4 @@ export const WithDataTable = () => (
     </Admin>
   </TestMemoryRouter>
 );
+

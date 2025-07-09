@@ -11,6 +11,7 @@ import {
   RecordContextProvider,
   SortPayload,
   useDataTableCallbacksContext,
+  useDataTableConfigContext,
   useDataTableDataContext,
   useDataTableRenderContext,
   useDataTableSelectedIdsContext,
@@ -50,7 +51,7 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
   const { children, className, rowClassName, ...rest } = props;
   return (
     <DataTableBase<RecordType>
-      hasBulkActions={false}
+      hasBulkActions
       loading={null}
       empty={<DataTableEmpty />}
       {...rest}
@@ -74,6 +75,7 @@ DataTable.NumberCol = DataTableNumberColumn;
 
 const DataTableHead = ({ children }: { children: ReactNode }) => {
   const data = useDataTableDataContext();
+  const { hasBulkActions = false } = useDataTableConfigContext();
   const { onSelect } = useDataTableCallbacksContext();
   const selectedIds = useDataTableSelectedIdsContext();
   const handleToggleSelectAll = (checked: boolean) => {
@@ -94,18 +96,20 @@ const DataTableHead = ({ children }: { children: ReactNode }) => {
   return (
     <TableHeader>
       <TableRow>
-        <TableHead className="w-8">
-          <Checkbox
-            onCheckedChange={handleToggleSelectAll}
-            checked={
-              selectedIds &&
-              selectedIds.length > 0 &&
-              selectableIds.length > 0 &&
-              selectableIds.every((id) => selectedIds.includes(id))
-            }
-            className="mb-2"
-          />
-        </TableHead>
+        {hasBulkActions ? (
+          <TableHead className="w-8">
+            <Checkbox
+              onCheckedChange={handleToggleSelectAll}
+              checked={
+                selectedIds &&
+                selectedIds.length > 0 &&
+                selectableIds.length > 0 &&
+                selectableIds.every((id) => selectedIds.includes(id))
+              }
+              className="mb-2"
+            />
+          </TableHead>
+        ) : null}
         {children}
       </TableRow>
     </TableHeader>
@@ -145,6 +149,7 @@ const DataTableRow = ({
 }) => {
   const { rowClick, handleToggleItem } = useDataTableCallbacksContext();
   const selectedIds = useDataTableSelectedIdsContext();
+  const { hasBulkActions = false } = useDataTableConfigContext();
 
   const record = useRecordContext();
   if (!record) {
@@ -195,12 +200,14 @@ const DataTableRow = ({
       onClick={handleClick}
       className={cn(rowClick !== false && "cursor-pointer", className)}
     >
-      <TableCell className="flex w-8" onClick={handleToggle}>
-        <Checkbox
-          checked={selectedIds?.includes(record.id)}
-          onClick={handleToggle}
-        />
-      </TableCell>
+      {hasBulkActions ? (
+        <TableCell className="flex w-8" onClick={handleToggle}>
+          <Checkbox
+            checked={selectedIds?.includes(record.id)}
+            onClick={handleToggle}
+          />
+        </TableCell>
+      ) : null}
       {children}
     </TableRow>
   );
