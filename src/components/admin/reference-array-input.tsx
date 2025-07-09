@@ -7,7 +7,7 @@ import {
   ChoicesContextProvider,
   UseReferenceArrayInputParams,
 } from "ra-core";
-import { AutocompleteArrayInput } from "./autocomplete-array-input";
+import { AutocompleteArrayInput } from "@/components/admin/autocomplete-array-input";
 
 /**
  * An Input component for fields containing a list of references to another resource.
@@ -85,7 +85,7 @@ export const ReferenceArrayInput = (props: ReferenceArrayInputProps) => {
   } = props;
   if (React.Children.count(children) !== 1) {
     throw new Error(
-      "<ReferenceArrayInput> only accepts a single child (like <Datagrid>)"
+      "<ReferenceArrayInput> only accepts a single child (like <AutocompleteArrayInput>)"
     );
   }
 

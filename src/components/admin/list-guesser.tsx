@@ -18,7 +18,7 @@ import { ArrayField } from "@/components/admin/array-field";
 import { BadgeField } from "@/components/admin/badge-field";
 import { ReferenceField } from "@/components/admin/reference-field";
 import { SingleFieldList } from "@/components/admin/single-field-list";
-import { ReferenceArrayField } from "./reference-array-field";
+import { ReferenceArrayField } from "@/components/admin/reference-array-field";
 
 export const ListGuesser = <RecordType extends RaRecord = RaRecord>(
   props: Omit<ListProps, "children"> & { enableLog?: boolean }

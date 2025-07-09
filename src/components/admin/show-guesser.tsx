@@ -22,7 +22,7 @@ import { ReferenceField } from "@/components/admin/reference-field";
 import { ArrayField } from "@/components/admin/array-field";
 import { BadgeField } from "@/components/admin/badge-field";
 import { SingleFieldList } from "@/components/admin/single-field-list";
-import { ReferenceArrayField } from "./reference-array-field";
+import { ReferenceArrayField } from "@/components/admin/reference-array-field";
 
 export const ShowGuesser = (props: { enableLog?: boolean }) => (
   <ShowBase>
@@ -149,7 +149,7 @@ ${children
   },
   referenceArray: {
       component: (props: any) => (
-        <RecordField source="${props.source}">
+        <RecordField source={props.source}>
           <ReferenceArrayField {...props} />
         </RecordField>
       ),
