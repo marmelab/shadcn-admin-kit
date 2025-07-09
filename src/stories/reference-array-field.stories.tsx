@@ -3,7 +3,13 @@ import { Resource, TestMemoryRouter } from "ra-core";
 
 import { Admin } from "@/components/admin/admin";
 import { ListGuesser } from "@/components/admin/list-guesser";
-import { EditGuesser, ShowGuesser } from "@/components/admin";
+import { EditGuesser } from "@/components/admin/edit-guesser";
+import { ReferenceArrayField } from "@/components/admin/reference-array-field";
+import { Show } from "@/components/admin/show";
+import { ShowGuesser } from "@/components/admin/show-guesser";
+import { DataTable } from "@/components/admin/data-table";
+import { RecordField } from "@/components/admin/record-field";
+import { SimpleShowLayout } from "@/components/admin/simple-show-layout";
 
 export default {
   title: "Fields/ReferenceArrayField",
@@ -40,6 +46,33 @@ export const Basic = () => (
         edit={EditGuesser}
       />
       <Resource name="artists" list={ListGuesser} />
+    </Admin>
+  </TestMemoryRouter>
+);
+
+export const WithDataTable = () => (
+  <TestMemoryRouter initialEntries={["/bands/1/show"]}>
+    <Admin dataProvider={dataProvider}>
+      <Resource
+        name="bands"
+        list={ListGuesser}
+        show={
+          <Show>
+            <SimpleShowLayout>
+              <RecordField source="id" />
+              <RecordField source="name" />
+              <RecordField source="artists_ids">
+                <ReferenceArrayField reference="artists" source="artists_ids">
+                  <DataTable>
+                    <DataTable.Col source="id" />
+                    <DataTable.Col source="name" />
+                  </DataTable>
+                </ReferenceArrayField>
+              </RecordField>
+            </SimpleShowLayout>
+          </Show>
+        }
+      />
     </Admin>
   </TestMemoryRouter>
 );
