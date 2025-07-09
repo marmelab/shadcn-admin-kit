@@ -26,16 +26,11 @@ import { AutocompleteArrayInput } from "@/components/admin/autocomplete-array-in
  * delegates rendering to its child component, to which it makes the possible
  * choices available through the ChoicesContext.
  *
- * Use it with a selector component as child, like `<SelectArrayInput>`
- * or <CheckboxGroupInput>.
- *
  * @example
  * export const PostEdit = () => (
  *     <Edit>
  *         <SimpleForm>
- *             <ReferenceArrayInput source="tag_ids" reference="tags">
- *                 <SelectArrayInput optionText="name" />
- *             </ReferenceArrayInput>
+ *             <ReferenceArrayInput source="tag_ids" reference="tags" />
  *         </SimpleForm>
  *     </Edit>
  * );
@@ -47,9 +42,8 @@ import { AutocompleteArrayInput } from "@/components/admin/autocomplete-array-in
  * <ReferenceArrayInput
  *      source="tag_ids"
  *      reference="tags"
- *      perPage={100}>
- *     <SelectArrayInput optionText="name" />
- * </ReferenceArrayInput>
+ *      perPage={100}
+ * />
  *
  * By default, orders the possible values by id desc. You can change this order
  * by setting the `sort` prop (an object with `field` and `order` properties).
@@ -58,9 +52,8 @@ import { AutocompleteArrayInput } from "@/components/admin/autocomplete-array-in
  * <ReferenceArrayInput
  *      source="tag_ids"
  *      reference="tags"
- *      sort={{ field: 'name', order: 'ASC' }}>
- *     <SelectArrayInput optionText="name" />
- * </ReferenceArrayInput>
+ *      sort={{ field: 'name', order: 'ASC' }}
+ * />
  *
  * Also, you can filter the query used to populate the possible values. Use the
  * `filter` prop for that.
@@ -69,9 +62,8 @@ import { AutocompleteArrayInput } from "@/components/admin/autocomplete-array-in
  * <ReferenceArrayInput
  *      source="tag_ids"
  *      reference="tags"
- *      filter={{ is_public: true }}>
- *     <SelectArrayInput optionText="name" />
- * </ReferenceArrayInput>
+ *      filter={{ is_public: true }}
+ * />
  *
  * The enclosed component may filter results. ReferenceArrayInput create a ChoicesContext which provides
  * a `setFilters` function. You can call this function to filter the results.

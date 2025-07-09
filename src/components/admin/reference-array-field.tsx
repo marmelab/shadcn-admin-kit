@@ -21,29 +21,25 @@ import { SingleFieldList } from "@/components/admin/single-field-list";
  *
  * You must define the fields to be passed to the iterator component as children.
  *
- * @example Display all the products of the current order as datagrid
+ * @example Display all the categories of the current product as a list of chips (the default)
+ * // product = {
+ * //   id: 456,
+ * //   category_ids: [11, 22, 33],
+ * // }
+ * <ReferenceArrayField label="Categories" reference="categories" source="category_ids"/ >
+ *
+ * @example Display all the products of the current order as DataTable
  * // order = {
  * //   id: 123,
  * //   product_ids: [456, 457, 458],
  * // }
  * <ReferenceArrayField label="Products" reference="products" source="product_ids">
- *     <Datagrid>
- *         <TextField source="id" />
- *         <TextField source="description" />
- *         <NumberField source="price" options={{ style: 'currency', currency: 'USD' }} />
- *         <EditButton />
- *     </Datagrid>
- * </ReferenceArrayField>
- *
- * @example Display all the categories of the current product as a list of chips
- * // product = {
- * //   id: 456,
- * //   category_ids: [11, 22, 33],
- * // }
- * <ReferenceArrayField label="Categories" reference="categories" source="category_ids">
- *     <SingleFieldList>
- *         <ChipField source="name" />
- *     </SingleFieldList>
+ *     <DataTable>
+ *         <DataTable.Col source="id" />
+ *         <DataTable.Col source="description" />
+ *         <DataTable.NumberCol source="price" options={{ style: 'currency', currency: 'USD' }} />
+ *         <DataTable.Col><EditButton /></DataTable.Col>
+ *     </DataTable>
  * </ReferenceArrayField>
  *
  * By default, restricts the displayed values to 1000. You can extend this limit
