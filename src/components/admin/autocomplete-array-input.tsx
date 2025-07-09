@@ -150,7 +150,7 @@ export const AutocompleteArrayInput = (
                   // We don't want the ChoicesContext to filter the choices if the input
                   // is not from a reference as it would also filter out the selected values
                   if (isFromReference) {
-                    setFilters(filterToQuery(filter));
+                    setFilters(filterToQuery(filter), undefined, true);
                   }
                 }}
                 onBlur={() => setOpen(false)}
