@@ -36,3 +36,4 @@ run-website: ## Run the website in development mode
 
 build-website: ## Build the website
 	pnpm run website:build
+	mv ./website/dist/* ./public/

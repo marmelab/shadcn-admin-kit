@@ -23,9 +23,13 @@ dist-ssr
 *.sln
 *.sw?
 
-public/r
+public/*
+!public/favicon.ico
+!public/shadcn-admin-kit.webp
+!public/demo
 public/demo/*
 !public/demo/.gitkeep
+
 temp
 
 *storybook.log
