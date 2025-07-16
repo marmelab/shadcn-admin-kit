@@ -258,6 +258,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/loading.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/lib/i18nProvider.ts",
           "type": "registry:lib"
         },
