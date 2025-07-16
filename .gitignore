@@ -23,7 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 
-public/r
+public/*
+!public/favicon.ico
+!public/shadcn-admin-kit.webp
+
 temp
 
 *storybook.log

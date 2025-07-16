@@ -27,6 +27,9 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      VITE_CHATWOOT_URL: ${{ vars.VITE_CHATWOOT_URL }}
+      VITE_CHATWOOT_WEBSITE_TOKEN: ${{ secrets.VITE_CHATWOOT_WEBSITE_TOKEN }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -42,12 +45,8 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
-      - name: Build demo
+      - name: Build components
         run: make build
-      - name: Move demo code to public folder
-        run: mv ./dist/* ./public
-      - name: Build registry
-        run: make build-registry
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

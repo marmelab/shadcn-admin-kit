@@ -12,8 +12,10 @@ run:
 lint: ## Run linter
 	pnpm run lint
 
-build: ## Build the project
-	pnpm run build
+build-demo: ## Build the demo
+	rm -rf ./public/demo
+	pnpm run demo:build
+	mv ./dist ./public/demo
 
 build-registry: ## Build the UI registry
 	pnpm run registry:build
@@ -29,3 +31,13 @@ clear-registry: ## Clear the UI registry
 
 storybook: ## Start the storybook
 	pnpm run storybook
+
+run-website: ## Run the website in development mode
+	pnpm run website:dev
+
+build-website: ## Build the website
+	rm -rf ./public/assets ./public/img ./public/index.html
+	pnpm run website:build
+	mv ./website/dist/* ./public/
+
+build: build-website build-demo build-registry ## Build all components
