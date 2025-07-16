@@ -9,6 +9,7 @@
       "title": "Shadcn Admin Kit Base",
       "description": "Shadcn Admin Kit Base Components",
       "registryDependencies": [
+        "accordion",
         "alert",
         "avatar",
         "badge",
@@ -250,6 +251,10 @@
         },
         {
           "path": "src/components/admin/user-menu.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/error.tsx",
           "type": "registry:component"
         },
         {
