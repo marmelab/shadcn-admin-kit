@@ -43,9 +43,7 @@ jobs:
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
       - name: Build demo
-        run: make build
-      - name: Move demo code to public folder
-        run: mv ./dist/* ./public
+        run: make build-demo
       - name: Build registry
         run: make build-registry
       - name: Setup Pages

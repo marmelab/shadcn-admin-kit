@@ -24,6 +24,8 @@ dist-ssr
 *.sw?
 
 public/r
+public/demo/*
+!public/demo/.gitkeep
 temp
 
 *storybook.log

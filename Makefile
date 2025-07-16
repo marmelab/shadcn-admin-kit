@@ -12,8 +12,9 @@ run:
 lint: ## Run linter
 	pnpm run lint
 
-build: ## Build the project
-	pnpm run build
+build-demo: ## Build the demo
+	pnpm run demo:build
+	mv ./dist/* ./public/demo
 
 build-registry: ## Build the UI registry
 	pnpm run registry:build
