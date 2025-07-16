@@ -5,9 +5,10 @@ export const Loading = (props: LoadingProps) => {
   const {
     loadingPrimary = "ra.page.loading",
     loadingSecondary = "ra.message.loading",
+    delay = 1000,
     ...rest
   } = props;
-  const oneSecondHasPassed = useTimeout(1000);
+  const oneSecondHasPassed = useTimeout(delay);
   const translate = useTranslate();
   return oneSecondHasPassed ? (
     <div
@@ -16,10 +17,12 @@ export const Loading = (props: LoadingProps) => {
     >
       <div className={"text-center font-sans color-muted pt-1 pb-1"}>
         <Spinner size="large" className="width-9 height-9" />
-        <h5 className="mt-3 text-2xl text-secondary">
+        <h5 className="mt-3 text-2xl text-secondary-foreground">
           {translate(loadingPrimary, { _: loadingPrimary })}
         </h5>
-        <p>{translate(loadingSecondary, { _: loadingSecondary })}</p>
+        <p className="text-primary">
+          {translate(loadingSecondary, { _: loadingSecondary })}
+        </p>
       </div>
     </div>
   ) : null;
@@ -28,4 +31,5 @@ export const Loading = (props: LoadingProps) => {
 export interface LoadingProps {
   loadingPrimary?: string;
   loadingSecondary?: string;
+  delay?: number;
 }
