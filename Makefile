@@ -30,3 +30,9 @@ clear-registry: ## Clear the UI registry
 
 storybook: ## Start the storybook
 	pnpm run storybook
+
+run-website: ## Run the website in development mode
+	pnpm run website:dev
+
+build-website: ## Build the website
+	pnpm run website:build
