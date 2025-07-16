@@ -189,9 +189,9 @@ export default defineConfig({
 Now, run the `shadcn` init command to setup your project:
 
 ```shell
-npx shadcn@latest init
+npx shadcn init
 # or
-yarn shadcn@latest init
+yarn shadcn init
 ```
 
 You will be asked a few questions to configure `components.json`.
