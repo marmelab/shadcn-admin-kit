@@ -31,7 +31,7 @@ export const Ready = () => (
         </a>
       </div>
       <div className="text-xl">
-        <a href="http://marmelab.com/shadcn-admin-kit/">
+        <a href="http://marmelab.com/shadcn-admin-kit/demo">
           <ChevronsLeftRight className="inline mr-4 w-10 h-10" />
           Demo
         </a>

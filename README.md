@@ -10,7 +10,7 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 [Online Demo]: https://img.shields.io/badge/Online_Demo-blue?style=for-the-badge
 [Documentation]: https://img.shields.io/badge/Documentation-blueviolet?style=for-the-badge
 
-[OnlineDemoLink]: https://marmelab.com/shadcn-admin-kit/ 'Online Demo'
+[OnlineDemoLink]: https://marmelab.com/shadcn-admin-kit/demo 'Online Demo'
 [DocumentationLink]: ./docs/1-Install.md 'Documentation'
 
 ## Features
