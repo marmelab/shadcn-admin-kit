@@ -13,8 +13,9 @@ lint: ## Run linter
 	pnpm run lint
 
 build-demo: ## Build the demo
+	rm -rf ./public/demo
 	pnpm run demo:build
-	mv ./dist/* ./public/demo
+	mv ./dist ./public/demo
 
 build-registry: ## Build the UI registry
 	pnpm run registry:build
@@ -35,5 +36,8 @@ run-website: ## Run the website in development mode
 	pnpm run website:dev
 
 build-website: ## Build the website
+	rm -rf ./public/assets ./public/img ./public/index.html
 	pnpm run website:build
 	mv ./website/dist/* ./public/
+
+build: build-website build-demo build-registry ## Build all components
