@@ -21,7 +21,7 @@ const Welcome = () => {
             className={buttonVariants({
               variant: "outline",
             })}
-            href="https://github.com/marmelab/shadcn-admin-kit"
+            href="https://marmelab.com/shadcn-admin-kit/"
           >
             <House className="mr-2 h-4 w-4" />
             {translate("pos.dashboard.welcome.ra_button")}
@@ -30,7 +30,7 @@ const Welcome = () => {
             className={buttonVariants({
               variant: "outline",
             })}
-            href="https://github.com/marmelab/shadcn-admin-kit/tree/main/src"
+            href="https://github.com/marmelab/shadcn-admin-kit/tree/main/src/demo"
           >
             <Code className="mr-2 h-4 w-4" />
             {translate("pos.dashboard.welcome.demo_button")}
