@@ -189,7 +189,7 @@ export default defineConfig({
 Now, run the `shadcn` init command to setup your project:
 
 ```shell
-npx shadcn init
+npx shadcn@latest init
 # or
 yarn shadcn init
 ```
