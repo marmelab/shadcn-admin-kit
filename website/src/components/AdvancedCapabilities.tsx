@@ -6,7 +6,7 @@ import featuresScreenshot from "/img/features-screenshot.jpeg";
 const features = [
   {
     name: "Rapid CRUD Generation",
-    description: "Builds admin UIs automatically from your API",
+    description: "Build admin UIs automatically from your API",
   },
   {
     name: "Easy relationships",
