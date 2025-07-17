@@ -27,8 +27,8 @@ export const Error = (props: InternalErrorProps & {}) => {
     <>
       {title && <span>{title}</span>}
       <div className="flex flex-col items-center p-20 gap-5" {...rest}>
-        <h1 className="flex items-center text-3xl mt-5 mb-5" role="alert">
-          <CircleAlert className="w-2em h-2em mr-2" />
+        <h1 className="flex items-center text-3xl mt-5 mb-5 gap-3" role="alert">
+          <CircleAlert className="w-2em h-2em" />
           <Translate i18nKey="ra.page.error" />
         </h1>
         <div>
@@ -36,7 +36,7 @@ export const Error = (props: InternalErrorProps & {}) => {
         </div>
         {process.env.NODE_ENV !== "production" && (
           <>
-            <Accordion type="multiple" className="mt-1 p-2 bg-secondary w-full">
+            <Accordion type="multiple" className="mt-1 p-2 bg-secondary w-150">
               <AccordionItem value="error">
                 <AccordionTrigger className="py-2">
                   <Translate i18nKey={error.message}>{error.message}</Translate>
@@ -56,16 +56,16 @@ export const Error = (props: InternalErrorProps & {}) => {
                   Check the{" "}
                   <a
                     className="text-primary underline-offset-4 hover:underline"
-                    href="https://marmelab.com/react-admin/documentation.html"
+                    href="https://github.com/marmelab/shadcn-admin-kit/tree/main/docs"
                   >
-                    react-admin documentation
+                    shadcn-admin-kit documentation
                   </a>
                 </li>
                 <li>
                   Search on{" "}
                   <a
                     className="text-primary underline-offset-4 hover:underline"
-                    href="https://stackoverflow.com/questions/tagged/react-admin"
+                    href="https://stackoverflow.com/questions/tagged/shadcn-admin-kit"
                   >
                     StackOverflow
                   </a>{" "}
@@ -75,9 +75,9 @@ export const Error = (props: InternalErrorProps & {}) => {
                   Get help from the core team via{" "}
                   <a
                     className="text-primary underline-offset-4 hover:underline"
-                    href="https://react-admin-ee.marmelab.com/#fromsww"
+                    href="https://marmelab.com/shadcn-admin-kit/"
                   >
-                    react-admin Enterprise Edition
+                    Shadcn Enterprise Edition
                   </a>
                 </li>
               </ul>
