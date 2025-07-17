@@ -1,9 +1,9 @@
 import type { FallbackProps } from "react-error-boundary";
 
 import {
-  useTranslate,
   useDefaultTitle,
   useResetErrorBoundaryOnLocationChange,
+  Translate,
 } from "ra-core";
 import { CircleAlert, History } from "lucide-react";
 import {
@@ -19,7 +19,6 @@ import { ErrorInfo } from "react";
 export const Error = (props: InternalErrorProps & {}) => {
   const { error, errorInfo, resetErrorBoundary, ...rest } = props;
 
-  const translate = useTranslate();
   const title = useDefaultTitle();
   useResetErrorBoundaryOnLocationChange(resetErrorBoundary);
 
@@ -30,17 +29,17 @@ export const Error = (props: InternalErrorProps & {}) => {
       <div className="flex flex-col items-center p-20 gap-5" {...rest}>
         <h1 className="flex items-center text-3xl mt-5 mb-5" role="alert">
           <CircleAlert className="w-2em h-2em mr-2" />
-          {translate("ra.page.error")}
+          <Translate i18nKey="ra.page.error" />
         </h1>
-        <div>{translate("ra.message.error")}</div>
+        <div>
+          <Translate i18nKey="ra.message.error" />
+        </div>
         {process.env.NODE_ENV !== "production" && (
           <>
             <Accordion type="multiple" className="mt-1 p-2 bg-secondary w-full">
               <AccordionItem value="error">
                 <AccordionTrigger className="py-2">
-                  {translate(error.message, {
-                    _: error.message,
-                  })}
+                  <Translate i18nKey={error.message}>{error.message}</Translate>
                 </AccordionTrigger>
                 <AccordionContent className="whitespace-pre-wrap pt-1">
                   <p>{errorInfo?.componentStack}</p>
@@ -88,7 +87,7 @@ export const Error = (props: InternalErrorProps & {}) => {
         <div className="mt-8">
           <Button onClick={goBack}>
             <History />
-            {translate("ra.action.back")}
+            <Translate i18nKey="ra.action.back" />
           </Button>
         </div>
       </div>
