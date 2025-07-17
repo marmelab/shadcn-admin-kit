@@ -9,10 +9,12 @@ alwaysApply: true
 
 Here are some rules to follow when using components in this project:
 
-- If using shadcn-admin-kit mcp and a registry url is provided, always check the mcp for components before creating your own.
-- If asked to init or create a new Admin, or to customize the resources, use the usage section below as guide to create or edit the Admin component.
+- If using shadcn-admin-kit mcp and a registry url is provided, always check the mcp for components (call get_items) before creating your own.
+- Only attempt to add items from the registry that actually exist in the registry (call get_items if necessary).
+- If asked to initialize or create a new Admin, or to customize the resources, use the usage section below as guide to create or edit the Admin component.
+- Always check if the TS config needs to be fixed (see below).
 
-## Steps to follow Admin initialization
+## Fixing the TS config
 
 When you initialize a new Admin:
 
