@@ -7,6 +7,7 @@ import ReactRouterLogo from "/img/react-router-logo.svg";
 import ReactQueryLogo from "/img/react-query-logo.svg";
 import TailwindLogo from "/img/tailwind-logo.svg";
 import RadixUILogo from "/img/radix-ui-logo.svg";
+import ReactHookFormLogo from "/img/react-hook-form-logo.svg";
 import {
   Tooltip,
   TooltipContent,
@@ -31,16 +32,20 @@ const technos = [
     logo: RadixUILogo,
   },
   {
-    name: "TypeScript",
-    logo: TypeScriptLogo,
-  },
-  {
     name: "React Router",
     logo: ReactRouterLogo,
   },
   {
     name: "TanStack Query",
     logo: ReactQueryLogo,
+  },
+  {
+    name: "React Hook Form",
+    logo: ReactHookFormLogo,
+  },
+  {
+    name: "TypeScript",
+    logo: TypeScriptLogo,
   },
 ];
 
