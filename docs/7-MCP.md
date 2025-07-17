@@ -59,5 +59,5 @@ You can now start prompting the LLM to create or edit the `<Admin>` component, t
 Some examples of prompts you can use:
 
 - "init this project using the registry"
-- "create a new admin component (use it as the main rendered component) and declare 3 resources in the admin: posts, comments and users"
+- "create a new admin and declare 3 resources in it: posts, comments and users"
 - "customize each resource to add a matching icon using the lucide library"
