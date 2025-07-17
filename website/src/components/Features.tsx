@@ -1,5 +1,5 @@
 import {
-  Database,
+  ArrowDownUp,
   AlignJustify,
   NotepadText,
   KeyRound,
@@ -11,18 +11,19 @@ import {
 
 const features = [
   {
-    name: "Tables",
-    description: "Advanced data tables with sorting, filtering & pagination",
-    icon: Database,
+    name: "Data Fetching",
+    description: "Efficient hooks for robust API interactions",
+    icon: ArrowDownUp,
   },
   {
-    name: "Lists",
+    name: "Lists & Data Tables",
     description: "Flexible list components for displaying data collections",
     icon: AlignJustify,
   },
   {
-    name: "Forms",
-    description: "Comprehensive form components with validation",
+    name: "Forms & Validation",
+    description:
+      "Data-bound inputs, adaptable layouts, and dynamic field support",
     icon: NotepadText,
   },
   {
@@ -33,7 +34,8 @@ const features = [
 
   {
     name: "Search & Filtering",
-    description: "Effortless search and precise filtering",
+    description:
+      "Components for search-as-you-type, combined filters, and more",
     icon: ScanSearch,
   },
   {
@@ -42,13 +44,13 @@ const features = [
     icon: Earth,
   },
   {
-    name: "Theming",
-    description: "Flexible theming with light/dark mode",
+    name: "Flexible Theming",
+    description: "App themes, light/dark mode & granular component styling",
     icon: Palette,
   },
   {
-    name: "Type-safe",
-    description: "Type-safe coding to catch errors early",
+    name: "Resilient UI",
+    description: "Gracefully manages loading, empty, and error states",
     icon: BugOff,
   },
 ];

@@ -10,7 +10,8 @@ export function ByDevelopers() {
               Built by developers for developers
             </p>
             <p className="mx-auto mt-5 max-w-prose text-xl text-muted-foreground mb-10">
-              Clean code and smart auto-completion ensure a seamless workflow.
+              Clean code, strong typing and smart auto-completion ensure a
+              seamless workflow.
             </p>
           </div>
           <img

@@ -5,8 +5,8 @@ import featuresScreenshot from "/img/features-screenshot.jpeg";
 
 const features = [
   {
-    name: "Zero-effort CRUD",
-    description: "Generate complete admin interfaces in seconds",
+    name: "Rapid CRUD Generation",
+    description: "Builds admin UIs automatically from your API",
   },
   {
     name: "Easy relationships",
@@ -17,12 +17,16 @@ const features = [
     description: "Manage user access with fine-grained control",
   },
   {
-    name: "User preferences",
-    description: "Save and restore user settings automatically",
-  },
-  {
     name: "Undo Functionality",
     description: "Let users easily revert changes",
+  },
+  {
+    name: "Bulk Actions",
+    description: "Select and modify multiple items at once",
+  },
+  {
+    name: "User preferences",
+    description: "Save and restore user settings automatically",
   },
   {
     name: "Fully customizable",
