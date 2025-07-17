@@ -1,4 +1,4 @@
-import { FallbackProps } from "react-error-boundary";
+import type { FallbackProps } from "react-error-boundary";
 
 import {
   useTranslate,
