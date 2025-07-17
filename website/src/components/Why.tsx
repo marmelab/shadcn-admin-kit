@@ -1,7 +1,7 @@
 import { Container } from "./Container";
 import {
   BicepsFlexed,
-  Github,
+  Plug,
   GraduationCap,
   LayoutPanelLeft,
   LockOpen,
@@ -18,23 +18,25 @@ const features = [
   {
     name: "Trusted expertise",
     description:
-      "Maintained by senior developers with proven open-source expertise.",
+      "Maintained by senior developers with proven open-source expertise (80k+ stars).",
     icon: GraduationCap,
   },
   {
-    name: "Fully open-source",
-    description: "With open-source flexibility, you're never locked in.",
-    icon: Github,
+    name: "Headless",
+    description:
+      "Exposes a rich library of hooks that can be used with any React component.",
+    icon: Plug,
   },
   {
     name: "No lock-in",
-    description: "You own the code. Host it anywhere with zero hidden costs.",
+    description:
+      "The code is open-source. Host it anywhere with zero hidden costs.",
     icon: LockOpen,
   },
   {
-    name: "A Strong Foundation",
+    name: "Industry best practices",
     description:
-      "Start with a solid foundation with industry best practices already implemented.",
+      "Composability, separation of concerns, strict typing, batteries included but removable, awesome DX.",
     icon: BicepsFlexed,
   },
   {
