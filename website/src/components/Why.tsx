@@ -36,7 +36,7 @@ const features = [
   {
     name: "Industry best practices",
     description:
-      "Composability, separation of concerns, strict typing, batteries included but removable, awesome DX.",
+      "Responsive design, accessibility, and performance are built-in.",
     icon: BicepsFlexed,
   },
   {
