@@ -10,6 +10,7 @@ import {
   List,
   ToggleFilterButton,
   TextInput,
+  ListPagination,
 } from "@/components/admin";
 import { Badge } from "@/components/ui/badge";
 import { Clock, DollarSign, Mail } from "lucide-react";
@@ -37,45 +38,54 @@ export const CustomerList = () => {
   const isMobile = useIsMobile();
 
   return (
-    <List perPage={25} sort={{ field: "last_seen", order: "DESC" }}>
+    <List
+      perPage={25}
+      sort={{ field: "last_seen", order: "DESC" }}
+      pagination={false}
+    >
       <div className="flex flex-row gap-4 mb-4">
         <SidebarFilters />
-        <DataTable className="flex-1">
-          <DataTable.Col
-            label="resources.customers.fields.name"
-            source="last_name"
-          >
-            <FullNameField />
-          </DataTable.Col>
-          <DataTable.Col
-            source="nb_orders"
-            label="resources.customers.fields.orders"
-            className="hidden md:table-cell text-right"
-            render={(record) => (record.nb_orders > 0 ? record.nb_orders : "")}
-          />
-          <DataTable.NumberCol
-            source="total_spent"
-            options={{ style: "currency", currency: "USD" }}
-            conditionalClassName={(record) =>
-              record.total_spent > 500 && "dark:text-green-500 text-lime-700"
-            }
-            className="hidden md:table-cell"
-          />
-          <DataTable.Col
-            source="last_seen"
-            render={(record) =>
-              isMobile
-                ? smallDateTimeFormatter.format(new Date(record.last_seen))
-                : dateTimeFormatter.format(new Date(record.last_seen))
-            }
-          />
-          <DataTable.Col
-            label="resources.customers.fields.groups"
-            className="hidden md:table-cell"
-          >
-            <SegmentList />
-          </DataTable.Col>
-        </DataTable>
+        <div className="lg:w-4xl">
+          <DataTable>
+            <DataTable.Col
+              label="resources.customers.fields.name"
+              source="last_name"
+            >
+              <FullNameField />
+            </DataTable.Col>
+            <DataTable.Col
+              source="nb_orders"
+              label="resources.customers.fields.orders"
+              className="hidden md:table-cell text-right"
+              render={(record) =>
+                record.nb_orders > 0 ? record.nb_orders : ""
+              }
+            />
+            <DataTable.NumberCol
+              source="total_spent"
+              options={{ style: "currency", currency: "USD" }}
+              conditionalClassName={(record) =>
+                record.total_spent > 500 && "dark:text-green-500 text-lime-700"
+              }
+              className="hidden md:table-cell"
+            />
+            <DataTable.Col
+              source="last_seen"
+              render={(record) =>
+                isMobile
+                  ? smallDateTimeFormatter.format(new Date(record.last_seen))
+                  : dateTimeFormatter.format(new Date(record.last_seen))
+              }
+            />
+            <DataTable.Col
+              label="resources.customers.fields.groups"
+              className="hidden md:table-cell"
+            >
+              <SegmentList />
+            </DataTable.Col>
+          </DataTable>
+          <ListPagination className="justify-start mt-2" />
+        </div>
       </div>
     </List>
   );
