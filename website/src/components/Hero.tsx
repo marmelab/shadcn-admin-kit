@@ -15,7 +15,7 @@ export function Hero() {
               <p className="mt-6 text-lg leading-8 text-gray-600">
                 Powerful open-source shadcn blocks to build beautiful internal
                 tools, <br className="hidden md:block" />
-                admin panels, and dashboards with React.
+                admin panels, B2B apps, and dashboards with React.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <Button asChild size="lg">
