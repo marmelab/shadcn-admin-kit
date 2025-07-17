@@ -8,11 +8,6 @@ import ReactQueryLogo from "/img/react-query-logo.svg";
 import TailwindLogo from "/img/tailwind-logo.svg";
 import RadixUILogo from "/img/radix-ui-logo.svg";
 import ReactHookFormLogo from "/img/react-hook-form-logo.svg";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 const technos = [
   {
@@ -67,19 +62,19 @@ export function Technos() {
             </div>
             <div className="flex flex-wrap items-center gap-y-12 md:gap-y-14 gap-x-6 md:gap-x-12 justify-center justify-items-center">
               {technos.map((techno) => (
-                <Tooltip key={techno.name}>
-                  <TooltipTrigger asChild>
-                    <img
-                      alt={techno.name}
-                      src={techno.logo}
-                      width={64}
-                      height={64}
-                    />
-                  </TooltipTrigger>
-                  <TooltipContent side="bottom">
-                    <p>{techno.name}</p>
-                  </TooltipContent>
-                </Tooltip>
+                <div
+                  key={techno.name}
+                  className="flex flex-col items-center place-content-between gap-2"
+                >
+                  <img
+                    alt={techno.name}
+                    src={techno.logo}
+                    width={64}
+                    height={64}
+                    className="h-14 w-14"
+                  />
+                  <p className="text-primary-foreground/80">{techno.name}</p>
+                </div>
               ))}
             </div>
           </div>
