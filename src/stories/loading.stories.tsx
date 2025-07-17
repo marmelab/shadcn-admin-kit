@@ -25,9 +25,15 @@ const StoryWrapper = ({
 
 const i18nProvider = polyglotI18nProvider(() => englishMessages, "en");
 
-export const Basic = ({ theme }: { theme: "system" | "light" | "dark" }) => (
+export const Basic = ({
+  theme,
+  delay,
+}: {
+  theme: "system" | "light" | "dark";
+  delay?: number;
+}) => (
   <StoryWrapper theme={theme}>
-    <Loading />
+    <Loading delay={delay} />
   </StoryWrapper>
 );
 
@@ -46,11 +52,17 @@ Basic.argTypes = {
   },
 };
 
-export const I18N = ({ theme }: { theme: "system" | "light" | "dark" }) => {
+export const I18N = ({
+  theme,
+  delay,
+}: {
+  theme: "system" | "light" | "dark";
+  delay?: number;
+}) => {
   return (
     <StoryWrapper theme={theme}>
       <I18nContextProvider value={i18nProvider}>
-        <Loading />
+        <Loading delay={delay} />
       </I18nContextProvider>
     </StoryWrapper>
   );
