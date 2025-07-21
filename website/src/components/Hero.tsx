@@ -1,6 +1,7 @@
 import { Container } from "./Container";
 import { Button } from "@/components/ui/button";
 import HeroScreenshot from "/img/hero-screenshot.jpeg";
+import HotspotSvg from "./HotspotSvg";
 
 export function Hero() {
   return (
@@ -41,8 +42,11 @@ export function Hero() {
               <img
                 src={HeroScreenshot}
                 alt="Hero screenshot"
-                className="mx-auto rounded-2xl shadow-lg ring-1 ring-gray-900/10"
+                className="mx-auto rounded-2xl shadow-lg ring-1 ring-gray-900/10 xl:hidden"
               />
+              <div className="hidden xl:block">
+                <HotspotSvg />
+              </div>
             </div>
           </div>
         </div>
