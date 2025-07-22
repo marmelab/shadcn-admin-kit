@@ -1,9 +1,7 @@
-import { ReactElement, ReactNode } from "react";
+import { ReactNode } from "react";
 import {
-  useReferenceManyFieldController,
-  ListContextProvider,
-  ResourceContextProvider,
-  useRecordContext,
+  ReferenceManyFieldBase,
+  useListContext,
   RaRecord,
   UseReferenceManyFieldControllerParams,
   ListControllerResult,
@@ -15,50 +13,21 @@ export const ReferenceManyField = <
 >(
   props: ReferenceManyFieldProps<RecordType, ReferenceRecordType>
 ) => {
-  const {
-    children,
-    debounce,
-    filter = defaultFilter,
-    page = 1,
-    pagination = null,
-    perPage = 25,
-    reference,
-    render,
-    resource,
-    sort = defaultSort,
-    source = "id",
-    storeKey,
-    target,
-    queryOptions,
-  } = props;
-  const record = useRecordContext(props);
-
-  const controllerProps = useReferenceManyFieldController<
-    RecordType,
-    ReferenceRecordType
-  >({
-    debounce,
-    filter,
-    page,
-    perPage,
-    record,
-    reference,
-    resource,
-    sort,
-    source,
-    storeKey,
-    target,
-    queryOptions,
-  });
+  const { children, empty, error, loading, pagination, render, ...rest } =
+    props;
 
   return (
-    <ResourceContextProvider value={reference}>
-      <ListContextProvider value={controllerProps}>
-        {render && render(controllerProps)}
+    <ReferenceManyFieldBase {...rest}>
+      <ReferenceManyFieldView<ReferenceRecordType>
+        empty={empty}
+        error={error}
+        loading={loading}
+        pagination={pagination}
+        render={render}
+      >
         {children}
-        {pagination}
-      </ListContextProvider>
-    </ResourceContextProvider>
+      </ReferenceManyFieldView>
+    </ReferenceManyFieldBase>
   );
 };
 
@@ -66,13 +35,71 @@ export interface ReferenceManyFieldProps<
   RecordType extends RaRecord = RaRecord,
   ReferenceRecordType extends RaRecord = RaRecord
 > extends UseReferenceManyFieldControllerParams<
-    RecordType,
-    ReferenceRecordType
-  > {
-  children?: ReactNode;
-  render?: (props: ListControllerResult<ReferenceRecordType>) => ReactNode;
-  pagination?: ReactElement;
-}
+      RecordType,
+      ReferenceRecordType
+    >,
+    ReferenceManyFieldViewProps<ReferenceRecordType> {}
 
-const defaultFilter = {};
-const defaultSort = { field: "id", order: "DESC" as const };
+const ReferenceManyFieldView = <
+  ReferenceRecordType extends RaRecord = RaRecord
+>(
+  props: ReferenceManyFieldViewProps<ReferenceRecordType>
+) => {
+  const {
+    children,
+    empty,
+    error: errorElement,
+    loading,
+    pagination,
+    render,
+  } = props;
+  const listContext = useListContext();
+  const {
+    isPending,
+    error,
+    total,
+    hasPreviousPage,
+    hasNextPage,
+    data,
+    filterValues,
+  } = listContext;
+
+  if (isPending && loading !== false) {
+    return loading;
+  }
+  if (error && errorElement !== false) {
+    return errorElement;
+  }
+  if (
+    (total === 0 ||
+      (total == null &&
+        hasPreviousPage === false &&
+        hasNextPage === false &&
+        // @ts-expect-error FIXME total may be undefined when using partial pagination but the ListControllerResult type is wrong about it
+        data.length === 0 &&
+        // the user didn't set any filters
+        !Object.keys(filterValues).length)) &&
+    empty !== false
+  ) {
+    return empty;
+  }
+
+  return (
+    <>
+      {render && render(listContext)}
+      {children}
+      {pagination}
+    </>
+  );
+};
+
+export interface ReferenceManyFieldViewProps<
+  ReferenceRecordType extends RaRecord = RaRecord
+> {
+  children?: ReactNode;
+  empty?: ReactNode;
+  error?: ReactNode;
+  loading?: ReactNode;
+  pagination?: ReactNode;
+  render?: (props: ListControllerResult<ReferenceRecordType>) => ReactNode;
+}

@@ -19,7 +19,7 @@ export const ReferenceField = <
 >(
   props: ReferenceFieldProps<RecordType, ReferenceRecordType>
 ) => {
-  const { empty, render, ...rest } = props;
+  const { loading, error, empty, render, ...rest } = props;
   const id = useFieldValue<RecordType>(props);
   const translate = useTranslate();
 
@@ -31,7 +31,12 @@ export const ReferenceField = <
     )
   ) : (
     <ReferenceFieldBase {...rest}>
-      <ReferenceFieldView<ReferenceRecordType> render={render} {...rest} />
+      <ReferenceFieldView<ReferenceRecordType>
+        render={render}
+        loading={loading}
+        error={error}
+        {...rest}
+      />
     </ReferenceFieldBase>
   );
 };
@@ -65,22 +70,23 @@ export const ReferenceFieldView = <
     children,
     className,
     empty,
+    error: errorElement,
     render,
     reference,
-    loading = null,
+    loading,
   } = props;
   const referenceFieldContext = useReferenceFieldContext();
-  const { error, link, isLoading, referenceRecord } = referenceFieldContext;
+  const { error, link, isPending, referenceRecord } = referenceFieldContext;
   const getRecordRepresentation = useGetRecordRepresentation(reference);
   const translate = useTranslate();
 
-  if (error) {
-    return null;
+  if (error && errorElement !== false) {
+    return errorElement;
   }
-  if (isLoading) {
+  if (isPending && loading !== false) {
     return loading;
   }
-  if (!referenceRecord) {
+  if (!referenceRecord && empty !== false) {
     return typeof empty === "string" ? (
       <>{empty && translate(empty, { _: empty })}</>
     ) : (

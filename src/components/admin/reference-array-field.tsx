@@ -1,13 +1,9 @@
 import { memo, type ReactElement, type ReactNode } from "react";
 import {
-  ListContextProvider,
   useListContext,
-  type ListControllerProps,
-  useReferenceArrayFieldController,
   type SortPayload,
   type FilterPayload,
-  ResourceContextProvider,
-  useRecordContext,
+  ReferenceArrayFieldBase,
   type RaRecord,
   HintedString,
   ExtractRecordPaths,
@@ -82,38 +78,28 @@ export const ReferenceArrayField = <
     sort,
     source,
     queryOptions,
+    ...rest
   } = props;
-  const record = useRecordContext<RecordType>(props);
-  const controllerProps = useReferenceArrayFieldController<
-    RecordType,
-    ReferenceRecordType
-  >({
-    filter,
-    page,
-    perPage,
-    record,
-    reference,
-    resource,
-    sort,
-    source,
-    queryOptions,
-  });
   return (
-    <ResourceContextProvider value={reference}>
-      <ListContextProvider value={controllerProps}>
-        <PureReferenceArrayFieldView {...props} />
-      </ListContextProvider>
-    </ResourceContextProvider>
+    <ReferenceArrayFieldBase
+      filter={filter}
+      page={page}
+      perPage={perPage}
+      reference={reference}
+      resource={resource}
+      sort={sort}
+      source={source}
+      queryOptions={queryOptions}
+    >
+      <PureReferenceArrayFieldView {...rest} />
+    </ReferenceArrayFieldBase>
   );
 };
 export interface ReferenceArrayFieldProps<
   RecordType extends RaRecord = RaRecord,
   ReferenceRecordType extends RaRecord = RaRecord
-> {
-  children?: ReactNode;
-  className?: string;
+> extends ReferenceArrayFieldViewProps {
   filter?: FilterPayload;
-  loading?: ReactNode;
   page?: number;
   pagination?: ReactElement;
   perPage?: number;
@@ -127,28 +113,52 @@ export interface ReferenceArrayFieldProps<
   >;
 }
 
-export interface ReferenceArrayFieldViewProps
-  extends Omit<
-      ReferenceArrayFieldProps,
-      "resource" | "page" | "perPage" | "queryOptions"
-    >,
-    Omit<ListControllerProps, "queryOptions"> {}
+export interface ReferenceArrayFieldViewProps {
+  children?: ReactNode;
+  className?: string;
+  empty?: ReactNode;
+  error?: ReactNode;
+  loading?: ReactNode;
+  pagination?: ReactNode;
+}
 
 export const ReferenceArrayFieldView = (
   props: ReferenceArrayFieldViewProps
 ) => {
   const {
     children = defaultChildren,
-    pagination,
     className,
-    loading = null,
+    empty,
+    error: errorElement,
+    loading,
+    pagination,
   } = props;
-  const { isPending, total } = useListContext();
+  const {
+    isPending,
+    error,
+    total,
+    hasPreviousPage,
+    hasNextPage,
+    data,
+    filterValues,
+  } = useListContext();
 
   return (
     <div className={className}>
-      {isPending ? (
+      {isPending && loading !== false ? (
         loading
+      ) : error && errorElement !== false ? (
+        errorElement
+      ) : (total === 0 ||
+          (total == null &&
+            hasPreviousPage === false &&
+            hasNextPage === false &&
+            // @ts-expect-error FIXME total may be undefined when using partial pagination but the ListControllerResult type is wrong about it
+            data.length === 0 &&
+            // the user didn't set any filters
+            !Object.keys(filterValues).length)) &&
+        empty !== false ? (
+        empty
       ) : (
         <span>
           {children}
@@ -159,5 +169,5 @@ export const ReferenceArrayFieldView = (
   );
 };
 
-const defaultChildren = <SingleFieldList />
+const defaultChildren = <SingleFieldList />;
 const PureReferenceArrayFieldView = memo(ReferenceArrayFieldView);
