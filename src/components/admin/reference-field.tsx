@@ -2,6 +2,7 @@ import {
   LinkToType,
   RaRecord,
   ReferenceFieldBase,
+  type UseReferenceFieldControllerResult,
   useFieldValue,
   useGetRecordRepresentation,
   useReferenceFieldContext,
@@ -18,7 +19,7 @@ export const ReferenceField = <
 >(
   props: ReferenceFieldProps<RecordType, ReferenceRecordType>
 ) => {
-  const { empty } = props;
+  const { empty, render, ...rest } = props;
   const id = useFieldValue<RecordType>(props);
   const translate = useTranslate();
 
@@ -29,8 +30,8 @@ export const ReferenceField = <
       empty
     )
   ) : (
-    <ReferenceFieldBase {...props}>
-      <ReferenceFieldView<ReferenceRecordType> {...props} />
+    <ReferenceFieldBase {...rest}>
+      <ReferenceFieldView<ReferenceRecordType> render={render} {...rest} />
     </ReferenceFieldBase>
   );
 };
@@ -68,8 +69,8 @@ export const ReferenceFieldView = <
     reference,
     loading = null,
   } = props;
-  const { error, link, isLoading, referenceRecord } =
-    useReferenceFieldContext();
+  const referenceFieldContext = useReferenceFieldContext();
+  const { error, link, isLoading, referenceRecord } = referenceFieldContext;
   const getRecordRepresentation = useGetRecordRepresentation(reference);
   const translate = useTranslate();
 
@@ -88,7 +89,7 @@ export const ReferenceFieldView = <
   }
 
   const child = render
-    ? render(referenceRecord as ReferenceRecordType)
+    ? render(referenceFieldContext)
     : children || <span>{getRecordRepresentation(referenceRecord)}</span>;
 
   if (link) {
@@ -111,7 +112,7 @@ export interface ReferenceFieldViewProps<
   className?: string;
   empty?: ReactNode;
   loading?: ReactNode;
-  render?: (record: ReferenceRecordType) => ReactNode;
+  render?: (props: UseReferenceFieldControllerResult) => ReactNode;
   reference: string;
   source: string;
   resource?: string;

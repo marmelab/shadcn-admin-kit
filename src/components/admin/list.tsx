@@ -1,8 +1,13 @@
-import { Breadcrumb, BreadcrumbItem, BreadcrumbPage } from "@/components/admin/breadcrumb";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbPage,
+} from "@/components/admin/breadcrumb";
 import {
   FilterLiveForm,
   ListBase,
   ListBaseProps,
+  type ListControllerResult,
   RaRecord,
   Translate,
   useGetResourceLabel,
@@ -51,16 +56,18 @@ export const List = <RecordType extends RaRecord = RaRecord>(
       sort={sort}
       storeKey={storeKey}
     >
-      <ListView {...rest} />
+      <ListView<RecordType> {...rest} />
     </ListBase>
   );
 };
 
 export interface ListProps<RecordType extends RaRecord = RaRecord>
   extends ListBaseProps<RecordType>,
-    ListViewProps {}
+    ListViewProps<RecordType> {}
 
-export const ListView = (props: ListViewProps) => {
+export const ListView = <RecordType extends RaRecord = RaRecord>(
+  props: ListViewProps<RecordType>
+) => {
   const {
     bulkActionsToolbar = defaultBulkActionsToolbar,
     filters,
@@ -131,8 +138,9 @@ export const ListView = (props: ListViewProps) => {
 const defaultPagination = <ListPagination />;
 const defaultBulkActionsToolbar = <BulkActionsToolbar />;
 
-export interface ListViewProps {
-  children: ReactNode;
+export interface ListViewProps<RecordType extends RaRecord = RaRecord> {
+  children?: ReactNode;
+  render?: (props: ListControllerResult<RecordType, Error>) => ReactNode;
   actions?: ReactNode;
   filters?: ReactElement[];
   pagination?: ReactNode;

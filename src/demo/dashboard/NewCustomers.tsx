@@ -19,7 +19,7 @@ const NewCustomers = () => {
   aMonthAgo.setMilliseconds(0);
 
   return (
-    <ListBase
+    <ListBase<Customer>
       resource="customers"
       filter={{
         has_ordered: true,
@@ -28,52 +28,48 @@ const NewCustomers = () => {
       sort={{ field: "first_seen", order: "DESC" }}
       perPage={100}
       disableSyncWithLocation
-    >
-      <CardWithIcon
-        to="/customers"
-        icon={UserPlus}
-        title={translate("pos.dashboard.new_customers")}
-        subtitle={<WithListContext render={({ total }) => <>{total}</>} />}
-      >
-        <WithListContext<Customer>
-          render={({ data }) => (
-            <div className="px-4 flex flex-col gap-4">
-              {data?.map((record) => (
-                <Link
-                  key={record.id}
-                  className="flex-1 flex flex-row"
-                  to={`/customers/${record.id}/show`}
-                >
-                  <div className="w-12 mt-2">
-                    <Avatar>
-                      <AvatarImage
-                        src={`${record.avatar}?size=32x32`}
-                        alt={`${record.first_name} ${record.last_name}`}
-                      />
-                    </Avatar>
-                  </div>
-                  <div className="flex-1 flex flex-col items-start justify-center text-sm">
-                    <div>{`${record.first_name} ${record.last_name}`}</div>
-                    <div className="text-muted-foreground">
-                      {new Date(record.first_seen).toLocaleDateString()}
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
-        />
-        <div className="flex-grow">&nbsp;</div>
-        <Link
-          className={buttonVariants({
-            variant: "outline",
-          })}
+      render={({ data }) => (
+        <CardWithIcon
           to="/customers"
+          icon={UserPlus}
+          title={translate("pos.dashboard.new_customers")}
+          subtitle={<WithListContext render={({ total }) => <>{total}</>} />}
         >
-          {translate("pos.dashboard.all_customers")}
-        </Link>
-      </CardWithIcon>
-    </ListBase>
+          <div className="px-4 flex flex-col gap-4">
+            {data?.map((record) => (
+              <Link
+                key={record.id}
+                className="flex-1 flex flex-row"
+                to={`/customers/${record.id}/show`}
+              >
+                <div className="w-12 mt-2">
+                  <Avatar>
+                    <AvatarImage
+                      src={`${record.avatar}?size=32x32`}
+                      alt={`${record.first_name} ${record.last_name}`}
+                    />
+                  </Avatar>
+                </div>
+                <div className="flex-1 flex flex-col items-start justify-center text-sm">
+                  <div>{`${record.first_name} ${record.last_name}`}</div>
+                  <div className="text-muted-foreground">
+                    {new Date(record.first_seen).toLocaleDateString()}
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          <div className="flex-grow">&nbsp;</div>
+          <Link
+            className={buttonVariants({ variant: "outline" })}
+            to="/customers"
+          >
+            {translate("pos.dashboard.all_customers")}
+          </Link>
+        </CardWithIcon>
+      )}
+    />
   );
 };
 

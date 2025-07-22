@@ -184,24 +184,24 @@ const ProductReview = () => {
           source="customer_id"
           reference="customers"
           link={false}
-          render={(customer) => (
+          render={({ referenceRecord }) => (
             <Avatar className="w-10 h-10">
-              <AvatarImage src={customer.avatar} />
+              <AvatarImage src={referenceRecord?.avatar} />
               <AvatarFallback>
-                {customer.first_name?.charAt(0)}
-                {customer.last_name?.charAt(0)}
+                {referenceRecord?.first_name?.charAt(0)}
+                {referenceRecord?.last_name?.charAt(0)}
               </AvatarFallback>
             </Avatar>
           )}
         />
-        <span className="text-sm font-semibold">
+        <div className="flex flex-col text-sm gap-1 font-semibold">
           <ReferenceField
             source="customer_id"
             reference="customers"
             link={false}
           />
           <StarRatingField size="small" />
-        </span>
+        </div>
         <div className="flex-1" />
         <span className="text-xs text-muted-foreground">
           {new Date(review.date).toLocaleDateString()}

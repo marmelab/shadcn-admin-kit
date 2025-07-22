@@ -35,46 +35,38 @@ export const OrderEdit = () => (
           <BooleanInput source="returned" />
         </div>
         <div className="flex-1">
+          <div className="text-xs opacity-75">Customer</div>
           <ReferenceField
             source="customer_id"
             reference="customers"
-            className="mb-4"
-          >
-            <RecordField
-              label="Customer"
-              className="md:text-sm [&>span]:underline"
-            >
-              <RecordRepresentation />
-            </RecordField>
-            <RecordField
-              render={(record) => (
+            render={({ referenceRecord }) => (
+              <div className="mb-4 md:text-sm">
+                <RecordRepresentation />
+                <br />
                 <a
                   className="underline md:text-sm"
-                  href={`mailto:${record.email}`}
+                  href={`mailto:${referenceRecord?.email}`}
                 >
-                  {record.email}
+                  {referenceRecord?.email}
                 </a>
-              )}
-            />
-          </ReferenceField>
-          <ReferenceField source="customer_id" reference="customers">
-            <RecordField
-              label="Shipping Address"
-              render={(record) => `${record.first_name} ${record.last_name}`}
-              className="md:text-sm"
-            />
-            <RecordField
-              label={false}
-              source="address"
-              className="md:text-sm"
-            />
-            <RecordField
-              render={(record) =>
-                `${record?.city}, ${record?.stateAbbr} ${record?.zipcode}`
-              }
-              className="md:text-sm"
-            />
-          </ReferenceField>
+              </div>
+            )}
+          />
+          <div className="text-xs opacity-75">Shipping Address</div>
+          <ReferenceField
+            source="customer_id"
+            reference="customers"
+            render={({ referenceRecord }) =>
+              referenceRecord && (
+                <div className="md:text-sm">
+                  {referenceRecord.address}
+                  <br />
+                  {referenceRecord.city}, {referenceRecord.stateAbbr}{" "}
+                  {referenceRecord.zipcode}
+                </div>
+              )
+            }
+          ></ReferenceField>
         </div>
       </div>
       <Basket />
