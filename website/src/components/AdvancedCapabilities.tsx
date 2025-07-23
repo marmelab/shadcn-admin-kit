@@ -6,27 +6,31 @@ import featuresScreenshot from "/img/features-screenshot.jpeg";
 const features = [
   {
     name: "Rapid CRUD Generation",
-    description: "Build admin UIs automatically from your API",
+    description: "Automatically generate admin UIs from your API",
   },
   {
-    name: "Easy relationships",
-    description: "Combine data from multiple resources seamlessly",
+    name: "Seamless relationships",
+    description: "Combine and display data from multiple resources",
   },
   {
     name: "Roles & permissions",
     description: "Manage user access with fine-grained control",
   },
   {
+    name: "Optimistic UI",
+    description: "A snappy, native-app experience, even on slow networks",
+  },
+  {
     name: "Undo Functionality",
-    description: "Let users easily revert changes",
+    description: "Allows users to instantly revert any changes",
   },
   {
     name: "Bulk Actions",
-    description: "Select and modify multiple items at once",
+    description: "Select and modify multiple records at once",
   },
   {
     name: "User preferences",
-    description: "Save and restore user settings automatically",
+    description: "Automatically saves and restores user settings and filters",
   },
   {
     name: "Fully customizable",
