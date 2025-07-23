@@ -26,9 +26,9 @@ export const App = () => {
   );
 }`,
     width: 240,
-    height: 696,
+    height: 555,
     x: 8,
-    y: 7,
+    y: 8,
     side: "right" as const,
   },
   filters: {
@@ -73,9 +73,9 @@ export const ReviewList = () => {
   );
 };`,
     width: 401,
-    height: 53,
-    x: 465,
-    y: 617,
+    height: 52,
+    x: 308,
+    y: 478,
     side: "top" as const,
   },
   customerField: {
@@ -105,7 +105,7 @@ export const CustomerField = () => {
 };`,
     width: 180,
     height: 50,
-    x: 1044,
+    x: 760,
     y: 56,
     side: "left" as const,
   },
@@ -117,7 +117,7 @@ export const ProductField = () => (
 );`,
     width: 180,
     height: 50,
-    x: 1236,
+    x: 952,
     y: 56,
     side: "left" as const,
   },
@@ -143,7 +143,7 @@ const StarArray = ({ rating }: { rating: number }) => {
 };`,
     width: 180,
     height: 50,
-    x: 1236,
+    x: 952,
     y: 110,
     side: "left" as const,
   },
@@ -160,9 +160,9 @@ export const StatusInput = () => (
     ]}
   />
 );`,
-    width: 382,
+    width: 384,
     height: 67,
-    x: 1044,
+    x: 760,
     y: 170,
     side: "left" as const,
   },
@@ -172,17 +172,17 @@ export const StatusInput = () => (
 export const CommentInput = () => (
   <TextInput source="comment" multiline rows={5} />
 );`,
-    width: 382,
-    height: 190,
-    x: 1044,
+    width: 384,
+    height: 112,
+    x: 760,
     y: 242,
     side: "left" as const,
   },
 };
 
-const IMG_WIDTH = 1434;
-const IMG_HEIGHT = 711;
-const HOTSPOT_RADIUS = 10;
+const IMG_WIDTH = 1152;
+const IMG_HEIGHT = 571;
+const HOTSPOT_RADIUS = 12;
 
 const HotspotSvg = () => {
   return (
@@ -190,8 +190,8 @@ const HotspotSvg = () => {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox={`0 0 ${IMG_WIDTH} ${IMG_HEIGHT}`}
-        width="100%"
-        height="100%"
+        width={IMG_WIDTH}
+        height={IMG_HEIGHT}
         className="mx-auto rounded-2xl shadow-lg ring-1 ring-gray-900/10"
       >
         <image
