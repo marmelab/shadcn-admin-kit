@@ -1,13 +1,21 @@
-import { Link } from "react-router";
-import { Plus } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
-import { useCreatePath, useResourceContext, Translate } from "ra-core";
+import { Plus } from "lucide-react";
+import { Translate, useCreatePath, useResourceContext } from "ra-core";
+import { Link } from "react-router";
 
-export const CreateButton = () => {
+export type CreateButtonProps = {
+  label?: string;
+  resource?: string;
+};
+
+export const CreateButton = ({
+  label,
+  resource: targetResource,
+}: CreateButtonProps) => {
   const resource = useResourceContext();
   const createPath = useCreatePath();
   const link = createPath({
-    resource,
+    resource: targetResource ?? resource,
     type: "create",
   });
   return (
@@ -17,11 +25,14 @@ export const CreateButton = () => {
       onClick={stopPropagation}
     >
       <Plus />
-      <Translate i18nKey="ra.action.create">Create</Translate>
+      {label ? (
+        label
+      ) : (
+        <Translate i18nKey={"ra.action.create"}>Create</Translate>
+      )}
     </Link>
   );
 };
 
 // useful to prevent click bubbling in a datagrid with rowClick
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const stopPropagation = (e: any) => e.stopPropagation();

@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCallback } from "react";
-import { Switch } from "@/components/ui/switch";
-import { FormDescription, FormItem, FormLabel } from "@/components/ui/form";
 import { FormError } from "@/components/admin/form-error";
-import { useInput, FieldTitle } from "ra-core";
+import { FormDescription, FormItem, FormLabel } from "@/components/ui/form";
+import { Switch } from "@/components/ui/switch";
+import { FieldTitle, useInput } from "ra-core";
+import { useCallback } from "react";
 
 export const BooleanInput = (props: BooleanInputProps) => {
   const {
@@ -75,7 +74,7 @@ export interface BooleanInputProps {
   className?: string;
   defaultValue?: boolean;
   format?: (value: any) => any;
-  helperText?: string;
+  helperText?: string | boolean;
   label?: string;
   onBlur?: (event: React.FocusEvent<HTMLButtonElement>) => void;
   onChange?: (value: any) => void;

@@ -1,22 +1,32 @@
-import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Trash } from "lucide-react";
 import {
+  Translate,
   useDelete,
+  UseDeleteOptions,
   useNotify,
   useRecordContext,
   useRedirect,
   useResourceContext,
   useTranslate,
-  Translate,
 } from "ra-core";
+
+export type DeleteButtonProps = {
+  size?: "default" | "sm" | "lg" | "icon";
+  mutationOptions?: UseDeleteOptions;
+
+  redirect?: boolean;
+  resource?: string;
+};
 
 export const DeleteButton = ({
   size,
-}: {
-  size?: "default" | "sm" | "lg" | "icon";
-}) => {
+  mutationOptions,
+  redirect: doRedirect = true,
+  resource: resourceOverride,
+}: DeleteButtonProps) => {
   const resource = useResourceContext();
-  const [deleteOne, { isPending }] = useDelete();
+  const [deleteOne, { isPending }] = useDelete(resource, {}, mutationOptions);
   const record = useRecordContext();
   const notify = useNotify();
   const redirect = useRedirect();
@@ -25,7 +35,7 @@ export const DeleteButton = ({
     stopPropagation(e);
     if (!record) return;
     deleteOne(
-      resource,
+      resourceOverride ?? resource,
       { id: record.id },
       {
         mutationMode: "undoable",
@@ -41,6 +51,8 @@ export const DeleteButton = ({
             },
             undoable: true,
           });
+
+          if (!doRedirect) return;
           redirect("list", resource);
         },
       }
@@ -48,11 +60,12 @@ export const DeleteButton = ({
   };
   return (
     <Button
-      variant="destructive"
+      variant="ghost"
       type="button"
       onClick={handleClick}
       disabled={isPending}
       size={size}
+      className="text-red-700 hover:text-red-700"
     >
       <Trash />
       <Translate i18nKey="ra.action.delete">Delete</Translate>
@@ -61,5 +74,4 @@ export const DeleteButton = ({
 };
 
 // useful to prevent click bubbling in a datagrid with rowClick
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const stopPropagation = (e: any) => e.stopPropagation();

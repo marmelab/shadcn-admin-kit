@@ -1,15 +1,21 @@
-import { Link } from "react-router";
 import { buttonVariants } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import {
+  Translate,
   useCreatePath,
   useRecordContext,
   useResourceContext,
-  Translate,
   type RaRecord,
 } from "ra-core";
+import { Link } from "react-router";
 
-export const EditButton = (props: { record?: RaRecord; resource?: string }) => {
+export type EditButtonProps = {
+  record?: RaRecord;
+  resource?: string;
+  label?: string;
+};
+
+export const EditButton = (props: EditButtonProps) => {
   const resource = useResourceContext(props);
   const record = useRecordContext(props);
   const createPath = useCreatePath();
@@ -25,11 +31,13 @@ export const EditButton = (props: { record?: RaRecord; resource?: string }) => {
       onClick={stopPropagation}
     >
       <Pencil />
-      <Translate i18nKey="ra.action.edit">Edit</Translate>
+      <Translate i18nKey={props.label ?? "ra.action.edit"}>
+        {props.label ?? "Edit"}
+      </Translate>
     </Link>
   );
 };
 
 // useful to prevent click bubbling in a datagrid with rowClick
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const stopPropagation = (e: any) => e.stopPropagation();
+const stopPropagation = (e: React.MouseEvent<HTMLAnchorElement>) =>
+  e.stopPropagation();

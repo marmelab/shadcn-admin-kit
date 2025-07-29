@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ExtractRecordPaths, RaRecord, useFieldValue } from "ra-core";
 import { ReactNode } from "react";
 

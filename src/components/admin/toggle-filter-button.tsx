@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { useListContext, useTranslate } from "ra-core";
+import { cn } from "@/lib/utils";
 import matches from "lodash/matches";
 import pickBy from "lodash/pickBy";
 import { CircleX } from "lucide-react";
+import { useListContext, useTranslate } from "ra-core";
+import { ReactElement } from "react";
 
 export const ToggleFilterButton = ({
   label,
@@ -12,7 +12,7 @@ export const ToggleFilterButton = ({
   value,
   className,
 }: {
-  label: string;
+  label: ReactElement | string;
   value: any;
   className?: string;
   size?: "default" | "sm" | "lg" | "icon" | null | undefined;
@@ -27,12 +27,12 @@ export const ToggleFilterButton = ({
       onClick={handleClick}
       className={cn(
         "cursor-pointer",
-        "flex flex-row items-center gap-2",
+        "flex flex-row items-center gap-2 px-2.5",
         className
       )}
       size={size}
     >
-      {translate(label, { _: label })}
+      {typeof label === "string" ? translate(label, { _: label }) : label}
       {isSelected && <CircleX className="opacity-50" />}
     </Button>
   );

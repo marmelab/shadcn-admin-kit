@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from "react";
-import { X } from "lucide-react";
+import { FormError } from "@/components/admin/form-error";
 import { Badge } from "@/components/ui/badge";
 import {
   Command,
@@ -15,18 +13,19 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Command as CommandPrimitive } from "cmdk";
+import { X } from "lucide-react";
 import {
   ChoicesProps,
+  FieldTitle,
   InputProps,
   useChoices,
   useChoicesContext,
+  useEvent,
   useGetRecordRepresentation,
   useInput,
   useTranslate,
-  FieldTitle,
-  useEvent,
 } from "ra-core";
-import { FormError } from "@/components/admin/form-error";
+import * as React from "react";
 
 export const AutocompleteArrayInput = (
   props: Omit<InputProps, "source"> &
@@ -37,6 +36,7 @@ export const AutocompleteArrayInput = (
       filterToQuery?: (searchText: string) => any;
       translateChoice?: boolean;
       placeholder?: string;
+      inputText?: (choice: any) => string;
     }
 ) => {
   const { filterToQuery = DefaultFilterToQuery } = props;

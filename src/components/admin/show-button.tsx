@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import { buttonVariants } from "@/components/ui/button";
 import { Eye } from "lucide-react";
 import {
@@ -7,8 +6,11 @@ import {
   useRecordContext,
   useResourceContext,
 } from "ra-core";
+import { Link } from "react-router";
 
-export const ShowButton = () => {
+export type ShowButtonProps = { label?: string };
+
+export const ShowButton = (props: ShowButtonProps) => {
   const resource = useResourceContext();
   const record = useRecordContext();
   const createPath = useCreatePath();
@@ -24,11 +26,12 @@ export const ShowButton = () => {
       onClick={stopPropagation}
     >
       <Eye />
-      <Translate i18nKey="ra.action.show">Show</Translate>
+      <Translate i18nKey={props.label ?? "ra.action.show"}>
+        {props.label ?? "Show"}
+      </Translate>
     </Link>
   );
 };
 
 // useful to prevent click bubbling in a datagrid with rowClick
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const stopPropagation = (e: any) => e.stopPropagation();

@@ -1,49 +1,49 @@
-import { createElement, ReactNode, useCallback } from "react";
-import {
-  DataTableBase,
-  DataTableBaseProps,
-  DataTableRenderContext,
-  ExtractRecordPaths,
-  FieldTitle,
-  HintedString,
-  Identifier,
-  RaRecord,
-  RecordContextProvider,
-  SortPayload,
-  useDataTableCallbacksContext,
-  useDataTableConfigContext,
-  useDataTableDataContext,
-  useDataTableRenderContext,
-  useDataTableSelectedIdsContext,
-  useDataTableSortContext,
-  useGetPathForRecordCallback,
-  useRecordContext,
-  useResourceContext,
-  useTranslate,
-  useTranslateLabel,
-} from "ra-core";
-import { ArrowDownAZ, ArrowUpZA } from "lucide-react";
-import { useNavigate } from "react-router";
-import { cn } from "@/lib/utils";
+import { NumberField } from "@/components/admin/number-field";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { NumberField } from "@/components/admin/number-field";
+import { cn } from "@/lib/utils";
 import get from "lodash/get";
+import { ArrowDownAZ, ArrowUpZA } from "lucide-react";
+import {
+    DataTableBase,
+    DataTableBaseProps,
+    DataTableRenderContext,
+    ExtractRecordPaths,
+    FieldTitle,
+    HintedString,
+    Identifier,
+    RaRecord,
+    RecordContextProvider,
+    SortPayload,
+    useDataTableCallbacksContext,
+    useDataTableConfigContext,
+    useDataTableDataContext,
+    useDataTableRenderContext,
+    useDataTableSelectedIdsContext,
+    useDataTableSortContext,
+    useGetPathForRecordCallback,
+    useRecordContext,
+    useResourceContext,
+    useTranslate,
+    useTranslateLabel,
+} from "ra-core";
+import { createElement, ReactNode, useCallback } from "react";
+import { useNavigate } from "react-router";
 
 export function DataTable<RecordType extends RaRecord = RaRecord>(
   props: DataTableProps<RecordType>
@@ -213,7 +213,6 @@ const DataTableRow = ({
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isPromise = (value: any): value is Promise<any> =>
   value && typeof value.then === "function";
 
@@ -233,7 +232,7 @@ export interface DataTableProps<RecordType extends RaRecord = RaRecord>
 }
 
 export function DataTableColumn<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
 >(props: DataTableColumnProps<RecordType>) {
   const renderContext = useDataTableRenderContext();
   switch (renderContext) {
@@ -245,7 +244,7 @@ export function DataTableColumn<
 }
 
 function DataTableHeadCell<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
 >(props: DataTableColumnProps<RecordType>) {
   const {
     disableSort,
@@ -265,7 +264,7 @@ function DataTableHeadCell<
   const nextSortOrder =
     sort && sort.field === source
       ? oppositeOrder[sort.order]
-      : sortByOrder ?? "ASC";
+      : (sortByOrder ?? "ASC");
   const fieldLabel = translateLabel({
     label: typeof label === "string" ? label : undefined,
     resource,
@@ -335,7 +334,7 @@ const oppositeOrder: Record<SortPayload["order"], SortPayload["order"]> = {
 };
 
 function DataTableCell<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
 >(props: DataTableColumnProps<RecordType>) {
   const {
     children,
@@ -367,14 +366,14 @@ function DataTableCell<
         (render
           ? record && render(record)
           : field
-          ? createElement(field, { source })
-          : get(record, source!))}
+            ? createElement(field, { source })
+            : get(record, source!))}
     </TableCell>
   );
 }
 
 export interface DataTableColumnProps<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
 > {
   className?: string;
   cellClassName?: string;
@@ -390,7 +389,7 @@ export interface DataTableColumnProps<
 }
 
 export function DataTableNumberColumn<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
 >(props: DataTableNumberColumnProps<RecordType>) {
   const {
     source,
@@ -415,7 +414,7 @@ export function DataTableNumberColumn<
 }
 
 export interface DataTableNumberColumnProps<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
 > extends DataTableColumnProps<RecordType> {
   source: NoInfer<HintedString<ExtractRecordPaths<RecordType>>>;
   locales?: string | string[];

@@ -1,21 +1,20 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReactNode, useEffect, useState } from "react";
-import {
-  EditBase,
-  InferredElement,
-  useResourceContext,
-  useEditContext,
-  getElementsFromRecords,
-  InferredTypeMap,
-} from "ra-core";
-import { capitalize, singularize } from "inflection";
+import { AutocompleteInput } from "@/components/admin/autocomplete-input";
+import { BooleanInput } from "@/components/admin/boolean-input";
 import { EditView } from "@/components/admin/edit";
+import { ReferenceArrayInput } from "@/components/admin/reference-array-input";
+import { ReferenceInput } from "@/components/admin/reference-input";
 import { SimpleForm } from "@/components/admin/simple-form";
 import { TextInput } from "@/components/admin/text-input";
-import { BooleanInput } from "@/components/admin/boolean-input";
-import { ReferenceInput } from "@/components/admin/reference-input";
-import { AutocompleteInput } from "@/components/admin/autocomplete-input";
-import { ReferenceArrayInput } from "@/components/admin/reference-array-input";
+import { capitalize, singularize } from "inflection";
+import {
+    EditBase,
+    getElementsFromRecords,
+    InferredElement,
+    InferredTypeMap,
+    useEditContext,
+    useResourceContext,
+} from "ra-core";
+import { ReactNode, useEffect, useState } from "react";
 
 export const EditGuesser = (props: { enableLog?: boolean }) => {
   return (

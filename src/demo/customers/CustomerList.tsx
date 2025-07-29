@@ -1,30 +1,30 @@
-import type { ReactNode } from "react";
-import {
-  useRecordContext,
-  Translate,
-  useTranslate,
-  FilterLiveForm,
-} from "ra-core";
 import {
   DataTable,
   List,
-  ToggleFilterButton,
-  TextInput,
   ListPagination,
+  TextInput,
+  ToggleFilterButton,
 } from "@/components/admin";
 import { Badge } from "@/components/ui/badge";
-import { Clock, DollarSign, Mail } from "lucide-react";
 import {
   endOfYesterday,
-  startOfWeek,
-  subWeeks,
   startOfMonth,
+  startOfWeek,
   subMonths,
+  subWeeks,
 } from "date-fns";
+import { Clock, DollarSign, Mail } from "lucide-react";
+import {
+  FilterLiveForm,
+  Translate,
+  useRecordContext,
+  useTranslate,
+} from "ra-core";
+import type { ReactNode } from "react";
 import segments from "../segments/data";
 
-import { FullNameField } from "./FullNameField";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { FullNameField } from "./FullNameField";
 
 const dateTimeFormatter = new Intl.DateTimeFormat(undefined, {
   dateStyle: "medium",
@@ -45,7 +45,7 @@ export const CustomerList = () => {
     >
       <div className="flex flex-row gap-4 mb-4">
         <SidebarFilters />
-        <div className="lg:w-4xl">
+        <div className="w-full">
           <DataTable>
             <DataTable.Col
               label="resources.customers.fields.name"

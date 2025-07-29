@@ -1,28 +1,27 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  ReactNode,
-  useEffect,
-  useState,
-  isValidElement,
-  Children,
-} from "react";
-import {
-  ShowBase,
-  InferredElement,
-  getElementsFromRecords,
-  useResourceContext,
-  useShowContext,
-  InferredTypeMap,
-} from "ra-core";
-import { capitalize, singularize } from "inflection";
-import { ShowView } from "@/components/admin/show";
-import { SimpleShowLayout } from "@/components/admin/simple-show-layout";
-import { RecordField } from "@/components/admin/record-field";
-import { ReferenceField } from "@/components/admin/reference-field";
 import { ArrayField } from "@/components/admin/array-field";
 import { BadgeField } from "@/components/admin/badge-field";
-import { SingleFieldList } from "@/components/admin/single-field-list";
+import { RecordField } from "@/components/admin/record-field";
 import { ReferenceArrayField } from "@/components/admin/reference-array-field";
+import { ReferenceField } from "@/components/admin/reference-field";
+import { ShowView } from "@/components/admin/show";
+import { SimpleShowLayout } from "@/components/admin/simple-show-layout";
+import { SingleFieldList } from "@/components/admin/single-field-list";
+import { capitalize, singularize } from "inflection";
+import {
+    InferredElement,
+    InferredTypeMap,
+    ShowBase,
+    getElementsFromRecords,
+    useResourceContext,
+    useShowContext,
+} from "ra-core";
+import {
+    Children,
+    ReactNode,
+    isValidElement,
+    useEffect,
+    useState,
+} from "react";
 
 export const ShowGuesser = (props: { enableLog?: boolean }) => (
   <ShowBase>
@@ -148,16 +147,16 @@ ${children
             </RecordField>`,
   },
   referenceArray: {
-      component: (props: any) => (
-        <RecordField source={props.source}>
-          <ReferenceArrayField {...props} />
-        </RecordField>
-      ),
-      representation: (props: any) =>
-        `<RecordField source="${props.source}">
+    component: (props: any) => (
+      <RecordField source={props.source}>
+        <ReferenceArrayField {...props} />
+      </RecordField>
+    ),
+    representation: (props: any) =>
+      `<RecordField source="${props.source}">
                 <ReferenceArrayField source="${props.source}" reference="${props.reference}" />
             </RecordField>`,
-    },
+  },
   string: {
     component: (props: any) => <RecordField source={props.source} />,
     representation: (props: any) => `<RecordField source="${props.source}" />`,
