@@ -66,6 +66,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/array-input.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/autocomplete-input.tsx",
           "type": "registry:component"
         },
@@ -135,6 +139,10 @@
         },
         {
           "path": "src/components/admin/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/input-helper-text.tsx",
           "type": "registry:component"
         },
         {
@@ -263,6 +271,10 @@
         },
         {
           "path": "src/lib/i18nProvider.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/lib/sanitizeInputRestProps.ts",
           "type": "registry:lib"
         },
         {
