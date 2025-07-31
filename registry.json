@@ -94,6 +94,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/bulk-export-button.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/count.tsx",
           "type": "registry:component"
         },

@@ -1,14 +1,13 @@
-import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Trash } from "lucide-react";
 import {
-  useResourceContext,
+  Translate,
   useDeleteMany,
   useListContext,
   useNotify,
+  useResourceContext,
   useTranslate,
-  Translate,
 } from "ra-core";
-import { MouseEvent } from "react";
 
 export const BulkDeleteButton = () => {
   const resource = useResourceContext();
@@ -45,6 +44,7 @@ export const BulkDeleteButton = () => {
       type="button"
       onClick={handleClick}
       disabled={isPending}
+      className="h-9"
     >
       <Trash />
       <Translate i18nKey="ra.action.delete">Delete</Translate>
@@ -53,5 +53,5 @@ export const BulkDeleteButton = () => {
 };
 
 // useful to prevent click bubbling in a datagrid with rowClick
-const stopPropagation = (e: MouseEvent<HTMLButtonElement>) =>
+const stopPropagation = (e: React.MouseEvent<HTMLButtonElement>) =>
   e.stopPropagation();
