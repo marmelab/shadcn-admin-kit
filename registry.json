@@ -270,6 +270,14 @@
           "type": "registry:component"
         },
         {
+          "path": "src/contexts/ArrayInputContext.tsx",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/contexts/useArrayInput.tsx",
+          "type": "registry:lib"
+        },
+        {
           "path": "src/lib/i18nProvider.ts",
           "type": "registry:lib"
         },
