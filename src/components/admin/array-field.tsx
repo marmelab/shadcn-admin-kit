@@ -1,32 +1,43 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReactNode } from "react";
 import {
   ListContextProvider,
   useList,
-  SortPayload,
-  FilterPayload,
   useFieldValue,
-  ExtractRecordPaths,
   RaRecord,
+  UseListOptions,
+  UseFieldValueOptions,
 } from "ra-core";
 
-export const ArrayField = (props: ArrayFieldProps) => {
-  const { children, resource, perPage, sort, filter } = props;
-  const data = useFieldValue(props) || emptyArray;
-  const listContext = useList({ data, resource, perPage, sort, filter });
+export const ArrayField = <RecordType extends RaRecord = RaRecord>({
+  defaultValue,
+  source,
+  resource,
+  perPage,
+  sort,
+  filter,
+  children,
+}: ArrayFieldProps<RecordType>) => {
+  const data: RecordType[] = useFieldValue({ defaultValue, source }) || [];
+  const listContext = useList({
+    resource,
+    perPage,
+    sort,
+    filter,
+    data,
+  });
+
   return (
     <ListContextProvider value={listContext}>{children}</ListContextProvider>
   );
 };
 
-export interface ArrayFieldProps<RecordType extends RaRecord = RaRecord> {
-  source: ExtractRecordPaths<RecordType>;
-  record?: RecordType;
-  resource?: string;
-  children?: ReactNode;
-  perPage?: number;
-  sort?: SortPayload;
-  filter?: FilterPayload;
-}
-
-const emptyArray: any[] = [];
+export type ArrayFieldProps<
+  RecordType extends RaRecord = RaRecord,
+  ErrorType = Error
+> = Pick<
+  UseListOptions<RecordType, ErrorType>,
+  "perPage" | "sort" | "filter" | "resource"
+> &
+  Pick<UseFieldValueOptions<RecordType>, "defaultValue" | "source"> & {
+    children?: ReactNode;
+  };
