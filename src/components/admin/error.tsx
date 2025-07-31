@@ -22,7 +22,6 @@ export const Error = (props: InternalErrorProps & {}) => {
   const title = useDefaultTitle();
   useResetErrorBoundaryOnLocationChange(resetErrorBoundary);
 
-  console.log({ errorInfo }, errorInfo?.componentStack);
   return (
     <>
       {title && <span>{title}</span>}

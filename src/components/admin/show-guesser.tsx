@@ -70,6 +70,7 @@ const ShowViewGuesser = (props: { enableLog?: boolean }) => {
         )
         .sort();
 
+      // eslint-disable-next-line no-console
       console.log(
         `Guessed Show:
 
@@ -148,16 +149,16 @@ ${children
             </RecordField>`,
   },
   referenceArray: {
-      component: (props: any) => (
-        <RecordField source={props.source}>
-          <ReferenceArrayField {...props} />
-        </RecordField>
-      ),
-      representation: (props: any) =>
-        `<RecordField source="${props.source}">
+    component: (props: any) => (
+      <RecordField source={props.source}>
+        <ReferenceArrayField {...props} />
+      </RecordField>
+    ),
+    representation: (props: any) =>
+      `<RecordField source="${props.source}">
                 <ReferenceArrayField source="${props.source}" reference="${props.reference}" />
             </RecordField>`,
-    },
+  },
   string: {
     component: (props: any) => <RecordField source={props.source} />,
     representation: (props: any) => `<RecordField source="${props.source}" />`,

@@ -4,7 +4,10 @@ help:
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 install: package.json ## Install dependencies
-	pnpm install
+	@pnpm install
+
+install-browsers: ## Install Playwright browsers
+	@pnpm exec playwright install --with-deps chromium
 
 run:
 	pnpm run dev
@@ -19,6 +22,15 @@ build-demo: ## Build the demo
 
 build-registry: ## Build the UI registry
 	pnpm run registry:build
+
+test:
+	pnpm run test
+
+test-watch: ## Run tests in watch mode
+	pnpm run test:watch
+
+test-browser: ## Run tests in browser mode
+	pnpm run test:browser
 
 test-registry: ## Test the UI registry
 	./scripts/test_registry.sh
@@ -41,3 +53,6 @@ build-website: ## Build the website
 	mv ./website/dist/* ./public/
 
 build: build-website build-demo build-registry ## Build all components
+
+typecheck: ## Run TypeScript type checking
+	@pnpm run typecheck

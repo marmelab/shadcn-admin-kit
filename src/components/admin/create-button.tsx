@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { Plus } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { useCreatePath, useResourceContext, Translate } from "ra-core";
+import { MouseEvent } from "react";
 
 export const CreateButton = () => {
   const resource = useResourceContext();
@@ -23,5 +24,5 @@ export const CreateButton = () => {
 };
 
 // useful to prevent click bubbling in a datagrid with rowClick
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const stopPropagation = (e: any) => e.stopPropagation();
+const stopPropagation = (e: MouseEvent<HTMLAnchorElement>) =>
+  e.stopPropagation();

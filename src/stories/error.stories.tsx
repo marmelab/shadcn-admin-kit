@@ -80,7 +80,6 @@ const errorInfo = {
 };
 
 export const Basic = ({ theme }: { theme: "system" | "light" | "dark" }) => {
-  console.log({ errorInfo });
   return (
     <StoryWrapper theme={theme}>
       <RaError

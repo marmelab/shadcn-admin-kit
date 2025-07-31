@@ -8,6 +8,7 @@ import {
   useTranslate,
   Translate,
 } from "ra-core";
+import { MouseEvent } from "react";
 
 export const BulkDeleteButton = () => {
   const resource = useResourceContext();
@@ -15,7 +16,7 @@ export const BulkDeleteButton = () => {
   const { selectedIds, onUnselectItems } = useListContext();
   const notify = useNotify();
   const translate = useTranslate();
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     stopPropagation(e);
     deleteMany(
       resource,
@@ -52,5 +53,5 @@ export const BulkDeleteButton = () => {
 };
 
 // useful to prevent click bubbling in a datagrid with rowClick
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const stopPropagation = (e: any) => e.stopPropagation();
+const stopPropagation = (e: MouseEvent<HTMLButtonElement>) =>
+  e.stopPropagation();

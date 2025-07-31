@@ -20,7 +20,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/use-is-mobile";
 import { Translate } from "ra-core";
 
 export const Breadcrumb = ({ children, ref }: BreadcrumbProps) => {

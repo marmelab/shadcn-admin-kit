@@ -12,6 +12,7 @@ export default tseslint.config(
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],
+    ignores: ["src/components/ui/*.tsx", "website/src/components/ui/*.tsx"],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
@@ -33,6 +34,7 @@ export default tseslint.config(
           argsIgnorePattern: "^_",
         },
       ],
+      "no-console": ["error", { allow: ["warn", "error"] }],
     },
   },
   storybook.configs["flat/recommended"]
