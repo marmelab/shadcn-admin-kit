@@ -270,12 +270,12 @@
           "type": "registry:component"
         },
         {
-          "path": "src/contexts/ArrayInputContext.tsx",
-          "type": "registry:lib"
+          "path": "src/hooks/ArrayInputContext.tsx",
+          "type": "registry:hook"
         },
         {
-          "path": "src/contexts/useArrayInput.tsx",
-          "type": "registry:lib"
+          "path": "src/hooks/useArrayInput.tsx",
+          "type": "registry:hook"
         },
         {
           "path": "src/lib/i18nProvider.ts",

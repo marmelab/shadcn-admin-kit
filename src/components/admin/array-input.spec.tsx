@@ -4,7 +4,7 @@ import { render } from "vitest-browser-react";
 import { FormProvider, useForm } from "react-hook-form";
 import { ArrayInput } from "./array-input";
 import { useContext, useEffect } from "react";
-import { ArrayInputContext } from "../../contexts/ArrayInputContext";
+import { ArrayInputContext } from "@/hooks/ArrayInputContext";
 
 // Composant de test pour les enfants de ArrayInput
 function TestChild({ source }: { source: string }) {

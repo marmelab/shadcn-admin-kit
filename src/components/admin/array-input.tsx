@@ -19,7 +19,7 @@ import { FormDescription } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";
-import { ArrayInputContext } from "@/contexts/ArrayInputContext";
+import { ArrayInputContext } from "@/hooks/ArrayInputContext";
 import { InputHelperText } from "./input-helper-text";
 import { sanitizeInputRestProps } from "@/lib/sanitizeInputRestProps";
 
