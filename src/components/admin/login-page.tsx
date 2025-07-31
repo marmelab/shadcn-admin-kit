@@ -46,7 +46,6 @@ export const LoginPage = () => {
             </div>
             <Form
               className="space-y-8"
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               onSubmit={(values: any) => login(values)}
             >
               <TextInput

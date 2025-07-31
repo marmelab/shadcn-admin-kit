@@ -1,15 +1,15 @@
-import { ReactNode } from "react";
 import {
+  ListControllerResult,
+  RaRecord,
   ReferenceManyFieldBase,
   useListContext,
-  RaRecord,
   UseReferenceManyFieldControllerParams,
-  ListControllerResult,
 } from "ra-core";
+import { ReactNode } from "react";
 
 export const ReferenceManyField = <
   RecordType extends RaRecord = RaRecord,
-  ReferenceRecordType extends RaRecord = RaRecord
+  ReferenceRecordType extends RaRecord = RaRecord,
 >(
   props: ReferenceManyFieldProps<RecordType, ReferenceRecordType>
 ) => {
@@ -33,7 +33,7 @@ export const ReferenceManyField = <
 
 export interface ReferenceManyFieldProps<
   RecordType extends RaRecord = RaRecord,
-  ReferenceRecordType extends RaRecord = RaRecord
+  ReferenceRecordType extends RaRecord = RaRecord,
 > extends UseReferenceManyFieldControllerParams<
       RecordType,
       ReferenceRecordType
@@ -41,7 +41,7 @@ export interface ReferenceManyFieldProps<
     ReferenceManyFieldViewProps<ReferenceRecordType> {}
 
 const ReferenceManyFieldView = <
-  ReferenceRecordType extends RaRecord = RaRecord
+  ReferenceRecordType extends RaRecord = RaRecord,
 >(
   props: ReferenceManyFieldViewProps<ReferenceRecordType>
 ) => {
@@ -94,7 +94,7 @@ const ReferenceManyFieldView = <
 };
 
 export interface ReferenceManyFieldViewProps<
-  ReferenceRecordType extends RaRecord = RaRecord
+  ReferenceRecordType extends RaRecord = RaRecord,
 > {
   children?: ReactNode;
   empty?: ReactNode;

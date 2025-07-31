@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { FormError } from "@/components/admin/form-error";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -21,30 +18,34 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { Check, ChevronsUpDown } from "lucide-react";
 import {
   ChoicesProps,
+  FieldTitle,
   InputProps,
   useChoices,
   useChoicesContext,
+  useEvent,
   useGetRecordRepresentation,
   useInput,
   useTranslate,
-  FieldTitle,
-  useEvent,
 } from "ra-core";
-import { FormError } from "@/components/admin/form-error";
+import * as React from "react";
 
-export const AutocompleteInput = (
-  props: Omit<InputProps, "source"> &
-    Partial<Pick<InputProps, "source">> &
-    ChoicesProps & {
-      className?: string;
-      disableValue?: string;
-      filterToQuery?: (searchText: string) => any;
-      translateChoice?: boolean;
-      placeholder?: string;
-    }
-) => {
+type AutocompleteInputProps = Omit<InputProps, "source"> &
+  Partial<Pick<InputProps, "source">> &
+  ChoicesProps & {
+    className?: string;
+    disableValue?: string;
+    filterToQuery?: (searchText: string) => any;
+    translateChoice?: boolean;
+    placeholder?: string;
+    inputText?: (choice: any) => string;
+    onCreate?: (value: string) => Promise<any>;
+  };
+
+export const AutocompleteInput = (props: AutocompleteInputProps) => {
   const { filterToQuery = DefaultFilterToQuery } = props;
   const {
     allChoices = [],
@@ -82,6 +83,8 @@ export const AutocompleteInput = (
     }
   });
 
+  const buttonRef = React.useRef<HTMLButtonElement>(null);
+
   return (
     <FormItem className={props.className}>
       {props.label !== false && (
@@ -101,13 +104,19 @@ export const AutocompleteInput = (
               variant="outline"
               role="combobox"
               aria-expanded={open}
-              className="w-full justify-between"
+              className="w-full justify-between h-auto"
+              ref={buttonRef}
             >
               {selectedChoice ? getChoiceText(selectedChoice) : placeholder}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-[200px] p-0">
+          <PopoverContent
+            className="w-full p-0"
+            style={{
+              width: buttonRef.current?.offsetWidth,
+            }}
+          >
             {/* We handle the filtering ourselves */}
             <Command shouldFilter={!isFromReference}>
               <CommandInput

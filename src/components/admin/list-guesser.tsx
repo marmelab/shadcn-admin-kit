@@ -1,24 +1,27 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from "react";
-import { useState, useEffect } from "react";
-import {
-  ListBase,
-  getElementsFromRecords,
-  InferredElement,
-  useListContext,
-  usePrevious,
-  useResourceContext,
-  RaRecord,
-} from "ra-core";
-import { useLocation } from "react-router";
-import { ListProps, ListView, ListViewProps } from "@/components/admin/list";
-import { capitalize, singularize } from "inflection";
-import { DataTable } from "@/components/admin/data-table";
 import { ArrayField } from "@/components/admin/array-field";
 import { BadgeField } from "@/components/admin/badge-field";
+import { DataTable } from "@/components/admin/data-table";
+import {
+    ListProps,
+    ListView,
+    ListViewProps,
+} from "@/components/admin/list";
+import { ReferenceArrayField } from "@/components/admin/reference-array-field";
 import { ReferenceField } from "@/components/admin/reference-field";
 import { SingleFieldList } from "@/components/admin/single-field-list";
-import { ReferenceArrayField } from "@/components/admin/reference-array-field";
+import { capitalize, singularize } from "inflection";
+import {
+    getElementsFromRecords,
+    InferredElement,
+    ListBase,
+    RaRecord,
+    useListContext,
+    usePrevious,
+    useResourceContext,
+} from "ra-core";
+import * as React from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router";
 
 export const ListGuesser = <RecordType extends RaRecord = RaRecord>(
   props: Omit<ListProps, "children"> & { enableLog?: boolean }

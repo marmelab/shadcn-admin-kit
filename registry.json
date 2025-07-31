@@ -35,7 +35,8 @@
         "sonner",
         "table",
         "textarea",
-        "tooltip"
+        "tooltip",
+        "radio-group"
       ],
       "dependencies": [
         "@tanstack/react-query",
@@ -44,9 +45,11 @@
         "inflection",
         "lodash",
         "lucide-react",
+        "query-string",
         "ra-core",
         "ra-i18n-polyglot",
         "ra-language-english",
+        "react-dropzone",
         "react-hook-form",
         "react-router",
         "tailwind-merge",

@@ -41,3 +41,6 @@ build-website: ## Build the website
 	mv ./website/dist/* ./public/
 
 build: build-website build-demo build-registry ## Build all components
+
+typecheck: ## Run TypeScript type checks
+	pnpm run typecheck

@@ -1,11 +1,10 @@
+import { Badge } from "@/components/ui/badge";
 import {
   RecordContextProvider,
   RecordRepresentation,
   useListContext,
 } from "ra-core";
-import { Badge } from "@/components/ui/badge";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const SingleFieldList = <RecordType = any,>({
   children,
   render,
@@ -18,7 +17,7 @@ export const SingleFieldList = <RecordType = any,>({
   const { data } = useListContext();
 
   return (
-    <div className={`flex gap-2 ${className}`}>
+    <div className={`flex flex-col ${className}`}>
       {data?.map((record, index) => (
         <RecordContextProvider key={index} value={record}>
           {render ? render(record, index) : children || <DefaultChildren />}

@@ -1,15 +1,15 @@
-import * as React from "react";
-import { useCallback } from "react";
+import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import {
-  fetchRelatedRecords,
-  useDataProvider,
-  useNotify,
-  useListContext,
   Exporter,
+  fetchRelatedRecords,
   Translate,
+  useDataProvider,
+  useListContext,
+  useNotify,
 } from "ra-core";
-import { Button } from "@/components/ui/button";
+import * as React from "react";
+import { useCallback } from "react";
 
 export const ExportButton = (props: ExportButtonProps) => {
   const {
@@ -73,7 +73,12 @@ export const ExportButton = (props: ExportButtonProps) => {
   );
 
   return (
-    <Button variant="outline" onClick={handleClick} disabled={total === 0}>
+    <Button
+      variant="outline"
+      onClick={handleClick}
+      disabled={total === 0}
+      className="cursor-pointer"
+    >
       {icon}
       <Translate i18nKey={label}>Export</Translate>
     </Button>
@@ -89,6 +94,5 @@ export interface ExportButtonProps {
   maxResults?: number;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   resource?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   meta?: any;
 }

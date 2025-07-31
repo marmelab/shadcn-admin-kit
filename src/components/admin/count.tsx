@@ -1,11 +1,11 @@
-import {
-  useResourceContext,
-  useGetList,
-  useTimeout,
-  useCreatePath,
-  SortPayload,
-} from "ra-core";
 import { CircleX, LoaderCircle } from "lucide-react";
+import {
+  SortPayload,
+  useCreatePath,
+  useGetList,
+  useResourceContext,
+  useTimeout,
+} from "ra-core";
 
 import { Link } from "react-router";
 
@@ -82,7 +82,6 @@ export const Count = (props: CountProps) => {
 };
 
 export interface CountProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   filter?: any;
   sort?: SortPayload;
   link?: boolean;
