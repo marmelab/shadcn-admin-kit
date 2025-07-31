@@ -24,7 +24,7 @@ import {
 import segments from "../segments/data";
 
 import { FullNameField } from "./FullNameField";
-import { useIsMobile } from "@/hooks/use-is-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const dateTimeFormatter = new Intl.DateTimeFormat(undefined, {
   dateStyle: "medium",
