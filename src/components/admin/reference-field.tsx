@@ -9,7 +9,7 @@ import {
   useTranslate,
   ExtractRecordPaths,
 } from "ra-core";
-import { ReactNode } from "react";
+import { MouseEvent, ReactNode } from "react";
 import { Link } from "react-router";
 import { UseQueryOptions } from "@tanstack/react-query";
 
@@ -58,8 +58,8 @@ export interface ReferenceFieldProps<
 }
 
 // useful to prevent click bubbling in a datagrid with rowClick
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const stopPropagation = (e: any) => e.stopPropagation();
+const stopPropagation = (e: MouseEvent<HTMLAnchorElement>) =>
+  e.stopPropagation();
 
 export const ReferenceFieldView = <
   ReferenceRecordType extends RaRecord = RaRecord

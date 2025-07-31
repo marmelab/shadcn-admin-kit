@@ -9,6 +9,7 @@ import {
   useTranslate,
   Translate,
 } from "ra-core";
+import { MouseEvent } from "react";
 
 export const DeleteButton = ({
   size,
@@ -21,7 +22,7 @@ export const DeleteButton = ({
   const notify = useNotify();
   const redirect = useRedirect();
   const translate = useTranslate();
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     stopPropagation(e);
     if (!record) return;
     deleteOne(
@@ -61,5 +62,5 @@ export const DeleteButton = ({
 };
 
 // useful to prevent click bubbling in a datagrid with rowClick
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const stopPropagation = (e: any) => e.stopPropagation();
+const stopPropagation = (e: MouseEvent<HTMLButtonElement>) =>
+  e.stopPropagation();

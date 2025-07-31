@@ -16,8 +16,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: latest
       - name: Setup node
         uses: actions/setup-node@v4
         with:
@@ -37,8 +35,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: latest
       - name: Setup node
         uses: actions/setup-node@v4
         with:
@@ -46,5 +42,24 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
-      - name: Test registry
+      - name: Install browsers
+        run: make install-browsers
+      - name: Test
+        run: make test
+
+  test-registry:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
+      - name: Test Registry
         run: make test-registry

@@ -15,7 +15,6 @@ const areChatwootParamsValid = (
 ) => {
   if (!baseUrl) {
     if (!production) {
-      // eslint-disable-next-line no-console
       console.error("Chatwoot base url is required.");
     }
     return false;
@@ -23,7 +22,6 @@ const areChatwootParamsValid = (
 
   if (!websiteToken) {
     if (!production) {
-      // eslint-disable-next-line no-console
       console.error("Chatwoot website token is required.");
     }
     return false;

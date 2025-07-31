@@ -33,6 +33,7 @@ export default tseslint.config(
           argsIgnorePattern: "^_",
         },
       ],
+      "no-console": ["error", { allow: ["warn", "error"] }],
     },
   },
   storybook.configs["flat/recommended"]
