@@ -8,36 +8,21 @@ import {
   UseFieldValueOptions,
 } from "ra-core";
 
-export const ArrayField = <RecordType extends RaRecord = RaRecord>({
-  defaultValue,
-  source,
-  resource,
-  perPage,
-  sort,
-  filter,
-  children,
-}: ArrayFieldProps<RecordType>) => {
-  const data: RecordType[] = useFieldValue({ defaultValue, source }) || [];
-  const listContext = useList({
-    resource,
-    perPage,
-    sort,
-    filter,
-    data,
-  });
+export const ArrayField = <RecordType extends RaRecord = RaRecord>(
+  props: ArrayFieldProps<RecordType>
+) => {
+  const { children, resource, perPage, sort, filter } = props;
+  const data: RecordType[] = useFieldValue(props) || [];
+  const listContext = useList({ data, resource, perPage, sort, filter });
 
   return (
     <ListContextProvider value={listContext}>{children}</ListContextProvider>
   );
 };
-
 export type ArrayFieldProps<
   RecordType extends RaRecord = RaRecord,
   ErrorType = Error
-> = Pick<
-  UseListOptions<RecordType, ErrorType>,
-  "perPage" | "sort" | "filter" | "resource"
-> &
-  Pick<UseFieldValueOptions<RecordType>, "defaultValue" | "source"> & {
+> = UseListOptions<RecordType, ErrorType> &
+  UseFieldValueOptions<RecordType> & {
     children?: ReactNode;
   };
