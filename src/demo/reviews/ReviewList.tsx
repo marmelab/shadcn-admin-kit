@@ -118,6 +118,7 @@ export const ReviewList = () => {
           "--sidebar-width": "25rem",
           "--sidebar-width-mobile": "20rem",
         }}
+        className="min-h-0 h-auto"
       >
         <Sidebar collapsible="offcanvas" variant="sidebar" side="right">
           {!!match && (
