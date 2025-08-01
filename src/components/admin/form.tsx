@@ -111,7 +111,9 @@ function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
 
 const FormError = ({ className, ...props }: React.ComponentProps<"p">) => {
   const { invalid, error, formMessageId } = useFormField();
-  if (!invalid || !error?.message) {
+
+  const err = error?.root?.message ?? error?.message;
+  if (!invalid || !err) {
     return null;
   }
 
@@ -122,7 +124,7 @@ const FormError = ({ className, ...props }: React.ComponentProps<"p">) => {
       className={cn("text-destructive text-sm", className)}
       {...props}
     >
-      <ValidationError error={error.message} />
+      <ValidationError error={err} />
     </p>
   );
 };

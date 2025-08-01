@@ -1,6 +1,8 @@
 import {
   CoreAdminContext,
+  minLength,
   RecordContextProvider,
+  required,
   ResourceContextProvider,
 } from "ra-core";
 import { SimpleForm, TextInput, ThemeProvider } from "@/components/admin";
@@ -45,6 +47,42 @@ export const Basic = ({ theme }: { theme: "system" | "light" | "dark" }) => (
         <ArrayInput source="tags">
           <SimpleFormIterator>
             <TextInput source="name" />
+          </SimpleFormIterator>
+        </ArrayInput>
+      </SimpleForm>
+    </ResourceContextProvider>
+  </StoryWrapper>
+);
+
+export const WithArrayInputValidation = ({
+  theme,
+}: {
+  theme: "system" | "light" | "dark";
+}) => (
+  <StoryWrapper theme={theme}>
+    <ResourceContextProvider value="posts">
+      <SimpleForm>
+        <ArrayInput source="tags" validate={minLength(5)}>
+          <SimpleFormIterator>
+            <TextInput source="name" validate={required()} />
+          </SimpleFormIterator>
+        </ArrayInput>
+      </SimpleForm>
+    </ResourceContextProvider>
+  </StoryWrapper>
+);
+
+export const WithInputValidation = ({
+  theme,
+}: {
+  theme: "system" | "light" | "dark";
+}) => (
+  <StoryWrapper theme={theme}>
+    <ResourceContextProvider value="posts">
+      <SimpleForm>
+        <ArrayInput source="tags">
+          <SimpleFormIterator>
+            <TextInput source="name" validate={required()} />
           </SimpleFormIterator>
         </ArrayInput>
       </SimpleForm>
