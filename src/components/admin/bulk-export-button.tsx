@@ -14,7 +14,7 @@ import {
  * To be used inside the <List bulkActionsToolbar> prop.
  *
  * @example // basic usage
- * import { BulkDeleteButton, BulkActionsToolbar, BulkExportButton, List, Datagrid } from '@/components/admin';
+ * import { BulkDeleteButton, BulkActionsToolbar, BulkExportButton, List, DataTable } from '@/components/admin';
  *
  * export const PostList = () => (
  *   <List

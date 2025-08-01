@@ -6,17 +6,17 @@ import { BulkDeleteButton } from "@/components/admin/bulk-delete-button";
 import { X } from "lucide-react";
 import { BulkExportButton } from "./bulk-export-button";
 
-export function DefaultBulkActionsButton() {
+export function BulkActionsToolbarChildren() {
   return (
-    <BulkActionsToolbar>
+    <>
       <BulkExportButton />
       <BulkDeleteButton />
-    </BulkActionsToolbar>
+    </>
   );
 }
 
 export const BulkActionsToolbar = ({
-  children = <DefaultBulkActionsButton />,
+  children = <BulkActionsToolbarChildren />,
 }: {
   children?: ReactNode;
 }) => {
