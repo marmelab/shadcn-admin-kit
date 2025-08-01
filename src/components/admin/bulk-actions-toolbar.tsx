@@ -4,9 +4,19 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BulkDeleteButton } from "@/components/admin/bulk-delete-button";
 import { X } from "lucide-react";
+import { BulkExportButton } from "./bulk-export-button";
+
+export function DefaultBulkActionsButton() {
+  return (
+    <BulkActionsToolbar>
+      <BulkExportButton />
+      <BulkDeleteButton />
+    </BulkActionsToolbar>
+  );
+}
 
 export const BulkActionsToolbar = ({
-  children = <BulkDeleteButton />,
+  children = <DefaultBulkActionsButton />,
 }: {
   children?: ReactNode;
 }) => {
