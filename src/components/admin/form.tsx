@@ -1,7 +1,6 @@
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
 import { FormProvider, useFormContext } from "react-hook-form";
-
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { createContext, useContext, useId, useMemo } from "react";
@@ -111,11 +110,9 @@ function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
   );
 }
 
-function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
-  const { error, formMessageId } = useFormField();
-  const body = error ? String(error?.message ?? "") : props.children;
-
-  if (!body) {
+const FormError = ({ className, ...props }: React.ComponentProps<"p">) => {
+  const { invalid, error, formMessageId } = useFormField();
+  if (!invalid || !error?.message) {
     return null;
   }
 
@@ -126,21 +123,8 @@ function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
       className={cn("text-destructive text-sm", className)}
       {...props}
     >
-      {body}
-    </p>
-  );
-}
-
-export const FormError = () => {
-  const { invalid, error } = useFormField();
-  if (!invalid || !error?.message) {
-    return null;
-  }
-
-  return (
-    <FormMessage>
       <ValidationError error={error.message} />
-    </FormMessage>
+    </p>
   );
 };
 
@@ -152,5 +136,5 @@ export {
   FormLabel,
   FormControl,
   FormDescription,
-  FormMessage,
+  FormError,
 };
