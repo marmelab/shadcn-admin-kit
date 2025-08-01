@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from "react";
-import { X } from "lucide-react";
+import { FormError } from "@/components/admin/form-error";
 import { Badge } from "@/components/ui/badge";
 import {
   Command,
@@ -15,30 +14,21 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Command as CommandPrimitive } from "cmdk";
+import { X } from "lucide-react";
 import {
   ChoicesProps,
+  FieldTitle,
   InputProps,
   useChoices,
   useChoicesContext,
+  useEvent,
   useGetRecordRepresentation,
   useInput,
   useTranslate,
-  FieldTitle,
-  useEvent,
 } from "ra-core";
-import { FormError } from "@/components/admin/form-error";
+import * as React from "react";
 
-export const AutocompleteArrayInput = (
-  props: Omit<InputProps, "source"> &
-    Partial<Pick<InputProps, "source">> &
-    ChoicesProps & {
-      className?: string;
-      disableValue?: string;
-      filterToQuery?: (searchText: string) => any;
-      translateChoice?: boolean;
-      placeholder?: string;
-    }
-) => {
+export const AutocompleteArrayInput = (props: AutocompleteArrayInputProps) => {
   const { filterToQuery = DefaultFilterToQuery } = props;
   const {
     allChoices = [],
@@ -205,3 +195,14 @@ export const AutocompleteArrayInput = (
 };
 
 const DefaultFilterToQuery = (searchText: string) => ({ q: searchText });
+
+export type AutocompleteArrayInputProps = Omit<InputProps, "source"> &
+  Partial<Pick<InputProps, "source">> &
+  ChoicesProps & {
+    className?: string;
+    disableValue?: string;
+    filterToQuery?: (searchText: string) => any;
+    translateChoice?: boolean;
+    placeholder?: string;
+    inputText?: (choice: any) => string;
+  };
