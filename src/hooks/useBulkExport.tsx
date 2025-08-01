@@ -16,7 +16,7 @@ import { useCallback, useMemo } from "react";
 export function useBulkExport<
   ResourceInformationsType extends Partial<{ resource: string }>
 >(props: UseBulkExportProps<ResourceInformationsType>) {
-  const { onClick, exporter: customExporter, meta } = props;
+  const { exporter: customExporter, meta } = props;
 
   const resource = useResourceContext(props);
   const { exporter: exporterFromContext, selectedIds } = useListContext();
@@ -24,32 +24,26 @@ export function useBulkExport<
   const dataProvider = useDataProvider();
   const notify = useNotify();
 
-  const bulkExport = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      if (exporter && resource) {
-        dataProvider
-          .getMany(resource, { ids: selectedIds, meta })
-          .then(({ data }) =>
-            exporter(
-              data,
-              fetchRelatedRecords(dataProvider),
-              dataProvider,
-              resource
-            )
+  const bulkExport = useCallback(() => {
+    if (exporter && resource) {
+      dataProvider
+        .getMany(resource, { ids: selectedIds, meta })
+        .then(({ data }) =>
+          exporter(
+            data,
+            fetchRelatedRecords(dataProvider),
+            dataProvider,
+            resource
           )
-          .catch((error) => {
-            console.error(error);
-            notify("ra.notification.http_error", {
-              type: "error",
-            });
+        )
+        .catch((error) => {
+          console.error(error);
+          notify("ra.notification.http_error", {
+            type: "error",
           });
-      }
-      if (typeof onClick === "function") {
-        onClick(event);
-      }
-    },
-    [dataProvider, exporter, notify, onClick, resource, selectedIds, meta]
-  );
+        });
+    }
+  }, [dataProvider, exporter, notify, resource, selectedIds, meta]);
 
   return useMemo(() => {
     return {
@@ -61,7 +55,6 @@ export function useBulkExport<
 export type ResourceInformation = Partial<{ resource: string }>;
 
 export type UseBulkExportProps<T extends ResourceInformation> = T & {
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   exporter?: Exporter;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   meta?: any;

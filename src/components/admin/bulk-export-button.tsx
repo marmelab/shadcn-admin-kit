@@ -34,13 +34,19 @@ import {
 export const BulkExportButton = <T extends ResourceInformation>({
   icon = defaultIcon,
   label = "ra.action.export",
+  onClick,
   ...props
 }: BulkExportButtonProps<T>) => {
   const { bulkExport } = useBulkExport(props);
 
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    bulkExport();
+    onClick?.(event);
+  };
+
   return (
     <Button
-      onClick={bulkExport}
+      onClick={handleClick}
       role="button"
       variant="outline"
       size="sm"
@@ -59,7 +65,7 @@ export type BulkExportButtonProps<T extends ResourceInformation> =
   UseBulkExportProps<T> & {
     icon?: React.ReactNode;
     label?: string;
-  } & Omit<React.ComponentProps<typeof Button>, "onClick">;
+  } & React.ComponentProps<typeof Button>;
 
 const sanitizeRestProps = <T extends ResourceInformation>({
   resource: _resource,
