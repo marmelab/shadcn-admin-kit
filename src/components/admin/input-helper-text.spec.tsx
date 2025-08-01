@@ -8,7 +8,9 @@ import { MemoryRouter } from "react-router";
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <MemoryRouter>
     <Form>
-      <FormField name="test-field">{children}</FormField>
+      <FormField id="test-field" name="test-field">
+        {children}
+      </FormField>
     </Form>
   </MemoryRouter>
 );

@@ -47,7 +47,7 @@ export const AutocompleteArrayInput = (
     isFromReference,
     setFilters,
   } = useChoicesContext(props);
-  const { field, isRequired } = useInput({ ...props, source });
+  const { id, field, isRequired } = useInput({ ...props, source });
   const translate = useTranslate();
   const { placeholder = translate("ra.action.search", { _: "Search..." }) } =
     props;
@@ -94,7 +94,7 @@ export const AutocompleteArrayInput = (
   const [filterValue, setFilterValue] = React.useState("");
 
   return (
-    <FormField className={props.className} name={field.name}>
+    <FormField className={props.className} id={id} name={field.name}>
       {props.label !== false && (
         <FormLabel>
           <FieldTitle

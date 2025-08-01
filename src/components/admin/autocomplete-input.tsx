@@ -53,7 +53,7 @@ export const AutocompleteInput = (
     isFromReference,
     setFilters,
   } = useChoicesContext(props);
-  const { field, isRequired } = useInput({ ...props, source });
+  const { id, field, isRequired } = useInput({ ...props, source });
   const translate = useTranslate();
   const { placeholder = translate("ra.action.search", { _: "Search..." }) } =
     props;
@@ -83,7 +83,7 @@ export const AutocompleteInput = (
   });
 
   return (
-    <FormField className={props.className} name={source}>
+    <FormField className={props.className} id={id} name={source}>
       {props.label !== false && (
         <FormLabel>
           <FieldTitle

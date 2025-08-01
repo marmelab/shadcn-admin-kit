@@ -117,6 +117,8 @@ export const ArrayInput = (props: ArrayInputProps) => {
     [parentSourceContext, arraySource]
   );
 
+  const id = React.useId();
+
   if (isPending) {
     return <Skeleton className="w-full h-9" />;
   }
@@ -129,6 +131,7 @@ export const ArrayInput = (props: ArrayInputProps) => {
         className,
         "w-full flex flex-col gap-2"
       )}
+      id={id}
       name={finalSource}
     >
       <Label className="text-muted-foreground text-sm">

@@ -3,7 +3,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { FormProvider, useFormContext } from "react-hook-form";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
-import { createContext, useContext, useId, useMemo } from "react";
+import { createContext, useContext, useMemo } from "react";
 import { ValidationError } from "ra-core";
 
 const Form = FormProvider;
@@ -34,9 +34,7 @@ const useFormField = () => {
   );
 };
 
-function FormField({ className, name, ...props }: FormItemProps) {
-  const id = useId();
-
+function FormField({ className, id, name, ...props }: FormItemProps) {
   const contextValue: FormItemContextValue = useMemo(
     () => ({
       id,
@@ -57,7 +55,8 @@ function FormField({ className, name, ...props }: FormItemProps) {
   );
 }
 
-type FormItemProps = React.ComponentProps<"div"> & {
+type FormItemProps = Omit<React.ComponentProps<"div">, "id"> & {
+  id: string;
   name: string;
 };
 

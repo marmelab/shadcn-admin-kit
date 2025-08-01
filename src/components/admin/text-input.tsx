@@ -30,10 +30,10 @@ export const TextInput = (props: TextInputProps) => {
     format: _formatProp,
     ...rest
   } = props;
-  const { field, isRequired } = useInput(props);
+  const { id, field, isRequired } = useInput(props);
 
   return (
-    <FormField className={className} name={field.name}>
+    <FormField id={id} className={className} name={field.name}>
       {label !== false && (
         <FormLabel>
           <FieldTitle
