@@ -20,7 +20,7 @@ import { cn } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";
 import { ArrayInputContext } from "@/hooks/ArrayInputContext";
 import { InputHelperText } from "./input-helper-text";
-import { sanitizeInputRestProps } from "@/lib/sanitizeInputRestProps";
+import { FormField, FormError } from "./form";
 
 export const ArrayInput = (props: ArrayInputProps) => {
   const {
@@ -33,7 +33,6 @@ export const ArrayInput = (props: ArrayInputProps) => {
     resource: resourceFromProps,
     source: arraySource,
     validate,
-    ...rest
   } = props;
 
   const formGroupName = useFormGroupContext();
@@ -46,7 +45,7 @@ export const ArrayInput = (props: ArrayInputProps) => {
     : validate;
   const getValidationErrorMessage = useGetValidationErrorMessage();
 
-  const { getFieldState, formState, getValues } = useFormContext();
+  const { getValues } = useFormContext();
 
   const fieldProps = useFieldArray({
     name: finalSource,
@@ -78,8 +77,6 @@ export const ArrayInput = (props: ArrayInputProps) => {
     isArrayInput: true,
     fieldArrayInputControl: fieldProps,
   });
-
-  const fieldState = getFieldState(finalSource, formState);
 
   // The SourceContext will be read by children of ArrayInput to compute their composed source and label
   //
@@ -125,14 +122,14 @@ export const ArrayInput = (props: ArrayInputProps) => {
   }
 
   return (
-    <div
+    <FormField
       className={cn(
         "ra-input",
         `ra-input-${finalSource}`,
         className,
         "w-full flex flex-col gap-2"
       )}
-      {...sanitizeInputRestProps(rest)}
+      name={finalSource}
     >
       <Label className="text-muted-foreground text-sm">
         <FieldTitle
@@ -150,8 +147,9 @@ export const ArrayInput = (props: ArrayInputProps) => {
         </OptionalResourceContextProvider>
       </ArrayInputContext.Provider>
 
-      <InputHelperText fieldState={fieldState} helperText={helperText} />
-    </div>
+      <InputHelperText helperText={helperText} />
+      <FormError />
+    </FormField>
   );
 };
 

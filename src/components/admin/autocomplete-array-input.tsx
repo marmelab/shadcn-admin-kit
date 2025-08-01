@@ -8,7 +8,12 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { FormControl, FormItem, FormLabel } from "@/components/ui/form";
+import {
+  FormControl,
+  FormError,
+  FormField,
+  FormLabel,
+} from "@/components/admin/form";
 import { Command as CommandPrimitive } from "cmdk";
 import {
   ChoicesProps,
@@ -42,7 +47,7 @@ export const AutocompleteArrayInput = (
     isFromReference,
     setFilters,
   } = useChoicesContext(props);
-  const { field, fieldState, isRequired } = useInput({ ...props, source });
+  const { field, isRequired } = useInput({ ...props, source });
   const translate = useTranslate();
   const { placeholder = translate("ra.action.search", { _: "Search..." }) } =
     props;
@@ -89,7 +94,7 @@ export const AutocompleteArrayInput = (
   const [filterValue, setFilterValue] = React.useState("");
 
   return (
-    <FormItem className={props.className}>
+    <FormField className={props.className} name={field.name}>
       {props.label !== false && (
         <FormLabel>
           <FieldTitle
@@ -191,8 +196,9 @@ export const AutocompleteArrayInput = (
           </div>
         </Command>
       </FormControl>
-      <InputHelperText fieldState={fieldState} helperText={props.helperText} />
-    </FormItem>
+      <InputHelperText helperText={props.helperText} />
+      <FormError />
+    </FormField>
   );
 };
 

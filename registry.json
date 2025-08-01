@@ -20,7 +20,6 @@
         "command",
         "drawer",
         "dropdown-menu",
-        "form",
         "input",
         "label",
         "navigation-menu",
@@ -134,7 +133,7 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/form-error.tsx",
+          "path": "src/components/admin/form.tsx",
           "type": "registry:component"
         },
         {

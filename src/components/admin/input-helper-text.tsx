@@ -1,20 +1,9 @@
 import { useTranslate } from "ra-core";
 import { isValidElement, ReactNode } from "react";
-import { ControllerFieldState } from "react-hook-form";
-import { FormError } from "./form-error";
+import { FormDescription } from "@/components/admin/form";
 
-export function InputHelperText({
-  fieldState,
-  helperText,
-}: {
-  fieldState?: ControllerFieldState;
-  helperText?: ReactNode;
-}) {
+export function InputHelperText({ helperText }: { helperText?: ReactNode }) {
   const translate = useTranslate();
-
-  if (fieldState?.invalid && fieldState?.error?.message) {
-    return <FormError fieldState={fieldState} />;
-  }
 
   if (!helperText) {
     return null;
@@ -25,10 +14,10 @@ export function InputHelperText({
   }
 
   return (
-    <p className="text-sm text-muted mt-1">
+    <FormDescription>
       {typeof helperText === "string"
         ? translate(helperText, { _: helperText })
         : helperText}
-    </p>
+    </FormDescription>
   );
 }

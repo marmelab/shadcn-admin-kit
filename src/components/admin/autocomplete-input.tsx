@@ -10,7 +10,12 @@ import {
   CommandInput,
   CommandItem,
 } from "@/components/ui/command";
-import { FormControl, FormItem, FormLabel } from "@/components/ui/form";
+import {
+  FormControl,
+  FormError,
+  FormField,
+  FormLabel,
+} from "@/components/admin/form";
 import {
   Popover,
   PopoverContent,
@@ -48,7 +53,7 @@ export const AutocompleteInput = (
     isFromReference,
     setFilters,
   } = useChoicesContext(props);
-  const { field, fieldState, isRequired } = useInput({ ...props, source });
+  const { field, isRequired } = useInput({ ...props, source });
   const translate = useTranslate();
   const { placeholder = translate("ra.action.search", { _: "Search..." }) } =
     props;
@@ -78,7 +83,7 @@ export const AutocompleteInput = (
   });
 
   return (
-    <FormItem className={props.className}>
+    <FormField className={props.className} name={source}>
       {props.label !== false && (
         <FormLabel>
           <FieldTitle
@@ -156,8 +161,9 @@ export const AutocompleteInput = (
           </PopoverContent>
         </Popover>
       </FormControl>
-      <InputHelperText fieldState={fieldState} helperText={props.helperText} />
-    </FormItem>
+      <InputHelperText helperText={props.helperText} />
+      <FormError />
+    </FormField>
   );
 };
 

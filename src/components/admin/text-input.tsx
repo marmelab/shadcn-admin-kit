@@ -4,7 +4,12 @@ import {
   useResourceContext,
   FieldTitle,
 } from "ra-core";
-import { FormControl, FormItem, FormLabel } from "@/components/ui/form";
+import {
+  FormControl,
+  FormError,
+  FormField,
+  FormLabel,
+} from "@/components/admin/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { InputHelperText } from "./input-helper-text";
@@ -25,10 +30,10 @@ export const TextInput = (props: TextInputProps) => {
     format: _formatProp,
     ...rest
   } = props;
-  const { field, fieldState, isRequired } = useInput(props);
+  const { field, isRequired } = useInput(props);
 
   return (
-    <FormItem className={className}>
+    <FormField className={className} name={field.name}>
       {label !== false && (
         <FormLabel>
           <FieldTitle
@@ -46,7 +51,8 @@ export const TextInput = (props: TextInputProps) => {
           <Input {...rest} {...field} />
         )}
       </FormControl>
-      <InputHelperText fieldState={fieldState} helperText={props.helperText} />
-    </FormItem>
+      <InputHelperText helperText={props.helperText} />
+      <FormError />
+    </FormField>
   );
 };

@@ -1,34 +1,31 @@
 import { describe, expect, it } from "vitest";
 import { InputHelperText } from "./input-helper-text";
 import { render } from "vitest-browser-react";
+import { FormField } from "./form";
+import { Form } from "ra-core";
+import { MemoryRouter } from "react-router";
+
+const TestWrapper = ({ children }: { children: React.ReactNode }) => (
+  <MemoryRouter>
+    <Form>
+      <FormField name="test-field">{children}</FormField>
+    </Form>
+  </MemoryRouter>
+);
 
 describe("InputHelperText", () => {
-  it("should render error message when provided", async () => {
-    const screen = render(
-      <InputHelperText
-        fieldState={{
-          invalid: true,
-          isTouched: true,
-          isDirty: false,
-          isValidating: false,
-          error: { type: "required", message: "error" },
-        }}
-        helperText={"helper text"}
-      />
-    );
-
-    await expect.element(screen.getByText("error")).toBeInTheDocument();
-  });
-
   it("should render helper text when provided", async () => {
-    const screen = render(<InputHelperText helperText={"helper text"} />);
+    const screen = render(<InputHelperText helperText={"helper text"} />, {
+      wrapper: TestWrapper,
+    });
 
     await expect.element(screen.getByText("helper text")).toBeInTheDocument();
   });
 
-  it("should not render anything when neither error nor helperText is provided", async () => {
-    const screen = render(<InputHelperText />);
-
-    await expect.element(screen.container).toBeEmptyDOMElement();
+  it("should not render anything when helperText is not provided", async () => {
+    const screen = render(<InputHelperText />, {
+      wrapper: TestWrapper,
+    });
+    await expect.element(screen.getByRole("group")).toBeEmptyDOMElement();
   });
 });
