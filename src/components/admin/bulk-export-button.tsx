@@ -59,7 +59,7 @@ export type BulkExportButtonProps<T extends ResourceInformation> =
   UseBulkExportProps<T> & {
     icon?: React.ReactNode;
     label?: string;
-  } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick">;
+  } & Omit<React.ComponentProps<typeof Button>, "onClick">;
 
 const sanitizeRestProps = <T extends ResourceInformation>({
   resource: _resource,
