@@ -34,18 +34,6 @@ import {
 } from "ra-core";
 import * as React from "react";
 
-type AutocompleteInputProps = Omit<InputProps, "source"> &
-  Partial<Pick<InputProps, "source">> &
-  ChoicesProps & {
-    className?: string;
-    disableValue?: string;
-    filterToQuery?: (searchText: string) => any;
-    translateChoice?: boolean;
-    placeholder?: string;
-    inputText?: (choice: any) => string;
-    onCreate?: (value: string) => Promise<any>;
-  };
-
 export const AutocompleteInput = (props: AutocompleteInputProps) => {
   const { filterToQuery = DefaultFilterToQuery } = props;
   const {
@@ -180,3 +168,15 @@ export const AutocompleteInput = (props: AutocompleteInputProps) => {
 };
 
 const DefaultFilterToQuery = (searchText: string) => ({ q: searchText });
+
+type AutocompleteInputProps = Omit<InputProps, "source"> &
+  Partial<Pick<InputProps, "source">> &
+  ChoicesProps & {
+    className?: string;
+    disableValue?: string;
+    filterToQuery?: (searchText: string) => any;
+    translateChoice?: boolean;
+    placeholder?: string;
+    inputText?: (choice: any) => string;
+    onCreate?: (value: string) => Promise<any>;
+  };
