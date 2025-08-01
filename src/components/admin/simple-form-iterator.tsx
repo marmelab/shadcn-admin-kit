@@ -322,7 +322,11 @@ const SimpleFormIteratorItem = React.forwardRef(
       <SimpleFormIteratorItemContext.Provider value={context}>
         <li
           ref={ref}
-          className="flex flex-row items-center justify-between gap-2 pb-2 border-b border-border last:border-b-0"
+          className={cn(
+            "flex flex-row items-start justify-between gap-2 pb-2 border-b border-border last:border-b-0",
+            // Align the buttons with the input
+            "[&:has(label)>.simple-form-iterator-item-actions]:pt-10"
+          )}
         >
           {label != null && label !== false && (
             <p className="text-sm text-muted-foreground mb-2">{label}</p>
@@ -340,7 +344,7 @@ const SimpleFormIteratorItem = React.forwardRef(
             </RecordContextProvider>
           </SourceContextProvider>
           {!disabled && (
-            <div className="flex flex-row h-9 items-center gap-1 self-end">
+            <div className="simple-form-iterator-item-actions flex flex-row h-9 items-center gap-1">
               {!disableReordering && reOrderButtons}
               {!disableRemoveField(record) && removeButton}
             </div>

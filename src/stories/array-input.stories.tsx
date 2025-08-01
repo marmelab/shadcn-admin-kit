@@ -89,3 +89,66 @@ export const WithInputValidation = ({
     </ResourceContextProvider>
   </StoryWrapper>
 );
+
+export const WithoutInputLabel = ({
+  theme,
+}: {
+  theme: "system" | "light" | "dark";
+}) => (
+  <StoryWrapper theme={theme}>
+    <ResourceContextProvider value="posts">
+      <SimpleForm>
+        <ArrayInput source="tags" validate={minLength(5)}>
+          <SimpleFormIterator>
+            <TextInput source="name" validate={required()} label={false} />
+          </SimpleFormIterator>
+        </ArrayInput>
+      </SimpleForm>
+    </ResourceContextProvider>
+  </StoryWrapper>
+);
+
+export const WithHelpText = ({
+  theme,
+}: {
+  theme: "system" | "light" | "dark";
+}) => (
+  <StoryWrapper theme={theme}>
+    <ResourceContextProvider value="posts">
+      <SimpleForm>
+        <ArrayInput source="tags" validate={minLength(5)}>
+          <SimpleFormIterator>
+            <TextInput
+              source="name"
+              validate={(required(), minLength(5))}
+              helperText="Enter at least 5 characters"
+            />
+          </SimpleFormIterator>
+        </ArrayInput>
+      </SimpleForm>
+    </ResourceContextProvider>
+  </StoryWrapper>
+);
+
+export const WithoutLabelWithHelpText = ({
+  theme,
+}: {
+  theme: "system" | "light" | "dark";
+}) => (
+  <StoryWrapper theme={theme}>
+    <ResourceContextProvider value="posts">
+      <SimpleForm>
+        <ArrayInput source="tags" validate={minLength(5)}>
+          <SimpleFormIterator>
+            <TextInput
+              source="name"
+              label={false}
+              validate={(required(), minLength(5))}
+              helperText="Enter at least 5 characters"
+            />
+          </SimpleFormIterator>
+        </ArrayInput>
+      </SimpleForm>
+    </ResourceContextProvider>
+  </StoryWrapper>
+);
