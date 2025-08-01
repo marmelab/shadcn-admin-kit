@@ -10,12 +10,7 @@ import {
   CommandInput,
   CommandItem,
 } from "@/components/ui/command";
-import {
-  FormControl,
-  FormDescription,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
+import { FormControl, FormItem, FormLabel } from "@/components/ui/form";
 import {
   Popover,
   PopoverContent,
@@ -32,7 +27,7 @@ import {
   FieldTitle,
   useEvent,
 } from "ra-core";
-import { FormError } from "@/components/admin/form-error";
+import { InputHelperText } from "./input-helper-text";
 
 export const AutocompleteInput = (
   props: Omit<InputProps, "source"> &
@@ -161,10 +156,7 @@ export const AutocompleteInput = (
           </PopoverContent>
         </Popover>
       </FormControl>
-      {props.helperText && (
-        <FormDescription>{props.helperText}</FormDescription>
-      )}
-      <FormError fieldState={fieldState} />
+      <InputHelperText fieldState={fieldState} helperText={props.helperText} />
     </FormItem>
   );
 };

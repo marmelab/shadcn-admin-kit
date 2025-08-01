@@ -6,7 +6,6 @@ import { ArrayInput } from "./array-input";
 import { useContext, useEffect } from "react";
 import { ArrayInputContext } from "@/hooks/ArrayInputContext";
 
-// Composant de test pour les enfants de ArrayInput
 function TestChild({ source }: { source: string }) {
   const arrayContext = useContext(ArrayInputContext);
 
@@ -26,7 +25,6 @@ function TestChild({ source }: { source: string }) {
   );
 }
 
-// Wrapper avec FormProvider pour les tests
 function TestWrapper({
   children,
   defaultValues = {},
@@ -104,7 +102,6 @@ describe("ArrayInput", () => {
       </TestWrapper>
     );
 
-    // Le skeleton devrait être affiché
     await expect
       .element(screen.getByTestId("test-child"))
       .not.toBeInTheDocument();
@@ -240,7 +237,6 @@ describe("ArrayInput", () => {
       { wrapper: TestWrapperWithError }
     );
 
-    // Vérifier que l'erreur de validation est affichée
     await expect
       .element(screen.getByText("This field is required"))
       .toBeInTheDocument();
@@ -257,7 +253,6 @@ describe("ArrayInput", () => {
 
     await expect.element(screen.getByTestId("test-child")).toBeInTheDocument();
 
-    // Le composant devrait se monter et démonter correctement
     screen.unmount();
   });
 
@@ -282,7 +277,6 @@ describe("ArrayInput", () => {
 
   it("should handle async validation", async () => {
     const asyncValidator = async (value: unknown[]) => {
-      // Simuler une validation asynchrone
       await new Promise((resolve) => setTimeout(resolve, 10));
       if (!value || value.length === 0) {
         return "Async validation error";

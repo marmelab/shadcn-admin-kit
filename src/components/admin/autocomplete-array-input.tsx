@@ -8,12 +8,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import {
-  FormControl,
-  FormDescription,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
+import { FormControl, FormItem, FormLabel } from "@/components/ui/form";
 import { Command as CommandPrimitive } from "cmdk";
 import {
   ChoicesProps,
@@ -26,7 +21,7 @@ import {
   FieldTitle,
   useEvent,
 } from "ra-core";
-import { FormError } from "@/components/admin/form-error";
+import { InputHelperText } from "./input-helper-text";
 
 export const AutocompleteArrayInput = (
   props: Omit<InputProps, "source"> &
@@ -196,10 +191,7 @@ export const AutocompleteArrayInput = (
           </div>
         </Command>
       </FormControl>
-      {props.helperText && (
-        <FormDescription>{props.helperText}</FormDescription>
-      )}
-      <FormError fieldState={fieldState} />
+      <InputHelperText fieldState={fieldState} helperText={props.helperText} />
     </FormItem>
   );
 };

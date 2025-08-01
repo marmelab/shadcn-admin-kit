@@ -15,7 +15,6 @@ import {
 import * as React from "react";
 import { useEffect } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
-import { FormDescription } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";
@@ -80,7 +79,7 @@ export const ArrayInput = (props: ArrayInputProps) => {
     fieldArrayInputControl: fieldProps,
   });
 
-  const { error } = getFieldState(finalSource, formState);
+  const fieldState = getFieldState(finalSource, formState);
 
   // The SourceContext will be read by children of ArrayInput to compute their composed source and label
   //
@@ -125,8 +124,6 @@ export const ArrayInput = (props: ArrayInputProps) => {
     return <Skeleton className="w-full h-9" />;
   }
 
-  const renderHelperText = helperText !== false || !!error;
-
   return (
     <div
       className={cn(
@@ -152,17 +149,8 @@ export const ArrayInput = (props: ArrayInputProps) => {
           </SourceContextProvider>
         </OptionalResourceContextProvider>
       </ArrayInputContext.Provider>
-      {renderHelperText ? (
-        <FormDescription>
-          <InputHelperText
-            // root property is applicable to built-in validation only,
-            // Resolvers are yet to support useFieldArray root level validation.
-            // Reference: https://react-hook-form.com/docs/usefieldarray
-            error={error?.root?.message ?? error?.message}
-            helperText={helperText}
-          />
-        </FormDescription>
-      ) : null}
+
+      <InputHelperText fieldState={fieldState} helperText={helperText} />
     </div>
   );
 };

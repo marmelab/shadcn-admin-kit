@@ -4,15 +4,10 @@ import {
   useResourceContext,
   FieldTitle,
 } from "ra-core";
-import {
-  FormControl,
-  FormDescription,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
+import { FormControl, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { FormError } from "@/components/admin/form-error";
+import { InputHelperText } from "./input-helper-text";
 
 export type TextInputProps = InputProps & {
   multiline?: boolean;
@@ -51,10 +46,7 @@ export const TextInput = (props: TextInputProps) => {
           <Input {...rest} {...field} />
         )}
       </FormControl>
-      {props.helperText && (
-        <FormDescription>{props.helperText}</FormDescription>
-      )}
-      <FormError fieldState={fieldState} />
+      <InputHelperText fieldState={fieldState} helperText={props.helperText} />
     </FormItem>
   );
 };

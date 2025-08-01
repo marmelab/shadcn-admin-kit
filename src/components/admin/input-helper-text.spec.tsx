@@ -5,24 +5,29 @@ import { render } from "vitest-browser-react";
 describe("InputHelperText", () => {
   it("should render error message when provided", async () => {
     const screen = render(
-      <InputHelperText error={"error"} helperText={"helper text"} />
+      <InputHelperText
+        fieldState={{
+          invalid: true,
+          isTouched: true,
+          isDirty: false,
+          isValidating: false,
+          error: { type: "required", message: "error" },
+        }}
+        helperText={"helper text"}
+      />
     );
 
     await expect.element(screen.getByText("error")).toBeInTheDocument();
   });
 
   it("should render helper text when provided", async () => {
-    const screen = render(
-      <InputHelperText error={undefined} helperText={"helper text"} />
-    );
+    const screen = render(<InputHelperText helperText={"helper text"} />);
 
     await expect.element(screen.getByText("helper text")).toBeInTheDocument();
   });
 
   it("should not render anything when neither error nor helperText is provided", async () => {
-    const screen = render(
-      <InputHelperText error={undefined} helperText={undefined} />
-    );
+    const screen = render(<InputHelperText />);
 
     await expect.element(screen.container).toBeEmptyDOMElement();
   });

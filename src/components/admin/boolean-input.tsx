@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback } from "react";
 import { Switch } from "@/components/ui/switch";
-import { FormDescription, FormItem, FormLabel } from "@/components/ui/form";
-import { FormError } from "@/components/admin/form-error";
+import { FormItem, FormLabel } from "@/components/ui/form";
 import { useInput, FieldTitle } from "ra-core";
+import { InputHelperText } from "./input-helper-text";
 
 export const BooleanInput = (props: BooleanInputProps) => {
   const {
@@ -65,8 +65,7 @@ export const BooleanInput = (props: BooleanInputProps) => {
           />
         </FormLabel>
       </div>
-      {helperText && <FormDescription>{helperText}</FormDescription>}
-      <FormError fieldState={fieldState} />
+      <InputHelperText fieldState={fieldState} helperText={helperText} />
     </FormItem>
   );
 };
