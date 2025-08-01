@@ -31,3 +31,7 @@ temp
 
 *storybook.log
 storybook-static
+
+# Vitest
+
+**/__screenshots__/*

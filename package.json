@@ -15,7 +15,8 @@
     "build-storybook": "storybook build",
     "test": "vitest run --browser.headless",
     "test:watch": "vitest watch --browser.headless",
-    "test:browser": "vitest watch"
+    "test:browser": "vitest watch",
+    "typecheck": "tsc --noEmit -p tsconfig.app.json"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",

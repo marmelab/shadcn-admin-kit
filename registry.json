@@ -20,7 +20,6 @@
         "command",
         "drawer",
         "dropdown-menu",
-        "form",
         "input",
         "label",
         "navigation-menu",
@@ -63,6 +62,10 @@
         },
         {
           "path": "src/components/admin/array-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/array-input.tsx",
           "type": "registry:component"
         },
         {
@@ -134,11 +137,15 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/form-error.tsx",
+          "path": "src/components/admin/form.tsx",
           "type": "registry:component"
         },
         {
           "path": "src/components/admin/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/input-helper-text.tsx",
           "type": "registry:component"
         },
         {
@@ -266,7 +273,19 @@
           "type": "registry:component"
         },
         {
+          "path": "src/hooks/ArrayInputContext.tsx",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/hooks/useArrayInput.tsx",
+          "type": "registry:hook"
+        },
+        {
           "path": "src/lib/i18nProvider.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/lib/sanitizeInputRestProps.ts",
           "type": "registry:lib"
         },
         {

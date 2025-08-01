@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/command";
 import {
   FormControl,
-  FormDescription,
-  FormItem,
+  FormError,
+  FormField,
   FormLabel,
-} from "@/components/ui/form";
+} from "@/components/admin/form";
 import {
   Popover,
   PopoverContent,
@@ -32,7 +32,7 @@ import {
   FieldTitle,
   useEvent,
 } from "ra-core";
-import { FormError } from "@/components/admin/form-error";
+import { InputHelperText } from "./input-helper-text";
 
 export const AutocompleteInput = (
   props: Omit<InputProps, "source"> &
@@ -53,7 +53,7 @@ export const AutocompleteInput = (
     isFromReference,
     setFilters,
   } = useChoicesContext(props);
-  const { field, fieldState, isRequired } = useInput({ ...props, source });
+  const { id, field, isRequired } = useInput({ ...props, source });
   const translate = useTranslate();
   const { placeholder = translate("ra.action.search", { _: "Search..." }) } =
     props;
@@ -83,7 +83,7 @@ export const AutocompleteInput = (
   });
 
   return (
-    <FormItem className={props.className}>
+    <FormField className={props.className} id={id} name={source}>
       {props.label !== false && (
         <FormLabel>
           <FieldTitle
@@ -161,11 +161,9 @@ export const AutocompleteInput = (
           </PopoverContent>
         </Popover>
       </FormControl>
-      {props.helperText && (
-        <FormDescription>{props.helperText}</FormDescription>
-      )}
-      <FormError fieldState={fieldState} />
-    </FormItem>
+      <InputHelperText helperText={props.helperText} />
+      <FormError />
+    </FormField>
   );
 };
 

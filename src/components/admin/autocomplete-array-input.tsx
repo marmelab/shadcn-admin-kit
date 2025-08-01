@@ -10,10 +10,10 @@ import {
 } from "@/components/ui/command";
 import {
   FormControl,
-  FormDescription,
-  FormItem,
+  FormError,
+  FormField,
   FormLabel,
-} from "@/components/ui/form";
+} from "@/components/admin/form";
 import { Command as CommandPrimitive } from "cmdk";
 import {
   ChoicesProps,
@@ -26,7 +26,7 @@ import {
   FieldTitle,
   useEvent,
 } from "ra-core";
-import { FormError } from "@/components/admin/form-error";
+import { InputHelperText } from "./input-helper-text";
 
 export const AutocompleteArrayInput = (
   props: Omit<InputProps, "source"> &
@@ -47,7 +47,7 @@ export const AutocompleteArrayInput = (
     isFromReference,
     setFilters,
   } = useChoicesContext(props);
-  const { field, fieldState, isRequired } = useInput({ ...props, source });
+  const { id, field, isRequired } = useInput({ ...props, source });
   const translate = useTranslate();
   const { placeholder = translate("ra.action.search", { _: "Search..." }) } =
     props;
@@ -94,7 +94,7 @@ export const AutocompleteArrayInput = (
   const [filterValue, setFilterValue] = React.useState("");
 
   return (
-    <FormItem className={props.className}>
+    <FormField className={props.className} id={id} name={field.name}>
       {props.label !== false && (
         <FormLabel>
           <FieldTitle
@@ -196,11 +196,9 @@ export const AutocompleteArrayInput = (
           </div>
         </Command>
       </FormControl>
-      {props.helperText && (
-        <FormDescription>{props.helperText}</FormDescription>
-      )}
-      <FormError fieldState={fieldState} />
-    </FormItem>
+      <InputHelperText helperText={props.helperText} />
+      <FormError />
+    </FormField>
   );
 };
 

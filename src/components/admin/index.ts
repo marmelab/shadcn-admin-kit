@@ -17,7 +17,7 @@ export * from "./edit-button";
 export * from "./edit-guesser";
 export * from "./edit";
 export * from "./export-button";
-export * from "./form-error";
+export * from "./form";
 export * from "./layout";
 export * from "./list-guesser";
 export * from "./list-pagination";

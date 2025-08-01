@@ -6,13 +6,13 @@ import {
 } from "ra-core";
 import {
   FormControl,
-  FormDescription,
-  FormItem,
+  FormError,
+  FormField,
   FormLabel,
-} from "@/components/ui/form";
+} from "@/components/admin/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { FormError } from "@/components/admin/form-error";
+import { InputHelperText } from "./input-helper-text";
 
 export type TextInputProps = InputProps & {
   multiline?: boolean;
@@ -30,10 +30,10 @@ export const TextInput = (props: TextInputProps) => {
     format: _formatProp,
     ...rest
   } = props;
-  const { field, fieldState, isRequired } = useInput(props);
+  const { id, field, isRequired } = useInput(props);
 
   return (
-    <FormItem className={className}>
+    <FormField id={id} className={className} name={field.name}>
       {label !== false && (
         <FormLabel>
           <FieldTitle
@@ -51,10 +51,8 @@ export const TextInput = (props: TextInputProps) => {
           <Input {...rest} {...field} />
         )}
       </FormControl>
-      {props.helperText && (
-        <FormDescription>{props.helperText}</FormDescription>
-      )}
-      <FormError fieldState={fieldState} />
-    </FormItem>
+      <InputHelperText helperText={props.helperText} />
+      <FormError />
+    </FormField>
   );
 };
