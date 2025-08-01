@@ -28,18 +28,7 @@ import {
 } from "ra-core";
 import * as React from "react";
 
-export const AutocompleteArrayInput = (
-  props: Omit<InputProps, "source"> &
-    Partial<Pick<InputProps, "source">> &
-    ChoicesProps & {
-      className?: string;
-      disableValue?: string;
-      filterToQuery?: (searchText: string) => any;
-      translateChoice?: boolean;
-      placeholder?: string;
-      inputText?: (choice: any) => string;
-    }
-) => {
+export const AutocompleteArrayInput = (props: AutocompleteArrayInputProps) => {
   const { filterToQuery = DefaultFilterToQuery } = props;
   const {
     allChoices = [],
@@ -206,3 +195,14 @@ export const AutocompleteArrayInput = (
 };
 
 const DefaultFilterToQuery = (searchText: string) => ({ q: searchText });
+
+export type AutocompleteArrayInputProps = Omit<InputProps, "source"> &
+  Partial<Pick<InputProps, "source">> &
+  ChoicesProps & {
+    className?: string;
+    disableValue?: string;
+    filterToQuery?: (searchText: string) => any;
+    translateChoice?: boolean;
+    placeholder?: string;
+    inputText?: (choice: any) => string;
+  };
