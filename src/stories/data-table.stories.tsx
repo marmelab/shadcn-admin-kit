@@ -1,7 +1,14 @@
-import { DataProvider, memoryStore, Resource, TestMemoryRouter } from "ra-core";
+import {
+  DataProvider,
+  memoryStore,
+  Resource,
+  TestMemoryRouter,
+  useListContext,
+} from "ra-core";
 import fakeRestDataProvider from "ra-data-fakerest";
 import {
   Admin,
+  BulkDeleteButton,
   CreateButton,
   DataTable,
   EditButton,
@@ -9,6 +16,8 @@ import {
   ShowGuesser,
 } from "@/components/admin";
 import { i18nProvider } from "@/lib/i18nProvider";
+import { BulkExportButton } from "@/components/admin/bulk-export-button";
+import { Button } from "@/components/ui/button";
 
 export default {
   title: "List/DataTable",
@@ -148,6 +157,126 @@ export const RowClickFalse = () => (
     </DataTable>
   </Wrapper>
 );
+
+const SelectAllButton = () => {
+  const { selectedIds, onSelectAll, total } = useListContext();
+  return (
+    <Button
+      onClick={(e) => {
+        e.stopPropagation();
+        onSelectAll();
+      }}
+      disabled={selectedIds.length === total}
+    >
+      Select All
+    </Button>
+  );
+};
+
+const CustomBulkActionButtons = () => (
+  <>
+    <SelectAllButton />
+    <BulkExportButton />
+    <BulkDeleteButton />
+  </>
+);
+
+export const BulkActionButtons = () => (
+  <Wrapper>
+    <div className="flex flex-col gap-4 mb-4">
+      <div>
+        <h1>Default</h1>
+        <DataTable>
+          <DataTable.Col source="id" />
+          <DataTable.Col source="title" />
+          <DataTable.Col source="author.name" />
+          <DataTable.Col source="year" />
+        </DataTable>
+      </div>
+
+      <div>
+        <h1>Disabled</h1>
+        <DataTable bulkActionButtons={false}>
+          <DataTable.Col source="id" />
+          <DataTable.Col source="title" />
+          <DataTable.Col source="author.name" />
+          <DataTable.Col source="year" />
+        </DataTable>
+      </div>
+
+      <div>
+        <h1>Custom</h1>
+        <DataTable bulkActionButtons={<CustomBulkActionButtons />}>
+          <DataTable.Col source="id" />
+          <DataTable.Col source="title" />
+          <DataTable.Col source="author.name" />
+          <DataTable.Col source="year" />
+        </DataTable>
+      </div>
+    </div>
+  </Wrapper>
+);
+
+// export const SelectAllButton = ({
+//     onlyDisplay,
+// }: {
+//     onlyDisplay?: 'default' | 'disabled' | 'custom';
+// }) => (
+//     <Wrapper>
+//         {/* <Box sx={{ mt: -7 }}> */}
+//             {(!onlyDisplay || onlyDisplay === 'default') && (
+//                 <>
+//                     <h1>Default</h1>
+//                     <DataTable>
+//                         <DataTable.Col source="id" />
+//                         <DataTable.Col source="title" />
+//                         <DataTable.Col source="author.name" />
+//                         <DataTable.Col source="year" />
+//                     </DataTable>
+//                 </>
+//             )}
+//             {(!onlyDisplay || onlyDisplay === 'disabled') && (
+//                 <>
+//                     <h1>Disabled</h1>
+//                     <DataTable
+//                         bulkActionsToolbar={
+//                             <BulkActionsToolbar>
+//                             {/* <BulkActionsToolbar selectAllButton={false}> */}
+//                                 <BulkDeleteButton />
+//                             </BulkActionsToolbar>
+//                         }
+//                     >
+//                         <DataTable.Col source="id" />
+//                         <DataTable.Col source="title" />
+//                         <DataTable.Col source="author.name" />
+//                         <DataTable.Col source="year" />
+//                     </DataTable>
+//                 </>
+//             )}
+//             {(!onlyDisplay || onlyDisplay === 'custom') && (
+//                 <>
+//                     <h1>Custom</h1>
+//                     <DataTable
+//                         bulkActionsToolbar={
+//                             <BulkActionsToolbar
+//                                 // selectAllButton={
+//                                 //     <RaSelectAllButton label="Select all records" />
+//                                 // }
+//                             >
+//                                 <BulkDeleteButton />
+//                             </BulkActionsToolbar>
+//                         }
+//                     >
+//                         <DataTable.Col source="id" />
+//                         <DataTable.Col source="title" />
+//                         <DataTable.Col source="author.name" />
+//                         <DataTable.Col source="year" />
+//                     </DataTable>
+//                 </>
+//             )}
+//         {/* </Box> */}
+//     </Wrapper>
+// );
 
 export const HeaderButton = () => (
   <Wrapper>
