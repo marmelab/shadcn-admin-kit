@@ -80,15 +80,11 @@ const dataProvider = fakeRestDataProvider(data);
 const Wrapper = ({
   children,
   defaultDataProvider = dataProvider,
-  //   resource = "books",
   actions = null,
-  // aside = null,
 }: {
   children: React.ReactNode;
   defaultDataProvider?: DataProvider;
-  //   resource?: string;
   actions?: React.ReactNode;
-  // aside?: React.ReactNode;
 }) => (
   <TestMemoryRouter initialEntries={["/books"]}>
     <Admin
@@ -101,9 +97,7 @@ const Wrapper = ({
         list={
           <List
             perPage={5}
-            // sx={{ p: 4 }}
             actions={actions}
-            // aside={aside}
             sort={{ field: "id", order: "ASC" }}
           >
             {children}
@@ -216,67 +210,6 @@ export const BulkActionButtons = () => (
     </div>
   </Wrapper>
 );
-
-// export const SelectAllButton = ({
-//     onlyDisplay,
-// }: {
-//     onlyDisplay?: 'default' | 'disabled' | 'custom';
-// }) => (
-//     <Wrapper>
-//         {/* <Box sx={{ mt: -7 }}> */}
-//             {(!onlyDisplay || onlyDisplay === 'default') && (
-//                 <>
-//                     <h1>Default</h1>
-//                     <DataTable>
-//                         <DataTable.Col source="id" />
-//                         <DataTable.Col source="title" />
-//                         <DataTable.Col source="author.name" />
-//                         <DataTable.Col source="year" />
-//                     </DataTable>
-//                 </>
-//             )}
-//             {(!onlyDisplay || onlyDisplay === 'disabled') && (
-//                 <>
-//                     <h1>Disabled</h1>
-//                     <DataTable
-//                         bulkActionsToolbar={
-//                             <BulkActionsToolbar>
-//                             {/* <BulkActionsToolbar selectAllButton={false}> */}
-//                                 <BulkDeleteButton />
-//                             </BulkActionsToolbar>
-//                         }
-//                     >
-//                         <DataTable.Col source="id" />
-//                         <DataTable.Col source="title" />
-//                         <DataTable.Col source="author.name" />
-//                         <DataTable.Col source="year" />
-//                     </DataTable>
-//                 </>
-//             )}
-//             {(!onlyDisplay || onlyDisplay === 'custom') && (
-//                 <>
-//                     <h1>Custom</h1>
-//                     <DataTable
-//                         bulkActionsToolbar={
-//                             <BulkActionsToolbar
-//                                 // selectAllButton={
-//                                 //     <RaSelectAllButton label="Select all records" />
-//                                 // }
-//                             >
-//                                 <BulkDeleteButton />
-//                             </BulkActionsToolbar>
-//                         }
-//                     >
-//                         <DataTable.Col source="id" />
-//                         <DataTable.Col source="title" />
-//                         <DataTable.Col source="author.name" />
-//                         <DataTable.Col source="year" />
-//                     </DataTable>
-//                 </>
-//             )}
-//         {/* </Box> */}
-//     </Wrapper>
-// );
 
 export const HeaderButton = () => (
   <Wrapper>
