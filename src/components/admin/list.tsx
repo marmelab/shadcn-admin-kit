@@ -41,6 +41,7 @@ export const List = <RecordType extends RaRecord = RaRecord>(
     storeKey,
     ...rest
   } = props;
+
   return (
     <ListBase<RecordType>
       debounce={debounce}
