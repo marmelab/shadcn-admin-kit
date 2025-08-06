@@ -1,4 +1,4 @@
-import { createElement, ReactNode, useCallback } from "react";
+import { createElement, isValidElement, ReactNode, useCallback } from "react";
 import {
   DataTableBase,
   DataTableBaseProps,
@@ -22,8 +22,9 @@ import {
   useTranslate,
   useTranslateLabel,
 } from "ra-core";
-import { ArrowDownAZ, ArrowUpZA } from "lucide-react";
 import { useNavigate } from "react-router";
+import { ArrowDownAZ, ArrowUpZA } from "lucide-react";
+import get from "lodash/get";
 import { cn } from "@/lib/utils";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
@@ -43,15 +44,30 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { NumberField } from "@/components/admin/number-field";
-import get from "lodash/get";
+import {
+  BulkActionsToolbar,
+  BulkActionsToolbarChildren,
+} from "@/components/admin/bulk-actions-toolbar";
+
+const defaultBulkActionButtons = <BulkActionsToolbarChildren />;
 
 export function DataTable<RecordType extends RaRecord = RaRecord>(
-  props: DataTableProps<RecordType>
+  props: DataTableProps<RecordType>,
 ) {
-  const { children, className, rowClassName, ...rest } = props;
+  const {
+    children,
+    className,
+    rowClassName,
+    bulkActionButtons = defaultBulkActionButtons,
+    bulkActionsToolbar,
+    ...rest
+  } = props;
+
+  const hasBulkActions = !!bulkActionsToolbar || bulkActionButtons !== false;
+
   return (
     <DataTableBase<RecordType>
-      hasBulkActions
+      hasBulkActions={hasBulkActions}
       loading={null}
       empty={<DataTableEmpty />}
       {...rest}
@@ -66,6 +82,15 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
           </DataTableBody>
         </Table>
       </div>
+
+      {bulkActionsToolbar ??
+        (bulkActionButtons !== false && (
+          <BulkActionsToolbar>
+            {isValidElement(bulkActionButtons)
+              ? bulkActionButtons
+              : defaultBulkActionButtons}
+          </BulkActionsToolbar>
+        ))}
     </DataTableBase>
   );
 }
@@ -85,9 +110,9 @@ const DataTableHead = ({ children }: { children: ReactNode }) => {
         ? selectedIds.concat(
             data
               .filter((record) => !selectedIds.includes(record.id))
-              .map((record) => record.id)
+              .map((record) => record.id),
           )
-        : []
+        : [],
     );
   };
   const selectableIds = Array.isArray(data)
@@ -170,7 +195,7 @@ const DataTableRow = ({
       if (!handleToggleItem) return;
       handleToggleItem(record.id, event);
     },
-    [handleToggleItem, record.id]
+    [handleToggleItem, record.id],
   );
 
   const handleClick = useCallback(async () => {
@@ -230,10 +255,12 @@ export interface DataTableProps<RecordType extends RaRecord = RaRecord>
   children: ReactNode;
   className?: string;
   rowClassName?: (record: RecordType) => string | undefined;
+  bulkActionButtons?: ReactNode;
+  bulkActionsToolbar?: ReactNode;
 }
 
 export function DataTableColumn<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
 >(props: DataTableColumnProps<RecordType>) {
   const renderContext = useDataTableRenderContext();
   switch (renderContext) {
@@ -245,7 +272,7 @@ export function DataTableColumn<
 }
 
 function DataTableHeadCell<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
 >(props: DataTableColumnProps<RecordType>) {
   const {
     disableSort,
@@ -265,7 +292,7 @@ function DataTableHeadCell<
   const nextSortOrder =
     sort && sort.field === source
       ? oppositeOrder[sort.order]
-      : sortByOrder ?? "ASC";
+      : (sortByOrder ?? "ASC");
   const fieldLabel = translateLabel({
     label: typeof label === "string" ? label : undefined,
     resource,
@@ -335,7 +362,7 @@ const oppositeOrder: Record<SortPayload["order"], SortPayload["order"]> = {
 };
 
 function DataTableCell<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
 >(props: DataTableColumnProps<RecordType>) {
   const {
     children,
@@ -350,7 +377,7 @@ function DataTableCell<
   const record = useRecordContext<RecordType>();
   if (!render && !field && !children && !source) {
     throw new Error(
-      "DataTableColumn: Missing at least one of the following props: render, field, children, or source"
+      "DataTableColumn: Missing at least one of the following props: render, field, children, or source",
     );
   }
 
@@ -360,21 +387,21 @@ function DataTableCell<
         "py-1",
         className,
         cellClassName,
-        record && conditionalClassName?.(record)
+        record && conditionalClassName?.(record),
       )}
     >
       {children ??
         (render
           ? record && render(record)
           : field
-          ? createElement(field, { source })
-          : get(record, source!))}
+            ? createElement(field, { source })
+            : get(record, source!))}
     </TableCell>
   );
 }
 
 export interface DataTableColumnProps<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
 > {
   className?: string;
   cellClassName?: string;
@@ -390,7 +417,7 @@ export interface DataTableColumnProps<
 }
 
 export function DataTableNumberColumn<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
 >(props: DataTableNumberColumnProps<RecordType>) {
   const {
     source,
@@ -415,7 +442,7 @@ export function DataTableNumberColumn<
 }
 
 export interface DataTableNumberColumnProps<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
 > extends DataTableColumnProps<RecordType> {
   source: NoInfer<HintedString<ExtractRecordPaths<RecordType>>>;
   locales?: string | string[];
