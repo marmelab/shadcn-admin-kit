@@ -44,12 +44,15 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { NumberField } from "@/components/admin/number-field";
-import { BulkActionsToolbar, BulkActionsToolbarChildren } from "@/components/admin/bulk-actions-toolbar";
+import {
+  BulkActionsToolbar,
+  BulkActionsToolbarChildren,
+} from "@/components/admin/bulk-actions-toolbar";
 
 const defaultBulkActionButtons = <BulkActionsToolbarChildren />;
 
 export function DataTable<RecordType extends RaRecord = RaRecord>(
-  props: DataTableProps<RecordType>
+  props: DataTableProps<RecordType>,
 ) {
   const {
     children,
@@ -60,7 +63,7 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
     ...rest
   } = props;
 
-  const hasBulkActions = !!bulkActionButtons !== false;
+  const hasBulkActions = !!bulkActionsToolbar || bulkActionButtons !== false;
 
   return (
     <DataTableBase<RecordType>
@@ -109,9 +112,9 @@ const DataTableHead = ({ children }: { children: ReactNode }) => {
         ? selectedIds.concat(
             data
               .filter((record) => !selectedIds.includes(record.id))
-              .map((record) => record.id)
+              .map((record) => record.id),
           )
-        : []
+        : [],
     );
   };
   const selectableIds = Array.isArray(data)
@@ -194,7 +197,7 @@ const DataTableRow = ({
       if (!handleToggleItem) return;
       handleToggleItem(record.id, event);
     },
-    [handleToggleItem, record.id]
+    [handleToggleItem, record.id],
   );
 
   const handleClick = useCallback(async () => {
@@ -254,7 +257,7 @@ export interface DataTableProps<RecordType extends RaRecord = RaRecord>
   children: ReactNode;
   className?: string;
   rowClassName?: (record: RecordType) => string | undefined;
-  bulkActionButtons?: ReactNode;
+  bulkActionButtons?: ReactNode | false;
   bulkActionsToolbar?: ReactNode;
 }
 
@@ -376,7 +379,7 @@ function DataTableCell<
   const record = useRecordContext<RecordType>();
   if (!render && !field && !children && !source) {
     throw new Error(
-      "DataTableColumn: Missing at least one of the following props: render, field, children, or source"
+      "DataTableColumn: Missing at least one of the following props: render, field, children, or source",
     );
   }
 
@@ -386,7 +389,7 @@ function DataTableCell<
         "py-1",
         className,
         cellClassName,
-        record && conditionalClassName?.(record)
+        record && conditionalClassName?.(record),
       )}
     >
       {children ??
