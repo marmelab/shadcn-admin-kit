@@ -255,7 +255,7 @@ export interface DataTableProps<RecordType extends RaRecord = RaRecord>
   children: ReactNode;
   className?: string;
   rowClassName?: (record: RecordType) => string | undefined;
-  bulkActionButtons?: ReactNode | false;
+  bulkActionButtons?: ReactNode;
   bulkActionsToolbar?: ReactNode;
 }
 
