@@ -177,7 +177,7 @@ const CustomBulkActionButtons = () => (
 
 export const BulkActionButtons = () => (
   <Wrapper>
-    <div className="flex flex-col gap-4 mb-4">
+    <div className="flex flex-col gap-4">
       <div>
         <h1>Default</h1>
         <DataTable>

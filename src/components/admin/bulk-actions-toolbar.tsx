@@ -29,7 +29,7 @@ export const BulkActionsToolbar = ({
     onUnselectItems();
   };
   return (
-    <Card className="flex flex-col gap-2 md:gap-6 md:flex-row items-stretch sm:items-center p-2 px-4 w-[90%] sm:w-fit mx-auto bottom-10 z-10 bg-zinc-100 dark:bg-zinc-900 absolute left-0 right-0 top-[calc(100%+1rem)] h-fit">
+    <Card className="flex flex-col gap-2 md:gap-6 md:flex-row items-stretch sm:items-center p-2 px-4 w-[90%] sm:w-fit mx-auto mt-2 bottom-10 z-10 bg-zinc-100 dark:bg-zinc-900">
       <div className="flex items-center gap-2">
         <Button
           variant="ghost"

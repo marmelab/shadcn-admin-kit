@@ -83,16 +83,14 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
         </Table>
       </div>
 
-      <div className="relative">
-        {bulkActionsToolbar ??
-          (bulkActionButtons !== false && (
-            <BulkActionsToolbar>
-              {isValidElement(bulkActionButtons)
-                ? bulkActionButtons
-                : defaultBulkActionButtons}
-            </BulkActionsToolbar>
-          ))}
-      </div>
+      {bulkActionsToolbar ??
+        (bulkActionButtons !== false && (
+          <BulkActionsToolbar>
+            {isValidElement(bulkActionButtons)
+              ? bulkActionButtons
+              : defaultBulkActionButtons}
+          </BulkActionsToolbar>
+        ))}
     </DataTableBase>
   );
 }
