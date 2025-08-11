@@ -101,6 +101,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/cancel-button.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/count.tsx",
           "type": "registry:component"
         },
