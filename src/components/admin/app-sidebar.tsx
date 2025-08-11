@@ -1,5 +1,6 @@
 import { createElement } from "react";
 import {
+  useCanAccess,
   useCreatePath,
   useGetResourceLabel,
   useHasDashboard,
@@ -19,7 +20,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { List, House, Shell } from "lucide-react";
+import { House, List, Shell } from "lucide-react";
+
+import { Skeleton } from "../ui/skeleton";
 
 export function AppSidebar() {
   const hasDashboard = useHasDashboard();
@@ -97,6 +100,10 @@ export const ResourceMenuItem = ({
   name: string;
   onClick?: () => void;
 }) => {
+  const { canAccess, isPending } = useCanAccess({
+    resource: name,
+    action: "list",
+  });
   const resources = useResourceDefinitions();
   const getResourceLabel = useGetResourceLabel();
   const createPath = useCreatePath();
@@ -105,7 +112,12 @@ export const ResourceMenuItem = ({
     type: "list",
   });
   const match = useMatch({ path: to, end: false });
-  if (!resources || !resources[name]) return null;
+
+  if (isPending) {
+    return <Skeleton className="h-8 w-full" />;
+  }
+
+  if (!resources || !resources[name] || !canAccess) return null;
 
   return (
     <SidebarMenuItem>
