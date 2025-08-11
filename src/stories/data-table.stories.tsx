@@ -179,8 +179,8 @@ export const BulkActionButtons = () => (
   <Wrapper>
     <div className="flex flex-col gap-4">
       <div>
-        <h1>Default</h1>
-        <DataTable>
+        <h1>Custom</h1>
+        <DataTable bulkActionButtons={<CustomBulkActionButtons />}>
           <DataTable.Col source="id" />
           <DataTable.Col source="title" />
           <DataTable.Col source="author.name" />
@@ -191,16 +191,6 @@ export const BulkActionButtons = () => (
       <div>
         <h1>Disabled</h1>
         <DataTable bulkActionButtons={false}>
-          <DataTable.Col source="id" />
-          <DataTable.Col source="title" />
-          <DataTable.Col source="author.name" />
-          <DataTable.Col source="year" />
-        </DataTable>
-      </div>
-
-      <div>
-        <h1>Custom</h1>
-        <DataTable bulkActionButtons={<CustomBulkActionButtons />}>
           <DataTable.Col source="id" />
           <DataTable.Col source="title" />
           <DataTable.Col source="author.name" />
