@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 import { Switch } from "@/components/ui/switch";
 import { FormError, FormField, FormLabel } from "@/components/admin/form";
 import { useInput, FieldTitle } from "ra-core";
@@ -44,7 +44,7 @@ export const BooleanInput = (props: BooleanInputProps) => {
       // Ensure field is considered as touched
       field.onBlur();
     },
-    [field]
+    [field],
   );
 
   return (
@@ -75,7 +75,7 @@ export interface BooleanInputProps {
   className?: string;
   defaultValue?: boolean;
   format?: (value: any) => any;
-  helperText?: string;
+  helperText?: React.ReactNode;
   label?: string;
   onBlur?: (event: React.FocusEvent<HTMLButtonElement>) => void;
   onChange?: (value: any) => void;

@@ -1,3 +1,4 @@
+import React from "react";
 import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,25 +9,38 @@ import {
   useResourceContext,
   useTranslate,
   Translate,
+  UseDeleteOptions,
 } from "ra-core";
-import { MouseEvent } from "react";
+
+export type DeleteButtonProps = {
+  size?: "default" | "sm" | "lg" | "icon";
+  mutationOptions?: UseDeleteOptions;
+
+  redirect?: boolean;
+  resource?: string;
+};
 
 export const DeleteButton = ({
   size,
-}: {
-  size?: "default" | "sm" | "lg" | "icon";
-}) => {
+  mutationOptions,
+  redirect: doRedirect = true,
+  resource: resourceOverride,
+}: DeleteButtonProps) => {
   const resource = useResourceContext();
-  const [deleteOne, { isPending }] = useDelete();
+  const [deleteOne, { isPending }] = useDelete(
+    resource,
+    undefined,
+    mutationOptions,
+  );
   const record = useRecordContext();
   const notify = useNotify();
   const redirect = useRedirect();
   const translate = useTranslate();
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (e: React.MouseEvent) => {
     stopPropagation(e);
     if (!record) return;
     deleteOne(
-      resource,
+      resourceOverride ?? resource,
       { id: record.id },
       {
         mutationMode: "undoable",
@@ -42,9 +56,11 @@ export const DeleteButton = ({
             },
             undoable: true,
           });
+
+          if (!doRedirect) return;
           redirect("list", resource);
         },
-      }
+      },
     );
   };
   return (
@@ -62,5 +78,4 @@ export const DeleteButton = ({
 };
 
 // useful to prevent click bubbling in a datagrid with rowClick
-const stopPropagation = (e: MouseEvent<HTMLButtonElement>) =>
-  e.stopPropagation();
+const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();

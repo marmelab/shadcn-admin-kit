@@ -15,12 +15,14 @@ import {
 import * as React from "react";
 import { useEffect } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
+
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";
-import { ArrayInputContext } from "@/hooks/ArrayInputContext";
-import { InputHelperText } from "./input-helper-text";
-import { FormField, FormError } from "./form";
+import { sanitizeInputRestProps } from "@/lib/sanitizeInputRestProps";
+import { ArrayInputContext } from "@/hooks/array-input-context";
+import { InputHelperText } from "@/components/admin/input-helper-text";
+import { FormError, FormField } from "@/components/admin/form";
 
 export const ArrayInput = (props: ArrayInputProps) => {
   const {
@@ -33,6 +35,7 @@ export const ArrayInput = (props: ArrayInputProps) => {
     resource: resourceFromProps,
     source: arraySource,
     validate,
+    ...rest
   } = props;
 
   const formGroupName = useFormGroupContext();
@@ -114,10 +117,8 @@ export const ArrayInput = (props: ArrayInputProps) => {
       getLabel: (source: string) =>
         parentSourceContext.getLabel(`${arraySource}.${source}`),
     }),
-    [parentSourceContext, arraySource]
+    [parentSourceContext, arraySource],
   );
-
-  const id = React.useId();
 
   if (isPending) {
     return <Skeleton className="w-full h-9" />;
@@ -129,10 +130,10 @@ export const ArrayInput = (props: ArrayInputProps) => {
         "ra-input",
         `ra-input-${finalSource}`,
         className,
-        "w-full flex flex-col gap-2"
+        "w-full flex flex-col gap-2",
       )}
-      id={id}
       name={finalSource}
+      {...sanitizeInputRestProps(rest)}
     >
       <Label className="text-muted-foreground text-sm">
         <FieldTitle

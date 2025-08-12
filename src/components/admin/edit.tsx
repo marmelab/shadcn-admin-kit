@@ -1,5 +1,6 @@
 import {
   EditBase,
+  EditBaseProps,
   Translate,
   useCreatePath,
   useEditContext,
@@ -11,34 +12,36 @@ import {
 } from "ra-core";
 import { ReactNode } from "react";
 import { Link } from "react-router";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbPage } from "@/components/admin/breadcrumb";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbPage,
+} from "@/components/admin/breadcrumb";
 import { ShowButton } from "@/components/admin/show-button";
 
-export const Edit = ({
-  title,
-  children,
-}: {
-  title?: ReactNode | string | false;
-  children: ReactNode;
-}) => (
+export type EditProps = EditViewProps & EditBaseProps;
+
+export const Edit = ({ title, aside, children }: EditProps) => (
   <EditBase>
-    <EditView title={title}>{children}</EditView>
+    <EditView title={title} aside={aside}>
+      {children}
+    </EditView>
   </EditBase>
 );
 
-export const EditView = ({
-  title,
-  children,
-}: {
+export type EditViewProps = {
   title?: ReactNode | string | false;
+  aside?: ReactNode;
   children: ReactNode;
-}) => {
+};
+
+export const EditView = ({ title, children }: EditViewProps) => {
   const context = useEditContext();
 
   const resource = useResourceContext();
   if (!resource) {
     throw new Error(
-      "The EditView component must be used within a ResourceContextProvider"
+      "The EditView component must be used within a ResourceContextProvider",
     );
   }
   const getResourceLabel = useGetResourceLabel();
