@@ -4,7 +4,6 @@ import {
   BreadcrumbPage,
 } from "@/components/admin/breadcrumb";
 import {
-  FilterLiveForm,
   ListBase,
   ListBaseProps,
   type ListControllerResult,
@@ -16,15 +15,19 @@ import {
   useResourceDefinition,
   useTranslate,
 } from "ra-core";
-import { cloneElement, ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 import { Link } from "react-router";
+import { cn } from "@/lib/utils.ts";
 import { CreateButton } from "@/components/admin/create-button";
 import { ExportButton } from "@/components/admin/export-button";
 import { ListPagination } from "@/components/admin/list-pagination";
 import { BulkActionsToolbar } from "@/components/admin/bulk-actions-toolbar";
+import { Title } from "@/components/admin/title";
+import { ListToolbar } from "@/components/admin/list-toolbar";
+import { FilterElementProps } from "@/hooks/filter-context.tsx";
 
 export const List = <RecordType extends RaRecord = RaRecord>(
-  props: ListProps<RecordType>
+  props: ListProps<RecordType>,
 ) => {
   const {
     debounce,
@@ -41,6 +44,7 @@ export const List = <RecordType extends RaRecord = RaRecord>(
     storeKey,
     ...rest
   } = props;
+
   return (
     <ListBase<RecordType>
       debounce={debounce}
@@ -66,7 +70,7 @@ export interface ListProps<RecordType extends RaRecord = RaRecord>
     ListViewProps<RecordType> {}
 
 export const ListView = <RecordType extends RaRecord = RaRecord>(
-  props: ListViewProps<RecordType>
+  props: ListViewProps<RecordType>,
 ) => {
   const {
     bulkActionsToolbar = defaultBulkActionsToolbar,
@@ -80,7 +84,7 @@ export const ListView = <RecordType extends RaRecord = RaRecord>(
   const resource = useResourceContext();
   if (!resource) {
     throw new Error(
-      "The ListView component must be used within a ResourceContextProvider"
+      "The ListView component must be used within a ResourceContextProvider",
     );
   }
   const getResourceLabel = useGetResourceLabel();
@@ -96,6 +100,7 @@ export const ListView = <RecordType extends RaRecord = RaRecord>(
 
   return (
     <>
+      {finalTitle && <Title title={finalTitle?.toString()} />}
       <Breadcrumb>
         {hasDashboard && (
           <BreadcrumbItem>
@@ -106,29 +111,19 @@ export const ListView = <RecordType extends RaRecord = RaRecord>(
         )}
         <BreadcrumbPage>{resourceLabel}</BreadcrumbPage>
       </Breadcrumb>
-      <div className="flex justify-between items-start flex-wrap gap-2 my-2">
-        <h2 className="text-2xl font-bold tracking-tight">{finalTitle}</h2>
-        {actions ?? (
-          <div className="flex items-center gap-2">
-            {hasCreate ? <CreateButton /> : null}
-            {<ExportButton />}
-          </div>
-        )}
-      </div>
-      {filters && filters.length ? (
-        <FilterLiveForm>
-          <div className="flex flex-col md:flex-row md:items-center gap-2 flex-wrap">
-            {filters.map((filter) =>
-              cloneElement(filter, {
-                key: filter.key ?? (filter.props as { source: string }).source,
-              })
-            )}
-          </div>
-        </FilterLiveForm>
-      ) : (
-        <span />
-      )}
-      <div className="my-2">{children}</div>
+
+      <ListToolbar
+        filters={filters && filters.length ? filters : undefined}
+        actions={
+          actions ?? (
+            <div className="flex items-center gap-2">
+              {hasCreate ? <CreateButton /> : null}
+              {<ExportButton />}
+            </div>
+          )
+        }
+      />
+      <div className={cn("my-2", props.className)}>{children}</div>
       {pagination}
       {bulkActionsToolbar}
     </>
@@ -141,9 +136,10 @@ const defaultBulkActionsToolbar = <BulkActionsToolbar />;
 export interface ListViewProps<RecordType extends RaRecord = RaRecord> {
   children?: ReactNode;
   render?: (props: ListControllerResult<RecordType, Error>) => ReactNode;
-  actions?: ReactNode;
-  filters?: ReactElement[];
+  actions?: ReactElement | false;
+  filters?: ReactElement<FilterElementProps>[];
   pagination?: ReactNode;
   bulkActionsToolbar?: ReactNode;
   title?: ReactNode | string | false;
+  className?: string;
 }

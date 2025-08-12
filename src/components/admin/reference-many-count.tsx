@@ -8,7 +8,7 @@ import {
 import { Link } from "react-router";
 
 export const ReferenceManyCount = <RecordType extends RaRecord = RaRecord>(
-  props: ReferenceManyCountProps<RecordType>
+  props: ReferenceManyCountProps<RecordType>,
 ) => {
   const {
     reference,
@@ -56,7 +56,7 @@ export const ReferenceManyCount = <RecordType extends RaRecord = RaRecord>(
 };
 
 export interface ReferenceManyCountProps<
-  RecordType extends RaRecord = RaRecord
+  RecordType extends RaRecord = RaRecord,
 > {
   record?: RecordType;
   reference: string;

@@ -1,6 +1,6 @@
+import { Form, required, useLogin } from "ra-core";
 import { TextInput } from "@/components/admin/text-input";
 import { Button } from "@/components/ui/button";
-import { Form, required, useLogin } from "ra-core";
 
 export const LoginPage = () => {
   const login = useLogin();

@@ -9,10 +9,10 @@ import {
 } from "ra-core";
 
 export const ArrayField = <RecordType extends RaRecord = RaRecord>(
-  props: ArrayFieldProps<RecordType>
+  props: ArrayFieldProps<RecordType>,
 ) => {
   const { children, resource, perPage, sort, filter } = props;
-  const data: RecordType[] = useFieldValue(props) || [];
+  const data = useFieldValue(props) || emptyArray;
   const listContext = useList({ data, resource, perPage, sort, filter });
 
   return (
@@ -21,8 +21,11 @@ export const ArrayField = <RecordType extends RaRecord = RaRecord>(
 };
 export type ArrayFieldProps<
   RecordType extends RaRecord = RaRecord,
-  ErrorType = Error
+  ErrorType = Error,
 > = UseListOptions<RecordType, ErrorType> &
   UseFieldValueOptions<RecordType> & {
     children?: ReactNode;
   };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const emptyArray: any[] = [];

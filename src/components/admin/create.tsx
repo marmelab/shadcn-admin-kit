@@ -1,4 +1,8 @@
-import { Breadcrumb, BreadcrumbItem, BreadcrumbPage } from "@/components/admin/breadcrumb";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbPage,
+} from "@/components/admin/breadcrumb";
 import {
   CreateBase,
   type CreateBaseProps,
@@ -12,32 +16,26 @@ import {
 import { ReactNode } from "react";
 import { Link } from "react-router";
 
-export const Create = ({
-  title,
-  children,
-  ...rest
-}: {
-  title?: ReactNode | string | false;
-  children: ReactNode;
-} & CreateBaseProps) => (
+export type CreateProps = CreateViewProps & CreateBaseProps;
+
+export const Create = ({ title, children, ...rest }: CreateProps) => (
   <CreateBase {...rest}>
     <CreateView title={title}>{children}</CreateView>
   </CreateBase>
 );
 
-export const CreateView = ({
-  title,
-  children,
-}: {
+export type CreateViewProps = {
   title?: ReactNode | string | false;
   children: ReactNode;
-}) => {
+};
+
+export const CreateView = ({ title, children }: CreateViewProps) => {
   const context = useCreateContext();
 
   const resource = useResourceContext();
   if (!resource) {
     throw new Error(
-      "The CreateView component must be used within a ResourceContextProvider"
+      "The CreateView component must be used within a ResourceContextProvider",
     );
   }
   const getResourceLabel = useGetResourceLabel();
@@ -51,7 +49,7 @@ export const CreateView = ({
 
   return (
     <>
-      <Breadcrumb className="my-4">
+      <Breadcrumb>
         {hasDashboard && (
           <BreadcrumbItem>
             <Link to="/">

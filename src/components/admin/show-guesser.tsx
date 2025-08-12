@@ -51,7 +51,7 @@ const ShowViewGuesser = (props: { enableLog?: boolean }) => {
       const inferredChild = new InferredElement(
         showFieldTypes.show,
         null,
-        inferredElements
+        inferredElements,
       );
       setChild(inferredChild.getElement());
 
@@ -64,9 +64,9 @@ const ShowViewGuesser = (props: { enableLog?: boolean }) => {
             new Set(
               Array.from(representation.matchAll(/<([^/\s>]+)/g))
                 .map((match) => match[1])
-                .filter((component) => component !== "span")
-            )
-          )
+                .filter((component) => component !== "span"),
+            ),
+          ),
         )
         .sort();
 
@@ -78,8 +78,8 @@ ${components
   .map(
     (component) =>
       `import { ${component} } from "@/components/admin/${kebabCase(
-        component
-      )}";`
+        component,
+      )}";`,
   )
   .join("\n")}
 
@@ -87,7 +87,7 @@ export const ${capitalize(singularize(resource))}Show = () => (
     <Show>
 ${inferredChild.getRepresentation()}
     </Show>
-);`
+);`,
       );
     }
   }, [record, child, resource, enableLog]);
@@ -100,7 +100,7 @@ const showFieldTypes: InferredTypeMap = {
     component: (props: any) => <SimpleShowLayout {...props} />,
     representation: (
       _props: any,
-      children: { getRepresentation: () => string }[]
+      children: { getRepresentation: () => string }[],
     ) => `        <SimpleShowLayout>
 ${children
   .map((child) => `            ${child.getRepresentation()}`)
