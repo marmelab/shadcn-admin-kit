@@ -8,6 +8,7 @@ export * from "./boolean-input";
 export * from "./breadcrumb";
 export * from "./bulk-actions-toolbar";
 export * from "./bulk-delete-button";
+export * from './cancel-button';
 export * from "./count";
 export * from "./create-button";
 export * from "./create";
