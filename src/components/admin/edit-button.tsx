@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import React from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import {
@@ -8,7 +8,7 @@ import {
   Translate,
   type RaRecord,
 } from "ra-core";
-import { type MouseEvent } from "react";
+import { Link } from "react-router";
 
 export type EditButtonProps = {
   record?: RaRecord;
@@ -40,5 +40,4 @@ export const EditButton = (props: EditButtonProps) => {
 };
 
 // useful to prevent click bubbling in a datagrid with rowClick
-const stopPropagation = (e: MouseEvent<HTMLAnchorElement>) =>
-  e.stopPropagation();
+const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();

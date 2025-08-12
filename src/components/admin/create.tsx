@@ -35,7 +35,7 @@ export const CreateView = ({ title, children }: CreateViewProps) => {
   const resource = useResourceContext();
   if (!resource) {
     throw new Error(
-      "The CreateView component must be used within a ResourceContextProvider"
+      "The CreateView component must be used within a ResourceContextProvider",
     );
   }
   const getResourceLabel = useGetResourceLabel();

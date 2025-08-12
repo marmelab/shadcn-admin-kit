@@ -1,42 +1,23 @@
-import {
-  ChoicesContextProvider,
-  InputProps,
-  ResourceContextProvider,
-  UseReferenceInputControllerParams,
-  useReferenceInputController,
-} from "ra-core";
-import { Children, ReactNode } from "react";
+import { ReferenceInputBase, ReferenceInputBaseProps } from "ra-core";
+import { AutocompleteInput } from "./autocomplete-input";
 
 export const ReferenceInput = (props: ReferenceInputProps) => {
-  const {
-    children,
-    reference,
-    sort = { field: "id", order: "DESC" },
-    filter = {},
-  } = props;
+  const { children = defaultChildren, ...rest } = props;
 
-  const controllerProps = useReferenceInputController({
-    ...props,
-    sort,
-    filter,
-  });
-
-  if (Children.count(children) !== 1) {
-    throw new Error("<ReferenceInput> only accepts a single child");
+  if (props.validate && process.env.NODE_ENV !== "production") {
+    throw new Error(
+      "<ReferenceInput> does not accept a validate prop. Set the validate prop on the child instead.",
+    );
   }
 
-  return (
-    <ResourceContextProvider value={reference}>
-      <ChoicesContextProvider value={controllerProps}>
-        {children}
-      </ChoicesContextProvider>
-    </ResourceContextProvider>
-  );
+  return <ReferenceInputBase {...rest}>{children}</ReferenceInputBase>;
 };
 
-export interface ReferenceInputProps
-  extends InputProps,
-    UseReferenceInputControllerParams {
-  children?: ReactNode;
-  label?: string;
+const defaultChildren = <AutocompleteInput />;
+
+export interface ReferenceInputProps extends ReferenceInputBaseProps {
+  /**
+   * Call validate on the child component instead
+   */
+  validate?: never;
 }

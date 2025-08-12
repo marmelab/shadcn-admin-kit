@@ -1,5 +1,6 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { Children, useCallback, useState } from "react";
+import { Translate, useAuthProvider, useGetIdentity, useLogout } from "ra-core";
+import { LogOut } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,38 +9,62 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Translate, useAuthProvider, useGetIdentity, useLogout } from "ra-core";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { UserMenuContextProvider } from "@/components/admin/user-menu-context-provider.tsx";
 
-export function UserMenu() {
+export type UserMenuProps = {
+  children?: React.ReactNode;
+};
+
+export function UserMenu({ children }: UserMenuProps) {
   const authProvider = useAuthProvider();
   const { data: identity } = useGetIdentity();
   const logout = useLogout();
 
+  const [open, setOpen] = useState(false);
+
+  const handleToggleOpen = useCallback(() => {
+    setOpen((prevOpen) => !prevOpen);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setOpen(false);
+  }, []);
+
   if (!authProvider) return null;
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 ml-2 rounded-full">
-          <Avatar className="h-8 w-8">
-            <AvatarImage src={identity?.avatar} role="presentation" />
-            <AvatarFallback>{identity?.fullName?.charAt(0)}</AvatarFallback>
-          </Avatar>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="end" forceMount>
-        <DropdownMenuLabel className="font-normal">
-          <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">
-              {identity?.fullName}
-            </p>
-          </div>
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => logout()}>
-          <Translate i18nKey="ra.auth.logout">Log out</Translate>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <UserMenuContextProvider value={{ onClose: handleClose }}>
+      <DropdownMenu open={open} onOpenChange={handleToggleOpen}>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            className="relative h-8 w-8 ml-2 rounded-full"
+          >
+            <Avatar className="h-8 w-8">
+              <AvatarImage src={identity?.avatar} role="presentation" />
+              <AvatarFallback>{identity?.fullName?.charAt(0)}</AvatarFallback>
+            </Avatar>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56" align="end" forceMount>
+          <DropdownMenuLabel className="font-normal">
+            <div className="flex flex-col space-y-1">
+              <p className="text-sm font-medium leading-none">
+                {identity?.fullName}
+              </p>
+            </div>
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          {children}
+          {Children.count(children) > 0 && <DropdownMenuSeparator />}
+          <DropdownMenuItem onClick={() => logout()} className="cursor-pointer">
+            <LogOut />
+            <Translate i18nKey="ra.auth.logout">Log out</Translate>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </UserMenuContextProvider>
   );
 }

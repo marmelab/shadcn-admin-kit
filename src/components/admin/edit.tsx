@@ -38,7 +38,7 @@ export const EditView = ({ title, children }: EditViewProps) => {
   const resource = useResourceContext();
   if (!resource) {
     throw new Error(
-      "The EditView component must be used within a ResourceContextProvider"
+      "The EditView component must be used within a ResourceContextProvider",
     );
   }
   const getResourceLabel = useGetResourceLabel();
