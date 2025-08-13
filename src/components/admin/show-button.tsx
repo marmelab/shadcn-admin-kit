@@ -7,9 +7,11 @@ import {
   useRecordContext,
   useResourceContext,
 } from "ra-core";
-import { MouseEvent } from "react";
+import { type MouseEvent } from "react";
 
-export const ShowButton = () => {
+export type ShowButtonProps = { label?: string };
+
+export const ShowButton = (props: ShowButtonProps) => {
   const resource = useResourceContext();
   const record = useRecordContext();
   const createPath = useCreatePath();
@@ -25,7 +27,9 @@ export const ShowButton = () => {
       onClick={stopPropagation}
     >
       <Eye />
-      <Translate i18nKey="ra.action.show">Show</Translate>
+      <Translate i18nKey={props.label ?? "ra.action.show"}>
+        {props.label ?? "Show"}
+      </Translate>
     </Link>
   );
 };
