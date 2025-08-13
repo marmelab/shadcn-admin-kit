@@ -19,6 +19,7 @@ export const ExportButton = (props: ExportButtonProps) => {
     icon = defaultIcon,
     exporter: customExporter,
     meta,
+    className = "cursor-pointer",
   } = props;
   const {
     filter,
@@ -73,7 +74,12 @@ export const ExportButton = (props: ExportButtonProps) => {
   );
 
   return (
-    <Button variant="outline" onClick={handleClick} disabled={total === 0}>
+    <Button
+      variant="outline"
+      onClick={handleClick}
+      disabled={total === 0}
+      className={className}
+    >
       {icon}
       <Translate i18nKey={label}>Export</Translate>
     </Button>
@@ -83,6 +89,7 @@ export const ExportButton = (props: ExportButtonProps) => {
 const defaultIcon = <Download />;
 
 export interface ExportButtonProps {
+  className?: string;
   exporter?: Exporter;
   icon?: React.ReactNode;
   label?: string;
