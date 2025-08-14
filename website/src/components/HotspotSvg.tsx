@@ -11,20 +11,18 @@ const HOTSPOTS = {
     description: `import { Resource } from "ra-core";
 import { Admin } from "@/components/admin";
 
-export const App = () => {
-  return (
-    <Admin
-      dataProvider={dataProvider}
-      dashboard={Dashboard}
-    >
-      <Resource {...orders} />
-      <Resource {...products} />
-      <Resource {...categories} />
-      <Resource {...customers} />
-      <Resource {...reviews} />
-    </Admin>
-  );
-}`,
+export const App = () => (
+  <Admin
+    dataProvider={dataProvider}
+    dashboard={Dashboard}
+  >
+    <Resource {...orders} />
+    <Resource {...products} />
+    <Resource {...categories} />
+    <Resource {...customers} />
+    <Resource {...reviews} />
+  </Admin>
+);`,
     width: 240,
     height: 555,
     x: 8,
@@ -54,24 +52,22 @@ const filters = [
     side: "bottom" as const,
   },
   bulkActions: {
-    description: `import { BulkActionsToolbar, List } from "@/components/admin";
+    description: `import { List, DataTable } from "@/components/admin";
 import { BulkApproveButton } from "./BulkApproveButton";
 import { BulkRejectButton } from "./BulkRejectButton";
 
-export const ReviewList = () => {
-  return (
-    <List
-      bulkActionsToolbar={
-        <BulkActionsToolbar>
-          <BulkApproveButton />
-          <BulkRejectButton />
-        </BulkActionsToolbar>
-      }
-    >
+export const ReviewList = () => (
+  <List>
+    <DataTable bulkActionButtons={
+      <>
+        <BulkApproveButton />
+        <BulkRejectButton />
+      </>
+    } />
       {/* ... */}
-    </List>
-  );
-};`,
+    </DataTable>
+  </List>
+);`,
     width: 401,
     height: 52,
     x: 308,

@@ -21,7 +21,6 @@ import { Link } from "react-router";
 import { CreateButton } from "@/components/admin/create-button";
 import { ExportButton } from "@/components/admin/export-button";
 import { ListPagination } from "@/components/admin/list-pagination";
-import { BulkActionsToolbar } from "@/components/admin/bulk-actions-toolbar";
 
 export const List = <RecordType extends RaRecord = RaRecord>(
   props: ListProps<RecordType>
@@ -41,6 +40,7 @@ export const List = <RecordType extends RaRecord = RaRecord>(
     storeKey,
     ...rest
   } = props;
+
   return (
     <ListBase<RecordType>
       debounce={debounce}
@@ -69,7 +69,6 @@ export const ListView = <RecordType extends RaRecord = RaRecord>(
   props: ListViewProps<RecordType>
 ) => {
   const {
-    bulkActionsToolbar = defaultBulkActionsToolbar,
     filters,
     pagination = defaultPagination,
     title,
@@ -130,13 +129,11 @@ export const ListView = <RecordType extends RaRecord = RaRecord>(
       )}
       <div className="my-2">{children}</div>
       {pagination}
-      {bulkActionsToolbar}
     </>
   );
 };
 
 const defaultPagination = <ListPagination />;
-const defaultBulkActionsToolbar = <BulkActionsToolbar />;
 
 export interface ListViewProps<RecordType extends RaRecord = RaRecord> {
   children?: ReactNode;
@@ -144,6 +141,5 @@ export interface ListViewProps<RecordType extends RaRecord = RaRecord> {
   actions?: ReactNode;
   filters?: ReactElement[];
   pagination?: ReactNode;
-  bulkActionsToolbar?: ReactNode;
   title?: ReactNode | string | false;
 }

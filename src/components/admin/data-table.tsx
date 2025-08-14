@@ -1,4 +1,10 @@
-import { createElement, ReactNode, useCallback, Children } from "react";
+import {
+  Children,
+  createElement,
+  isValidElement,
+  useCallback,
+  type ReactNode,
+} from "react";
 import {
   DataTableBase,
   DataTableBaseProps,
@@ -24,8 +30,9 @@ import {
   useTranslate,
   useTranslateLabel,
 } from "ra-core";
-import { ArrowDownAZ, ArrowUpZA } from "lucide-react";
 import { useNavigate } from "react-router";
+import { ArrowDownAZ, ArrowUpZA } from "lucide-react";
+import get from "lodash/get";
 import { cn } from "@/lib/utils";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
@@ -49,12 +56,25 @@ import {
   ColumnsSelectorItem,
 } from "@/components/admin/columns-button";
 import { NumberField } from "@/components/admin/number-field";
-import get from "lodash/get";
+import {
+  BulkActionsToolbar,
+  BulkActionsToolbarChildren,
+} from "@/components/admin/bulk-actions-toolbar";
+
+const defaultBulkActionButtons = <BulkActionsToolbarChildren />;
 
 export function DataTable<RecordType extends RaRecord = RaRecord>(
   props: DataTableProps<RecordType>
 ) {
-  const { children, className, rowClassName, ...rest } = props;
+  const {
+    children,
+    className,
+    rowClassName,
+    bulkActionButtons = defaultBulkActionButtons,
+    bulkActionsToolbar,
+    ...rest
+  } = props;
+  const hasBulkActions = !!bulkActionsToolbar || bulkActionButtons !== false;
   const resourceFromContext = useResourceContext(props);
   const storeKey = props.storeKey || `${resourceFromContext}.datatable`;
   const [columnRanks] = useStore<number[]>(`${storeKey}_columnRanks`);
@@ -64,7 +84,7 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
 
   return (
     <DataTableBase<RecordType>
-      hasBulkActions
+      hasBulkActions={hasBulkActions}
       loading={null}
       empty={<DataTableEmpty />}
       {...rest}
@@ -79,6 +99,14 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
           </DataTableBody>
         </Table>
       </div>
+      {bulkActionsToolbar ??
+        (bulkActionButtons !== false && (
+          <BulkActionsToolbar>
+            {isValidElement(bulkActionButtons)
+              ? bulkActionButtons
+              : defaultBulkActionButtons}
+          </BulkActionsToolbar>
+        ))}
       <DataTableRenderContext.Provider value="columnsSelector">
         <ColumnsSelector>{children}</ColumnsSelector>
       </DataTableRenderContext.Provider>
@@ -246,6 +274,8 @@ export interface DataTableProps<RecordType extends RaRecord = RaRecord>
   children: ReactNode;
   className?: string;
   rowClassName?: (record: RecordType) => string | undefined;
+  bulkActionButtons?: ReactNode;
+  bulkActionsToolbar?: ReactNode;
 }
 
 export function DataTableColumn<

@@ -20,9 +20,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { Skeleton } from "@/components/ui/skeleton";
 import { House, List, Shell } from "lucide-react";
-
-import { Skeleton } from "../ui/skeleton";
 
 export function AppSidebar() {
   const hasDashboard = useHasDashboard();

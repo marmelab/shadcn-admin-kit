@@ -11,21 +11,21 @@ import {
 /**
  * Export the selected rows
  *
- * To be used inside the <List bulkActionsToolbar> prop.
+ * To be used inside the <DataTable bulkActionsButtons> prop.
  *
  * @example // basic usage
- * import { BulkDeleteButton, BulkActionsToolbar, BulkExportButton, List, DataTable } from '@/components/admin';
+ * import { BulkDeleteButton, BulkExportButton, DataTable, List } from '@/components/admin';
  *
  * export const PostList = () => (
- *   <List
- *     bulkActionsToolbar={
- *       <BulkActionsToolbar>
- *         <BulkExportButton />
- *         <BulkDeleteButton />
- *       </BulkActionsToolbar>
- *     }
- *   >
- *     <DataTable>
+ *   <List>
+ *     <DataTable
+ *       bulkActionsButtons={
+ *         <>
+ *           <BulkExportButton />
+ *           <BulkDeleteButton />
+ *         </>
+ *       }
+ *     >
  *       ...
  *     </DataTable>
  *   </List>
