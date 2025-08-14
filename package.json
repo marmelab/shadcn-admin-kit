@@ -41,6 +41,7 @@
     "cmdk": "^1.1.1",
     "data-generator-retail": "^5.10.0",
     "date-fns": "^4.1.0",
+    "diacritic": "^0.0.2",
     "echarts": "^5.6.0",
     "inflection": "^3.0.2",
     "lodash": "^4.17.21",

@@ -40,6 +40,7 @@
         "@tanstack/react-query",
         "class-variance-authority",
         "clsx",
+        "diacritic",
         "inflection",
         "lodash",
         "lucide-react",
@@ -117,6 +118,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/columns-button.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/data-table.tsx",
           "type": "registry:component"
         },
@@ -138,6 +143,10 @@
         },
         {
           "path": "src/components/admin/export-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/field-toggle.tsx",
           "type": "registry:component"
         },
         {

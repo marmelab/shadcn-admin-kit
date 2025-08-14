@@ -6,7 +6,9 @@ import {
   FilterLiveForm,
 } from "ra-core";
 import {
+  ColumnsButton,
   DataTable,
+  ExportButton,
   List,
   ToggleFilterButton,
   TextInput,
@@ -42,6 +44,12 @@ export const CustomerList = () => {
       perPage={25}
       sort={{ field: "last_seen", order: "DESC" }}
       pagination={false}
+      actions={
+        <div className="flex items-center gap-2">
+          <ColumnsButton />
+          <ExportButton />
+        </div>
+      }
     >
       <div className="flex flex-row gap-4 mb-4">
         <SidebarFilters />
