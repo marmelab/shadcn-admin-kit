@@ -141,6 +141,5 @@ export interface ListViewProps<RecordType extends RaRecord = RaRecord> {
   actions?: ReactNode;
   filters?: ReactElement[];
   pagination?: ReactNode;
-  bulkActionsToolbar?: ReactNode;
   title?: ReactNode | string | false;
 }
