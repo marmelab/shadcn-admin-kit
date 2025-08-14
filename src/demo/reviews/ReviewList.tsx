@@ -5,7 +5,6 @@ import { useCreatePath, useTranslate } from "ra-core";
 import { Link, matchPath, useLocation, useNavigate } from "react-router";
 import { X } from "lucide-react";
 import {
-  BulkActionsToolbar,
   BulkDeleteButton,
   DataTable,
   List,
@@ -93,13 +92,6 @@ export const ReviewList = () => {
         perPage={25}
         filters={isMobile ? undefined : filters}
         pagination={match ? false : undefined}
-        bulkActionsToolbar={
-          <BulkActionsToolbar>
-            <BulkApproveButton />
-            <BulkRejectButton />
-            <BulkDeleteButton />
-          </BulkActionsToolbar>
-        }
       >
         {isMobile ? (
           <ReviewListMobile />
@@ -235,6 +227,13 @@ const ReviewListDesktop = ({ selectedRow }: { selectedRow?: number }) => {
         }
         return className;
       }}
+      bulkActionButtons={
+        <>
+          <BulkApproveButton />
+          <BulkRejectButton />
+          <BulkDeleteButton />
+        </>
+      }
       className="[&_thead_tr]:border-l-transparent [&_thead_tr]:border-l-5"
     >
       <DataTable.Col
