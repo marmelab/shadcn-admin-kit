@@ -19,10 +19,10 @@ import { cn } from "@/lib/utils";
  * import { ColumnsButton, DataTable } from 'shadcn-admin-kit';
  *
  * const PostListActions = () => (
- *   <TopToolbar>
+ *   <div className="flex items-center gap-2">
         <ColumnsButton />
         <FilterButton />
- *   </TopToolbar>
+ *   </div>
  * );
  *
  * const PostList = () => (
