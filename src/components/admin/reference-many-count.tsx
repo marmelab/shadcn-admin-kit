@@ -60,9 +60,9 @@ export interface ReferenceManyCountProps<
 > {
   record?: RecordType;
   reference: string;
-  resource: string;
+  resource?: string;
   target: string;
-  source: string;
+  source?: string;
   sort?: SortPayload;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   filter?: any;
