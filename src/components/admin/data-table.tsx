@@ -1,18 +1,8 @@
-import {
-  createElement,
-  ReactNode,
-  useCallback,
-  Children,
-  useState,
-  useEffect,
-} from "react";
-import { createPortal } from "react-dom";
+import { createElement, ReactNode, useCallback, Children } from "react";
 import {
   DataTableBase,
   DataTableBaseProps,
   DataTableRenderContext,
-  DataTableColumnRankContext,
-  DataTableColumnFilterContext,
   ExtractRecordPaths,
   FieldTitle,
   HintedString,
@@ -21,8 +11,6 @@ import {
   RecordContextProvider,
   SortPayload,
   useDataTableCallbacksContext,
-  useDataTableColumnRankContext,
-  useDataTableColumnFilterContext,
   useDataTableConfigContext,
   useDataTableDataContext,
   useDataTableRenderContext,
@@ -36,10 +24,7 @@ import {
   useTranslate,
   useTranslateLabel,
 } from "ra-core";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import * as diacritic from "diacritic";
-import { ArrowDownAZ, ArrowUpZA, Search } from "lucide-react";
+import { ArrowDownAZ, ArrowUpZA } from "lucide-react";
 import { useNavigate } from "react-router";
 import { cn } from "@/lib/utils";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -52,7 +37,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Tooltip,
@@ -60,8 +44,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  ColumnsSelector,
+  ColumnsSelectorItem,
+} from "@/components/admin/columns-button";
 import { NumberField } from "@/components/admin/number-field";
-import { FieldToggle } from "@/components/admin/field-toggle";
 import get from "lodash/get";
 
 export function DataTable<RecordType extends RaRecord = RaRecord>(
@@ -275,20 +262,6 @@ export function DataTableColumn<
   }
 }
 
-// Function to help with column ranking
-const padRanks = (ranks: number[], length: number) =>
-  ranks.concat(
-    Array.from({ length: length - ranks.length }, (_, i) => ranks.length + i)
-  );
-
-const fieldLabelMatchesFilter = (fieldLabel: string, columnFilter?: string) =>
-  columnFilter
-    ? diacritic
-        .clean(fieldLabel)
-        .toLowerCase()
-        .includes(diacritic.clean(columnFilter).toLowerCase())
-    : true;
-
 /**
  * Reorder children based on columnRanks
  *
@@ -306,194 +279,6 @@ const reorderChildren = (children: ReactNode, columnRanks: number[]) =>
     }
     return acc;
   }, []);
-
-/**
- * Render DataTable.Col elements in the ColumnsButton selector using a React Portal.
- *
- * @see ColumnsButton
- */
-export const ColumnsSelector = ({ children }: ColumnsSelectorProps) => {
-  const translate = useTranslate();
-  const { storeKey, defaultHiddenColumns } = useDataTableStoreContext();
-  const [columnRanks, setColumnRanks] = useStore<number[] | undefined>(
-    `${storeKey}_columnRanks`
-  );
-  const [_hiddenColumns, setHiddenColumns] = useStore<string[]>(
-    storeKey,
-    defaultHiddenColumns
-  );
-  const elementId = `${storeKey}-columnsSelector`;
-
-  const [container, setContainer] = useState<HTMLElement | null>(() =>
-    typeof document !== "undefined" ? document.getElementById(elementId) : null
-  );
-
-  // on first mount, we don't have the container yet, so we wait for it
-  useEffect(() => {
-    if (
-      container &&
-      typeof document !== "undefined" &&
-      document.body.contains(container)
-    )
-      return;
-    // look for the container in the DOM every 100ms
-    const interval = setInterval(() => {
-      const target = document.getElementById(elementId);
-      if (target) setContainer(target);
-    }, 100);
-    // stop looking after 500ms
-    const timeout = setTimeout(() => clearInterval(interval), 500);
-    return () => {
-      clearInterval(interval);
-      clearTimeout(timeout);
-    };
-  }, [elementId, container]);
-
-  const [columnFilter, setColumnFilter] = useState<string>("");
-
-  if (!container) return null;
-
-  const childrenArray = Children.toArray(children);
-  const paddedColumnRanks = padRanks(columnRanks ?? [], childrenArray.length);
-  const shouldDisplaySearchInput = childrenArray.length > 5;
-
-  return createPortal(
-    <ul className="max-h-[50vh] p-1 overflow-auto">
-      {shouldDisplaySearchInput ? (
-        <li className="pb-2" tabIndex={-1}>
-          <div className="relative">
-            <Input
-              value={columnFilter}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setColumnFilter(e.target.value);
-              }}
-              placeholder={translate("ra.action.search_columns", {
-                _: "Search columns",
-              })}
-              className="pr-8"
-            />
-            <Search className="absolute right-2 top-2 h-4 w-4 text-muted-foreground" />
-            {columnFilter && (
-              <button
-                onClick={() => setColumnFilter("")}
-                className="absolute right-8 top-2 h-4 w-4 text-muted-foreground"
-                aria-label="Clear"
-              >
-                ×
-              </button>
-            )}
-          </div>
-        </li>
-      ) : null}
-      {paddedColumnRanks.map((position, index) => (
-        <DataTableColumnRankContext.Provider value={position} key={index}>
-          <DataTableColumnFilterContext.Provider
-            value={columnFilter}
-            key={index}
-          >
-            {childrenArray[position]}
-          </DataTableColumnFilterContext.Provider>
-        </DataTableColumnRankContext.Provider>
-      ))}
-      <li className="text-center mt-2 px-3">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => {
-            setColumnRanks(undefined);
-            setHiddenColumns(defaultHiddenColumns);
-          }}
-        >
-          Reset
-        </Button>
-      </li>
-    </ul>,
-    container
-  );
-};
-
-interface ColumnsSelectorProps {
-  children?: React.ReactNode;
-}
-
-export const ColumnsSelectorItem = <
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
->({
-  source,
-  label,
-}: DataTableColumnProps<RecordType>) => {
-  const resource = useResourceContext();
-  const { storeKey, defaultHiddenColumns } = useDataTableStoreContext();
-  const [hiddenColumns, setHiddenColumns] = useStore<string[]>(
-    storeKey,
-    defaultHiddenColumns
-  );
-  const columnRank = useDataTableColumnRankContext();
-  const [columnRanks, setColumnRanks] = useStore<number[]>(
-    `${storeKey}_columnRanks`
-  );
-  const columnFilter = useDataTableColumnFilterContext();
-  const translateLabel = useTranslateLabel();
-  if (!source && !label) return null;
-  const fieldLabel = translateLabel({
-    label: typeof label === "string" ? label : undefined,
-    resource,
-    source,
-  }) as string;
-  const isColumnHidden = hiddenColumns.includes(source!);
-  const isColumnFiltered = fieldLabelMatchesFilter(fieldLabel, columnFilter);
-
-  const handleMove = (
-    index1: number | string,
-    index2: number | string | null
-  ) => {
-    const colRanks = !columnRanks
-      ? padRanks([], Math.max(Number(index1), Number(index2 || 0)) + 1)
-      : Math.max(Number(index1), Number(index2 || 0)) > columnRanks.length - 1
-      ? padRanks(columnRanks, Math.max(Number(index1), Number(index2 || 0)) + 1)
-      : columnRanks;
-    const index1Pos = colRanks.findIndex((index) => index == Number(index1));
-    const index2Pos = colRanks.findIndex((index) => index == Number(index2));
-    if (index1Pos === -1 || index2Pos === -1) {
-      return;
-    }
-    let newColumnRanks;
-    if (index1Pos > index2Pos) {
-      newColumnRanks = [
-        ...colRanks.slice(0, index2Pos),
-        colRanks[index1Pos],
-        ...colRanks.slice(index2Pos, index1Pos),
-        ...colRanks.slice(index1Pos + 1),
-      ];
-    } else {
-      newColumnRanks = [
-        ...colRanks.slice(0, index1Pos),
-        ...colRanks.slice(index1Pos + 1, index2Pos + 1),
-        colRanks[index1Pos],
-        ...colRanks.slice(index2Pos + 1),
-      ];
-    }
-    setColumnRanks(newColumnRanks);
-  };
-
-  return isColumnFiltered ? (
-    <FieldToggle
-      key={columnRank}
-      source={source!}
-      label={fieldLabel}
-      index={String(columnRank)}
-      selected={!isColumnHidden}
-      onToggle={() =>
-        isColumnHidden
-          ? setHiddenColumns(
-              hiddenColumns.filter((column) => column !== source!)
-            )
-          : setHiddenColumns([...hiddenColumns, source!])
-      }
-      onMove={handleMove}
-    />
-  ) : null;
-};
 
 function DataTableHeadCell<
   RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
