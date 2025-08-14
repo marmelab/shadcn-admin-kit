@@ -40,6 +40,7 @@
         "@tanstack/react-query",
         "class-variance-authority",
         "clsx",
+        "diacritic",
         "inflection",
         "lodash",
         "lucide-react",
@@ -101,6 +102,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/cancel-button.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/count.tsx",
           "type": "registry:component"
         },
@@ -110,6 +115,10 @@
         },
         {
           "path": "src/components/admin/create-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/columns-button.tsx",
           "type": "registry:component"
         },
         {
@@ -134,6 +143,10 @@
         },
         {
           "path": "src/components/admin/export-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/field-toggle.tsx",
           "type": "registry:component"
         },
         {

@@ -1,5 +1,6 @@
 import {
   EditBase,
+  EditBaseProps,
   Translate,
   useCreatePath,
   useEditContext,
@@ -11,28 +12,27 @@ import {
 } from "ra-core";
 import { ReactNode } from "react";
 import { Link } from "react-router";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbPage } from "@/components/admin/breadcrumb";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbPage,
+} from "@/components/admin/breadcrumb";
 import { ShowButton } from "@/components/admin/show-button";
 
-export const Edit = ({
-  title,
-  children,
-}: {
-  title?: ReactNode | string | false;
-  children: ReactNode;
-}) => (
-  <EditBase>
+export interface EditProps extends EditViewProps, EditBaseProps {}
+
+export const Edit = ({ title, children, ...rest }: EditProps) => (
+  <EditBase {...rest}>
     <EditView title={title}>{children}</EditView>
   </EditBase>
 );
 
-export const EditView = ({
-  title,
-  children,
-}: {
+export interface EditViewProps {
   title?: ReactNode | string | false;
-  children: ReactNode;
-}) => {
+  children?: ReactNode;
+}
+
+export const EditView = ({ title, children }: EditViewProps) => {
   const context = useEditContext();
 
   const resource = useResourceContext();

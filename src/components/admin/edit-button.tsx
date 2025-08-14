@@ -8,9 +8,15 @@ import {
   Translate,
   type RaRecord,
 } from "ra-core";
-import { MouseEvent } from "react";
+import { type MouseEvent } from "react";
 
-export const EditButton = (props: { record?: RaRecord; resource?: string }) => {
+export type EditButtonProps = {
+  record?: RaRecord;
+  resource?: string;
+  label?: string;
+};
+
+export const EditButton = (props: EditButtonProps) => {
   const resource = useResourceContext(props);
   const record = useRecordContext(props);
   const createPath = useCreatePath();
@@ -26,7 +32,9 @@ export const EditButton = (props: { record?: RaRecord; resource?: string }) => {
       onClick={stopPropagation}
     >
       <Pencil />
-      <Translate i18nKey="ra.action.edit">Edit</Translate>
+      <Translate i18nKey={props.label ?? "ra.action.edit"}>
+        {props.label ?? "Edit"}
+      </Translate>
     </Link>
   );
 };

@@ -1,4 +1,10 @@
-import { createElement, isValidElement, ReactNode, useCallback } from "react";
+import {
+  Children,
+  createElement,
+  isValidElement,
+  useCallback,
+  type ReactNode,
+} from "react";
 import {
   DataTableBase,
   DataTableBaseProps,
@@ -16,9 +22,11 @@ import {
   useDataTableRenderContext,
   useDataTableSelectedIdsContext,
   useDataTableSortContext,
+  useDataTableStoreContext,
   useGetPathForRecordCallback,
   useRecordContext,
   useResourceContext,
+  useStore,
   useTranslate,
   useTranslateLabel,
 } from "ra-core";
@@ -43,6 +51,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  ColumnsSelector,
+  ColumnsSelectorItem,
+} from "@/components/admin/columns-button";
 import { NumberField } from "@/components/admin/number-field";
 import {
   BulkActionsToolbar,
@@ -52,7 +64,7 @@ import {
 const defaultBulkActionButtons = <BulkActionsToolbarChildren />;
 
 export function DataTable<RecordType extends RaRecord = RaRecord>(
-  props: DataTableProps<RecordType>,
+  props: DataTableProps<RecordType>
 ) {
   const {
     children,
@@ -62,8 +74,13 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
     bulkActionsToolbar,
     ...rest
   } = props;
-
   const hasBulkActions = !!bulkActionsToolbar || bulkActionButtons !== false;
+  const resourceFromContext = useResourceContext(props);
+  const storeKey = props.storeKey || `${resourceFromContext}.datatable`;
+  const [columnRanks] = useStore<number[]>(`${storeKey}_columnRanks`);
+  const columns = columnRanks
+    ? reorderChildren(children, columnRanks)
+    : children;
 
   return (
     <DataTableBase<RecordType>
@@ -75,14 +92,13 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
       <div className={cn("rounded-md border", className)}>
         <Table>
           <DataTableRenderContext.Provider value="header">
-            <DataTableHead>{children}</DataTableHead>
+            <DataTableHead>{columns}</DataTableHead>
           </DataTableRenderContext.Provider>
           <DataTableBody<RecordType> rowClassName={rowClassName}>
-            {children}
+            {columns}
           </DataTableBody>
         </Table>
       </div>
-
       {bulkActionsToolbar ??
         (bulkActionButtons !== false && (
           <BulkActionsToolbar>
@@ -91,6 +107,9 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
               : defaultBulkActionButtons}
           </BulkActionsToolbar>
         ))}
+      <DataTableRenderContext.Provider value="columnsSelector">
+        <ColumnsSelector>{children}</ColumnsSelector>
+      </DataTableRenderContext.Provider>
     </DataTableBase>
   );
 }
@@ -110,9 +129,9 @@ const DataTableHead = ({ children }: { children: ReactNode }) => {
         ? selectedIds.concat(
             data
               .filter((record) => !selectedIds.includes(record.id))
-              .map((record) => record.id),
+              .map((record) => record.id)
           )
-        : [],
+        : []
     );
   };
   const selectableIds = Array.isArray(data)
@@ -195,7 +214,7 @@ const DataTableRow = ({
       if (!handleToggleItem) return;
       handleToggleItem(record.id, event);
     },
-    [handleToggleItem, record.id],
+    [handleToggleItem, record.id]
   );
 
   const handleClick = useCallback(async () => {
@@ -260,10 +279,12 @@ export interface DataTableProps<RecordType extends RaRecord = RaRecord>
 }
 
 export function DataTableColumn<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
 >(props: DataTableColumnProps<RecordType>) {
   const renderContext = useDataTableRenderContext();
   switch (renderContext) {
+    case "columnsSelector":
+      return <ColumnsSelectorItem<RecordType> {...props} />;
     case "header":
       return <DataTableHeadCell {...props} />;
     case "data":
@@ -271,8 +292,26 @@ export function DataTableColumn<
   }
 }
 
+/**
+ * Reorder children based on columnRanks
+ *
+ * Note that columnRanks may be shorter than the number of children
+ */
+const reorderChildren = (children: ReactNode, columnRanks: number[]) =>
+  Children.toArray(children).reduce((acc: ReactNode[], child, index) => {
+    const rank = columnRanks.indexOf(index);
+    if (rank === -1) {
+      // if the column is not in columnRanks, keep it at the same index
+      acc[index] = child;
+    } else {
+      // if the column is in columnRanks, move it to the rank index
+      acc[rank] = child;
+    }
+    return acc;
+  }, []);
+
 function DataTableHeadCell<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
 >(props: DataTableColumnProps<RecordType>) {
   const {
     disableSort,
@@ -288,11 +327,15 @@ function DataTableHeadCell<
   const resource = useResourceContext();
   const translate = useTranslate();
   const translateLabel = useTranslateLabel();
+  const { storeKey, defaultHiddenColumns } = useDataTableStoreContext();
+  const [hiddenColumns] = useStore<string[]>(storeKey, defaultHiddenColumns);
+  const isColumnHidden = hiddenColumns.includes(source!);
+  if (isColumnHidden) return null;
 
   const nextSortOrder =
     sort && sort.field === source
       ? oppositeOrder[sort.order]
-      : (sortByOrder ?? "ASC");
+      : sortByOrder ?? "ASC";
   const fieldLabel = translateLabel({
     label: typeof label === "string" ? label : undefined,
     resource,
@@ -362,7 +405,7 @@ const oppositeOrder: Record<SortPayload["order"], SortPayload["order"]> = {
 };
 
 function DataTableCell<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
 >(props: DataTableColumnProps<RecordType>) {
   const {
     children,
@@ -374,10 +417,14 @@ function DataTableCell<
     conditionalClassName,
   } = props;
 
+  const { storeKey, defaultHiddenColumns } = useDataTableStoreContext();
+  const [hiddenColumns] = useStore<string[]>(storeKey, defaultHiddenColumns);
   const record = useRecordContext<RecordType>();
+  const isColumnHidden = hiddenColumns.includes(source!);
+  if (isColumnHidden) return null;
   if (!render && !field && !children && !source) {
     throw new Error(
-      "DataTableColumn: Missing at least one of the following props: render, field, children, or source",
+      "DataTableColumn: Missing at least one of the following props: render, field, children, or source"
     );
   }
 
@@ -387,21 +434,21 @@ function DataTableCell<
         "py-1",
         className,
         cellClassName,
-        record && conditionalClassName?.(record),
+        record && conditionalClassName?.(record)
       )}
     >
       {children ??
         (render
           ? record && render(record)
           : field
-            ? createElement(field, { source })
-            : get(record, source!))}
+          ? createElement(field, { source })
+          : get(record, source!))}
     </TableCell>
   );
 }
 
 export interface DataTableColumnProps<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
 > {
   className?: string;
   cellClassName?: string;
@@ -417,7 +464,7 @@ export interface DataTableColumnProps<
 }
 
 export function DataTableNumberColumn<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
 >(props: DataTableNumberColumnProps<RecordType>) {
   const {
     source,
@@ -442,7 +489,7 @@ export function DataTableNumberColumn<
 }
 
 export interface DataTableNumberColumnProps<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
 > extends DataTableColumnProps<RecordType> {
   source: NoInfer<HintedString<ExtractRecordPaths<RecordType>>>;
   locales?: string | string[];

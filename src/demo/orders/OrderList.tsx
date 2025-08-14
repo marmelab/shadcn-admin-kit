@@ -1,6 +1,8 @@
 import { useListContext } from "ra-core";
 import {
+  ColumnsButton,
   DataTable,
+  ExportButton,
   List,
   ReferenceField,
   Count,
@@ -20,6 +22,18 @@ const storeKeyByStatus = {
   cancelled: "orders.list3",
 };
 
+const ListActions = () => {
+  const { filterValues } = useListContext();
+  const status =
+    (filterValues.status as "ordered" | "delivered" | "cancelled") ?? "ordered";
+  return (
+    <div className="flex items-center gap-2">
+      <ColumnsButton storeKey={storeKeyByStatus[status]} />
+      <ExportButton />
+    </div>
+  );
+};
+
 const filters = [
   <TextInput source="q" placeholder="Search" label={false} />,
   <ReferenceInput
@@ -37,6 +51,7 @@ export const OrderList = () => (
     filterDefaultValues={{ status: "ordered" }}
     filters={filters}
     perPage={25}
+    actions={<ListActions />}
   >
     <TabbedDataTable />
   </List>

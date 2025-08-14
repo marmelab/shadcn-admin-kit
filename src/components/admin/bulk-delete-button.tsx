@@ -7,21 +7,26 @@ import {
   useNotify,
   useResourceContext,
   useTranslate,
+  type MutationMode,
 } from "ra-core";
 
-export const BulkDeleteButton = () => {
+export const BulkDeleteButton = ({
+  mutationMode = "undoable",
+}: {
+  mutationMode?: MutationMode;
+}) => {
   const resource = useResourceContext();
   const [deleteMany, { isPending }] = useDeleteMany();
   const { selectedIds, onUnselectItems } = useListContext();
   const notify = useNotify();
   const translate = useTranslate();
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (e: React.MouseEvent) => {
     stopPropagation(e);
     deleteMany(
       resource,
       { ids: selectedIds },
       {
-        mutationMode: "undoable",
+        mutationMode,
         onSuccess: () => {
           onUnselectItems();
           notify(`resources.${resource}.notifications.deleted`, {
@@ -32,7 +37,7 @@ export const BulkDeleteButton = () => {
                 _: `${selectedIds.length} elements deleted`,
               }),
             },
-            undoable: true,
+            undoable: mutationMode === "undoable",
           });
         },
       }
@@ -53,5 +58,4 @@ export const BulkDeleteButton = () => {
 };
 
 // useful to prevent click bubbling in a datagrid with rowClick
-const stopPropagation = (e: React.MouseEvent<HTMLButtonElement>) =>
-  e.stopPropagation();
+const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();

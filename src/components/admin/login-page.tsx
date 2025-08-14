@@ -1,9 +1,44 @@
-import { TextInput } from "@/components/admin/text-input";
+import { useState } from "react";
+import { Form, required, useLogin, useNotify } from "ra-core";
+import type { SubmitHandler, FieldValues } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { Form, required, useLogin } from "ra-core";
+import { TextInput } from "@/components/admin/text-input";
+import { Notification } from "@/components/admin/notification";
 
-export const LoginPage = () => {
+export const LoginPage = (props: { redirectTo?: string }) => {
+  const { redirectTo } = props;
+  const [loading, setLoading] = useState(false);
   const login = useLogin();
+  const notify = useNotify();
+
+  const handleSubmit: SubmitHandler<FieldValues> = (values) => {
+    setLoading(true);
+    login(values, redirectTo)
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        notify(
+          typeof error === "string"
+            ? error
+            : typeof error === "undefined" || !error.message
+            ? "ra.auth.sign_in_error"
+            : error.message,
+          {
+            type: "error",
+            messageArgs: {
+              _:
+                typeof error === "string"
+                  ? error
+                  : error && error.message
+                  ? error.message
+                  : undefined,
+            },
+          }
+        );
+      });
+  };
 
   return (
     <div className="min-h-screen flex">
@@ -44,11 +79,7 @@ export const LoginPage = () => {
                 Try janedoe@acme.com / password
               </p>
             </div>
-            <Form
-              className="space-y-8"
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              onSubmit={(values: any) => login(values)}
-            >
+            <Form className="space-y-8" onSubmit={handleSubmit}>
               <TextInput
                 label="Email"
                 source="email"
@@ -61,11 +92,18 @@ export const LoginPage = () => {
                 type="password"
                 validate={required()}
               />
-              <Button type="submit">Sign in</Button>
+              <Button
+                type="submit"
+                className="cursor-pointer"
+                disabled={loading}
+              >
+                Sign in
+              </Button>
             </Form>
           </div>
         </div>
       </div>
+      <Notification />
     </div>
   );
 };
