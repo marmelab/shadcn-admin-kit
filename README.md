@@ -16,7 +16,7 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 ## Features
 
 - CRUD: working List, Show, Edit and Create pages
-- Data Table with sorting, filtering, export, bulk actions, and pagination
+- Data Table with sorting, filtering, export, bulk actions, column selection, and pagination
 - Form components with data binding and validation
 - View and edit references (one-to-many, many-to-one)
 - Sidebar menu
