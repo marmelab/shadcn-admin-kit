@@ -28,6 +28,7 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 - Responsive
 - Accessible
 - Compatible with any API (REST, GraphQL, etc.)
+- Works with Vite.js, Remix, Netx.js, and more
 
 ## Tech Stack
 
@@ -39,7 +40,6 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 - Forms & Validation: [React Hook Form](https://react-hook-form.com/)
 - Admin Framework: [React Admin](https://marmelab.com/react-admin/)
 - Type safety: [TypeScript](https://www.typescriptlang.org/)
-- Build tool: [Vite](https://vitejs.dev/) (SPA mode)
 
 ## Getting started
 
