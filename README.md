@@ -20,9 +20,9 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 - Form components with data binding and validation
 - View and edit references (one-to-many, many-to-one)
 - Sidebar menu
-- Login page (compatible with any authentication backend)
+- Login, auth check & access control (compatible with any authentication backend)
 - Dashboard page
-- Automatically guess the code based on the data, using *Guessers*
+- Scaffold the code based on the API response, using *Guessers*
 - i18n support
 - Light/dark mode
 - Responsive
