@@ -7,11 +7,13 @@ const DEFAULT_IDENTITY = data.users[0];
  * This authProvider is only for test purposes. Don't use it in production.
  */
 export const authProvider: AuthProvider = {
-  login: ({ email, password }) => {
+  login: async ({ email, password }) => {
     const user = data.users.find(
       (u) => u.email === email && u.password === password
     );
 
+    // simulate login delay
+    await new Promise((resolve) => setTimeout(resolve, 300));
     if (user) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...userToPersist } = user;
