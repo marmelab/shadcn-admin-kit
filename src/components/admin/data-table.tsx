@@ -36,6 +36,8 @@ import {
   useTranslate,
   useTranslateLabel,
 } from "ra-core";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import * as diacritic from "diacritic";
 import { ArrowDownAZ, ArrowUpZA, Search } from "lucide-react";
 import { useNavigate } from "react-router";
