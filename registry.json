@@ -170,10 +170,6 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/filter-form-input.tsx",
-          "type": "registry:component"
-        },
-        {
           "path": "src/components/admin/form.tsx",
           "type": "registry:component"
         },
