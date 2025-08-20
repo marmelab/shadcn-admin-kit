@@ -23,6 +23,7 @@ export default defineConfig({
           href: "https://github.com/marmelab/shadcn-admin-kit",
         },
       ],
+      favicon: "/icon.png",
     }),
     expressiveCode({
       plugins: [pluginFullscreen(), pluginCollapsibleSections()],
