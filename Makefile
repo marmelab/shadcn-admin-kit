@@ -58,4 +58,4 @@ typecheck: ## Run TypeScript type checking
 	@pnpm run typecheck
 
 doc: ## launch doc web server
-	@cd docs_headless && pnpm run dev
+	@cd docs && pnpm run dev
