@@ -76,7 +76,7 @@ export function AdvancedCapabilities() {
                 </dl>
                 <Button variant="outline" asChild>
                   <a
-                    href="https://github.com/marmelab/shadcn-admin-kit/blob/main/docs/2-Quick-Start-Guide.md"
+                    href="https://marmelab.com/shadcn-admin-kit/docs"
                     target="_blank"
                   >
                     Learn More

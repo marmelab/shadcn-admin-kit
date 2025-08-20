@@ -21,7 +21,7 @@ export function Hero() {
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <Button asChild size="lg">
                   <a
-                    href="https://github.com/marmelab/shadcn-admin-kit/blob/main/docs/2-Quick-Start-Guide.md"
+                    href="https://marmelab.com/shadcn-admin-kit/docs"
                     target="_blank"
                   >
                     Get started
