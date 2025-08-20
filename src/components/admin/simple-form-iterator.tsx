@@ -9,7 +9,7 @@ import {
   useResourceContext,
   useSourceContext,
   useTranslate,
-  useWrappedSource,
+  useWrappedSource
 } from "ra-core";
 import * as React from "react";
 import {
@@ -19,7 +19,7 @@ import {
   useCallback,
   useMemo,
   useRef,
-  useState,
+  useState
 } from "react";
 import { type UseFieldArrayReturn, useFormContext } from "react-hook-form";
 import {
@@ -27,7 +27,7 @@ import {
   ArrowUpCircle,
   PlusCircle,
   Trash,
-  XCircle,
+  XCircle
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -35,21 +35,19 @@ import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
-  TooltipTrigger,
+  TooltipTrigger
 } from "@/components/ui/tooltip";
 import {
   ArrayInputContextValue,
-  useArrayInput,
+  useArrayInput
 } from "@/hooks/array-input-context";
 import {
   SimpleFormIteratorContext,
   useSimpleFormIterator,
-} from "@/hooks/simple-form-iterator-context";
-import {
   SimpleFormIteratorItemContext,
   SimpleFormIteratorItemContextValue,
-  useSimpleFormIteratorItem,
-} from "@/hooks/simple-form-iterator-item-context.tsx";
+  useSimpleFormIteratorItem
+} from "@/hooks/simple-form-iterator-context";
 import { Confirm } from "@/components/admin/confirm";
 import { IconButtonWithTooltip } from "@/components/admin/icon-button-with-tooltip.tsx";
 
@@ -69,13 +67,14 @@ export const SimpleFormIterator = (props: SimpleFormIteratorProps) => {
     disableRemove = false,
     disableReordering,
     inline,
-    getItemLabel = false,
+    getItemLabel = false
   } = props;
 
   const finalSource = useWrappedSource("");
-  if (!finalSource) {
+  if (!finalSource)
+  {
     throw new Error(
-      "SimpleFormIterator can only be called within an iterator input like ArrayInput",
+      "SimpleFormIterator can only be called within an iterator input like ArrayInput"
     );
   }
 
@@ -90,21 +89,24 @@ export const SimpleFormIterator = (props: SimpleFormIteratorProps) => {
     (index: number) => {
       remove(index);
       const isScalarArray = getValues(finalSource).every(
-        (value: any) => typeof value !== "object",
+        (value: any) => typeof value !== "object"
       );
-      if (isScalarArray) {
+      if (isScalarArray)
+      {
         // Trigger validation on the Array to avoid ghost errors.
         // Otherwise, validation errors on removed fields might still be displayed
         trigger(finalSource);
       }
     },
-    [remove, trigger, finalSource, getValues],
+    [remove, trigger, finalSource, getValues]
   );
 
-  if (fields.length > 0) {
+  if (fields.length > 0)
+  {
     const { id: _id, ...rest } = fields[0];
     initialDefaultValue.current = rest;
-    for (const k in initialDefaultValue.current) {
+    for (const k in initialDefaultValue.current)
+    {
       // @ts-expect-error: reset fields
       initialDefaultValue.current[k] = null;
     }
@@ -113,7 +115,8 @@ export const SimpleFormIterator = (props: SimpleFormIteratorProps) => {
   const addField = useCallback(
     (item: any = undefined) => {
       let defaultValue = item;
-      if (item == null) {
+      if (item == null)
+      {
         defaultValue = initialDefaultValue.current;
         if (
           Children.count(children) === 1 &&
@@ -123,11 +126,13 @@ export const SimpleFormIterator = (props: SimpleFormIteratorProps) => {
           // Make sure it's not a FormDataConsumer
           // @ts-expect-error: Check if the child is a FormDataConsumer
           Children.only(children).type !== FormDataConsumer
-        ) {
+        )
+        {
           // ArrayInput used for an array of scalar values
           // (e.g. tags: ['foo', 'bar'])
           defaultValue = "";
-        } else {
+        } else
+        {
           // ArrayInput used for an array of objects
           // (e.g. authors: [{ firstName: 'John', lastName: 'Doe' }, { firstName: 'Jane', lastName: 'Doe' }])
           defaultValue = defaultValue || ({} as Record<string, unknown>);
@@ -137,7 +142,8 @@ export const SimpleFormIterator = (props: SimpleFormIteratorProps) => {
               input.type !== FormDataConsumer &&
               // @ts-expect-error: Check if the child has a source prop
               input.props.source
-            ) {
+            )
+            {
               // @ts-expect-error: Check if the child has a source prop
               defaultValue[input.props.source] =
                 // @ts-expect-error: Check if the child has a source prop
@@ -148,14 +154,14 @@ export const SimpleFormIterator = (props: SimpleFormIteratorProps) => {
       }
       append(defaultValue);
     },
-    [append, children],
+    [append, children]
   );
 
   const handleReorder = useCallback(
     (origin: number, destination: number) => {
       move(origin, destination);
     },
-    [move],
+    [move]
   );
 
   const handleArrayClear = useCallback(() => {
@@ -171,9 +177,9 @@ export const SimpleFormIterator = (props: SimpleFormIteratorProps) => {
       add: addField,
       remove: removeField,
       reOrder: handleReorder,
-      source: finalSource,
+      source: finalSource
     }),
-    [addField, fields.length, handleReorder, removeField, finalSource],
+    [addField, fields.length, handleReorder, removeField, finalSource]
   );
   return fields ? (
     <SimpleFormIteratorContext.Provider value={context}>
@@ -222,7 +228,8 @@ export const SimpleFormIterator = (props: SimpleFormIteratorProps) => {
   ) : null;
 };
 
-export interface SimpleFormIteratorProps extends Partial<UseFieldArrayReturn> {
+export interface SimpleFormIteratorProps extends Partial<UseFieldArrayReturn>
+{
   addButton?: ReactElement;
   children?: ReactElement | ReactElement[];
   className?: string;
@@ -250,7 +257,7 @@ export interface SimpleFormIteratorProps extends Partial<UseFieldArrayReturn> {
 export const SimpleFormIteratorItem = React.forwardRef(
   (
     props: SimpleFormIteratorItemProps,
-    ref: React.ForwardedRef<HTMLLIElement>,
+    ref: React.ForwardedRef<HTMLLIElement>
   ) => {
     const {
       children,
@@ -262,12 +269,13 @@ export const SimpleFormIteratorItem = React.forwardRef(
       inline,
       record,
       removeButton = defaultRemoveItemButton,
-      reOrderButtons = defaultReOrderButtons,
+      reOrderButtons = defaultReOrderButtons
     } = props;
     const resource = useResourceContext(props);
-    if (!resource) {
+    if (!resource)
+    {
       throw new Error(
-        "SimpleFormIteratorItem must be used in a ResourceContextProvider or be passed a resource prop.",
+        "SimpleFormIteratorItem must be used in a ResourceContextProvider or be passed a resource prop."
       );
     }
     const { total, reOrder, remove } = useSimpleFormIterator();
@@ -276,7 +284,8 @@ export const SimpleFormIteratorItem = React.forwardRef(
     // determining if the button should be disabled. Otherwise, use a boolean property that
     // enables or disables the button for all of the fields.
     const disableRemoveField = (record: RaRecord) => {
-      if (typeof disableRemove === "boolean") {
+      if (typeof disableRemove === "boolean")
+      {
         return disableRemove;
       }
       return disableRemove && disableRemove(record);
@@ -287,9 +296,9 @@ export const SimpleFormIteratorItem = React.forwardRef(
         index,
         total,
         reOrder: (newIndex) => reOrder(index, newIndex),
-        remove: () => remove(index),
+        remove: () => remove(index)
       }),
-      [index, total, reOrder, remove],
+      [index, total, reOrder, remove]
     );
 
     const label =
@@ -299,7 +308,8 @@ export const SimpleFormIteratorItem = React.forwardRef(
     const sourceContext = useMemo(
       () => ({
         getSource: (source: string) => {
-          if (!source) {
+          if (!source)
+          {
             // source can be empty for scalar values, e.g.
             // <ArrayInput source="tags" /> => SourceContext is "tags"
             //   <SimpleFormIterator> => SourceContext is "tags.0"
@@ -307,7 +317,8 @@ export const SimpleFormIteratorItem = React.forwardRef(
             //   </SimpleFormIterator>
             // </ArrayInput>
             return parentSourceContext.getSource(`${index}`);
-          } else {
+          } else
+          {
             // Normal input with source, e.g.
             // <ArrayInput source="orders" /> => SourceContext is "orders"
             //   <SimpleFormIterator> => SourceContext is "orders.0"
@@ -326,9 +337,9 @@ export const SimpleFormIteratorItem = React.forwardRef(
           //
           // we don't prefix with the index to avoid that translation keys contain it
           return parentSourceContext.getLabel(source);
-        },
+        }
       }),
-      [index, parentSourceContext],
+      [index, parentSourceContext]
     );
 
     return (
@@ -345,7 +356,7 @@ export const SimpleFormIteratorItem = React.forwardRef(
               <div
                 className={cn(
                   "flex flex-1",
-                  inline ? "flex-col sm:flex-row gap-2" : "flex-col",
+                  inline ? "flex-col sm:flex-row gap-2" : "flex-col"
                 )}
               >
                 {children}
@@ -361,7 +372,7 @@ export const SimpleFormIteratorItem = React.forwardRef(
         </li>
       </SimpleFormIteratorItemContext.Provider>
     );
-  },
+  }
 );
 
 export type DisableRemoveFunction = (record: RaRecord) => boolean;
@@ -417,7 +428,7 @@ export const ReOrderButtons = ({ className }: { className?: string }) => {
       className={cn(
         "button-reorder",
         `button-reorder-${source}-${index}`,
-        className,
+        className
       )}
     >
       <IconButtonWithTooltip
@@ -474,7 +485,7 @@ export const RemoveItemButton = (props: React.ComponentProps<"button">) => {
             className={cn(
               "button-remove",
               `button-remove-${source}-${index}`,
-              className,
+              className
             )}
             {...rest}
           >
