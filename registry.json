@@ -54,7 +54,7 @@
       ],
       "files": [
         {
-          "path": "src/components/add-item-button.tsx",
+          "path": "src/components/admin/add-item-button.tsx",
           "type": "registry:component"
         },
         {
