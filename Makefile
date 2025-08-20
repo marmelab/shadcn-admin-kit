@@ -56,3 +56,6 @@ build: build-website build-demo build-registry ## Build all components
 
 typecheck: ## Run TypeScript type checking
 	@pnpm run typecheck
+
+doc: ## launch doc web server
+	@cd docs_headless && pnpm run dev
