@@ -302,10 +302,6 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/toolbar.tsx",
-          "type": "registry:component"
-        },
-        {
           "path": "src/components/admin/user-menu.tsx",
           "type": "registry:component"
         },
