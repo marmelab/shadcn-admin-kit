@@ -190,10 +190,6 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/list-toolbar.tsx",
-          "type": "registry:component"
-        },
-        {
           "path": "src/components/admin/locales-menu-button.tsx",
           "type": "registry:component"
         },

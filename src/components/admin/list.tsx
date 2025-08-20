@@ -1,9 +1,11 @@
+import * as React from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbPage,
 } from "@/components/admin/breadcrumb";
 import {
+  type Exporter,
   ListBase,
   ListBaseProps,
   type ListControllerResult,
@@ -15,14 +17,14 @@ import {
   useResourceDefinition,
   useTranslate,
 } from "ra-core";
-import { ReactElement, ReactNode } from "react";
+import { type FC, memo, ReactElement, ReactNode } from "react";
 import { Link } from "react-router";
 import { cn } from "@/lib/utils.ts";
+import { FilterContext, FilterElementProps } from "@/hooks/filter-context.tsx";
 import { CreateButton } from "@/components/admin/create-button";
 import { ExportButton } from "@/components/admin/export-button";
 import { ListPagination } from "@/components/admin/list-pagination";
-import { ListToolbar } from "@/components/admin/list-toolbar";
-import { FilterElementProps } from "@/hooks/filter-context.tsx";
+import { FilterForm } from "@/components/admin/filter-form.tsx";
 
 export const List = <RecordType extends RaRecord = RaRecord>(
   props: ListProps<RecordType>,
@@ -137,4 +139,57 @@ export interface ListViewProps<RecordType extends RaRecord = RaRecord> {
   pagination?: ReactNode;
   title?: ReactNode | string | false;
   className?: string;
+}
+
+export const ListToolbar: FC<ListToolbarProps> = memo((inProps) => {
+  const { filters, actions, className, ...rest } = inProps;
+
+  return Array.isArray(filters) ? (
+    <FilterContext.Provider value={filters}>
+      <div
+        className={cn(
+          "flex flex-row justify-between items-end w-full pb-2",
+          className,
+        )}
+      >
+        <FilterForm />
+
+        {actions}
+      </div>
+    </FilterContext.Provider>
+  ) : (
+    <div
+      className={cn(
+        "flex flex-row justify-between items-end w-full pb-2",
+        className,
+      )}
+    >
+      {filters ? (
+        React.cloneElement(filters, {
+          ...rest,
+          context: "form",
+        })
+      ) : (
+        <span />
+      )}
+
+      {actions &&
+        React.cloneElement(actions, {
+          ...rest,
+          filters,
+          ...actions.props,
+        })}
+    </div>
+  );
+});
+
+export type FiltersType =
+  | ReactElement<FilterElementProps>
+  | ReactElement<FilterElementProps>[];
+
+export interface ListToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
+  actions?: ReactElement<{ filters?: FiltersType }> | false;
+  exporter?: Exporter | false;
+  filters?: FiltersType;
+  hasCreate?: boolean;
 }

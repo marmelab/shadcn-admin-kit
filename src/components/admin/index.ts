@@ -26,7 +26,6 @@ export * from "./form";
 export * from "./layout";
 export * from "./list-guesser";
 export * from "./list-pagination";
-export * from "./list-toolbar";
 export * from "./list";
 export * from "./loading";
 export * from "./locales-menu-button";
