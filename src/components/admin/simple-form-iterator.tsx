@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { cn } from "@/lib/utils";
 import get from "lodash/get";
 import {
   FormDataConsumer,
   type RaRecord,
+  RecordContextProvider,
+  SourceContextProvider,
   useRecordContext,
+  useResourceContext,
+  useSourceContext,
   useTranslate,
   useWrappedSource,
 } from "ra-core";
@@ -12,24 +15,45 @@ import * as React from "react";
 import {
   Children,
   type ReactElement,
+  ReactNode,
   useCallback,
   useMemo,
   useRef,
   useState,
 } from "react";
 import { type UseFieldArrayReturn, useFormContext } from "react-hook-form";
-
-import { AddItemButton } from "@/components/admin/add-item-button";
-import { useArrayInput } from "@/hooks/array-input-context";
-import { ClearArrayButton } from "@/components/admin/clear-array-button";
-import { Confirm } from "@/components/admin/confirm";
-import { SimpleFormIteratorContext } from "@/hooks/simple-form-iterator-context";
 import {
-  DisableRemoveFunction,
-  SimpleFormIteratorItem,
-} from "@/components/admin/simple-form-iterator-item";
+  ArrowDownCircle,
+  ArrowUpCircle,
+  PlusCircle,
+  Trash,
+  XCircle,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  ArrayInputContextValue,
+  useArrayInput,
+} from "@/hooks/array-input-context";
+import {
+  SimpleFormIteratorContext,
+  useSimpleFormIterator,
+} from "@/hooks/simple-form-iterator-context";
+import {
+  SimpleFormIteratorItemContext,
+  SimpleFormIteratorItemContextValue,
+  useSimpleFormIteratorItem,
+} from "@/hooks/simple-form-iterator-item-context.tsx";
+import { Confirm } from "@/components/admin/confirm";
+import { IconButtonWithTooltip } from "@/components/admin/icon-button-with-tooltip.tsx";
 
-const defaultAddItemButton = <AddItemButton />;
+type GetItemLabelFunc = (index: number) => string | ReactElement;
 
 export const SimpleFormIterator = (props: SimpleFormIteratorProps) => {
   const {
@@ -198,8 +222,6 @@ export const SimpleFormIterator = (props: SimpleFormIteratorProps) => {
   ) : null;
 };
 
-type GetItemLabelFunc = (index: number) => string | ReactElement;
-
 export interface SimpleFormIteratorProps extends Partial<UseFieldArrayReturn> {
   addButton?: ReactElement;
   children?: ReactElement | ReactElement[];
@@ -224,3 +246,247 @@ export interface SimpleFormIteratorProps extends Partial<UseFieldArrayReturn> {
   resource?: string;
   source?: string;
 }
+
+export const SimpleFormIteratorItem = React.forwardRef(
+  (
+    props: SimpleFormIteratorItemProps,
+    ref: React.ForwardedRef<HTMLLIElement>,
+  ) => {
+    const {
+      children,
+      disabled,
+      disableReordering,
+      disableRemove,
+      getItemLabel,
+      index,
+      inline,
+      record,
+      removeButton = defaultRemoveItemButton,
+      reOrderButtons = defaultReOrderButtons,
+    } = props;
+    const resource = useResourceContext(props);
+    if (!resource) {
+      throw new Error(
+        "SimpleFormIteratorItem must be used in a ResourceContextProvider or be passed a resource prop.",
+      );
+    }
+    const { total, reOrder, remove } = useSimpleFormIterator();
+    // Returns a boolean to indicate whether to disable the remove button for certain fields.
+    // If disableRemove is a function, then call the function with the current record to
+    // determining if the button should be disabled. Otherwise, use a boolean property that
+    // enables or disables the button for all of the fields.
+    const disableRemoveField = (record: RaRecord) => {
+      if (typeof disableRemove === "boolean") {
+        return disableRemove;
+      }
+      return disableRemove && disableRemove(record);
+    };
+
+    const context = useMemo<SimpleFormIteratorItemContextValue>(
+      () => ({
+        index,
+        total,
+        reOrder: (newIndex) => reOrder(index, newIndex),
+        remove: () => remove(index),
+      }),
+      [index, total, reOrder, remove],
+    );
+
+    const label =
+      typeof getItemLabel === "function" ? getItemLabel(index) : getItemLabel;
+
+    const parentSourceContext = useSourceContext();
+    const sourceContext = useMemo(
+      () => ({
+        getSource: (source: string) => {
+          if (!source) {
+            // source can be empty for scalar values, e.g.
+            // <ArrayInput source="tags" /> => SourceContext is "tags"
+            //   <SimpleFormIterator> => SourceContext is "tags.0"
+            //      <TextInput /> => use its parent's getSource so finalSource = "tags.0"
+            //   </SimpleFormIterator>
+            // </ArrayInput>
+            return parentSourceContext.getSource(`${index}`);
+          } else {
+            // Normal input with source, e.g.
+            // <ArrayInput source="orders" /> => SourceContext is "orders"
+            //   <SimpleFormIterator> => SourceContext is "orders.0"
+            //      <DateInput source="date" /> => use its parent's getSource so finalSource = "orders.0.date"
+            //   </SimpleFormIterator>
+            // </ArrayInput>
+            return parentSourceContext.getSource(`${index}.${source}`);
+          }
+        },
+        getLabel: (source: string) => {
+          // <ArrayInput source="orders" /> => LabelContext is "orders"
+          //   <SimpleFormIterator> => LabelContext is ALSO "orders"
+          //      <DateInput source="date" /> => use its parent's getLabel so finalLabel = "orders.date"
+          //   </SimpleFormIterator>
+          // </ArrayInput>
+          //
+          // we don't prefix with the index to avoid that translation keys contain it
+          return parentSourceContext.getLabel(source);
+        },
+      }),
+      [index, parentSourceContext],
+    );
+
+    return (
+      <SimpleFormIteratorItemContext.Provider value={context}>
+        <li
+          ref={ref}
+          className="flex flex-row items-center justify-between gap-2 pb-2 border-b border-border last:border-b-0"
+        >
+          {label != null && label !== false && (
+            <p className="text-sm text-muted-foreground mb-2">{label}</p>
+          )}
+          <SourceContextProvider value={sourceContext}>
+            <RecordContextProvider value={record}>
+              <div
+                className={cn(
+                  "flex flex-1",
+                  inline ? "flex-col sm:flex-row gap-2" : "flex-col",
+                )}
+              >
+                {children}
+              </div>
+            </RecordContextProvider>
+          </SourceContextProvider>
+          {!disabled && (
+            <div className="flex flex-row h-9 items-center gap-1 self-end">
+              {!disableReordering && reOrderButtons}
+              {!disableRemoveField(record) && removeButton}
+            </div>
+          )}
+        </li>
+      </SimpleFormIteratorItemContext.Provider>
+    );
+  },
+);
+
+export type DisableRemoveFunction = (record: RaRecord) => boolean;
+
+export type SimpleFormIteratorItemProps = Partial<ArrayInputContextValue> & {
+  children?: ReactNode;
+  disabled?: boolean;
+  disableRemove?: boolean | DisableRemoveFunction;
+  disableReordering?: boolean;
+  getItemLabel?: boolean | GetItemLabelFunc;
+  index: number;
+  inline?: boolean;
+  onRemoveField: (index: number) => void;
+  onReorder: (origin: number, destination: number) => void;
+  record: RaRecord;
+  removeButton?: ReactElement;
+  reOrderButtons?: ReactElement;
+  resource?: string;
+  source?: string;
+};
+
+export const AddItemButton = (props: React.ComponentProps<"button">) => {
+  const { add, source } = useSimpleFormIterator();
+  const { className, ...rest } = props;
+  const translate = useTranslate();
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            onClick={() => add()}
+            className={cn("button-add", `button-add-${source}`, className)}
+            {...rest}
+          >
+            <PlusCircle className="h-5 w-5" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>{translate("ra.action.add")}</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+};
+
+export const ReOrderButtons = ({ className }: { className?: string }) => {
+  const { index, total, reOrder } = useSimpleFormIteratorItem();
+  const { source } = useSimpleFormIterator();
+
+  return (
+    <span
+      className={cn(
+        "button-reorder",
+        `button-reorder-${source}-${index}`,
+        className,
+      )}
+    >
+      <IconButtonWithTooltip
+        label="ra.action.move_up"
+        onClick={() => reOrder(index - 1)}
+        disabled={index <= 0}
+      >
+        <ArrowUpCircle className="h-4 w-4" />
+      </IconButtonWithTooltip>
+      <IconButtonWithTooltip
+        label="ra.action.move_down"
+        onClick={() => reOrder(index + 1)}
+        disabled={total == null || index >= total - 1}
+      >
+        <ArrowDownCircle className="h-4 w-4" />
+      </IconButtonWithTooltip>
+    </span>
+  );
+};
+
+export const ClearArrayButton = (props: React.ComponentProps<"button">) => {
+  const translate = useTranslate();
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button type="button" variant="ghost" size="icon" {...props}>
+            <Trash className="h-5 w-5 text-red-500" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          {translate("ra.action.clear_array_input")}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+};
+
+export const RemoveItemButton = (props: React.ComponentProps<"button">) => {
+  const { remove, index } = useSimpleFormIteratorItem();
+  const { source } = useSimpleFormIterator();
+  const { className, ...rest } = props;
+  const translate = useTranslate();
+
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            onClick={() => remove()}
+            className={cn(
+              "button-remove",
+              `button-remove-${source}-${index}`,
+              className,
+            )}
+            {...rest}
+          >
+            <XCircle className="h-5 w-5 text-red-500" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>{translate("ra.action.remove")}</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+};
+
+const defaultAddItemButton = <AddItemButton />;
+const defaultRemoveItemButton = <RemoveItemButton />;
+const defaultReOrderButtons = <ReOrderButtons />;
