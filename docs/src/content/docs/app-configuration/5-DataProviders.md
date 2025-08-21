@@ -1,6 +1,6 @@
 ---
 
-title: Data Fetching with Data Providers
+title: Data Fetching & Data Providers
 
 ---
 

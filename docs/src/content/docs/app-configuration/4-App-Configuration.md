@@ -1,6 +1,6 @@
 ---
 
-title: Application Configuration
+title: Admin, Resource, CustomRoutes
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 
-title: Security
+title: Security & Auth Providers
 
 ---
 

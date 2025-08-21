@@ -24,6 +24,20 @@ export default defineConfig({
         },
       ],
       favicon: "/icon.png",
+      sidebar: [
+        {
+          label: "Getting Started",
+          autogenerate: { directory: "getting-started" },
+        },
+        {
+          label: "Application configuration",
+          autogenerate: { directory: "app-configuration" },
+        },
+        {
+          label: "Misc",
+          autogenerate: { directory: "misc" },
+        },
+      ],
     }),
     expressiveCode({
       plugins: [pluginFullscreen(), pluginCollapsibleSections()],
