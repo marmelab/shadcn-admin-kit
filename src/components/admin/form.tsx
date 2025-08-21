@@ -14,7 +14,7 @@ type FormItemContextValue = {
 };
 
 const FormItemContext = createContext<FormItemContextValue>(
-  {} as FormItemContextValue
+  {} as FormItemContextValue,
 );
 
 const useFormField = () => {
@@ -30,7 +30,7 @@ const useFormField = () => {
       formMessageId: `${id}-message`,
       ...fieldState,
     }),
-    [id, fieldState]
+    [id, fieldState],
   );
 };
 
@@ -40,14 +40,14 @@ function FormField({ className, id, name, ...props }: FormItemProps) {
       id,
       name,
     }),
-    [id, name]
+    [id, name],
   );
 
   return (
     <FormItemContext.Provider value={contextValue}>
       <div
         data-slot="form-item"
-        className={cn("grid gap-2", className)}
+        className={cn("form-item grid gap-2", className)}
         role="group"
         {...props}
       />

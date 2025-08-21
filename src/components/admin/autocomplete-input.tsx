@@ -43,7 +43,7 @@ export const AutocompleteInput = (
       filterToQuery?: (searchText: string) => any;
       translateChoice?: boolean;
       placeholder?: string;
-    }
+    },
 ) => {
   const { filterToQuery = DefaultFilterToQuery } = props;
   const {
@@ -71,7 +71,7 @@ export const AutocompleteInput = (
 
   const [open, setOpen] = React.useState(false);
   const selectedChoice = allChoices.find(
-    (choice) => getChoiceValue(choice) === field.value
+    (choice) => getChoiceValue(choice) === field.value,
   );
 
   const handleOpenChange = useEvent((isOpen: boolean) => {
@@ -107,7 +107,7 @@ export const AutocompleteInput = (
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-[200px] p-0">
+          <PopoverContent className="w-full p-0">
             {/* We handle the filtering ourselves */}
             <Command shouldFilter={!isFromReference}>
               <CommandInput
@@ -150,7 +150,7 @@ export const AutocompleteInput = (
                         "mr-2 h-4 w-4",
                         field.value === getChoiceValue(choice)
                           ? "opacity-100"
-                          : "opacity-0"
+                          : "opacity-0",
                       )}
                     />
                     {getChoiceText(choice)}
