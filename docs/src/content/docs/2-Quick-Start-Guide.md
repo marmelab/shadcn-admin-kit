@@ -664,7 +664,9 @@ Even though updates appear immediately due to optimistic rendering, `shadcn-admi
 
 Optimistic updates and undo require no specific code on the API side—`shadcn-admin-kit` handles them purely on the client side. That means you'll get them for free with your own API!
 
-**Note**: When you add the ability to edit an item, you also add the ability to delete it. The "Delete" button in the edit view is fully functional out of the box-and it is also "undoable".
+:::note
+When you add the ability to edit an item, you also add the ability to delete it. The "Delete" button in the edit view is fully functional out of the box-and it is also "undoable".
+:::
 
 ## Adding Search And Filters To The List
 
