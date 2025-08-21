@@ -1,7 +1,7 @@
 import {
   AutocompleteInput,
   Edit,
-  Toolbar,
+  FormToolbar,
   ReferenceField,
   ReferenceInput,
   ReferenceManyField,
@@ -27,7 +27,7 @@ export const ProductEdit = () => {
         <SimpleForm
           className="max-w-2xl"
           toolbar={
-            <Toolbar className="md:pl-36 pt-4 pb-4 sticky bottom-0 bg-linear-to-b from-transparent to-background to-10%" />
+            <FormToolbar className="md:pl-36 pt-4 pb-4 sticky bottom-0 bg-linear-to-b from-transparent to-background to-10%" />
           }
         >
           <div className="flex flex-col md:flex-row gap-4 mb-2">

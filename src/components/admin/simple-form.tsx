@@ -27,7 +27,7 @@ export const SimpleForm = ({
   );
 };
 
-export const Toolbar = (inProps: ToolbarProps) => {
+export const FormToolbar = (inProps: FormToolbarProps) => {
   const { children, className, resource, ...rest } = inProps;
 
   return (
@@ -58,10 +58,10 @@ export const Toolbar = (inProps: ToolbarProps) => {
   );
 };
 
-export interface ToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface FormToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
   className?: string;
   resource?: string;
 }
 
-const defaultFormToolbar = <Toolbar />;
+const defaultFormToolbar = <FormToolbar />;
