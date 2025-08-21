@@ -34,6 +34,10 @@ export default defineConfig({
           autogenerate: { directory: "app-configuration" },
         },
         {
+          label: "The List Page",
+          autogenerate: { directory: "list" },
+        },
+        {
           label: "Misc",
           autogenerate: { directory: "misc" },
         },
