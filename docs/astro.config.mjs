@@ -27,11 +27,19 @@ export default defineConfig({
       sidebar: [
         {
           label: "Getting Started",
-          autogenerate: { directory: "getting-started" },
+          items: [
+            "getting-started/install",
+            "getting-started/quick-start-guide",
+            "getting-started/guides-and-concepts",
+          ],
         },
         {
           label: "Application configuration",
-          autogenerate: { directory: "app-configuration" },
+          items: [
+            "app-configuration/app-configuration",
+            "app-configuration/dataproviders",
+            "app-configuration/security",
+          ],
         },
         {
           label: "The List Page",
