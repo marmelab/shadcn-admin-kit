@@ -55,4 +55,3 @@ export * from "./toggle-filter-button";
 export * from "./theme-mode-toggle";
 export * from "./theme-provider";
 export * from "./user-menu";
-export * from "./user-menu-context-provider";

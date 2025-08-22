@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { UserMenuContextProvider } from "@/components/admin/user-menu-context-provider.tsx";
+import { UserMenuContext } from "@/hooks/user-menu-context.tsx";
 
 export type UserMenuProps = {
   children?: React.ReactNode;
@@ -35,7 +35,7 @@ export function UserMenu({ children }: UserMenuProps) {
   if (!authProvider) return null;
 
   return (
-    <UserMenuContextProvider value={{ onClose: handleClose }}>
+    <UserMenuContext.Provider value={{ onClose: handleClose }}>
       <DropdownMenu open={open} onOpenChange={handleToggleOpen}>
         <DropdownMenuTrigger asChild>
           <Button
@@ -65,6 +65,6 @@ export function UserMenu({ children }: UserMenuProps) {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </UserMenuContextProvider>
+    </UserMenuContext.Provider>
   );
 }

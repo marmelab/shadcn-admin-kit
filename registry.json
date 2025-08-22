@@ -306,10 +306,6 @@
           "type": "registry:hook"
         },
         {
-          "path": "src/components/admin/user-menu-context-provider.tsx",
-          "type": "registry:component"
-        },
-        {
           "path": "src/components/admin/error.tsx",
           "type": "registry:component"
         },
