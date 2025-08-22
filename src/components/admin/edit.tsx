@@ -18,27 +18,31 @@ import {
   BreadcrumbPage,
 } from "@/components/admin/breadcrumb";
 import { ShowButton } from "@/components/admin/show-button";
+import { DeleteButton } from "./delete-button";
 
 export interface EditProps extends EditViewProps, EditBaseProps {}
 
-export const Edit = ({ title, children, ...rest }: EditProps) => (
+export const Edit = ({ title, children, actions, ...rest }: EditProps) => (
   <EditBase {...rest}>
-    <EditView title={title}>{children}</EditView>
+    <EditView title={title} actions={actions}>
+      {children}
+    </EditView>
   </EditBase>
 );
 
 export interface EditViewProps {
   title?: ReactNode | string | false;
+  actions?: ReactNode;
   children?: ReactNode;
 }
 
-export const EditView = ({ title, children }: EditViewProps) => {
+export const EditView = ({ title, actions, children }: EditViewProps) => {
   const context = useEditContext();
 
   const resource = useResourceContext();
   if (!resource) {
     throw new Error(
-      "The EditView component must be used within a ResourceContextProvider"
+      "The EditView component must be used within a ResourceContextProvider",
     );
   }
   const getResourceLabel = useGetResourceLabel();
@@ -78,9 +82,12 @@ export const EditView = ({ title, children }: EditViewProps) => {
         <h2 className="text-2xl font-bold tracking-tight">
           {title !== undefined ? title : context.defaultTitle}
         </h2>
-        <div className="flex justify-end items-center">
-          {hasShow ? <ShowButton /> : null}
-        </div>
+        {actions ?? (
+          <div className="flex justify-end items-center">
+            {hasShow ? <ShowButton /> : null}
+            <DeleteButton />
+          </div>
+        )}
       </div>
       <div className="my-2">{children}</div>
     </>

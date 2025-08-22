@@ -39,8 +39,8 @@ export const DeleteButton = (props: DeleteButtonProps) => {
     mutationOptions,
     redirect = "list",
     successMessage,
-    variant = "destructive",
-    className = "cursor-pointer",
+    variant = "outline",
+    className = "cursor-pointer hover:bg-destructive/10! text-destructive! border-destructive! focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40",
   } = props;
   const record = useRecordContext(props);
   const resource = useResourceContext(props);
@@ -63,7 +63,7 @@ export const DeleteButton = (props: DeleteButtonProps) => {
         smart_count: 1,
         _: resource ? singularize(resource) : undefined,
       }),
-      true
+      true,
     ),
   });
   // We don't support React elements for this

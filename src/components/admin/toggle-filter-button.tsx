@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import React from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useListContext, useTranslate } from "ra-core";
@@ -12,7 +13,7 @@ export const ToggleFilterButton = ({
   value,
   className,
 }: {
-  label: string;
+  label: React.ReactElement | string;
   value: any;
   className?: string;
   size?: "default" | "sm" | "lg" | "icon" | null | undefined;
@@ -27,12 +28,12 @@ export const ToggleFilterButton = ({
       onClick={handleClick}
       className={cn(
         "cursor-pointer",
-        "flex flex-row items-center gap-2",
-        className
+        "flex flex-row items-center gap-2 px-2.5",
+        className,
       )}
       size={size}
     >
-      {translate(label, { _: label })}
+      {typeof label === "string" ? translate(label, { _: label }) : label}
       {isSelected && <CircleX className="opacity-50" />}
     </Button>
   );
@@ -40,7 +41,7 @@ export const ToggleFilterButton = ({
 
 const toggleFilter = (value: any, filters: any) => {
   const isSelected = matches(
-    pickBy(value, (val) => typeof val !== "undefined")
+    pickBy(value, (val) => typeof val !== "undefined"),
   )(filters);
 
   if (isSelected) {
@@ -48,7 +49,7 @@ const toggleFilter = (value: any, filters: any) => {
     return Object.keys(filters).reduce(
       (acc, key) =>
         keysToRemove.includes(key) ? acc : { ...acc, [key]: filters[key] },
-      {}
+      {},
     );
   }
 

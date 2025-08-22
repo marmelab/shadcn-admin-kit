@@ -80,11 +80,11 @@ const dataProvider = fakeRestDataProvider(data);
 const Wrapper = ({
   children,
   defaultDataProvider = dataProvider,
-  actions = null,
+  actions = false,
 }: {
   children: React.ReactNode;
   defaultDataProvider?: DataProvider;
-  actions?: React.ReactNode;
+  actions?: React.ReactElement | false;
 }) => (
   <TestMemoryRouter initialEntries={["/books"]}>
     <Admin

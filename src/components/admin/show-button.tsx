@@ -1,3 +1,4 @@
+import React from "react";
 import { Link } from "react-router";
 import { buttonVariants } from "@/components/ui/button";
 import { Eye } from "lucide-react";
@@ -7,7 +8,6 @@ import {
   useRecordContext,
   useResourceContext,
 } from "ra-core";
-import { type MouseEvent } from "react";
 
 export type ShowButtonProps = { label?: string };
 
@@ -35,5 +35,4 @@ export const ShowButton = (props: ShowButtonProps) => {
 };
 
 // useful to prevent click bubbling in a datagrid with rowClick
-const stopPropagation = (e: MouseEvent<HTMLAnchorElement>) =>
-  e.stopPropagation();
+const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();

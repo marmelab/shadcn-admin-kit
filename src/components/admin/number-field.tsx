@@ -3,7 +3,7 @@ import { ExtractRecordPaths, RaRecord, useFieldValue } from "ra-core";
 import { ReactNode } from "react";
 
 export const NumberField = <RecordType extends RaRecord = RaRecord>(
-  props: NumberFieldProps<RecordType>
+  props: NumberFieldProps<RecordType>,
 ) => {
   let value = useFieldValue(props);
   const {

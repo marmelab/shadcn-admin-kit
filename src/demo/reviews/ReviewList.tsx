@@ -33,11 +33,12 @@ import { useIsMobile } from "../../hooks/use-mobile";
 import type { Review } from "../types";
 
 const filters = [
-  <TextInput source="q" placeholder="Search" label={false} />,
+  <TextInput source="q" placeholder="Search" label={false} alwaysOn />,
   <ReferenceInput
     source="customer_id"
     reference="customers"
     sort={{ field: "last_name", order: "ASC" }}
+    alwaysOn
   >
     <AutocompleteInput placeholder="Filter by customer" label={false} />
   </ReferenceInput>,
@@ -45,6 +46,7 @@ const filters = [
     source="product_id"
     reference="products"
     sort={{ field: "name", order: "ASC" }}
+    alwaysOn
   >
     <AutocompleteInput placeholder="Filter by product" label={false} />
   </ReferenceInput>,
@@ -64,14 +66,15 @@ const filters = [
             choice.id === "accepted"
               ? "bg-green-400 dark:bg-green-800"
               : choice.id === "rejected"
-              ? "bg-red-400 dark:bg-red-800"
-              : "bg-yellow-400 dark:bg-yellow-800"
+                ? "bg-red-400 dark:bg-red-800"
+                : "bg-yellow-400 dark:bg-yellow-800",
           )}
         />
         {choice.name}
       </>
     )}
     label={false}
+    alwaysOn
   />,
 ];
 
@@ -198,7 +201,7 @@ const ReviewListDesktop = ({ selectedRow }: { selectedRow?: number }) => {
             resource,
             id,
             type: "edit",
-          })
+          }),
         );
         // Disable the default rowClick behavior
         return false;
@@ -222,7 +225,7 @@ const ReviewListDesktop = ({ selectedRow }: { selectedRow?: number }) => {
             break;
           default:
             throw new Error(
-              `Unknown status: ${record.status}. Please check your data.`
+              `Unknown status: ${record.status}. Please check your data.`,
             );
         }
         return className;
@@ -263,7 +266,7 @@ const ReviewListDesktop = ({ selectedRow }: { selectedRow?: number }) => {
             accepted: "Approved",
             rejected: "Rejected",
             pending: "Pending",
-          }[record.status])
+          })[record.status]
         }
       />
     </DataTable>
