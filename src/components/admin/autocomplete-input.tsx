@@ -33,6 +33,7 @@ import {
   useEvent,
 } from "ra-core";
 import { InputHelperText } from "./input-helper-text";
+import { useCallback } from "react";
 
 export const AutocompleteInput = (
   props: Omit<InputProps, "source"> &
@@ -43,9 +44,12 @@ export const AutocompleteInput = (
       filterToQuery?: (searchText: string) => any;
       translateChoice?: boolean;
       placeholder?: string;
+      inputText?:
+        | React.ReactNode
+        | ((option: any | undefined) => React.ReactNode);
     },
 ) => {
-  const { filterToQuery = DefaultFilterToQuery } = props;
+  const { filterToQuery = DefaultFilterToQuery, inputText } = props;
   const {
     allChoices = [],
     source,
@@ -72,6 +76,19 @@ export const AutocompleteInput = (
   const [open, setOpen] = React.useState(false);
   const selectedChoice = allChoices.find(
     (choice) => getChoiceValue(choice) === field.value,
+  );
+
+  const getInputText = useCallback(
+    (selectedChoice: any) => {
+      if (typeof inputText === "function") {
+        return inputText(selectedChoice);
+      }
+      if (inputText !== undefined) {
+        return inputText;
+      }
+      return getChoiceText(selectedChoice);
+    },
+    [inputText, getChoiceText],
   );
 
   const handleOpenChange = useEvent((isOpen: boolean) => {
@@ -103,7 +120,7 @@ export const AutocompleteInput = (
               aria-expanded={open}
               className="w-full justify-between"
             >
-              {selectedChoice ? getChoiceText(selectedChoice) : placeholder}
+              {selectedChoice ? getInputText(selectedChoice) : placeholder}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
