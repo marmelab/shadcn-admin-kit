@@ -242,10 +242,6 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/save-button.tsx",
-          "type": "registry:component"
-        },
-        {
           "path": "src/components/admin/show.tsx",
           "type": "registry:component"
         },

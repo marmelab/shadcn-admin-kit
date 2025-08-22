@@ -2,9 +2,7 @@ import * as React from "react";
 import { Children, ReactNode } from "react";
 import { Form, type FormProps, WithRecord } from "ra-core";
 import { cn } from "@/lib/utils";
-import { DeleteButton } from "@/components/admin/delete-button.tsx";
-import { CancelButton } from "@/components/admin/cancel-button.tsx";
-import { SaveButton } from "@/components/admin/save-button.tsx";
+import { DeleteButton, CancelButton, SaveButton } from "@/components/admin";
 
 export const SimpleForm = ({
   children,
