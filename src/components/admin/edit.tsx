@@ -21,18 +21,21 @@ import { ShowButton } from "@/components/admin/show-button";
 
 export interface EditProps extends EditViewProps, EditBaseProps {}
 
-export const Edit = ({ title, children, ...rest }: EditProps) => (
+export const Edit = ({ title, children, actions, ...rest }: EditProps) => (
   <EditBase {...rest}>
-    <EditView title={title}>{children}</EditView>
+    <EditView title={title} actions={actions}>
+      {children}
+    </EditView>
   </EditBase>
 );
 
 export interface EditViewProps {
   title?: ReactNode | string | false;
+  actions?: ReactNode;
   children?: ReactNode;
 }
 
-export const EditView = ({ title, children }: EditViewProps) => {
+export const EditView = ({ title, actions, children }: EditViewProps) => {
   const context = useEditContext();
 
   const resource = useResourceContext();
@@ -78,9 +81,11 @@ export const EditView = ({ title, children }: EditViewProps) => {
         <h2 className="text-2xl font-bold tracking-tight">
           {title !== undefined ? title : context.defaultTitle}
         </h2>
-        <div className="flex justify-end items-center">
-          {hasShow ? <ShowButton /> : null}
-        </div>
+        {actions ?? (
+          <div className="flex justify-end items-center">
+            {hasShow ? <ShowButton /> : null}
+          </div>
+        )}
       </div>
       <div className="my-2">{children}</div>
     </>
