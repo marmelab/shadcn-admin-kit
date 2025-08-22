@@ -18,6 +18,7 @@ import {
   BreadcrumbPage,
 } from "@/components/admin/breadcrumb";
 import { ShowButton } from "@/components/admin/show-button";
+import { DeleteButton } from "./delete-button";
 
 export interface EditProps extends EditViewProps, EditBaseProps {}
 
@@ -84,6 +85,7 @@ export const EditView = ({ title, actions, children }: EditViewProps) => {
         {actions ?? (
           <div className="flex justify-end items-center">
             {hasShow ? <ShowButton /> : null}
+            <DeleteButton />
           </div>
         )}
       </div>

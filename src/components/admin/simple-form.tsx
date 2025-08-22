@@ -26,26 +26,19 @@ export const SimpleForm = ({
 };
 
 export const FormToolbar = (inProps: FormToolbarProps) => {
-  const { children, className, resource, ...rest } = inProps;
+  const { children, className, ...rest } = inProps;
 
   return (
     <div
       {...rest}
       className={cn(
-        // Responsive styles - mobile-first approach
-        "pt-4 flex flex-row flex-auto justify-end",
+        "sticky pt-4 pb-4 md:block md:pt-2 md:pb-0 bottom-0 bg-linear-to-b from-transparent to-background to-10%",
         className,
       )}
       role="toolbar"
     >
       {Children.count(children) === 0 ? (
-        <div className="flex-1 flex justify-between gap-4">
-          <WithRecord
-            render={(record) =>
-              record.id !== null && <DeleteButton resource={resource} />
-            }
-          />
-          <div className="flex-1" />
+        <div className="flex flex-row gap-2 justify-end">
           <CancelButton />
           <SaveButton />
         </div>
@@ -59,7 +52,6 @@ export const FormToolbar = (inProps: FormToolbarProps) => {
 export interface FormToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
   className?: string;
-  resource?: string;
 }
 
 const defaultFormToolbar = <FormToolbar />;
