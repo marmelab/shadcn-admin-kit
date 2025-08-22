@@ -54,6 +54,25 @@ export const Basic = ({ theme }: { theme: "system" | "light" | "dark" }) => (
   </StoryWrapper>
 );
 
+export const SeveralInputs = ({
+  theme,
+}: {
+  theme: "system" | "light" | "dark";
+}) => (
+  <StoryWrapper theme={theme}>
+    <ResourceContextProvider value="posts">
+      <SimpleForm>
+        <ArrayInput source="tags">
+          <SimpleFormIterator>
+            <TextInput source="name" />
+            <TextInput source="profession" />
+          </SimpleFormIterator>
+        </ArrayInput>
+      </SimpleForm>
+    </ResourceContextProvider>
+  </StoryWrapper>
+);
+
 export const WithArrayInputValidation = ({
   theme,
 }: {
