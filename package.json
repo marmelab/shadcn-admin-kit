@@ -47,6 +47,7 @@
     "lodash": "^4.17.21",
     "lucide-react": "^0.506.0",
     "next-themes": "^0.4.6",
+    "query-string": "^9.2.2",
     "ra-core": "^5.10.0",
     "ra-data-fakerest": "^5.10.0",
     "ra-i18n-polyglot": "^5.10.0",

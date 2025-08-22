@@ -44,6 +44,7 @@
         "inflection",
         "lodash",
         "lucide-react",
+        "query-string",
         "ra-core",
         "ra-i18n-polyglot",
         "ra-language-english",
@@ -240,6 +241,14 @@
         {
           "path": "src/components/admin/refresh-button.tsx",
           "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/saved-queries.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/hooks/saved-queries.tsx",
+          "type": "registry:hook"
         },
         {
           "path": "src/components/admin/show.tsx",
