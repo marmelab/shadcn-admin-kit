@@ -27,6 +27,7 @@ import {
   useEvent,
 } from "ra-core";
 import { InputHelperText } from "./input-helper-text";
+import { useCallback } from "react";
 
 export const AutocompleteArrayInput = (
   props: Omit<InputProps, "source"> &
@@ -37,9 +38,12 @@ export const AutocompleteArrayInput = (
       filterToQuery?: (searchText: string) => any;
       translateChoice?: boolean;
       placeholder?: string;
-    }
+      inputText?:
+        | React.ReactNode
+        | ((option: any | undefined) => React.ReactNode);
+    },
 ) => {
-  const { filterToQuery = DefaultFilterToQuery } = props;
+  const { filterToQuery = DefaultFilterToQuery, inputText } = props;
   const {
     allChoices = [],
     source,
@@ -66,7 +70,7 @@ export const AutocompleteArrayInput = (
 
   const handleUnselect = useEvent((choice: any) => {
     field.onChange(
-      field.value.filter((v: any) => v !== getChoiceValue(choice))
+      field.value.filter((v: any) => v !== getChoiceValue(choice)),
     );
   });
 
@@ -86,12 +90,25 @@ export const AutocompleteArrayInput = (
   });
 
   const availableChoices = allChoices.filter(
-    (choice) => !field.value.includes(getChoiceValue(choice))
+    (choice) => !field.value.includes(getChoiceValue(choice)),
   );
   const selectedChoices = allChoices.filter((choice) =>
-    field.value.includes(getChoiceValue(choice))
+    field.value.includes(getChoiceValue(choice)),
   );
   const [filterValue, setFilterValue] = React.useState("");
+
+  const getInputText = useCallback(
+    (selectedChoice: any) => {
+      if (typeof inputText === "function") {
+        return inputText(selectedChoice);
+      }
+      if (inputText !== undefined) {
+        return inputText;
+      }
+      return getChoiceText(selectedChoice);
+    },
+    [inputText, getChoiceText],
+  );
 
   return (
     <FormField className={props.className} id={id} name={field.name}>
@@ -115,7 +132,7 @@ export const AutocompleteArrayInput = (
             <div className="flex flex-wrap gap-1">
               {selectedChoices.map((choice) => (
                 <Badge key={getChoiceValue(choice)} variant="outline">
-                  {getChoiceText(choice)}
+                  {getInputText(choice)}
                   <button
                     className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
                     onKeyDown={(e) => {
