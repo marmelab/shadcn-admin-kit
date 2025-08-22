@@ -25,7 +25,7 @@ import { FormProvider, useFormContext, useFormState } from "react-hook-form";
 import type { UseMutationOptions } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
-import { Button, buttonVariants } from "@/components/ui/button.tsx";
+import { Button } from "@/components/ui/button.tsx";
 
 const Form = FormProvider;
 
@@ -237,18 +237,12 @@ const SaveButton = <RecordType extends RaRecord = RaRecord>(
       disabled={disabled}
       onClick={handleClick}
       className={cn(
-        buttonVariants({ variant: "outline" }),
-        "text-primary",
         disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer",
         className,
       )}
       {...rest}
     >
-      {isSubmitting ? (
-        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-      ) : (
-        icon && <span className="mr-2">{icon}</span>
-      )}
+      {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : icon}
       {displayedLabel}
     </Button>
   );
