@@ -98,7 +98,7 @@ const StyledForm = (props: React.FormHTMLAttributes<HTMLFormElement>) => {
     <form
       {...props}
       className={cn(
-        "flex flex-row justify-start items-center gap-x-6 gap-y-3 py-3 flex-auto pointer-events-none flex-wrap",
+        "flex flex-row justify-start items-end gap-x-2 gap-y-3 flex-auto pointer-events-none flex-wrap",
         "[&_.form-helper-text]:hidden",
         props.className,
       )}
@@ -130,8 +130,7 @@ export const FilterFormInput = (inProps: FilterFormInputProps) => {
     <div
       data-source={filterElement.props.source}
       className={cn(
-        "filter-field flex flex-row min-w-64 h-full pointer-events-auto gap-2 mt-2 relative",
-        "[&_.form-item]:flex-grow [&_.form-item_label]:absolute [&_.form-item_label]:-top-2/3",
+        "filter-field flex flex-row h-full pointer-events-auto gap-2 relative",
         className,
       )}
     >

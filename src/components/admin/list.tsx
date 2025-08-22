@@ -148,7 +148,7 @@ export const ListToolbar: FC<ListToolbarProps> = memo((inProps) => {
     <FilterContext.Provider value={filters}>
       <div
         className={cn(
-          "flex flex-row justify-between items-end w-full pb-2",
+          "flex flex-row justify-between items-end w-full",
           className,
         )}
       >
@@ -160,7 +160,7 @@ export const ListToolbar: FC<ListToolbarProps> = memo((inProps) => {
   ) : (
     <div
       className={cn(
-        "flex flex-row justify-between items-end w-full pb-2",
+        "flex flex-row justify-between items-end w-full",
         className,
       )}
     >
