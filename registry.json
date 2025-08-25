@@ -323,6 +323,10 @@
           "type": "registry:hook"
         },
         {
+          "path": "src/lib/field.type.ts",
+          "type": "registry:lib"
+        },
+        {
           "path": "src/lib/genericMemo.ts",
           "type": "registry:lib"
         },
