@@ -259,6 +259,10 @@
           "type": "registry:hook"
         },
         {
+          "path": "src/components/admin/search-input.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/show.tsx",
           "type": "registry:component"
         },
