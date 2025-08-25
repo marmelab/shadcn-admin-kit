@@ -219,6 +219,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/number-input.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/ready.tsx",
           "type": "registry:component"
         },
