@@ -36,6 +36,7 @@ export * from "./login-page";
 export * from "./notification";
 export * from "./number-field";
 export * from "./number-input";
+export * from "./radio-button-group-input";
 export * from "./ready";
 export * from "./record-field";
 export * from "./reference-array-input";

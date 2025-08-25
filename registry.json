@@ -25,6 +25,7 @@
         "navigation-menu",
         "pagination",
         "popover",
+        "radio-group",
         "select",
         "separator",
         "sheet",
@@ -220,6 +221,10 @@
         },
         {
           "path": "src/components/admin/number-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/radio-button-group-input.tsx",
           "type": "registry:component"
         },
         {
