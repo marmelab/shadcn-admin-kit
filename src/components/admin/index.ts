@@ -52,6 +52,7 @@ export * from "./simple-form";
 export * from "./simple-form-iterator";
 export * from "./simple-show-layout";
 export * from "./single-field-list";
+export * from "./sort-button";
 export * from "./text-field";
 export * from "./text-input";
 export * from "./toggle-filter-button";
