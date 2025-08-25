@@ -1,26 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ExtractRecordPaths, RaRecord, useFieldValue } from "ra-core";
-import { ReactNode } from "react";
+import { HTMLAttributes } from "react";
+import { RaRecord, useFieldValue, useTranslate } from "ra-core";
+import { FieldProps } from "@/lib/field.type.ts";
 
-export const NumberField = <RecordType extends RaRecord = RaRecord>(
-  props: NumberFieldProps<RecordType>,
-) => {
-  let value = useFieldValue(props);
-  const {
-    className,
-    locales,
-    options,
-    empty = null,
-    transform = defaultTransform,
-  } = props;
+export const NumberField = <RecordType extends RaRecord = RaRecord>({
+  defaultValue,
+  source,
+  record,
+  empty,
+  resource: _,
+  transform = defaultTransform,
+  locales,
+  options,
+  ...rest
+}: NumberFieldProps<RecordType>) => {
+  let value = useFieldValue({ defaultValue, source, record });
+  const translate = useTranslate();
+
   if (value == null) {
-    return empty;
+    return empty && typeof empty === "string"
+      ? translate(empty, { _: empty })
+      : empty;
   }
+
   if (transform) {
     value = transform(value);
   }
+
   return (
-    <span className={className}>
+    <span {...rest}>
       {hasNumberFormat && typeof value === "number"
         ? value.toLocaleString(locales, options)
         : value}
@@ -28,12 +36,9 @@ export const NumberField = <RecordType extends RaRecord = RaRecord>(
   );
 };
 
-export interface NumberFieldProps<RecordType extends RaRecord = RaRecord> {
-  className?: string;
-  empty?: ReactNode;
-  source: ExtractRecordPaths<RecordType>;
-  record?: RecordType;
-  resource?: string;
+export interface NumberFieldProps<RecordType extends RaRecord = RaRecord>
+  extends FieldProps<RecordType>,
+    HTMLAttributes<HTMLSpanElement> {
   locales?: string | string[];
   options?: object;
   transform?: (value: any) => number;
