@@ -26,11 +26,12 @@ export const RecordField = <
     label,
     render,
     source,
+    record: recordProp,
     variant,
     ...rest
   } = props;
   const resource = useResourceContext();
-  const record = useRecordContext<RecordType>(props);
+  const record = useRecordContext<RecordType>({ recordProp });
   const translate = useTranslate();
   if (!source && !label && !render) return null;
   return (
