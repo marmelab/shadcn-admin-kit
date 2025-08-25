@@ -23,6 +23,7 @@ export * from "./email-field";
 export * from "./error";
 export * from "./export-button";
 export * from "./field-toggle";
+export * from "./file-field";
 export * from "./filter-form";
 export * from "./form";
 export * from "./layout";

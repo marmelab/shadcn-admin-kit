@@ -163,6 +163,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/file-field.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/hooks/filter-context.tsx",
           "type": "registry:hook"
         },
