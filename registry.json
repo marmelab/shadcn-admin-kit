@@ -323,6 +323,10 @@
           "type": "registry:hook"
         },
         {
+          "path": "src/lib/genericMemo.ts",
+          "type": "registry:lib"
+        },
+        {
           "path": "src/lib/i18nProvider.ts",
           "type": "registry:lib"
         },
