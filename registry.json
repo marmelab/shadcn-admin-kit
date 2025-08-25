@@ -131,6 +131,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/date-field.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/delete-button.tsx",
           "type": "registry:component"
         },
@@ -144,6 +148,10 @@
         },
         {
           "path": "src/components/admin/edit-guesser.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/email-field.tsx",
           "type": "registry:component"
         },
         {
@@ -300,6 +308,10 @@
         },
         {
           "path": "src/components/admin/toggle-filter-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/url-field.tsx",
           "type": "registry:component"
         },
         {
