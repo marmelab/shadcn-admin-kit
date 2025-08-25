@@ -263,6 +263,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/select-field.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/show.tsx",
           "type": "registry:component"
         },
