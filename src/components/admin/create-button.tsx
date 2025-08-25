@@ -26,7 +26,9 @@ export const CreateButton = ({
       onClick={stopPropagation}
     >
       <Plus />
-      <Translate i18nKey={label ?? "ra.action.create"}>Create</Translate>
+      <Translate i18nKey={label ?? "ra.action.create"}>
+        {label ?? "Create"}
+      </Translate>
     </Link>
   );
 };
