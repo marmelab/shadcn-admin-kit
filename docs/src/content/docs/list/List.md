@@ -65,7 +65,7 @@ You can find more advanced examples of `<List>` usage in the [demo](https://marm
 | `pagination` | Optional | `ReactNode` | `<ListPagination />` | Custom pagination component |
 | `perPage` | Optional | `number` | `10` | Records per page |
 | `queryOptions` | Optional | `object` | - | Extra TanStack Query options |
-| `resource` | Optional | `string` | inferred | Resource name (if not in a `<Resource>` context) |
+| `resource` | Optional | `string` | inferred | Resource name, defaults to the current `<ResourceContext>` |
 | `sort` | Optional | `{ field: string; order: 'ASC'|'DESC' }` | - | Initial sort |
 | `storeKey` | Optional | `string | false` | derived | Storage key for persisted params; `false` disables persistence |
 | `title` | Optional | `string | ReactNode | false` | resource plural label | Page title |
@@ -74,9 +74,188 @@ You can find more advanced examples of `<List>` usage in the [demo](https://marm
 
 These props will soon be supported: `aside`, `empty`, `emptyWhileLoading`.
 
-## `actions`
+## Sort
 
-By default the header (right side) shows:
+Pass an object literal as the `sort` prop to determine the default `field` and `order` used for sorting:
+
+```jsx
+export const PostList = () => (
+    <List sort={{ field: 'published_at', order: 'DESC' }}>
+        ...
+    </List>
+);
+```
+
+`sort` defines the *default* sort order ; users can change the sort order, e.g. by clicking on column headers when using a `<DataTable>`, or by selecting another option in the `<SortButton>`.
+
+
+## Pagination
+
+By default, the `<List>` view displays a set of pagination controls at the bottom of the list.
+
+![Pagination](https://marmelab.com/react-admin/img/list-pagination.webp)
+
+The `pagination` prop allows to replace the default pagination controls by your own.
+
+```jsx
+// in src/MyPagination.js
+import { TablePagination, List } from 'shadcn-admin-kit';
+
+const PostPagination = () => <TablePagination rowsPerPageOptions={[10, 25, 50, 100]} />;
+
+export const PostList = () => (
+    <List pagination={<PostPagination />}>
+        ...
+    </List>
+);
+```
+
+By default, the list paginates results by groups of 10. You can override this setting by specifying the `perPage` prop:
+
+```jsx
+// in src/posts.js
+export const PostList = () => (
+    <List perPage={25}>
+        ...
+    </List>
+);
+```
+
+:::note
+The default pagination component's `rowsPerPageOptions` includes options of 5, 10, 25 and 50. If you set your List `perPage` to a value not in that set, you must also customize the pagination so that it allows this value, or else there will be an error.
+
+```diff
+// in src/MyPagination.js
+-import { List } from 'shadcn-admin-kit';
++import { List, Pagination } from 'shadcn-admin-kit';
+
+export const PostList = () => (
+-    <List perPage={6}>
++    <List perPage={6} pagination={<Pagination rowsPerPageOptions={[6, 12, 24, 36]} />}>
+        ...
+    </List>
+);
+```
+:::
+
+## Permanent Filter
+
+You can choose to always filter the list, without letting the user disable this filter - for instance to display only published posts. Write the filter to be passed to the data provider in the `filter` props:
+
+```jsx
+// in src/posts.js
+export const PostList = () => (
+    <List filter={{ is_published: true }}>
+        ...
+    </List>
+);
+```
+
+The actual filter parameter sent to the data provider is the result of the combination of the *user* filters (the ones set through the `filters` component form), and the *permanent* filter. The user cannot override the permanent filters set by way of `filter`.
+
+## Filter Button / Form Combo
+
+<video controls autoplay playsinline muted loop>
+    <source src="https://marmelab.com/react-admin/img/list_filter.mp4" type="video/mp4"/>
+  Your browser does not support the video tag.
+</video>
+
+You can add an array of filter Inputs to the List using the `filters` prop:
+
+```jsx
+const postFilters = [
+    <SearchInput source="q" alwaysOn />,
+    <TextInput label="Title" source="title" defaultValue="Hello, World!" />,
+];
+
+export const PostList = () => (
+    <List filters={postFilters}>
+        ...
+    </List>
+);
+```
+
+:::tip
+Don't mix up this `filters` prop, expecting an array of `<Input>` elements, with the `filter` props, which expects an object to define permanent filters (see below).
+:::
+
+:::tip
+Filters will render as disabled inputs or menu items (depending on filter context) if passed the prop `disabled`.
+:::
+
+Filter Inputs are regular inputs. `<List>` hides them all by default, except those that have the `alwaysOn` prop. Note that inputs with `alwaysOn` don't accept `defaultValue`. You have to use the `filterDefaultValues` for those.
+
+```jsx
+// in src/posts.js
+const postFilters = [
+    <TextInput label="Search" source="q" alwaysOn />,
+    <BooleanInput source="is_published" alwaysOn />,
+    <TextInput source="title" defaultValue="Hello, World!" />,
+];
+
+export const PostList = () => (
+    <List filters={postFilters} filterDefaultValues={{ is_published: true }}>
+        ...
+    </List>
+);
+```
+
+:::tip
+You can also display filters as a sidebar thanks to the [`<ToggleFilterButton>`](./ToggleFilterButton.md) component:
+
+<video controls autoplay playsinline muted loop>
+    <source src="https://marmelab.com/react-admin/img/filter-sidebar.webm" type="video/webm"/>
+    <source src="https://marmelab.com/react-admin/img/filter-sidebar.mp4" type="video/mp4"/>
+  Your browser does not support the video tag.
+</video>
+:::
+
+For more details about customizing filters, see the [Filtering the List](https://marmelab.com/react-admin/FilteringTutorial.html#filtering-the-list) documentation.
+
+## List Items
+
+`<List>` itself doesn't render the list of records. It delegates this task to its children components. These children components grab the `data` from the [`ListContext`](https://marmelab.com/react-admin/useListContext.html) and render them on screen.
+
+![List children](https://marmelab.com/react-admin/img/list-children.webp)
+
+shadcn-admin-kit provides several components that can read and display a list of records from a `ListContext`, each with a different layout:
+
+- [`<DataTable>`](https://marmelab.com/react-admin/DataTable.html) displays records in a table
+- [`<SingleFieldList>`](https://marmelab.com/react-admin/SingleFieldList.html) displays records inline, showing one field per record
+
+Alternatively to `children`, you can pass a `render` prop to `<List>`. It will receive the [`ListContext`](https://marmelab.com/react-admin/useListContext.html#return-value) as its argument, and should return a React node. This allows to inline the render logic for the list page.
+
+```tsx
+const PostList = () => (
+    <List
+        render={({ isPending, error, data }) => {
+            if (isPending) {
+                return <div>Loading...</div>;
+            }
+            if (error) {
+                return <div>Error: {error.message}</div>;
+            }
+            return (
+                <ul>
+                    {data.map(post => (
+                        <li key={post.id}>
+                            <strong>{post.title}</strong> - {post.author}
+                        </li>
+                    ))}
+                </ul>
+            );
+        }}
+    />
+);
+```
+
+:::note
+When receiving a `render` prop, the `<List>` component will ignore the `children` prop.
+:::
+
+## Actions toolbar
+
+By default the page header shows a toolbar with 2 buttons:
 
 * `<CreateButton>` (if the resource has a create view)
 * `<ExportButton>` (unless `exporter={false}`)
@@ -103,144 +282,7 @@ export const PostList = () => (
 
 You can also build contextual actions using anything from the list context (`isPending`, `total`, `selectedIds`, etc.).
 
-## `children`
-
-`<List>` itself doesn't render the list of records. It delegates this task to its children components. These children components grab the `data` from the [`ListContext`](https://marmelab.com/react-admin/useListContext.html) and render them on screen.
-
-![List children](https://marmelab.com/react-admin/img/list-children.webp)
-
-The most common List child is [`<DataTable>`](https://marmelab.com/react-admin/DataTable.html):
-
-```jsx
-export const BookList = () => (
-    <List>
-        <DataTable>
-            <DataTable.Col source="id" />
-            <DataTable.Col source="title" />
-            <DataTable.Col source="published_at" field={DateField} />
-            <DataTable.Col label="Nb comments">
-                <ReferenceManyCount reference="comments" target="post_id" link />
-            </DataTable.Col>
-            <DataTable.Col source="commentable" label="Com." field={BooleanField} />
-            <DataTable.NumberCol source="nb_views" label="Views" />
-            <DataTable.Col>
-                <EditButton />
-                <ShowButton />
-            </DataTable.Col>
-        </DataTable>
-    </List>
-);
-```
-
-shadcn-admin-kit provides several components that can read and display a list of records from a `ListContext`, each with a different layout:
-
-- [`<DataTable>`](https://marmelab.com/react-admin/DataTable.html) displays records in a table
-- [`<SingleFieldList>`](https://marmelab.com/react-admin/SingleFieldList.html) displays records inline, showing one field per record
-
-You can also render the list of records using a custom React component thanks to [the `render` prop](#render). Check [Building a custom List Iterator](https://marmelab.com/react-admin/ListTutorial.html#building-a-custom-iterator) for more details.
-
-## `debounce`
-
-By default, `<List>` does not refresh the data as soon as the user enters data in the filter form. Instead, it waits for half a second of user inactivity (via `lodash.debounce`) before calling the dataProvider on filter change. This is to prevent repeated (and useless) calls to the API.
-
-You can customize the debounce duration in milliseconds - or disable it completely - by passing a `debounce` prop to the `<List>` component:
-
-```jsx
-// wait 1 seconds instead of 500 milliseconds before calling the dataProvider
-const PostList = () => (
-    <List debounce={1000}>
-        ...
-    </List>
-);
-```
-
-## `disableAuthentication`
-
-By default, all pages using `<List>` require the user to be authenticated - any anonymous access redirects the user to the login page.
-
-If you want to allow anonymous access to a List page, set the `disableAuthentication` prop to `true`.
-
-```jsx
-import { List } from 'shadcn-admin-kit';
-
-const BoolkList = () => (
-    <List disableAuthentication>
-        ...
-    </List>
-);
-```
-
-## `disableSyncWithLocation`
-
-By default, shadcn-admin-kit synchronizes the `<List>` parameters (sort, pagination, filters) with the query string in the URL (using `react-router` location) and the [Store](https://marmelab.com/react-admin/Store.html).
-
-When you use a `<List>` component anywhere else than as `<Resource list>`, you may want to disable this synchronization to keep the parameters in a local state, independent for each `<List>` instance. This allows to have multiple lists on a single page. To do so, pass the `disableSyncWithLocation` prop. The drawback is that a hit on the "back" button doesn't restore the previous list parameters.
-
-```jsx
-const Dashboard = () => (
-    <div>
-        // ...
-        <ResourceContextProvider value="posts">
-            <List disableSyncWithLocation>
-                <DataTable>
-                    <DataTable.Col source="id" />
-                    <DataTable.Col label="User" source="userId">
-                        <ReferenceField source="userId" reference="users">
-                            <TextField source="name" />
-                        </ReferenceField>
-                    </DataTable.Col>
-                    <DataTable.Col source="title" />
-                    <DataTable.Col source="body" />
-                </DataTable>
-            </List>
-        </ResourceContextProvider>
-        <ResourceContextProvider value="comments">
-            <List disableSyncWithLocation>
-                <DataTable>
-                    <DataTable.Col source="id" />
-                    <DataTable.Col label="Post" source="postId">
-                        <ReferenceField source="postId" reference="posts">
-                            <TextField source="title" />
-                        </ReferenceField>
-                    </DataTable.Col>
-                    <DataTable.Col source="body" />
-                </DataTable>
-            </List>
-        </ResourceContextProvider>
-    </div>
-)
-```
-
-
-:::tip
-`disableSyncWithLocation` also disables the persistence of the list parameters in the Store by default. To enable the persistence of the list parameters in the Store, you can pass a custom `storeKey` prop.
-
-```diff
-const Dashboard = () => (
-    <div>
-        // ...
-        <ResourceContextProvider value="posts">
--           <List disableSyncWithLocation>
-+           <List disableSyncWithLocation storeKey="postsListParams">
-                ...
-            </List>
-        </ResourceContextProvider>
-        <ResourceContextProvider value="comments">
--           <List disableSyncWithLocation>
-+           <List disableSyncWithLocation storeKey="commentsListParams">
-                ...
-            </List>
-        </ResourceContextProvider>
-    </div>
-)
-```
-:::
-
-:::note
-The *selection state* is not synced in the URL but in a global store using the resource as key. Thus, all lists in the page using the same resource will share the same synced selection state. This is a design choice because if row selection is not tied to a resource, then when a user deletes a record it may remain selected without any ability to unselect it. If you want to allow custom `storeKey`'s for managing selection state, you will have to implement your own `useListController` hook and pass a custom key to the `useRecordSelection` hook. You will then need to implement your own `DeleteButton` and `BulkDeleteButton` to manually unselect rows when deleting records. You can still opt out of all store interactions including selection if you set it to `false`.
-:::
-
-## `exporter`
+## Exported Data
 
 <video controls autoplay playsinline muted loop>
     <source src="https://marmelab.com/react-admin/img/export-button.webm" type="video/webm"/>
@@ -368,152 +410,7 @@ export const PostList = () => {
 Looking for an `<ImportButton>`? shadcn-admin-kit doesn't provide this feature, but the community has an excellent third-party module for CSV import: [benwinding/react-admin-import-csv](https://github.com/benwinding/react-admin-import-csv).
 :::
 
-## `filters`: Filter Inputs
-
-<video controls autoplay playsinline muted loop>
-    <source src="https://marmelab.com/react-admin/img/list_filter.mp4" type="video/mp4"/>
-  Your browser does not support the video tag.
-</video>
-
-You can add an array of filter Inputs to the List using the `filters` prop:
-
-```jsx
-const postFilters = [
-    <SearchInput source="q" alwaysOn />,
-    <TextInput label="Title" source="title" defaultValue="Hello, World!" />,
-];
-
-export const PostList = () => (
-    <List filters={postFilters}>
-        ...
-    </List>
-);
-```
-
-:::tip
-Don't mix up this `filters` prop, expecting an array of `<Input>` elements, with the `filter` props, which expects an object to define permanent filters (see below).
-:::
-
-:::tip
-Filters will render as disabled inputs or menu items (depending on filter context) if passed the prop `disabled`.
-:::
-
-Filter Inputs are regular inputs. `<List>` hides them all by default, except those that have the `alwaysOn` prop.
-
-You can also display filters as a sidebar:
-
-<video controls autoplay playsinline muted loop>
-    <source src="https://marmelab.com/react-admin/img/filter-sidebar.webm" type="video/webm"/>
-    <source src="https://marmelab.com/react-admin/img/filter-sidebar.mp4" type="video/mp4"/>
-  Your browser does not support the video tag.
-</video>
-
-For more details about customizing filters, see the [Filtering the List](https://marmelab.com/react-admin/FilteringTutorial.html#filtering-the-list) documentation.
-
-## `filter`: Permanent Filter
-
-You can choose to always filter the list, without letting the user disable this filter - for instance to display only published posts. Write the filter to be passed to the data provider in the `filter` props:
-
-```jsx
-// in src/posts.js
-export const PostList = () => (
-    <List filter={{ is_published: true }}>
-        ...
-    </List>
-);
-```
-
-
-The actual filter parameter sent to the data provider is the result of the combination of the *user* filters (the ones set through the `filters` component form), and the *permanent* filter. The user cannot override the permanent filters set by way of `filter`.
-
-## `filterDefaultValues`
-
-To set default values to filters, you can either pass an object literal as the `filterDefaultValues` prop of the `<List>` element, or use the `defaultValue` prop of any input component.
-
-There is one exception: inputs with `alwaysOn` don't accept `defaultValue`. You have to use the `filterDefaultValues` for those.
-
-```jsx
-// in src/posts.js
-const postFilters = [
-    <TextInput label="Search" source="q" alwaysOn />,
-    <BooleanInput source="is_published" alwaysOn />,
-    <TextInput source="title" defaultValue="Hello, World!" />,
-];
-
-export const PostList = () => (
-    <List filters={postFilters} filterDefaultValues={{ is_published: true }}>
-        ...
-    </List>
-);
-```
-
-
-:::tip
-The `filter` and `filterDefaultValues` props have one key difference: the `filterDefaultValues` can be overridden by the user, while the `filter` values are always sent to the data provider. Or, to put it otherwise:
-
-```js
-const filterSentToDataProvider = { ...filterDefaultValues, ...filterChosenByUser, ...filter };
-```
-:::
-
-## `pagination`
-
-By default, the `<List>` view displays a set of pagination controls at the bottom of the list.
-
-![Pagination](https://marmelab.com/react-admin/img/list-pagination.webp)
-
-The `pagination` prop allows to replace the default pagination controls by your own.
-
-```jsx
-// in src/MyPagination.js
-import { TablePagination, List } from 'shadcn-admin-kit';
-
-const PostPagination = () => <TablePagination rowsPerPageOptions={[10, 25, 50, 100]} />;
-
-export const PostList = () => (
-    <List pagination={<PostPagination />}>
-        ...
-    </List>
-);
-```
-
-:::tip
-If you want the new pages to be automatically fetched when users scroll down, you can use the [`<InfiniteList>`](#infinite-scroll-pagination) component.
-
-See [Paginating the List](https://marmelab.com/react-admin/ListTutorial.html#building-a-custom-pagination) for details.
-:::
-
-## `perPage`
-
-By default, the list paginates results by groups of 10. You can override this setting by specifying the `perPage` prop:
-
-```jsx
-// in src/posts.js
-export const PostList = () => (
-    <List perPage={25}>
-        ...
-    </List>
-);
-```
-
-:::note
-The default pagination component's `rowsPerPageOptions` includes options of 5, 10, 25 and 50. If you set your List `perPage` to a value not in that set, you must also customize the pagination so that it allows this value, or else there will be an error.
-
-```diff
-// in src/MyPagination.js
--import { List } from 'shadcn-admin-kit';
-+import { List, Pagination } from 'shadcn-admin-kit';
-
-export const PostList = () => (
--    <List perPage={6}>
-+    <List perPage={6} pagination={<Pagination rowsPerPageOptions={[6, 12, 24, 36]} />}>
-        ...
-    </List>
-);
-```
-:::
-
-## `queryOptions`
+## Data Fetching Options
 
 `<List>` accepts a `queryOptions` prop to pass [query options](https://marmelab.com/react-admin/DataProviders.html#react-query-options) to the react-query client. Check react-query's [`useQuery` documentation](https://tanstack.com/query/v5/docs/react/reference/useQuery) for the list of available options.
 
@@ -528,7 +425,6 @@ const PostList = () => (
     </List>
 );
 ```
-
 
 With this option, shadcn-admin-kit will call `dataProvider.getList()` on mount with the `meta: { foo: 'bar' }` option.
 
@@ -554,77 +450,101 @@ const PostList = () => {
 }
 ```
 
-
 The `onError` function receives the error from the dataProvider call (`dataProvider.getList()`), which is a JavaScript Error object (see [the dataProvider documentation for details](https://marmelab.com/react-admin/DataProviderWriting.html#error-format)).
 
-## `render`
+If `dataProvider.getList()` returns additional metadata in the response under the `meta` key, you can access it in the list view using the `meta` property of the `ListContext`.
 
-Alternatively to `children`, you can pass a `render` prop to `<List>`. It will receive the [`ListContext`](https://marmelab.com/react-admin/useListContext.html#return-value) as its argument, and should return a React node.
+![List metadata](https://marmelab.com/react-admin/img/List-facets.png)
 
-This allows to inline the render logic for the list page.
-
-When receiving a render prop the `<List>` component will ignore the children property.
+This is often used by APIs to return facets, aggregations, statistics, or other metadata about the list of records.
 
 ```tsx
-const PostList = () => (
-    <List
-        render={({ isPending, error, data }) => {
-            if (isPending) {
-                return <div>Loading...</div>;
-            }
-            if (error) {
-                return <div>Error: {error.message}</div>;
-            }
-            return (
-                <ul>
-                    {data.map(post => (
-                        <li key={post.id}>
-                            <strong>{post.title}</strong> - {post.author}
+// dataProvider.getLists('books') returns response like
+// {
+//     data: [ ... ],
+//     total: 293,
+//     meta: {
+//         genres: [
+//             { value: 'Fictions', count: 134 },
+//             { value: 'Essays', count: 24 },
+//         ],
+//         centuries: [
+//             { value: '18th', count: 23 },
+//             { value: '19th', count: 78 },
+//             { value: '20th', count: 57 },
+//             { value: '21st', count: 34 },
+//         ],
+//     },
+// }
+const Facets = () => {
+    const { isPending, error, meta } = useListContext();
+    if (isPending || error) return null;
+    return (
+        <div className="space-y-4 rounded-md border p-4 bg-background">
+            <div>
+                <h4 className="text-sm font-semibold tracking-wide text-foreground/80 mb-2">Genres</h4>
+                <ul className="space-y-1 text-sm">
+                    {meta.genres.map(facet => (
+                        <li key={facet.value}>
+                            <Link href="#" className="hover:underline">
+                                {facet.value} <span className="text-muted-foreground">({facet.count})</span>
+                            </Link>
                         </li>
                     ))}
                 </ul>
-            );
+            </div>
+            <div>
+                <h4 className="text-sm font-semibold tracking-wide text-foreground/80 mb-2">Century</h4>
+                <ul className="space-y-1 text-sm">
+                    {meta.centuries.map(facet => (
+                        <li key={facet.value}>
+                            <Link href="#" className="hover:underline">
+                                {facet.value} <span className="text-muted-foreground">({facet.count})</span>
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    );
+};
+```
+
+You might want to allow data to be fetched only when at least some filters have been set. You can leverage TanStack react-query `enabled` option for that. It accepts a function that receives the query as its only parameter. As shadcn-admin-kit always format the `queryKey` as `[ResourceName, DataProviderMethod, DataProviderParams]`, you can check that there is at least a filter in this function:
+
+```tsx
+export const PostList = () => (
+    <List
+        filters={postFilter}
+        queryOptions={{
+            enabled: query => {
+                const listParams = query.queryKey[2] as GetListParams;
+                return listParams.filter.q?.length > 2;
+            }
         }}
-    />
-);
+        render={context =>
+            context.filterValues.q?.length > 2 ? (
+                <CardContentInner>
+                    Type a search term to fetch data
+                </CardContentInner>
+            ) : (
+                <Datagrid>
+                    {/* your fields */}
+                </Datagrid>
+            )
+        }
+    />)
 ```
 
 :::note
-When receiving a `render` prop, the `<List>` component will ignore the `children` prop.
+Notice we display some custom UI when there is no filter. This is because otherwise, users would see the loading UI as Tanstack Query will set the `isPending` property of the underlying query to `true` if the query isn't enabled.
 :::
 
-## `resource`
+## Parameters Persistence
 
-By default, `<List>` operates on the current `ResourceContext` (defined at the routing level), so under the `/posts` path, the `resource` prop will be `posts`. You may want to force a different resource for a list. In this case, pass a custom `resource` prop, and it will override the `ResourceContext` value.
+By default, when users change the list parameters (sort, pagination, filters), shadcn-admin-kit stores them in localStorage so that users can come back to the list and find it in the same state as when they left it, using the internal [Store](https://marmelab.com/react-admin/Store.html). 
 
-```jsx
-export const UsersList = () => (
-    <List resource="users">
-        ...
-    </List>
-);
-```
-
-## `sort`
-
-Pass an object literal as the `sort` prop to determine the default `field` and `order` used for sorting:
-
-```jsx
-export const PostList = () => (
-    <List sort={{ field: 'published_at', order: 'DESC' }}>
-        ...
-    </List>
-);
-```
-
-
-`sort` defines the *default* sort order ; the list remains sortable by clicking on column headers.
-
-For more details on list sort, see the [Sorting The List](https://marmelab.com/react-admin/ListTutorial.html#sorting-the-list) section below.
-
-## `storeKey`
-
-By default, shadcn-admin-kit stores the list parameters (sort, pagination, filters) in localStorage so that  users can come back to the list and find it in the same state as when they left it. shadcn-admin-kit uses the current resource as the identifier to store the list parameters (under the key `${resource}.listParams`).
+Shadcn-admin-kit uses the current resource as the identifier to store the list parameters (under the key `${resource}.listParams`).
 
 If you want to display multiple lists of the same resource and keep distinct store states for each of them (filters, sorting and pagination), you must give each list a unique `storeKey` property. You can also disable the persistence of list parameters and selection in the store by setting the `storeKey` prop to `false`.
 
@@ -683,12 +603,11 @@ const Admin = () => {
 };
 ```
 
-
 **Tip:** The `storeKey` is actually passed to the underlying `useListController` hook, which you can use directly for more complex scenarios. See the [`useListController` doc](https://marmelab.com/react-admin/useListController.html#storekey) for more info.
 
 **Note:** *Selection state* will remain linked to a resource-based key regardless of the specified `storeKey` string. This is a design choice because if row selection is not tied to a resource, then when a user deletes a record it may remain selected without any ability to unselect it. If you want to allow custom `storeKey`'s for managing selection state, you will have to implement your own `useListController` hook and pass a custom key to the `useRecordSelection` hook. You will then need to implement your own `DeleteButton` and `BulkDeleteButton` to manually unselect rows when deleting records. You can still opt out of all store interactions including selection if you set it to `false`.
 
-## `title`
+## Page Title
 
 The default title for a list view is the translation key `ra.page.list` that translates to [the plural name of the resource](https://marmelab.com/react-admin/TranslationTranslating.html#translating-resource-and-field-names) (e.g. "Posts").
 
@@ -750,20 +669,6 @@ Just like `<List>`, `<ListGuesser>` fetches the data. It then analyzes the respo
 
 You can learn more by reading [the `<ListGuesser>` documentation](https://marmelab.com/react-admin/ListGuesser.html).
 
-## Adding `meta` To The DataProvider Call
-
-Use [the `queryOptions` prop](#queryoptions) to pass [a custom `meta`](https://marmelab.com/react-admin/Actions.html#meta-parameter) to the `dataProvider.getList()` call.
-
-```jsx
-import { List } from 'shadcn-admin-kit';
-
-const PostList = () => (
-    <List queryOptions={{ meta: { foo: 'bar' } }}>
-        ...
-    </List>
-);
-```
-
 ## Rendering An Empty List
 
 When there is no data, shadcn-admin-kit displays a special page inviting the user to create the first record. This page can be customized using [the `empty` prop](#empty).
@@ -778,114 +683,6 @@ const ProductList = () => (
         ...
     </List>
 )
-```
-
-## Disabling Parameters Persistence
-
-By default, shadcn-admin-kit stores the list parameters (sort, pagination, filters) in localStorage so that  users can come back to the list and find it in the same state as when they left it. This also synchronizes the list parameters across tabs.
-
-You can disable this feature by setting [the `storeKey` prop](#storekey) to `false`:
-
-```tsx
-import { List } from 'shadcn-admin-kit';
-
-const ProductList = () => (
-    <List storeKey={false}>
-        ...
-    </List>
-)
-```
-
-## Enabling Data Fetching Conditionally
-
-You might want to allow data to be fetched only when at least some filters have been set. You can leverage TanStack react-query `enabled` option for that. It accepts a function that receives the query as its only parameter. As shadcn-admin-kit always format the `queryKey` as `[ResourceName, DataProviderMethod, DataProviderParams]`, you can check that there is at least a filter in this function:
-
-```tsx
-export const PostList = () => (
-    <List
-        filters={postFilter}
-        queryOptions={{
-            enabled: query => {
-                const listParams = query.queryKey[2] as GetListParams;
-                return listParams.filter.q?.length > 2;
-            }
-        }}
-        render={context =>
-            context.filterValues.q?.length > 2 ? (
-                <CardContentInner>
-                    Type a search term to fetch data
-                </CardContentInner>
-            ) : (
-                <Datagrid>
-                    {/* your fields */}
-                </Datagrid>
-            )
-        }
-    />)
-```
-
-:::note
-Notice we display some custom UI when there is no filter. This is because otherwise, users would see the loading UI as Tanstack Query will set the `isPending` property of the underlying query to `true` if the query isn't enabled.
-:::
-
-## Accessing Extra Response Data
-
-If `dataProvider.getList()` returns additional metadata in the response under the `meta` key, you can access it in the list view using the `meta` property of the `ListContext`.
-
-![List metadata](https://marmelab.com/react-admin/img/List-facets.png)
-
-This is often used by APIs to return facets, aggregations, statistics, or other metadata about the list of records.
-
-```tsx
-// dataProvider.getLists('books') returns response like
-// {
-//     data: [ ... ],
-//     total: 293,
-//     meta: {
-//         genres: [
-//             { value: 'Fictions', count: 134 },
-//             { value: 'Essays', count: 24 },
-//         ],
-//         centuries: [
-//             { value: '18th', count: 23 },
-//             { value: '19th', count: 78 },
-//             { value: '20th', count: 57 },
-//             { value: '21st', count: 34 },
-//         ],
-//     },
-// }
-const Facets = () => {
-    const { isPending, error, meta } = useListContext();
-    if (isPending || error) return null;
-    return (
-        <div className="space-y-4 rounded-md border p-4 bg-background">
-            <div>
-                <h4 className="text-sm font-semibold tracking-wide text-foreground/80 mb-2">Genres</h4>
-                <ul className="space-y-1 text-sm">
-                    {meta.genres.map(facet => (
-                        <li key={facet.value}>
-                            <Link href="#" className="hover:underline">
-                                {facet.value} <span className="text-muted-foreground">({facet.count})</span>
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div>
-                <h4 className="text-sm font-semibold tracking-wide text-foreground/80 mb-2">Century</h4>
-                <ul className="space-y-1 text-sm">
-                    {meta.centuries.map(facet => (
-                        <li key={facet.value}>
-                            <Link href="#" className="hover:underline">
-                                {facet.value} <span className="text-muted-foreground">({facet.count})</span>
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </div>
-    );
-};
 ```
 
 ## Controlled Mode
@@ -1057,20 +854,6 @@ const ProductList = () => {
 
 `useListController` returns callbacks to sort, filter, and paginate the list, so you can build a complete List page. Check [the `useListController`hook documentation](https://marmelab.com/react-admin/useListController.html) for details.
 
-## Anonymous Access
-
-The `<List>` component requires authentication and will redirect anonymous users to the login page. If you want to allow anonymous access, use the [`disableAuthentication`](#disableauthentication) prop.
-
-```jsx
-import { List } from 'shadcn-admin-kit';
-
-const BookList = () => (
-    <List disableAuthentication>
-        ...
-    </List>
-);
-```
-
 ## Access Control
 
 If your `authProvider` implements [Access Control](https://marmelab.com/react-admin/Permissions.html#access-control), `<List>`  will only render if the user can access the resource with the "list" action.
@@ -1101,73 +884,3 @@ const PostList = () => (
 Users without access will be redirected to the [Access Denied page](https://marmelab.com/react-admin/Admin.html#accessdenied).
 
 **Note**: Access control is disabled when you use [the `disableAuthentication` prop](#disableauthentication).
-
-For finer access control of the list action buttons, use the `<List>` component from the `@react-admin/ra-rbac` package.
-
-```diff
--import { List } from 'shadcn-admin-kit';
-+import { List } from '@react-admin/ra-rbac';
-```
-
-This component adds the following [RBAC](https://marmelab.com/react-admin/AuthRBAC.html) controls:
-
-- Users must have the `'create'` permission on the resource to see the `<CreateButton>`.
-- Users must have the `'export'` permission on the resource to see the `<ExportButton>`.
-- Users must have the `'read'` permission on a resource column to see it in the export:
-
-```jsx
-{ action: "read", resource: `${resource}.${source}` }.
-// 
-{ action: "read", resource: `${resource}.*` }.
-```
-
-Here is an example of `<List>` with RBAC:
-
-```tsx
-import { List } from '@react-admin/ra-rbac';
-
-const authProvider = {
-    // ...
-    canAccess: async () =>
-        canAccessWithPermissions({
-            permissions: [
-                { action: 'list', resource: 'products' },
-                { action: 'export', resource: 'products' },
-                // actions 'create' and 'delete' are missing
-                { action: 'read', resource: 'products.name' },
-                { action: 'read', resource: 'products.description' },
-                { action: 'read', resource: 'products.price' },
-                { action: 'read', resource: 'products.category' },
-                // resource 'products.stock' is missing
-            ],
-            action,
-            resource,
-            record
-        }),
-};
-
-export const PostList = () => (
-    <List exporter={exporter}>
-        {/*...*/}
-    </List>
-);
-// Users will see the Export action on top of the list, but not the Create action.
-// Users will only see the authorized columns when clicking on the export button.
-```
-
-:::tip
-If you need a custom [`exporter`](#exporter), you can use `useExporterWithAccessControl` to apply access control to the exported records:
-
-```tsx
-import { List, useExporterWithAccessControl } from '@ra-enterprise/ra-rbac';
-import { myExporter } from './myExporter';
-
-export const PostList = () => {
-    const exporter = useExporterWithAccessControl({ exporter: myExporter })
-    return (
-        <List exporter={exporter}>
-            {/*...*/}
-        </List>
-    );
-}
-```
