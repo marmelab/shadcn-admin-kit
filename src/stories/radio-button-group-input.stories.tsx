@@ -4,7 +4,7 @@ import { i18nProvider } from "@/lib/i18nProvider.ts";
 import { RadioButtonGroupInput, ThemeProvider } from "@/components/admin";
 
 export default {
-  title: "Fields/RadioButtonGroupInput",
+  title: "Inputs/RadioButtonGroupInput",
 };
 
 const record = {

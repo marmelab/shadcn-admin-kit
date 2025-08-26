@@ -4,7 +4,7 @@ import { i18nProvider } from "@/lib/i18nProvider.ts";
 import { FileInput, FileField, ThemeProvider } from "@/components/admin";
 
 export default {
-  title: "Fields/FileInput",
+  title: "Inputs/FileInput",
 };
 
 const record = {

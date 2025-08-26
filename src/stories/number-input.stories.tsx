@@ -4,7 +4,7 @@ import { i18nProvider } from "@/lib/i18nProvider.ts";
 import { NumberInput, ThemeProvider } from "@/components/admin";
 
 export default {
-  title: "Fields/NumberInput",
+  title: "Inputs/NumberInput",
 };
 
 const record = {

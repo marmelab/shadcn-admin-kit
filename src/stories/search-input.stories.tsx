@@ -9,7 +9,7 @@ import { i18nProvider } from "@/lib/i18nProvider.ts";
 import { SearchInput, ThemeProvider } from "@/components/admin";
 
 export default {
-  title: "Fields/SearchInput",
+  title: "Inputs/SearchInput",
 };
 
 const records = [
