@@ -35,7 +35,6 @@ export const Basic = () => (
       source="gender"
       choices={genders}
       optionText="label"
-      optionValue="id"
     />
   </Wrapper>
 );
