@@ -49,6 +49,7 @@
         "ra-core",
         "ra-i18n-polyglot",
         "ra-language-english",
+        "react-dropzone",
         "react-hook-form",
         "react-router",
         "tailwind-merge",
@@ -165,6 +166,10 @@
         },
         {
           "path": "src/components/admin/file-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/file-input.tsx",
           "type": "registry:component"
         },
         {
