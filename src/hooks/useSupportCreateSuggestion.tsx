@@ -74,6 +74,7 @@ export const useSupportCreateSuggestion = (
             : createLabel,
       );
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     handleChange: async (eventOrValue: MouseEvent | any) => {
       const value = eventOrValue?.target?.value || eventOrValue;
       const finalValue = Array.isArray(value) ? [...value].pop() : value;
@@ -115,7 +116,8 @@ export const useSupportCreateSuggestion = (
         </CreateSuggestionContext.Provider>
       ) : null,
     getOptionDisabled: (option) =>
-      option?.id === createHintValue || option === createHintValue,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (option as any)?.id === createHintValue || option === createHintValue,
   };
 };
 
@@ -129,7 +131,7 @@ export interface SupportCreateSuggestionOptions {
   createLabel?: React.ReactNode;
   createItemLabel?: string | ((filter: string) => React.ReactNode);
   filter?: string;
-  handleChange: (value: any) => void;
+  handleChange: (value: unknown) => void;
   onCreate?: OnCreateHandler;
   optionText?: OptionText;
 }
@@ -142,11 +144,12 @@ export interface UseSupportCreateValue {
   createHintId: string;
   getCreateItem: (filterValue?: string) => {
     id: Identifier;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
   };
-  handleChange: (eventOrValue: ChangeEvent | any) => Promise<void>;
+  handleChange: (eventOrValue: ChangeEvent | unknown) => Promise<void>;
   createElement: ReactElement | null;
-  getOptionDisabled: (option: any) => boolean;
+  getOptionDisabled: (option: unknown) => boolean;
 }
 
 /**
@@ -161,7 +164,7 @@ const CreateSuggestionContext = createContext<
  */
 interface CreateSuggestionContextValue {
   filter?: string;
-  onCreate: (choice: any) => void;
+  onCreate: (choice: unknown) => void;
   onCancel: () => void;
 }
 
@@ -181,4 +184,5 @@ export const useCreateSuggestionContext = () => {
 /**
  * @deprecated Use `OnCreateHandler` from "ra-core" when available.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type OnCreateHandler = (filter?: string) => any | Promise<any>;
