@@ -32,9 +32,9 @@ import set from "lodash/set";
  * - createElement: a React element to render after the input. It will be rendered when users choose to create a new choice. It renders null otherwise.
  * - getOptionDisabled: a function which should be passed to the input to disable the create choice when the filter is empty (to make it a hint).
  */
-export const useSupportCreateSuggestion = (
-  options: SupportCreateSuggestionOptions,
-): UseSupportCreateValue => {
+export const useSupportCreateSuggestion = <T = unknown,>(
+  options: SupportCreateSuggestionOptions<T>,
+): UseSupportCreateValue<T> => {
   const {
     create,
     createLabel = "ra.action.create",
@@ -108,7 +108,7 @@ export const useSupportCreateSuggestion = (
             onCancel: () => setRenderOnCreate(false),
             onCreate: (item) => {
               setRenderOnCreate(false);
-              handleChange(item);
+              handleChange(item as T);
             },
           }}
         >
@@ -124,14 +124,14 @@ export const useSupportCreateSuggestion = (
 /**
  * @deprecated Use `SupportCreateSuggestionOptions` from "ra-core" when available.
  */
-export interface SupportCreateSuggestionOptions {
+export interface SupportCreateSuggestionOptions<T = unknown> {
   create?: ReactElement;
   createValue?: string;
   createHintValue?: string;
   createLabel?: React.ReactNode;
   createItemLabel?: string | ((filter: string) => React.ReactNode);
   filter?: string;
-  handleChange: (value: unknown) => void;
+  handleChange: (value: T) => void;
   onCreate?: OnCreateHandler;
   optionText?: OptionText;
 }
@@ -139,7 +139,7 @@ export interface SupportCreateSuggestionOptions {
 /**
  * @deprecated Use `UseSupportCreateValue` from "ra-core" when available.
  */
-export interface UseSupportCreateValue {
+export interface UseSupportCreateValue<T = unknown> {
   createId: string;
   createHintId: string;
   getCreateItem: (filterValue?: string) => {
@@ -147,9 +147,9 @@ export interface UseSupportCreateValue {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
   };
-  handleChange: (eventOrValue: ChangeEvent | unknown) => Promise<void>;
+  handleChange: (eventOrValue: ChangeEvent | T) => Promise<void>;
   createElement: ReactElement | null;
-  getOptionDisabled: (option: unknown) => boolean;
+  getOptionDisabled: (option: T) => boolean;
 }
 
 /**
@@ -162,9 +162,9 @@ const CreateSuggestionContext = createContext<
 /**
  * @deprecated Use `CreateSuggestionContextValue` from "ra-core" when available.
  */
-interface CreateSuggestionContextValue {
+interface CreateSuggestionContextValue<T = unknown> {
   filter?: string;
-  onCreate: (choice: unknown) => void;
+  onCreate: (choice: T) => void;
   onCancel: () => void;
 }
 
