@@ -6,22 +6,27 @@ title: "List"
 
 The `<List>` component is the root component for list pages. It fetches a list of records from the data provider (via `ra-core` hooks), puts them in a [`ListContext`](https://marmelab.com/react-admin/useListContext.html), renders a default layout (breadcrumb, title, action buttons, inline filters, pagination), then renders its children (usually a [`<DataTable>`](https://marmelab.com/react-admin/DataTable.html)).
 
+![Simple users list](../images/users-list.png)
+
 ## Usage
 
-Here is a minimal example to display a list of posts with a [`<DataTable>`](https://marmelab.com/react-admin/DataTable.html):
+Here is a minimal example to display a list of users with a [`<DataTable>`](https://marmelab.com/react-admin/DataTable.html):
 
 ```jsx
-// in src/posts.jsx
-import { List, DataTable, DateField, BooleanField } from 'shadcn-admin-kit';
+// in src/users.jsx
+import { DataTable, List } from "@/components/admin";
 
-export const PostList = () => (
+export const UserList = () => (
     <List>
         <DataTable>
             <DataTable.Col source="id" />
-            <DataTable.Col source="title" />
-            <DataTable.Col source="published_at" field={DateField} />
-            <DataTable.Col source="category" />
-            <DataTable.Col source="commentable" field={BooleanField} />
+            <DataTable.Col source="name" />
+            <DataTable.Col source="username" />
+            <DataTable.Col source="email" />
+            <DataTable.Col source="address.street" />
+            <DataTable.Col source="phone" />
+            <DataTable.Col source="website" />
+            <DataTable.Col source="company.name" />
         </DataTable>
     </List>
 );
@@ -31,11 +36,11 @@ import { Admin } from 'shadcn-admin-kit';
 import { Resource } from 'ra-core';
 import jsonServerProvider from 'ra-data-json-server';
 
-import { PostList } from './posts';
+import { UserList } from './users';
 
 const App = () => (
     <Admin dataProvider={jsonServerProvider('https://jsonplaceholder.typicode.com')}>
-        <Resource name="posts" list={PostList} />
+        <Resource name="users" list={UserList} />
     </Admin>
 );
 
@@ -43,8 +48,6 @@ export default App;
 ```
 
 That's enough to display a basic list with sorting and pagination.
-
-![Simple posts list](https://marmelab.com/react-admin/img/simple-post-list.png)
 
 You can find more advanced examples of `<List>` usage in the [demo](https://marmelab.com/shadcn-admin-kit/demo/).
 
