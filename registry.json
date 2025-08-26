@@ -285,6 +285,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/select-input.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/show.tsx",
           "type": "registry:component"
         },
@@ -350,6 +354,10 @@
         },
         {
           "path": "src/hooks/user-menu-context.tsx",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/hooks/useSupportCreateSuggestion.tsx",
           "type": "registry:hook"
         },
         {

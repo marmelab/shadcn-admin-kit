@@ -50,6 +50,7 @@ export * from "./refresh-button";
 export * from "./saved-queries";
 export * from "./search-input";
 export * from "./select-field";
+export * from "./select-input";
 export * from "./show-button";
 export * from "./show-guesser";
 export * from "./show";
