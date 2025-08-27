@@ -213,12 +213,9 @@ export const SelectInput = (props: SelectInputProps) => {
 
   // Handle reset functionality
   const handleReset = (e: React.MouseEvent<HTMLDivElement>) => {
-    console.log("test!");
     e.stopPropagation();
     field.onChange(emptyValue);
   };
-
-  console.log(field.value?.toString());
 
   return (
     <>
