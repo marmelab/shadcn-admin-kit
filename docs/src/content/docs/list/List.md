@@ -91,12 +91,11 @@ export const PostList = () => (
 
 `sort` defines the *default* sort order ; users can change the sort order, e.g. by clicking on column headers when using a `<DataTable>`, or by selecting another option in the `<SortButton>`.
 
-
 ## Pagination
 
-By default, the `<List>` view displays a set of pagination controls at the bottom of the list.
+By default, `<List>` displays a set of pagination controls at the bottom of the list.
 
-![Pagination](https://marmelab.com/react-admin/img/list-pagination.webp)
+![Pagination in users list](../images/users-list-pagination.png)
 
 The `pagination` prop allows to replace the default pagination controls by your own.
 
@@ -206,11 +205,7 @@ export const PostList = () => (
 :::tip
 You can also display filters as a sidebar thanks to the [`<ToggleFilterButton>`](./ToggleFilterButton.md) component:
 
-<video controls autoplay playsinline muted loop>
-    <source src="https://marmelab.com/react-admin/img/filter-sidebar.webm" type="video/webm"/>
-    <source src="https://marmelab.com/react-admin/img/filter-sidebar.mp4" type="video/mp4"/>
-  Your browser does not support the video tag.
-</video>
+![Filter sidebar](../images/filter-sidebar.png)
 :::
 
 For more details about customizing filters, see the [Filtering the List](https://marmelab.com/react-admin/FilteringTutorial.html#filtering-the-list) documentation.
@@ -219,7 +214,7 @@ For more details about customizing filters, see the [Filtering the List](https:/
 
 `<List>` itself doesn't render the list of records. It delegates this task to its children components. These children components grab the `data` from the [`ListContext`](https://marmelab.com/react-admin/useListContext.html) and render them on screen.
 
-![List children](https://marmelab.com/react-admin/img/list-children.webp)
+![List children](../images/users-list-items.png)
 
 shadcn-admin-kit provides several components that can read and display a list of records from a `ListContext`, each with a different layout:
 
@@ -286,12 +281,6 @@ export const PostList = () => (
 You can also build contextual actions using anything from the list context (`isPending`, `total`, `selectedIds`, etc.).
 
 ## Exported Data
-
-<video controls autoplay playsinline muted loop>
-    <source src="https://marmelab.com/react-admin/img/export-button.webm" type="video/webm"/>
-    <source src="https://marmelab.com/react-admin/img/export-button.mp4" type="video/mp4"/>
-  Your browser does not support the video tag.
-</video>
 
 Among the default list actions, shadcn-admin-kit includes an `<ExportButton>`.
 
@@ -614,7 +603,7 @@ const Admin = () => {
 
 The default title for a list view is the translation key `ra.page.list` that translates to [the plural name of the resource](https://marmelab.com/react-admin/TranslationTranslating.html#translating-resource-and-field-names) (e.g. "Posts").
 
-![List title](https://marmelab.com/react-admin/img/list-title.png)
+![List title](../images/users-list-title.png)
 
 You can customize this title by providing a resource specific translation with the key `resources.RESOURCE.page.list` (e.g. `resources.posts.page.list`):
 
@@ -661,14 +650,14 @@ import { dataProvider } from './dataProvider';
 const App = () => (
     <Admin dataProvider={dataProvider}>
         {/* ... */}
-        <Resource name="comments" list={ListGuesser} />
+        <Resource name="posts" list={ListGuesser} />
     </Admin>
 );
 ```
 
 Just like `<List>`, `<ListGuesser>` fetches the data. It then analyzes the response, and guesses the fields it should use to display a basic `<DataTable>` with the data. It also dumps the components it has guessed in the console, so you can copy it into your own code.
 
-![Guessed List](https://marmelab.com/react-admin/img/guessed-list.png)
+![Guessed List](../images/posts-list-guesser.png)
 
 You can learn more by reading [the `<ListGuesser>` documentation](https://marmelab.com/react-admin/ListGuesser.html).
 
