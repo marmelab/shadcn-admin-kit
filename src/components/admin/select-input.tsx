@@ -245,7 +245,9 @@ export const SelectInput = (props: SelectInputProps) => {
             value={field.value?.toString() || emptyValue}
             onValueChange={handleChangeWithCreateSupport}
           >
-            <SelectTrigger className={cn("w-full")}>
+            <SelectTrigger
+              className={cn("w-full transition-all hover:bg-accent")}
+            >
               <SelectValue placeholder={renderEmptyItemOption()} />
 
               {field.value && field.value !== emptyValue ? (
