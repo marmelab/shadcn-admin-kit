@@ -77,19 +77,113 @@ You can find more advanced examples of `<List>` usage in the [demo](https://marm
 
 These props will soon be supported: `aside`, `empty`, `emptyWhileLoading`.
 
-## Sort
+## Main Area Content
 
-Pass an object literal as the `sort` prop to determine the default `field` and `order` used for sorting:
+`<List>` itself doesn't render the list of records. It delegates this task to its children components. These children components grab the `data` from the [`ListContext`](https://marmelab.com/react-admin/useListContext.html) and render them on screen.
+
+![List children](../images/users-list-items.png)
+
+shadcn-admin-kit provides several components that can read and display a list of records from a `ListContext`, each with a different layout:
+
+- [`<DataTable>`](https://marmelab.com/react-admin/DataTable.html) displays records in a table
+- [`<SingleFieldList>`](https://marmelab.com/react-admin/SingleFieldList.html) displays records inline, showing one field per record
+
+Alternatively to `children`, you can pass a `render` prop to `<List>`. It will receive the [`ListContext`](https://marmelab.com/react-admin/useListContext.html#return-value) as its argument, and should return a React node. This allows to inline the render logic for the list page.
+
+```tsx
+const PostList = () => (
+    <List
+        render={({ isPending, error, data }) => {
+            if (isPending) {
+                return <div>Loading...</div>;
+            }
+            if (error) {
+                return <div>Error: {error.message}</div>;
+            }
+            return (
+                <ul>
+                    {data.map(post => (
+                        <li key={post.id}>
+                            <strong>{post.title}</strong> - {post.author}
+                        </li>
+                    ))}
+                </ul>
+            );
+        }}
+    />
+);
+```
+
+:::note
+When receiving a `render` prop, the `<List>` component will ignore the `children` prop.
+:::
+
+## Actions toolbar
+
+By default the page header shows a toolbar with 2 buttons:
+
+* `<CreateButton>` (if the resource has a create view)
+* `<ExportButton>` (unless `exporter={false}`)
+
+Provide an `actions` prop to completely replace that area:
 
 ```jsx
+import { List, CreateButton, ExportButton, ColumnsButton } from 'shadcn-admin-kit';
+
+const MyActions = () => (
+    <div className="flex items-center gap-2">
+        <ColumnsButton />
+        <CreateButton />
+        <ExportButton />
+    </div>
+);
+
 export const PostList = () => (
-    <List sort={{ field: 'published_at', order: 'DESC' }}>
+    <List actions={<MyActions />}> 
         ...
     </List>
 );
 ```
 
-`sort` defines the *default* sort order ; users can change the sort order, e.g. by clicking on column headers when using a `<DataTable>`, or by selecting another option in the `<SortButton>`.
+You can also build contextual actions using anything from the list context (`isPending`, `total`, `selectedIds`, etc.).
+
+## Page Title
+
+The default title for a list view is the translation key `ra.page.list` that translates to [the plural name of the resource](https://marmelab.com/react-admin/TranslationTranslating.html#translating-resource-and-field-names) (e.g. "Posts").
+
+![List title](../images/users-list-title.png)
+
+You can customize this title by providing a resource specific translation with the key `resources.RESOURCE.page.list` (e.g. `resources.posts.page.list`):
+
+```js
+// in src/i18n/en.js
+import englishMessages from 'ra-language-english';
+
+export const en = {
+    ...englishMessages,
+    resources: {
+        posts: {
+            name: 'Post |||| Posts',
+            page: {
+                list: 'Post list'
+            }
+        },
+    },
+    ...
+};
+```
+
+You can also customize this title by specifying a custom `title` prop:
+
+```jsx
+export const PostList = () => (
+    <List title="List of posts">
+        ...
+    </List>
+);
+```
+
+The title can be a string, a React element, or `false` to disable the title.
 
 ## Pagination
 
@@ -139,6 +233,20 @@ export const PostList = () => (
 );
 ```
 :::
+
+## Sort
+
+Pass an object literal as the `sort` prop to determine the default `field` and `order` used for sorting:
+
+```jsx
+export const PostList = () => (
+    <List sort={{ field: 'published_at', order: 'DESC' }}>
+        ...
+    </List>
+);
+```
+
+`sort` defines the *default* sort order ; users can change the sort order, e.g. by clicking on column headers when using a `<DataTable>`, or by selecting another option in the `<SortButton>`.
 
 ## Permanent Filter
 
@@ -209,76 +317,6 @@ You can also display filters as a sidebar thanks to the [`<ToggleFilterButton>`]
 :::
 
 For more details about customizing filters, see the [Filtering the List](https://marmelab.com/react-admin/FilteringTutorial.html#filtering-the-list) documentation.
-
-## List Items
-
-`<List>` itself doesn't render the list of records. It delegates this task to its children components. These children components grab the `data` from the [`ListContext`](https://marmelab.com/react-admin/useListContext.html) and render them on screen.
-
-![List children](../images/users-list-items.png)
-
-shadcn-admin-kit provides several components that can read and display a list of records from a `ListContext`, each with a different layout:
-
-- [`<DataTable>`](https://marmelab.com/react-admin/DataTable.html) displays records in a table
-- [`<SingleFieldList>`](https://marmelab.com/react-admin/SingleFieldList.html) displays records inline, showing one field per record
-
-Alternatively to `children`, you can pass a `render` prop to `<List>`. It will receive the [`ListContext`](https://marmelab.com/react-admin/useListContext.html#return-value) as its argument, and should return a React node. This allows to inline the render logic for the list page.
-
-```tsx
-const PostList = () => (
-    <List
-        render={({ isPending, error, data }) => {
-            if (isPending) {
-                return <div>Loading...</div>;
-            }
-            if (error) {
-                return <div>Error: {error.message}</div>;
-            }
-            return (
-                <ul>
-                    {data.map(post => (
-                        <li key={post.id}>
-                            <strong>{post.title}</strong> - {post.author}
-                        </li>
-                    ))}
-                </ul>
-            );
-        }}
-    />
-);
-```
-
-:::note
-When receiving a `render` prop, the `<List>` component will ignore the `children` prop.
-:::
-
-## Actions toolbar
-
-By default the page header shows a toolbar with 2 buttons:
-
-* `<CreateButton>` (if the resource has a create view)
-* `<ExportButton>` (unless `exporter={false}`)
-
-Provide an `actions` prop to completely replace that area:
-
-```jsx
-import { List, CreateButton, ExportButton, ColumnsButton } from 'shadcn-admin-kit';
-
-const MyActions = () => (
-    <div className="flex items-center gap-2">
-        <ColumnsButton />
-        <CreateButton />
-        <ExportButton />
-    </div>
-);
-
-export const PostList = () => (
-    <List actions={<MyActions />}> 
-        ...
-    </List>
-);
-```
-
-You can also build contextual actions using anything from the list context (`isPending`, `total`, `selectedIds`, etc.).
 
 ## Exported Data
 
@@ -599,44 +637,6 @@ const Admin = () => {
 
 **Note:** *Selection state* will remain linked to a resource-based key regardless of the specified `storeKey` string. This is a design choice because if row selection is not tied to a resource, then when a user deletes a record it may remain selected without any ability to unselect it. If you want to allow custom `storeKey`'s for managing selection state, you will have to implement your own `useListController` hook and pass a custom key to the `useRecordSelection` hook. You will then need to implement your own `DeleteButton` and `BulkDeleteButton` to manually unselect rows when deleting records. You can still opt out of all store interactions including selection if you set it to `false`.
 
-## Page Title
-
-The default title for a list view is the translation key `ra.page.list` that translates to [the plural name of the resource](https://marmelab.com/react-admin/TranslationTranslating.html#translating-resource-and-field-names) (e.g. "Posts").
-
-![List title](../images/users-list-title.png)
-
-You can customize this title by providing a resource specific translation with the key `resources.RESOURCE.page.list` (e.g. `resources.posts.page.list`):
-
-```js
-// in src/i18n/en.js
-import englishMessages from 'ra-language-english';
-
-export const en = {
-    ...englishMessages,
-    resources: {
-        posts: {
-            name: 'Post |||| Posts',
-            page: {
-                list: 'Post list'
-            }
-        },
-    },
-    ...
-};
-```
-
-You can also customize this title by specifying a custom `title` prop:
-
-```jsx
-export const PostList = () => (
-    <List title="List of posts">
-        ...
-    </List>
-);
-```
-
-The title can be a string, a React element, or `false` to disable the title.
-
 ## Scaffolding a List page
 
 You can use [`<ListGuesser>`](https://marmelab.com/react-admin/ListGuesser.html) to quickly bootstrap a List view on top of an existing API, without adding the fields one by one.
@@ -658,8 +658,6 @@ const App = () => (
 Just like `<List>`, `<ListGuesser>` fetches the data. It then analyzes the response, and guesses the fields it should use to display a basic `<DataTable>` with the data. It also dumps the components it has guessed in the console, so you can copy it into your own code.
 
 ![Guessed List](../images/posts-list-guesser.png)
-
-You can learn more by reading [the `<ListGuesser>` documentation](https://marmelab.com/react-admin/ListGuesser.html).
 
 ## Rendering An Empty List
 

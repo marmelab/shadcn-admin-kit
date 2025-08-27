@@ -42,8 +42,8 @@ export default defineConfig({
           ],
         },
         {
-          label: "The List Page",
-          autogenerate: { directory: "list" },
+          label: "Page components",
+          items: ["page/list", "page/edit"],
         },
         {
           label: "Misc",

@@ -17,22 +17,26 @@ import {
   BreadcrumbItem,
   BreadcrumbPage,
 } from "@/components/admin/breadcrumb";
+import { cn } from "@/lib/utils";
 import { ShowButton } from "@/components/admin/show-button";
 
 export interface EditProps extends EditViewProps, EditBaseProps {}
 
-export const Edit = ({ title, children, ...rest }: EditProps) => (
+export const Edit = ({ title, children, className, ...rest }: EditProps) => (
   <EditBase {...rest}>
-    <EditView title={title}>{children}</EditView>
+    <EditView title={title} className={className}>
+      {children}
+    </EditView>
   </EditBase>
 );
 
 export interface EditViewProps {
   title?: ReactNode | string | false;
   children?: ReactNode;
+  className?: string;
 }
 
-export const EditView = ({ title, children }: EditViewProps) => {
+export const EditView = ({ title, children, className }: EditViewProps) => {
   const context = useEditContext();
 
   const resource = useResourceContext();
@@ -74,7 +78,12 @@ export const EditView = ({ title, children }: EditViewProps) => {
         </BreadcrumbItem>
         <BreadcrumbPage>{recordRepresentation}</BreadcrumbPage>
       </Breadcrumb>
-      <div className="flex justify-between items-start flex-wrap gap-2 my-2">
+      <div
+        className={cn(
+          "flex justify-between items-start flex-wrap gap-2 my-2",
+          className
+        )}
+      >
         <h2 className="text-2xl font-bold tracking-tight">
           {title !== undefined ? title : context.defaultTitle}
         </h2>
