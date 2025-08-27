@@ -128,7 +128,7 @@ export const AutocompleteArrayInput = (
           shouldFilter={!isFromReference}
           className="overflow-visible bg-transparent"
         >
-          <div className="group rounded-md bg-transparent dark:bg-input/30 border border-input px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
+          <div className="group rounded-md bg-transparent dark:bg-input/30 border border-input px-3 py-1.75 text-sm transition-all ring-offset-background focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px]">
             <div className="flex flex-wrap gap-1">
               {selectedChoices.map((choice) => (
                 <Badge key={getChoiceValue(choice)} variant="outline">
@@ -177,10 +177,10 @@ export const AutocompleteArrayInput = (
               />
             </div>
           </div>
-          <div className="relative mt-2">
+          <div className="relative">
             <CommandList>
               {open && availableChoices.length > 0 ? (
-                <div className="absolute top-0 z-10 w-full rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
+                <div className="absolute top-2 z-10 w-full rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
                   <CommandGroup className="h-full overflow-auto">
                     {availableChoices.map((choice) => {
                       return (
