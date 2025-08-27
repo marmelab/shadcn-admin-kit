@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FieldTitle,
   type InputProps,
@@ -20,6 +20,7 @@ export const NumberInput = (props: NumberInputProps) => {
     validate: _validateProp,
     format: _formatProp,
     parse = convertStringToNumber,
+    onFocus,
     ...rest
   } = props;
   const resource = useResourceContext({ resource: resourceProp });
@@ -37,6 +38,25 @@ export const NumberInput = (props: NumberInputProps) => {
   const [value, setValue] = useState<string | undefined>(
     field.value?.toString() ?? "",
   );
+
+  const hasFocus = React.useRef(false);
+
+  const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    onFocus?.(event);
+    hasFocus.current = true;
+  };
+
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    field.onBlur?.(event);
+    hasFocus.current = false;
+    setValue(field.value?.toString() ?? "");
+  };
+
+  useEffect(() => {
+    if (!hasFocus.current) {
+      setValue(field.value?.toString() ?? "");
+    }
+  }, [field.value]);
 
   return (
     <FormField id={id} className={className} name={field.name}>
@@ -57,6 +77,8 @@ export const NumberInput = (props: NumberInputProps) => {
           type="number"
           value={value}
           onChange={handleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
       </FormControl>
       <InputHelperText helperText={props.helperText} />
