@@ -198,6 +198,9 @@ importers:
       postcss:
         specifier: ^8.4.40
         version: 8.5.3
+      prettier:
+        specifier: ^3.6.2
+        version: 3.6.2
       react-error-boundary:
         specifier: ^6.0.0
         version: 6.0.0(react@19.1.0)
@@ -8596,6 +8599,11 @@ snapshots:
     dependencies:
       '@typescript-eslint/utils': 8.32.1(eslint@9.26.0(jiti@2.5.1))(typescript@5.7.3)
       eslint: 9.26.0(jiti@2.5.1)
+
+  eslint-plugin-storybook@9.0.13(eslint@9.26.0(jiti@2.4.2))(storybook@9.0.13(@testing-library/dom@10.4.0)(prettier@3.6.2))(typescript@5.7.3):
+    dependencies:
+      '@typescript-eslint/utils': 8.32.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.7.3)
+      eslint: 9.26.0(jiti@2.4.2)
       storybook: 9.0.13(@testing-library/dom@10.4.0)(prettier@3.6.2)
     transitivePeerDependencies:
       - supports-color

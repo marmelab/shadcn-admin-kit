@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 
 import { Button } from "../ui/button";
 
-export function CancelButton() {
+export function CancelButton(props: React.ComponentProps<"button">) {
   const navigate = useNavigate();
   return (
     <Button
@@ -12,6 +12,7 @@ export function CancelButton() {
       variant="ghost"
       onClick={() => navigate(-1)}
       className="cursor-pointer"
+      {...props}
     >
       <CircleX />
       <Translate i18nKey="ra.action.cancel">Cancel</Translate>

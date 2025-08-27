@@ -1,4 +1,8 @@
-import { Breadcrumb, BreadcrumbItem, BreadcrumbPage } from "@/components/admin/breadcrumb";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbPage,
+} from "@/components/admin/breadcrumb";
 import {
   ShowBase,
   Translate,
@@ -15,21 +19,27 @@ import { Link } from "react-router";
 import { EditButton } from "@/components/admin/edit-button";
 
 export const Show = ({
+  actions,
   title,
   children,
 }: {
+  actions?: ReactNode;
   title?: ReactNode | string | false;
   children: ReactNode;
 }) => (
   <ShowBase>
-    <ShowView title={title}>{children}</ShowView>
+    <ShowView title={title} actions={actions}>
+      {children}
+    </ShowView>
   </ShowBase>
 );
 
 export const ShowView = ({
+  actions,
   title,
   children,
 }: {
+  actions?: ReactNode;
   title?: ReactNode | string | false;
   children: ReactNode;
 }) => {
@@ -38,7 +48,7 @@ export const ShowView = ({
   const resource = useResourceContext();
   if (!resource) {
     throw new Error(
-      "The ShowView component must be used within a ResourceContextProvider"
+      "The ShowView component must be used within a ResourceContextProvider",
     );
   }
   const getResourceLabel = useGetResourceLabel();
@@ -78,9 +88,11 @@ export const ShowView = ({
         <h2 className="text-2xl font-bold tracking-tight">
           {title !== undefined ? title : context.defaultTitle}
         </h2>
-        <div className="flex justify-end items-center">
-          {hasEdit ? <EditButton /> : null}
-        </div>
+        {actions ?? (
+          <div className="flex justify-end items-center">
+            {hasEdit ? <EditButton /> : null}
+          </div>
+        )}
       </div>
       <div className="my-2">{children}</div>
     </>

@@ -35,11 +35,12 @@ const ListActions = () => {
 };
 
 const filters = [
-  <TextInput source="q" placeholder="Search" label={false} />,
+  <TextInput source="q" placeholder="Search" label={false} alwaysOn />,
   <ReferenceInput
     source="customer_id"
     reference="customers"
     sort={{ field: "last_name", order: "ASC" }}
+    alwaysOn
   >
     <AutocompleteInput placeholder="Filter by customer" label={false} />
   </ReferenceInput>,

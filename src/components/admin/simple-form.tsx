@@ -1,10 +1,8 @@
-import { ReactNode } from "react";
-import { Form, type FormProps, Translate, WithRecord } from "ra-core";
-import { useNavigate } from "react-router";
-import { CircleX, Save } from "lucide-react";
+import * as React from "react";
+import { Children, ReactNode } from "react";
+import { Form, type FormProps } from "ra-core";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { DeleteButton } from "@/components/admin/delete-button";
+import { CancelButton, SaveButton } from "@/components/admin";
 
 export const SimpleForm = ({
   children,
@@ -15,43 +13,43 @@ export const SimpleForm = ({
   children: ReactNode;
   className?: string;
   toolbar?: ReactNode;
-} & FormProps) => {
-  return (
-    <Form
-      className={cn(`flex flex-col gap-4 w-full max-w-lg`, className)}
-      {...rest}
-    >
-      {children}
-      {toolbar}
-    </Form>
-  );
-};
+} & FormProps) => (
+  <Form
+    className={cn(`flex flex-col gap-4 w-full max-w-lg`, className)}
+    {...rest}
+  >
+    {children}
+    {toolbar}
+  </Form>
+);
 
-export const FormToolbar = ({ className }: { className?: string }) => {
-  const navigate = useNavigate();
-  return (
-    <div
-      className={cn(
-        "sticky pt-4 pb-4 md:block md:pt-0 md:pb-0 bottom-0 bg-linear-to-b from-transparent to-background to-10%",
-        className
-      )}
-    >
-      <div className="flex flex-row gap-4 justify-start">
-        <Button type="submit">
-          <Save />
-          <Translate i18nKey="ra.action.save">Save</Translate>
-        </Button>
-        <Button type="button" variant="outline" onClick={() => navigate(-1)}>
-          <CircleX />
-          <Translate i18nKey="ra.action.cancel">Cancel</Translate>
-        </Button>
-        <div className="flex-1" />
-        <WithRecord
-          render={(record) => record.id !== null && <DeleteButton />}
-        />
+export const FormToolbar = ({
+  children,
+  className,
+  ...rest
+}: FormToolbarProps) => (
+  <div
+    {...rest}
+    className={cn(
+      "sticky pt-4 pb-4 md:block md:pt-2 md:pb-0 bottom-0 bg-linear-to-b from-transparent to-background to-10%",
+      className,
+    )}
+    role="toolbar"
+  >
+    {Children.count(children) === 0 ? (
+      <div className="flex flex-row gap-2 justify-end">
+        <CancelButton />
+        <SaveButton />
       </div>
-    </div>
-  );
-};
+    ) : (
+      children
+    )}
+  </div>
+);
+
+export interface FormToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
+  children?: ReactNode;
+  className?: string;
+}
 
 const defaultFormToolbar = <FormToolbar />;

@@ -4,7 +4,7 @@ import { render } from "vitest-browser-react";
 import { FormProvider, useForm } from "react-hook-form";
 import { ArrayInput } from "./array-input";
 import { useContext, useEffect } from "react";
-import { ArrayInputContext } from "@/hooks/ArrayInputContext";
+import { ArrayInputContext } from "@/hooks/array-input-context";
 
 function TestChild({ source }: { source: string }) {
   const arrayContext = useContext(ArrayInputContext);
@@ -54,7 +54,7 @@ describe("ArrayInput", () => {
         <ArrayInput source="items" label="Items">
           <TestChild source="name" />
         </ArrayInput>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     await expect.element(screen.getByText("Items")).toBeInTheDocument();
@@ -67,7 +67,7 @@ describe("ArrayInput", () => {
         <ArrayInput source="items">
           <TestChild source="name" />
         </ArrayInput>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     await expect
@@ -85,7 +85,7 @@ describe("ArrayInput", () => {
         <ArrayInput source="items">
           <TestChild source="name" />
         </ArrayInput>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     await expect
@@ -99,7 +99,7 @@ describe("ArrayInput", () => {
         <ArrayInput source="items" isPending>
           <TestChild source="name" />
         </ArrayInput>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     await expect
@@ -113,7 +113,7 @@ describe("ArrayInput", () => {
         <ArrayInput source="items" className="custom-class">
           <TestChild source="name" />
         </ArrayInput>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const arrayInput = screen.container.querySelector(".ra-input");
@@ -126,7 +126,7 @@ describe("ArrayInput", () => {
         <ArrayInput source="items" helperText="This is helper text">
           <TestChild source="name" />
         </ArrayInput>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     await expect
@@ -143,7 +143,7 @@ describe("ArrayInput", () => {
         <ArrayInput source="items" validate={[validator1, validator2]}>
           <TestChild source="name" />
         </ArrayInput>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     await expect.element(screen.getByTestId("test-child")).toBeInTheDocument();
@@ -155,7 +155,7 @@ describe("ArrayInput", () => {
         <ArrayInput source="items" defaultValue={[]}>
           <TestChild source="name" />
         </ArrayInput>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     await expect
@@ -169,7 +169,7 @@ describe("ArrayInput", () => {
         <ArrayInput source="items">
           <TestChild source="name" />
         </ArrayInput>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     await expect
@@ -190,7 +190,7 @@ describe("ArrayInput", () => {
         <ArrayInput source="items" helperText={false}>
           <TestChild source="name" />
         </ArrayInput>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     // Vérifier qu'aucun texte d'aide n'est affiché
@@ -234,7 +234,7 @@ describe("ArrayInput", () => {
       <ArrayInput source="items">
         <TestChild source="name" />
       </ArrayInput>,
-      { wrapper: TestWrapperWithError }
+      { wrapper: TestWrapperWithError },
     );
 
     await expect
@@ -248,7 +248,7 @@ describe("ArrayInput", () => {
         <ArrayInput source="items">
           <TestChild source="name" />
         </ArrayInput>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     await expect.element(screen.getByTestId("test-child")).toBeInTheDocument();
@@ -269,7 +269,7 @@ describe("ArrayInput", () => {
         <ArrayInput source="items" validate={requiredValidator}>
           <TestChild source="name" />
         </ArrayInput>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     await expect.element(screen.getByTestId("test-child")).toBeInTheDocument();
@@ -289,7 +289,7 @@ describe("ArrayInput", () => {
         <ArrayInput source="items" validate={asyncValidator}>
           <TestChild source="name" />
         </ArrayInput>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     await expect.element(screen.getByTestId("test-child")).toBeInTheDocument();
@@ -301,7 +301,7 @@ describe("ArrayInput", () => {
         <ArrayInput source="orders">
           <TestChild source="date" />
         </ArrayInput>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     await expect
@@ -315,7 +315,7 @@ describe("ArrayInput", () => {
         <ArrayInput source="user.orders">
           <TestChild source="date" />
         </ArrayInput>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     await expect.element(screen.getByTestId("test-child")).toBeInTheDocument();
@@ -327,7 +327,7 @@ describe("ArrayInput", () => {
         <ArrayInput source="comments" resource="comments">
           <TestChild source="content" />
         </ArrayInput>
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     await expect.element(screen.getByTestId("test-child")).toBeInTheDocument();

@@ -70,6 +70,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/hooks/array-input-context.tsx",
+          "type": "registry:hook"
+        },
+        {
           "path": "src/components/admin/autocomplete-input.tsx",
           "type": "registry:component"
         },
@@ -147,6 +151,14 @@
         },
         {
           "path": "src/components/admin/field-toggle.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/hooks/filter-context.tsx",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/components/admin/filter-form.tsx",
           "type": "registry:component"
         },
         {
@@ -246,6 +258,14 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/simple-form-iterator.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/hooks/simple-form-iterator-context.tsx",
+          "type": "registry:hook"
+        },
+        {
           "path": "src/components/admin/simple-show-layout.tsx",
           "type": "registry:component"
         },
@@ -278,6 +298,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/hooks/user-menu-context.tsx",
+          "type": "registry:hook"
+        },
+        {
           "path": "src/components/admin/error.tsx",
           "type": "registry:component"
         },
@@ -286,11 +310,7 @@
           "type": "registry:component"
         },
         {
-          "path": "src/hooks/ArrayInputContext.tsx",
-          "type": "registry:hook"
-        },
-        {
-          "path": "src/hooks/useArrayInput.tsx",
+          "path": "src/hooks/array-input-context.tsx",
           "type": "registry:hook"
         },
         {

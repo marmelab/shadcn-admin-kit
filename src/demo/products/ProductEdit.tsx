@@ -147,7 +147,7 @@ const ProductReviews = () => (
                   data && data.length > 0
                     ? data?.reduce(
                         (total, review) => total + review.rating,
-                        0
+                        0,
                       ) / data?.length
                     : 0
                 }

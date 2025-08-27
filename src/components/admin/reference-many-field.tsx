@@ -9,9 +9,9 @@ import {
 
 export const ReferenceManyField = <
   RecordType extends RaRecord = RaRecord,
-  ReferenceRecordType extends RaRecord = RaRecord
+  ReferenceRecordType extends RaRecord = RaRecord,
 >(
-  props: ReferenceManyFieldProps<RecordType, ReferenceRecordType>
+  props: ReferenceManyFieldProps<RecordType, ReferenceRecordType>,
 ) => {
   const { children, empty, error, loading, pagination, render, ...rest } =
     props;
@@ -33,7 +33,7 @@ export const ReferenceManyField = <
 
 export interface ReferenceManyFieldProps<
   RecordType extends RaRecord = RaRecord,
-  ReferenceRecordType extends RaRecord = RaRecord
+  ReferenceRecordType extends RaRecord = RaRecord,
 > extends UseReferenceManyFieldControllerParams<
       RecordType,
       ReferenceRecordType
@@ -41,9 +41,9 @@ export interface ReferenceManyFieldProps<
     ReferenceManyFieldViewProps<ReferenceRecordType> {}
 
 const ReferenceManyFieldView = <
-  ReferenceRecordType extends RaRecord = RaRecord
+  ReferenceRecordType extends RaRecord = RaRecord,
 >(
-  props: ReferenceManyFieldViewProps<ReferenceRecordType>
+  props: ReferenceManyFieldViewProps<ReferenceRecordType>,
 ) => {
   const {
     children,
@@ -94,7 +94,7 @@ const ReferenceManyFieldView = <
 };
 
 export interface ReferenceManyFieldViewProps<
-  ReferenceRecordType extends RaRecord = RaRecord
+  ReferenceRecordType extends RaRecord = RaRecord,
 > {
   children?: ReactNode;
   empty?: ReactNode;

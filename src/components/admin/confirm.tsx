@@ -40,7 +40,7 @@ export const Confirm = (props: ConfirmProps) => {
       e.stopPropagation();
       onConfirm(e);
     },
-    [onConfirm]
+    [onConfirm],
   );
 
   const handleClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -103,7 +103,7 @@ export interface ConfirmProps {
   isOpen?: boolean;
   loading?: boolean;
   onClose: () => void;
-  onConfirm: MouseEventHandler<HTMLButtonElement>;
+  onConfirm: MouseEventHandler;
   title: React.ReactNode;
   /**
    * @deprecated use `titleTranslateOptions` and `contentTranslateOptions` instead
