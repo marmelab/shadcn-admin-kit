@@ -101,7 +101,7 @@ export const EditView = ({
           {title !== undefined ? title : context.defaultTitle}
         </h2>
         {actions ?? (
-          <div className="flex justify-end items-center">
+          <div className="flex justify-end items-center gap-2">
             {hasShow ? <ShowButton /> : null}
             <DeleteButton />
           </div>

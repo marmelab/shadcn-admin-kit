@@ -77,7 +77,7 @@ You can find more advanced examples of `<List>` usage in the [demo](https://marm
 
 These props will soon be supported: `aside`, `empty`, `emptyWhileLoading`.
 
-## Main Area Content
+## Main Content Area
 
 `<List>` itself doesn't render the list of records. It delegates this task to its children components. These children components grab the `data` from the [`ListContext`](https://marmelab.com/react-admin/useListContext.html) and render them on screen.
 

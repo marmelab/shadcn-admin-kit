@@ -6,6 +6,8 @@ title: "Edit"
 
 The `<Edit>` component is the main component for edition pages. It fetches a record based on the URL, prepares a form submit handler, and renders the page title and actions. It is not responsible for rendering the actual form - that's the job of its child component (usually a form component, like [`<SimpleForm>`](https://marmelab.com/react-admin/SimpleForm.html)). This form component uses its children ([`<Input>`](https://marmelab.com/react-admin/Inputs.html) components) to render each form input.
 
+![Edit view](../images/customers-edit.png)
+
 The `<Edit>` component calls `dataProvider.getOne()`, using the `id` from the URL. It creates a `RecordContext` with the result. It also creates a [`SaveContext`](https://marmelab.com/react-admin/useSaveContext.html) containing a `save` callback, which calls `dataProvider.update()` when executed, and [an `EditContext`](https://marmelab.com/react-admin/useEditContext.html) containing both the record and the callback.
 
 ## Usage
@@ -15,27 +17,20 @@ Wrap the `<Edit>` component around the form you want to create, then pass it as 
 For instance, the following component will render an edition form for posts when users browse to `/posts/edit/1234`:
 
 ```jsx
-// in src/posts.js
-import { Edit, SimpleForm, TextInput, DateInput, DataTable, DateField, EditButton } from '@/components/admin';
-import { ReferenceManyFieldBase, required } from 'ra-core';
+// in src/customers.js
+import { Edit, SimpleForm, BooleanInput, TextInput } from "@/components/admin";
+import { required } from 'ra-core';
 
-export const PostEdit = () => (
-    <Edit>
-        <SimpleForm>
-            <TextInput disabled label="Id" source="id" />
-            <TextInput source="title" validate={required()} />
-            <TextInput multiline source="teaser" validate={required()} />
-            <TextInput multiline source="body" validate={required()} />
-            <DateInput label="Publication date" source="published_at" />
-            <ReferenceManyFieldBase reference="comments" target="post_id">
-                <DataTable>
-                    <DataTable.Col source="body" />
-                    <DataTable.Col source="created_at" field={DateField} />
-                    <DataTable.Col><EditButton /></DataTable.Col>
-                </DataTable>
-            </ReferenceManyFieldBase>
-        </SimpleForm>
-    </Edit>
+export const CustomerEdit = () => (
+  <Edit>
+    <SimpleForm>
+      <TextInput source="first_name" validate={required()} />
+      <TextInput source="last_name" validate={required()} />
+      <TextInput source="email" validate={required()} />
+      <BooleanInput source="has_ordered" />
+      <TextInput multiline source="notes" />
+    </SimpleForm>
+  </Edit>
 );
 
 // in src/App.js
@@ -43,11 +38,11 @@ import { Admin } from '@/components/admin';
 import { Resource } from 'ra-core';
 
 import { dataProvider } from './dataProvider';
-import { PostEdit } from './posts';
+import { CustomerEdit } from './customers';
 
 const App = () => (
     <Admin dataProvider={dataProvider}>
-        <Resource name="posts" edit={PostEdit} />
+        <Resource name="customers" edit={CustomerEdit} />
     </Admin>
 );
 
@@ -77,29 +72,31 @@ You can customize the `<Edit>` component using the following props:
 
 `*` You must provide either `children` or `render`.
 
-## Main Area Content
+## Main Content Area
 
 The `<Edit>` component will render its children inside a `EditContext` provider, which the `save` function. Children can be any React node, but are usually a form component like [`<SimpleForm>`](https://marmelab.com/react-admin/SimpleForm.html), or the headless [`<Form>`](https://marmelab.com/react-admin/Form.html) component.
 
+![](../images/customers-edit-content.png)
+
 ```tsx
-import { 
+import {
     Edit,
-    DateInput,
     SimpleForm,
     TextInput,
-    required
-} from '@/components/ui';
+    BooleanInput,
+} from "@/components/admin";
+import { required } from 'ra-core';
 
-export const PostEdit = () => (
-    <Edit>
-        <SimpleForm>
-            <TextInput disabled label="Id" source="id" />
-            <TextInput source="title" validate={required()} />
-            <TextInput multiline source="teaser" validate={required()} />
-            <TextInput multiline source="body" validate={required()} />
-            <DateInput label="Publication date" source="published_at" />
-        </SimpleForm>
-    </Edit>
+export const CustomerEdit = () => (
+  <Edit>
+    <SimpleForm>
+      <TextInput source="first_name" validate={required()} />
+      <TextInput source="last_name" validate={required()} />
+      <TextInput source="email" validate={required()} />
+      <BooleanInput source="has_ordered" />
+      <TextInput multiline source="notes" />
+    </SimpleForm>
+  </Edit>
 );
 ```
 
@@ -136,20 +133,25 @@ export const PostEdit = () => (
 
 ## Actions Toolbar
 
-By default, the Edit component includes a toolbar with a button to navigate to the show view. You can replace these actions by your own elements using the `actions` prop:
+By default, the Edit component includes a toolbar with a button to navigate to the show view (if present) and a button to delete the current record. 
+
+![](../images/customers-edit-actions.png)
+
+You can replace these actions by your own elements using the `actions` prop:
 
 ```jsx
-import { Edit, ShowButton, DeleteButton } from '@/components/admin';
+import { Edit, ShowButton, CreateButton, DeleteButton } from '@/components/admin';
 
-const MyActions = () => (
+const PostEditActions = () => (
     <div className="flex items-center gap-2">
         <ShowButton />
+        <CreateButton />
         <DeleteButton />
     </div>
 );
 
 export const PostEdit = () => (
-    <Edit actions={<MyActions />}>
+    <Edit actions={<PostEditActions />}>
         ...
     </Edit>
 );
