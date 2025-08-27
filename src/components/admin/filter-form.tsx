@@ -312,6 +312,7 @@ export const FilterButton = (props: FilterButtonProps) => {
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
           <Button
+            type="button"
             className="add-filter"
             variant={variant}
             size={size}
