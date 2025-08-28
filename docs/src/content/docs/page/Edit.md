@@ -602,14 +602,14 @@ import dataProvider from './dataProvider';
 const App = () => (
     <Admin dataProvider={dataProvider}>
         {/* ... */}
-        <Resource name="users" edit={EditGuesser} />
+        <Resource name="customers" edit={EditGuesser} />
     </Admin>
 );
 ```
 
 Just like `<Edit>`, `<EditGuesser>` fetches the data. It then analyzes the response, and guesses the inputs it should use to display a basic `<SimpleForm>` with the data. It also dumps the components it has guessed in the console, so you can copy it into your own code.
 
-![Guessed Edit](https://marmelab.com/react-admin/img/guessed-edit.png)
+![Guessed Edit](../images/cusrtomers-edit-guesser.png)
 
 ## Cleaning Up Empty Strings
 
