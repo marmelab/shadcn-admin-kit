@@ -7,7 +7,7 @@ import {
   useTranslate,
 } from "ra-core";
 import { cn } from "@/lib/utils";
-import type { FieldProps } from "@/lib/field.type";
+import type { FieldProps } from "@/lib/field.type.ts";
 
 /**
  * Render a link to a file based on a path contained in a record field

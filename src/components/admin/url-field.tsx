@@ -3,7 +3,7 @@ import React, { AnchorHTMLAttributes } from "react";
 
 import { cn } from "@/lib/utils";
 import { genericMemo } from "@/lib/genericMemo";
-import { FieldProps } from "@/lib/field.type";
+import { FieldProps } from "@/lib/field.type.ts";
 
 const UrlFieldImpl = <
   //eslint-disable-next-line @typescript-eslint/no-explicit-any
