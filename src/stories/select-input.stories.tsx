@@ -1,6 +1,22 @@
 import React from "react";
-import { CoreAdminContext, Form, RecordContextProvider } from "ra-core";
+import {
+  CoreAdminContext,
+  Form,
+  RecordContextProvider,
+  useTranslate,
+} from "ra-core";
 import { i18nProvider } from "@/lib/i18nProvider.ts";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog.tsx";
+import { Label } from "@/components/ui/label.tsx";
+import { Input } from "@/components/ui/input.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { useCreateSuggestionContext } from "@/hooks/useSupportCreateSuggestion.tsx";
 import { SelectInput, ThemeProvider } from "@/components/admin";
 
 export default {
@@ -32,5 +48,66 @@ const Wrapper = ({ children }: React.PropsWithChildren) => (
 export const Basic = () => (
   <Wrapper>
     <SelectInput source="gender" choices={genders} optionText="label" />
+  </Wrapper>
+);
+
+const CreateGender = () => {
+  const translate = useTranslate();
+  const { onCancel, onCreate } = useCreateSuggestionContext();
+  const [newGenderName, setNewGenderName] = React.useState("");
+
+  const handleChangeGenderName = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setNewGenderName(event.currentTarget.value);
+  };
+  const saveGender = () => {
+    const newGender = { label: newGenderName, id: newGenderName.toLowerCase() };
+    genders.push(newGender);
+    setNewGenderName("");
+    onCreate(newGender.id);
+  };
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    saveGender();
+  };
+
+  return (
+    <Dialog open onOpenChange={onCancel}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Create a gender</DialogTitle>
+        </DialogHeader>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="name">New gender name</Label>
+            <Input
+              id="name"
+              value={newGenderName}
+              onChange={handleChangeGenderName}
+              autoFocus
+            />
+          </div>
+        </form>
+        <DialogFooter>
+          <Button variant="outline" onClick={onCancel}>
+            {translate("ra.action.cancel")}
+          </Button>
+          <Button onClick={saveGender}>{translate("ra.action.save")}</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export const Create = () => (
+  <Wrapper>
+    <SelectInput
+      source="gender"
+      choices={genders}
+      optionText="label"
+      create={<CreateGender />}
+      createLabel="Create a gender"
+    />
   </Wrapper>
 );
