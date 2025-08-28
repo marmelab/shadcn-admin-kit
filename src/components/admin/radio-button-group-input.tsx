@@ -13,7 +13,7 @@ import {
   FormControl,
   FormLabel,
   FormError,
-} from "@/components/admin";
+} from "@/components/admin/form";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Skeleton } from "@/components/ui/skeleton";
