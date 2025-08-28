@@ -18,9 +18,15 @@ export const NumberField = <RecordType extends RaRecord = RaRecord>({
   const translate = useTranslate();
 
   if (value == null) {
-    return empty && typeof empty === "string"
-      ? translate(empty, { _: empty })
-      : empty;
+    if (!empty) {
+      return null;
+    }
+
+    return (
+      <span {...rest}>
+        {typeof empty === "string" ? translate(empty, { _: empty }) : empty}
+      </span>
+    );
   }
 
   if (transform) {

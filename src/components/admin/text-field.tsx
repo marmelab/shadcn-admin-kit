@@ -12,14 +12,22 @@ export const TextField = <RecordType extends RaRecord = RaRecord>({
 }: TextFieldProps<RecordType>) => {
   const value = useFieldValue({ defaultValue, source, record });
   const translate = useTranslate();
+
+  if (value == null) {
+    if (!empty) {
+      return null;
+    }
+
+    return (
+      <span {...rest}>
+        {typeof empty === "string" ? translate(empty, { _: empty }) : empty}
+      </span>
+    );
+  }
+
   return (
     <span {...rest}>
-      {value != null && typeof value !== "string"
-        ? value.toString()
-        : (value ??
-          (empty && typeof empty === "string"
-            ? translate(empty, { _: empty })
-            : empty))}
+      {typeof value !== "string" ? value.toString() : value}
     </span>
   );
 };

@@ -24,12 +24,14 @@ const EmailFieldImpl = <
   const translate = useTranslate();
 
   if (value == null) {
+    if (!empty) {
+      return null;
+    }
+
     return (
-      <a className={className} {...rest}>
-        {empty && typeof empty === "string"
-          ? translate(empty, { _: empty })
-          : empty}
-      </a>
+      <span className={className} {...rest}>
+        {typeof empty === "string" ? translate(empty, { _: empty }) : empty}
+      </span>
     );
   }
 

@@ -33,7 +33,9 @@ export const RecordField = <
   const resource = useResourceContext();
   const record = useRecordContext<RecordType>({ recordProp });
   const translate = useTranslate();
+
   if (!source && !label && !render) return null;
+
   return (
     <div
       className={cn(
