@@ -1,12 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReactNode, useEffect, useState } from "react";
+import {
+  Component,
+  ComponentType,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
 import {
   EditBase,
   InferredElement,
   useResourceContext,
   useEditContext,
   getElementsFromRecords,
-  InferredTypeMap,
+  // InferredTypeMap,
 } from "ra-core";
 import { capitalize, singularize } from "inflection";
 import { EditView } from "@/components/admin/edit";
@@ -16,6 +22,8 @@ import { BooleanInput } from "@/components/admin/boolean-input";
 import { ReferenceInput } from "@/components/admin/reference-input";
 import { AutocompleteInput } from "@/components/admin/autocomplete-input";
 import { ReferenceArrayInput } from "@/components/admin/reference-array-input";
+import { DateInput } from "./date-input";
+import { NumberInput } from "./number-input";
 
 export const EditGuesser = (props: { enableLog?: boolean }) => {
   return (
@@ -91,9 +99,19 @@ ${representation}
   return <EditView {...rest}>{child}</EditView>;
 };
 
+export interface InferredType {
+  type?: ComponentType<any>;
+  component?: ComponentType<any>;
+  representation?: (props: any, children: any) => string;
+}
+
+export interface InferredTypeMap {
+  [key: string]: InferredType | undefined;
+}
+
 const editFieldTypes: InferredTypeMap = {
   form: {
-    component: (props: any) => <SimpleForm {...props} />,
+    component: SimpleForm,
     representation: (
       _props: any,
       children: { getRepresentation: () => string }[],
@@ -115,17 +133,25 @@ ${children
               </ReferenceInput>`,
   },
   referenceArray: {
-    component: (props: any) => <ReferenceArrayInput {...props} />,
+    component: ReferenceArrayInput,
     representation: (props: any) =>
       `<ReferenceArrayInput source="${props.source}" reference="${props.reference}" />`,
   },
   boolean: {
-    component: (props: any) => <BooleanInput {...props} />,
+    component: BooleanInput,
     representation: (props: any) => `<BooleanInput source="${props.source}" />`,
   },
   string: {
-    component: (props: any) => <TextInput {...props} />,
+    component: TextInput,
     representation: (props: any) => `<TextInput source="${props.source}" />`,
+  },
+  date: {
+    component: DateInput,
+    representation: (props: any) => `<DateInput source="${props.source}" />`,
+  },
+  number: {
+    component: NumberInput,
+    representation: (props: any) => `<NumberInput source="${props.source}" />`,
   },
 };
 

@@ -282,6 +282,26 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/date-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/time-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/date-time-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/number-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/password-input.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/theme-mode-toggle.tsx",
           "type": "registry:component"
         },

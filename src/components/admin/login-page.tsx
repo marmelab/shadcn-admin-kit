@@ -4,6 +4,7 @@ import type { SubmitHandler, FieldValues } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/admin/text-input";
 import { Notification } from "@/components/admin/notification";
+import { PasswordInput } from "./password-input";
 
 export const LoginPage = (props: { redirectTo?: string }) => {
   const { redirectTo } = props;
@@ -23,8 +24,8 @@ export const LoginPage = (props: { redirectTo?: string }) => {
           typeof error === "string"
             ? error
             : typeof error === "undefined" || !error.message
-            ? "ra.auth.sign_in_error"
-            : error.message,
+              ? "ra.auth.sign_in_error"
+              : error.message,
           {
             type: "error",
             messageArgs: {
@@ -32,10 +33,10 @@ export const LoginPage = (props: { redirectTo?: string }) => {
                 typeof error === "string"
                   ? error
                   : error && error.message
-                  ? error.message
-                  : undefined,
+                    ? error.message
+                    : undefined,
             },
-          }
+          },
         );
       });
   };
@@ -86,10 +87,9 @@ export const LoginPage = (props: { redirectTo?: string }) => {
                 type="email"
                 validate={required()}
               />
-              <TextInput
+              <PasswordInput
                 label="Password"
                 source="password"
-                type="password"
                 validate={required()}
               />
               <Button

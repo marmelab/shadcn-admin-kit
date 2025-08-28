@@ -19,6 +19,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { Product, Review, Customer } from "@/demo/types";
 import { Link } from "react-router";
 import { StarRatingField, StarArray } from "../reviews/StarRatingField";
+import { NumberInput } from "@/components/admin/number-input";
 
 export const ProductEdit = () => {
   return (
@@ -70,25 +71,12 @@ export const ProductEdit = () => {
               <ReferenceInput source="category_id" reference="categories">
                 <AutocompleteInput label="Category" validate={required()} />
               </ReferenceInput>
-              <TextInput
-                source="width"
-                type="number"
-                className="[&>input]:bg-white"
-              />
-              <TextInput
-                source="height"
-                type="number"
-                className="[&>input]:bg-white"
-              />
-              <TextInput
-                source="price"
-                type="number"
-                className="[&>input]:bg-white"
-              />
-              <TextInput
+              <NumberInput source="width" className="[&>input]:bg-white" />
+              <NumberInput source="height" className="[&>input]:bg-white" />
+              <NumberInput source="price" className="[&>input]:bg-white" />
+              <NumberInput
                 source="stock"
                 label="Stock"
-                type="number"
                 className="[&>input]:bg-white"
               />
             </div>

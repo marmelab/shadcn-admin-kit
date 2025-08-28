@@ -5,6 +5,7 @@ import {
   SimpleForm,
   TextInput,
 } from "@/components/admin";
+import { NumberInput } from "@/components/admin/number-input";
 import { required } from "ra-core";
 
 export const ProductCreate = () => (
@@ -14,10 +15,10 @@ export const ProductCreate = () => (
       <ReferenceInput source="category_id" reference="categories">
         <AutocompleteInput label="Category" validate={required()} />
       </ReferenceInput>
-      <TextInput source="width" type="number" />
-      <TextInput source="height" type="number" />
-      <TextInput source="price" type="number" />
-      <TextInput source="stock" label="Stock" type="number" />
+      <NumberInput source="width" />
+      <NumberInput source="height" />
+      <NumberInput source="price" />
+      <NumberInput source="stock" label="Stock" />
     </SimpleForm>
   </Create>
 );
