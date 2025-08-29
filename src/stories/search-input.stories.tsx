@@ -7,6 +7,7 @@ import {
 } from "ra-core";
 import { i18nProvider } from "@/lib/i18nProvider.ts";
 import { SearchInput, ThemeProvider } from "@/components/admin";
+import { useWatch } from "react-hook-form";
 
 export default {
   title: "Inputs/SearchInput",
@@ -30,6 +31,11 @@ const records = [
   },
 ];
 
+const FormValues = () => {
+  const values = useWatch();
+  return <pre>{JSON.stringify(values, null, 2)}</pre>;
+};
+
 const Wrapper = ({ children }: React.PropsWithChildren) => {
   const listContext = useList({
     data: records,
@@ -49,5 +55,6 @@ const Wrapper = ({ children }: React.PropsWithChildren) => {
 export const Basic = () => (
   <Wrapper>
     <SearchInput source="q" alwaysOn />
+    <FormValues />
   </Wrapper>
 );

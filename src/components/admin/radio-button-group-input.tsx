@@ -44,7 +44,7 @@ export const RadioButtonGroupInput = (inProps: RadioButtonGroupInputProps) => {
     className,
     helperText,
     label,
-    row = true,
+    row,
     ...rest
   } = inProps;
 
@@ -117,7 +117,7 @@ export const RadioButtonGroupInput = (inProps: RadioButtonGroupInputProps) => {
           {...rest}
           value={field.value || ""}
           onValueChange={field.onChange}
-          className={cn("flex gap-4", row ? "flex-row" : "flex-col")}
+          className={cn("flex", row ? "flex-row gap-4" : "flex-col gap-2")}
           disabled={disabled || readOnly}
         >
           {allChoices?.map((choice) => {

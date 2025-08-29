@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { useCreateSuggestionContext } from "@/hooks/useSupportCreateSuggestion.tsx";
 import { SelectInput, ThemeProvider } from "@/components/admin";
+import { useWatch } from "react-hook-form";
 
 export default {
   title: "Inputs/SelectInput",
@@ -35,6 +36,11 @@ const genders = [
   { id: "nonbinary", label: "They/Them" },
 ];
 
+const FormValues = () => {
+  const values = useWatch();
+  return <pre>{JSON.stringify(values, null, 2)}</pre>;
+};
+
 const Wrapper = ({ children }: React.PropsWithChildren) => (
   <ThemeProvider>
     <CoreAdminContext i18nProvider={i18nProvider}>
@@ -48,6 +54,7 @@ const Wrapper = ({ children }: React.PropsWithChildren) => (
 export const Basic = () => (
   <Wrapper>
     <SelectInput source="gender" choices={genders} optionText="label" />
+    <FormValues />
   </Wrapper>
 );
 
@@ -109,5 +116,6 @@ export const Create = () => (
       create={<CreateGender />}
       createLabel="Create a gender"
     />
+    <FormValues />
   </Wrapper>
 );
