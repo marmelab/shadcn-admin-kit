@@ -2,42 +2,56 @@
 title: "NumberField"
 ---
 
-Displays a numeric value. Accepts string numbers ("123") and converts them to numbers via a `transform` function (defaults to coercing numeric strings).
-
-Uses `toLocaleString()` when the final value is a number and Intl is available, allowing you to localize or style numbers.
+Displays a numeric value. It reads the value from the record context and formats it according to the browser locale.
 
 ## Usage
 
 ```tsx
-import { NumberField } from 'shadcn-admin-kit';
+import { NumberField } from '@/components/admin';
 
 <DataTable.NumberCol source="price" options={{ style: 'currency', currency: 'USD' }} />
 // or directly
 <NumberField source="views" locales="fr-FR" />
 ```
 
+`<NumberField>` works for values that are numbers (e.g. `2108`) or strings that convert to numbers (e.g. `'2108'`).  It uses `Intl.NumberFormat()` if available, passing the `locales` and `options` props as arguments. This allows a perfect display of decimals, currencies, percentages, etc.
+
 ## Props
 
 | Prop | Required | Type | Default | Description |
 |------|----------|------|---------|-------------|
-| `source` | Optional* | `string` | - | Field in the record |
-| `record` | Optional | `object` | Record from context | Explicit record |
+| `source` | Required | `string` | - | Field in the record |
 | `defaultValue` | Optional | `any` | - | Fallback value |
 | `empty` | Optional | `ReactNode` | - | Placeholder when value missing |
 | `locales` | Optional | `string \| string[]` | Browser locale | Locale(s) for `toLocaleString` |
 | `options` | Optional | `object` | - | Intl.NumberFormat options |
+| `record` | Optional | `object` | Record from context | Explicit record |
 | `transform` | Optional | `(value:any)=>number` | Coerce numeric strings | Custom transform before display |
-| `...rest` | - | `HTMLAttributes<HTMLSpanElement>` | - | DOM attributes |
 
-`*` Provide `source` or use inside `RecordField`.
+Remaining props are passed to the underlying `<span>` (e.g., `className`).
 
-## Formatting Example
+## Number Formatting
 
-```tsx
-<NumberField source="price" options={{ style: 'currency', currency: 'EUR' }} />
+See [the Intl.NumberFormat documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat) for the `options` prop syntax.
+
+```jsx
+<NumberField source="score" options={{ maximumFractionDigits: 2 }}/>
+// renders the record { id: 1234, score: 567.3567458569 } as
+<span>567.35</span>
+
+<NumberField source="share" options={{ style: 'percent' }} />
+// renders the record { id: 1234, share: 0.2545 } as
+<span>25%</span>
+
+<NumberField source="price" options={{ style: 'currency', currency: 'USD' }} />
+// renders the record { id: 1234, price: 25.99 } as
+<span>$25.99</span>
+
+<NumberField source="volume" options={{ style: 'unit', unit: 'liter' }} />
+// renders the record { id: 1234, volume: 3500 } as
+<span>3,500 L</span>
 ```
 
 ## Tips
 
-- If the field already contains numbers, you can set `transform={v => v}` to skip coercion.
-- Provide `empty` to display e.g. `empty="ra.field.no_value"` for translation.
+- If you are in a `<DataTable>`, you can use `<DataTable.NumberCol>` instead to achieve the same result.

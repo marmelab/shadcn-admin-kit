@@ -7,6 +7,8 @@ Displays an email address as a `mailto:` link. Prevents row click bubbling.
 ## Usage
 
 ```tsx
+import { EmailField } from '@/components/admin';
+
 <EmailField source="email" />
 ```
 
@@ -14,15 +16,9 @@ Displays an email address as a `mailto:` link. Prevents row click bubbling.
 
 | Prop | Required | Type | Default | Description |
 |------|----------|------|---------|-------------|
-| `source` | Optional* | `string` | - | Field containing the email |
-| `record` | Optional | `object` | Record from context | Explicit record |
+| `source` | Required | `string` | - | Field containing the email |
 | `defaultValue` | Optional | `any` | - | Fallback value |
 | `empty` | Optional | `ReactNode` | - | Placeholder when no value |
-| `...rest` | - | `AnchorHTMLAttributes<HTMLAnchorElement>` | - | Extra anchor props |
+| `record` | Optional | `object` | Record from context | Explicit record |
 
-`*` Provide `source` or use inside `RecordField`.
-
-## Tips
-
-- Combine with `<TextField>` for plain text emails if you don’t want links.
-- Provide `empty` e.g. `empty="ra.field.no_email"` for translation.
+Remaining props are passed to the underlying `<a>` element (e.g., `target`, `rel`, `className`).
