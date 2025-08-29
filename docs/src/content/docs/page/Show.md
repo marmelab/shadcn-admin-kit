@@ -56,7 +56,8 @@ Components using `<Show>` can be used as the `show` prop of a `<Resource>` compo
 
 ```jsx
 // in src/App.jsx
-import { Admin, Resource } from 'react-admin';
+import { Admin } from '@/copmponents/admin';
+import { Resource } from 'ra-core';
 
 import { dataProvider } from './dataProvider';
 import { ProductShow } from './products';

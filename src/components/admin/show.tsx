@@ -111,8 +111,8 @@ export const ShowView = ({
       </Breadcrumb>
       <div
         className={cn(
-          className,
           "flex justify-between items-start flex-wrap gap-2 my-2",
+          className,
         )}
       >
         <h2 className="text-2xl font-bold tracking-tight">

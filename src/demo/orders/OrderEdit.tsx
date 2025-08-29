@@ -7,6 +7,7 @@ import {
   SimpleForm,
 } from "@/components/admin";
 import { RecordRepresentation } from "ra-core";
+import { Link } from "react-router";
 import { Basket } from "./Basket";
 import { Totals } from "./Totals";
 
@@ -39,9 +40,12 @@ export const OrderEdit = () => (
           <ReferenceField
             source="customer_id"
             reference="customers"
+            link={false}
             render={({ referenceRecord }) => (
               <div className="mb-4 md:text-sm">
-                <RecordRepresentation />
+                <Link to={`/customers/${referenceRecord?.id}`}>
+                  <RecordRepresentation />
+                </Link>
                 <br />
                 <a
                   className="underline md:text-sm"
