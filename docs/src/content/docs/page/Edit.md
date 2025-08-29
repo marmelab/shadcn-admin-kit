@@ -433,9 +433,9 @@ If you want to have different failure side effects based on the button clicked b
 
 ## Changing The Notification Message
 
-![Edit notification](https://marmelab.com/react-admin/img/EditSuccess.png)
+Once the `dataProvider.update()` request returns successfully, users see a success notification.
 
-Once the `dataProvider.update()` request returns successfully, users see a generic notification ("Element updated").
+![Edit notification](../images/update-notification.png)
 
 `<Edit>` uses two successive translation keys to build the success message:
 
@@ -449,9 +449,9 @@ To customize the notification message, you can set custom translation for these 
 ```jsx
 const englishMessages = {
     resources: {
-        comments: {
+        orders: {
             notifications: {
-                updated: 'Comment updated |||| %{smart_count} comments updated',
+                updated: 'Order updated |||| %{smart_count} orders updated',
                 // ...
             },
         },
@@ -465,13 +465,13 @@ Alternately, you can customize this message by passing a custom success side eff
 import { Edit, SimpleForm } from '@/components/admin';
 import { useNotify, useRedirect } from 'ra-core';
 
-const PostEdit = () => {
+const OrderEdit = () => {
     const notify = useNotify();
     const redirect = useRedirect();
 
     const onSuccess = () => {
-        notify(`Post updated successfully`);
-        redirect('list', 'posts');
+        notify(`Order updated successfully`);
+        redirect('list', 'orders');
     };
 
     return (
@@ -609,7 +609,7 @@ const App = () => (
 
 Just like `<Edit>`, `<EditGuesser>` fetches the data. It then analyzes the response, and guesses the inputs it should use to display a basic `<SimpleForm>` with the data. It also dumps the components it has guessed in the console, so you can copy it into your own code.
 
-![Guessed Edit](../images/cusrtomers-edit-guesser.png)
+![Guessed Edit](../images/customers-edit-guesser.png)
 
 ## Cleaning Up Empty Strings
 
