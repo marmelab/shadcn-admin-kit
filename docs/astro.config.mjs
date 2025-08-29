@@ -46,6 +46,10 @@ export default defineConfig({
           items: ["page/list", "page/edit", "page/show", "page/create"],
         },
         {
+          label: "Fields",
+          autogenerate: { directory: "fields" },
+        },
+        {
           label: "Misc",
           autogenerate: { directory: "misc" },
         },
