@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HTMLAttributes } from "react";
-import { RaRecord, useFieldValue, useTranslate } from "ra-core";
+import { useFieldValue, useTranslate } from "ra-core";
 import { FieldProps } from "@/lib/field.type.ts";
 
-export const TextField = <RecordType extends RaRecord = RaRecord>({
+export const TextField = <
+  RecordType extends Record<string, any> = Record<string, any>,
+>({
   defaultValue,
   source,
   record,
   empty,
-  resource: _,
   ...rest
 }: TextFieldProps<RecordType>) => {
   const value = useFieldValue({ defaultValue, source, record });
@@ -32,6 +34,7 @@ export const TextField = <RecordType extends RaRecord = RaRecord>({
   );
 };
 
-export interface TextFieldProps<RecordType extends RaRecord = RaRecord>
-  extends FieldProps<RecordType>,
+export interface TextFieldProps<
+  RecordType extends Record<string, any> = Record<string, any>,
+> extends FieldProps<RecordType>,
     HTMLAttributes<HTMLSpanElement> {}

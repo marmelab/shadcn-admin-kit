@@ -43,7 +43,7 @@ export default defineConfig({
         },
         {
           label: "Page components",
-          items: ["page/list", "page/edit"],
+          items: ["page/list", "page/edit", "page/show"],
         },
         {
           label: "Misc",

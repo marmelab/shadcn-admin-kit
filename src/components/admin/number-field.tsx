@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HTMLAttributes } from "react";
-import { RaRecord, useFieldValue, useTranslate } from "ra-core";
+import { useFieldValue, useTranslate } from "ra-core";
 import { FieldProps } from "@/lib/field.type.ts";
 
-export const NumberField = <RecordType extends RaRecord = RaRecord>({
+export const NumberField = <
+  RecordType extends Record<string, any> = Record<string, any>,
+>({
   defaultValue,
   source,
   record,
   empty,
-  resource: _,
   transform = defaultTransform,
   locales,
   options,
@@ -42,8 +43,9 @@ export const NumberField = <RecordType extends RaRecord = RaRecord>({
   );
 };
 
-export interface NumberFieldProps<RecordType extends RaRecord = RaRecord>
-  extends FieldProps<RecordType>,
+export interface NumberFieldProps<
+  RecordType extends Record<string, any> = Record<string, any>,
+> extends FieldProps<RecordType>,
     HTMLAttributes<HTMLSpanElement> {
   locales?: string | string[];
   options?: object;
