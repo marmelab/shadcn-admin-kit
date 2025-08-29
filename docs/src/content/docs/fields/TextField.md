@@ -4,12 +4,10 @@ title: "TextField"
 
 Displays the textual value of a field inside a `<span>`.
 
-If the value is `null` or `undefined`, it renders nothing unless you provide the `empty` prop. If `empty` is a string, it is passed to the translation function.
-
 ## Usage
 
-```tsx
-import { TextField } from 'shadcn-admin-kit';
+```tsx {8}
+import { List, DataTable, TextField } from '@/components/admin';
 
 export const UserList = () => (
   <List>
@@ -23,23 +21,22 @@ export const UserList = () => (
 );
 ```
 
+If the value is `null` or `undefined`, it renders nothing unless you provide the `empty` prop. If `empty` is a string, it is passed to the translation function.
+
 ## Props
 
 | Prop | Required | Type | Default | Description |
 |------|----------|------|---------|-------------|
-| `source` | Optional* | `string` | - | Field name in the record |
-| `record` | Optional | `object` | Record from context | Record to read (overrides context) |
+| `source` | Required | `string` | - | Field name in the record |
 | `defaultValue` | Optional | `any` | - | Fallback when record has no value for `source` |
 | `empty` | Optional | `ReactNode` | - | Placeholder when value is `null`/`undefined` |
-| `...rest` | - | `HTMLAttributes<HTMLSpanElement>` | - | DOM props passed to the `<span>` |
+| `record` | Optional | `object` | Record from context | Record to read (overrides context) |
 
-`*` Provide either `source` (or wrap custom children / use inside a `RecordField`).
-
-## Translation
-
-When `empty` is a string it is passed to `useTranslate` with `{ _: empty }` so you can localize placeholders.
+Remaining props are passed to the underlying `<span>` element (e.g., `className`).
 
 ## Tips
 
+- `<TextField>` is the default child for `<DataTable.Col>`.
+- `<TextField>` is the default child for `<RecordField>`.
 - Non‑string values are converted with `toString()`.
-- To format numbers or dates, prefer `<NumberField>` or `<DateField>`.
+- To format numbers or dates, prefer [`<NumberField>`](./NumberField.md) or [`<DateField>`](./DateField.md).

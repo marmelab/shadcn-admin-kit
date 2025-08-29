@@ -4,25 +4,26 @@ title: "UrlField"
 
 Renders a record field as a clickable hyperlink (`<a>`). Prevents row click bubbling in tables.
 
-If the value is missing, renders nothing unless `empty` is provided.
-
 ## Usage
 
 ```tsx
+import { UrlField } from '@/components/admin';
+
 <UrlField source="website" target="_blank" rel="noopener" />
 ```
+
+If the value is missing, renders nothing unless `empty` is provided.
 
 ## Props
 
 | Prop | Required | Type | Default | Description |
 |------|----------|------|---------|-------------|
-| `source` | Optional* | `string` | - | Field containing the URL |
-| `record` | Optional | `object` | Record from context | Explicit record |
+| `source` | Required | `string` | - | Field containing the URL |
 | `defaultValue` | Optional | `any` | - | Fallback when no value |
 | `empty` | Optional | `ReactNode` | - | Placeholder when no value |
-| `...rest` | - | `AnchorHTMLAttributes<HTMLAnchorElement>` | - | Anchor props (target, rel, etc.) |
+| `record` | Optional | `object` | Record from context | Explicit record |
 
-`*` Provide `source` or use inside `RecordField`.
+Additional props are passed to the underlying `<a>` element (e.g., `target`, `rel`, `className`).
 
 ## Tips
 

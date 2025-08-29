@@ -30,7 +30,7 @@ Renders an embedded array of objects. Creates a `ListContext` with the data so y
 
 Leverage `<ArrayField>` e.g. in a Show view, to display the `tags` as a `<SingleFieldList>` and the `backlinks` as a `<DataTable>`:
 
-```tsx
+```tsx {14-25}
 import { 
     ArrayField,
     BadgeField,

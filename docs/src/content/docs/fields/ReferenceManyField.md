@@ -2,24 +2,69 @@
 title: "ReferenceManyField"
 ---
 
-Displays records from another resource that reference the current record (inverse relationship). Wraps `ReferenceManyFieldBase` and exposes a `ListContext` for its children.
+Fetches multiple referenced records that reference the current record, and provides them through a `ListContext` to its children. Useful for displaying a list of related records via a one-to-many relationship, when the foreign key is carried by the referenced resource.
 
 ## Usage
 
-```tsx
-// For a post show view: list comments referencing the post id
-<ReferenceManyField target="post_id" reference="comments">
-  <DataTable>
-    <DataTable.Col source="id" />
-    <DataTable.Col source="body" />
-  </DataTable>
-</ReferenceManyField>
+For instance, if an `author` has many `books`, and each book resource exposes an `author_id` field:
+
+```
+┌────────────────┐       ┌──────────────┐
+│ authors        │       │ books        │
+│----------------│       │--------------│
+│ id             │───┐   │ id           │
+│ first_name     │   └──╼│ author_id    │
+│ last_name      │       │ title        │
+│ date_of_birth  │       │ published_at │
+└────────────────┘       └──────────────┘
 ```
 
-Use `render` to customize before children:
+`<ReferenceManyField>` can render the titles of all the books by a given author.
 
-```tsx
-<ReferenceManyField target="post_id" reference="comments" render={({ total }) => <h3>{total} comments</h3>} />
+```jsx {8-13}
+import { Show, ReferenceManyField, DataTable, TextField, DateField } from '@/components/admin';
+
+const AuthorShow = () => (
+    <Show>
+        <div className="flex flex-col gap-4">
+            <TextField source="first_name" />
+            <TextField source="last_name" />
+            <ReferenceManyField reference="books" target="author_id" label="Books">
+              <DataTable>
+                <DataTable.Col source="title" />
+                <DataTable.Col source="published_at" field={DateField} />
+              </DataTable>
+            </ReferenceManyField>
+        </div>
+    </Show>
+);
+```
+
+`<ReferenceManyField>` expects a `reference` attribute, which specifies the resource to fetch for the related record. It also expects a `source` attribute which defines the field containing the value to look for in the `target` field of the referenced resource. By default, this is the `id` of the resource (`authors.id` in the previous example).
+
+You can also use `<ReferenceManyField>` in a list, e.g. to display the authors of the comments related to each post in a list by matching `post.id` to `comment.post_id`:
+
+```jsx {10-14}
+import { List, DataTable, BadgeField, ReferenceManyField, SingleFieldList } from '@/components/admin';
+
+export const PostList = () => (
+    <List>
+        <DataTable>
+            <DataTable.Col source="id" />
+            <DataTable.Col source="title" />
+            <DataTable.Col label="Comments by">
+                <ReferenceManyField reference="comments" target="post_id">
+                    <SingleFieldList>
+                        <BadgeField source="author.name" />
+                    </SingleFieldList>
+                </ReferenceManyField>
+            </DataTable.Col>
+            <DataTable.Col>
+                <EditButton />
+            </DataTable.Col>
+        </DataTable>
+    </List>
+);
 ```
 
 ## Props
@@ -28,22 +73,19 @@ Use `render` to customize before children:
 |------|----------|------|---------|-------------|
 | `reference` | Required | `string` | - | Target resource |
 | `target` | Required | `string` | - | Foreign key in target referencing current record id |
-| `filter` | Optional | `object` | - | Permanent filters |
-| `sort` | Optional | `{ field: string; order: 'ASC' \| 'DESC' }` | - | Sort order |
-| `perPage` | Optional | `number` | - | Page size |
-| `page` | Optional | `number` | 1 | Initial page |
 | `children` | Optional | `ReactNode` | - | List display components |
+| `debounce` | Optional | `number` | 500 | Debounce time in ms for filter changes |
 | `empty` | Optional | `ReactNode` | - | Placeholder when list empty |
-| `loading` | Optional | `ReactNode` | - | Loading element (set `false` to hide) |
 | `error` | Optional | `ReactNode` | - | Error element (set `false` to hide) |
+| `filter` | Optional | `object` | - | Permanent filters |
+| `loading` | Optional | `ReactNode` | - | Loading element (set `false` to hide) |
+| `page` | Optional | `number` | 1 | Initial page |
 | `pagination` | Optional | `ReactNode` | - | Pagination component |
+| `perPage` | Optional | `number` | - | Page size |
 | `render` | Optional | `(listCtx)=>ReactNode` | - | Custom pre-children renderer |
-
-## Empty Logic
-
-Mirrors the logic of `ReferenceArrayField` for empty detection (checks `total`, pages, data length, filters).
+| `sort` | Optional | `{ field: string; order: 'ASC' \| 'DESC' }` | - | Sort order |
+| `storeKey` | Optional | `string` | - | The key to use to store the records selection state |
 
 ## Tips
 
-- Add informative headers with `render={({ total }) => ... }`.
-- Combine with `queryOptions` (passed through controller props) for caching.
+- Use `<ReferenceArrayField>` instead when the current record contains an array of foreign keys.
