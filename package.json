@@ -16,7 +16,8 @@
     "test": "vitest run --browser.headless",
     "test:watch": "vitest watch --browser.headless",
     "test:browser": "vitest watch",
-    "typecheck": "tsc --noEmit -p tsconfig.app.json"
+    "typecheck": "tsc --noEmit -p tsconfig.app.json",
+    "doc:build": "cd docs && pnpm run build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",

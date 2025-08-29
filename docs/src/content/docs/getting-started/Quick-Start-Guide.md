@@ -1,4 +1,8 @@
-# Shadcn-Admin-Kit Quick Start Guide
+---
+
+title: Quick Start
+
+---
 
 In this tutorial, you will learn to create a web application with `shadcn-admin-kit` based on an existing REST API.
 
@@ -8,7 +12,7 @@ Follow the [installation instructions](./1-Install.md) to install `shadcn-admin-
 
 You should end up with a welcome screen like this:
 
-![Welcome to shadcn-admin-kit!](images/welcome.png)
+![Welcome to shadcn-admin-kit!](../images/welcome.png)
 
 ## Using an API as the Data Source
 
@@ -112,7 +116,7 @@ The `<Resource name="users" />` line instructs `shadcn-admin-kit` to fetch "user
 
 Now, your app can display a list of users:
 
-![Users list](images/users-list.png)
+![Users list](../images/users-list.png)
 
 The list is already functional: you can sort it by clicking on the column headers or navigate through pages using the pagination controls. If you open the network tab in your browser's developer tools, you'll see that every user action on the list triggers a corresponding HTTP request to `https://jsonplaceholder.typicode.com/users` with updated parameters. The data provider handles these requests, translating user actions into API calls that the backend understands.
 
@@ -120,7 +124,7 @@ The list is already functional: you can sort it by clicking on the column header
 
 The `<ListGuesser>` component isn't meant for production use—it's just there to help you quickly set up an admin interface. Eventually, you'll need to replace the `ListGuesser` in the `users` resource with a custom React component. Fortunately, `ListGuesser` provides the guessed list code right in the console:
 
-![Guessed users list](images/users-list-guesser.png)
+![Guessed users list](../images/users-list-guesser.png)
 
 Copy this code and create a new `UserList` component in a new file called `users.tsx`:
 
@@ -164,7 +168,7 @@ function App() {
 export default App;
 ```
 
-![Users list](images/users-list.png)
+![Users list](../images/users-list.png)
 
 Visually, nothing changes in the browser, but now the app uses a component that you can fully customize.
 
@@ -221,7 +225,7 @@ That's a bit too much for a usable grid, so let's remove a couple of `<DataTable
 </DataTable>
 ```
 
-![Users list with selected columns only](images/users-list-selected-columns.png)
+![Users list with selected columns only](../images/users-list-selected-columns.png)
 
 In `shadcn-admin-kit`, most configuration is done through components. Instead of using a `columns` prop for configuration, `shadcn-admin-kit` leverages the `children` prop for flexibility, enabling you to add custom logic or change column types as needed.
 
@@ -274,7 +278,7 @@ export const UserList = () => (
 );
 ```
 
-![Users list with a link in Website column](images/users-list-website-link.png)
+![Users list with a link in Website column](../images/users-list-website-link.png)
 
 ## Handling Relationships
 
@@ -310,7 +314,7 @@ function App() {
 export default App;
 ```
 
-![Guessed posts list](images/posts-list-guesser.png)
+![Guessed posts list](../images/posts-list-guesser.png)
 
 The `ListGuesser` suggests using a [`<ReferenceField>`](https://marmelab.com/react-admin/ReferenceField.html) for the `userId` field.
 Let's play with this new field by creating the `PostList` component based on the code dumped by the guesser:
@@ -360,7 +364,7 @@ export default App;
 
 When displaying the posts list, `shadcn-admin-kit` is smart enough to display the `name` of the post author:
 
-![Post list with user names](images/posts-list-user-name.png)
+![Post list with user names](../images/posts-list-user-name.png)
 
 **Tip**: To customize how to represent a record, set [the `recordRepresentation` prop of the `<Resource>`](https://marmelab.com/react-admin/Resource.html#recordrepresentation).
 
@@ -400,7 +404,7 @@ export const PostList = () => (
 );
 ```
 
-![Posts list with fewer columns](images/posts-list-less-columns.png)
+![Posts list with fewer columns](../images/posts-list-less-columns.png)
 
 ## Adding A Detail View
 
@@ -660,7 +664,9 @@ Even though updates appear immediately due to optimistic rendering, `shadcn-admi
 
 Optimistic updates and undo require no specific code on the API side—`shadcn-admin-kit` handles them purely on the client side. That means you'll get them for free with your own API!
 
-**Note**: When you add the ability to edit an item, you also add the ability to delete it. The "Delete" button in the edit view is fully functional out of the box-and it is also "undoable".
+:::note
+When you add the ability to edit an item, you also add the ability to delete it. The "Delete" button in the edit view is fully functional out of the box-and it is also "undoable".
+:::
 
 ## Adding Search And Filters To The List
 
@@ -764,7 +770,7 @@ export const App = () => (
 );
 ```
 
-![Custom home page](images/dashboard.png)
+![Custom home page](../images/dashboard.png)
 
 ## Adding Authentication
 

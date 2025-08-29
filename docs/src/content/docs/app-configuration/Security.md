@@ -1,4 +1,8 @@
-# Security
+---
+
+title: Security & Auth Providers
+
+---
 
 Shadcn-Admin-Kit supports both authentication and authorization, allowing you to secure your admin app with your preferred authentication strategy. Since there are many strategies (e.g., OAuth, MFA, passwordless, magic link), shadcn-admin-kit delegates this logic to an authProvider.
 
@@ -75,20 +79,20 @@ Check out the [Auth Provider Setup](https://marmelab.com/react-admin/Authenticat
 
 The community has built a few open-source Auth Providers that may fit your need:
 
-- <img src="./images/backend-logos/appwrite.svg" title="Appwrite Logo" style="width:16px;height:16px;"/> **[Appwrite](https://appwrite.io/)**: [marmelab/ra-appwrite](https://github.com/marmelab/ra-appwrite)
-- <img src="./images/backend-logos/auth0.svg" title="auth0 Logo" style="width:16px;height:16px;"/> **[Auth0 by Okta](https://auth0.com/)**: [marmelab/ra-auth-auth0](https://github.com/marmelab/ra-auth-auth0/blob/main/packages/ra-auth-auth0/Readme.md)
-- <img src="./images/backend-logos/amplify.svg" title="amplify Logo" style="width:16px;height:16px;"/> **[AWS Amplify](https://docs.amplify.aws)**: [MrHertal/react-admin-amplify](https://github.com/MrHertal/react-admin-amplify)
-- <img src="./images/backend-logos/aws.png" title="cognito Logo" style="width:16px;height:16px;"/> **[AWS Cognito](https://docs.aws.amazon.com/cognito/latest/developerguide/setting-up-the-javascript-sdk.html)**: [marmelab/ra-auth-cognito](https://github.com/marmelab/ra-auth-cognito/blob/main/packages/ra-auth-cognito/Readme.md)
-- <img src="./images/backend-logos/microsoft.svg" title="azure Logo" style="width:16px;height:16px;"/> **[Microsoft Entra ID (using MSAL)](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-browser)**: [marmelab/ra-auth-msal](https://github.com/marmelab/ra-auth-msal/blob/main/packages/ra-auth-msal/Readme.md) ([Tutorial](https://marmelab.com/blog/2023/09/13/active-directory-integration-tutorial.html))
-- <img src="./images/backend-logos/casdoor.svg" title="casdoor Logo" style="width:16px;height:16px;"/> **[Casdoor](https://casdoor.com/)**: [NMB-Lab/reactadmin-casdoor-authprovider](https://github.com/NMB-Lab/reactadmin-casdoor-authprovider)
-- <img src="./images/backend-logos/directus.svg" title="directus Logo" style="width:16px;height:16px;"/> **[Directus](https://directus.io/)**: [marmelab/ra-directus](https://github.com/marmelab/ra-directus/blob/main/packages/ra-directus/Readme.md)
-- <img src="./images/backend-logos/firebase.png" title="firebase Logo" style="width:16px;height:16px;"/> **[Firebase Auth (Google, Facebook, GitHub, etc.)](https://firebase.google.com/docs/auth/web/firebaseui)**: [benwinding/react-admin-firebase](https://github.com/benwinding/react-admin-firebase#auth-provider)
-- <img src="./images/backend-logos/google.svg" title="google Logo" style="width:16px;height:16px;"/> **[Google Identity & Google Workspace](https://developers.google.com/identity/gsi/web/guides/overview)**: [marmelab/ra-auth-google](https://github.com/marmelab/ra-auth-google/blob/main/packages/ra-auth-google/Readme.md)
-- <img src="./images/backend-logos/keycloak.svg" title="keycloak Logo" style="width:16px;height:16px;"/> **[Keycloak](https://www.keycloak.org/)**: [marmelab/ra-keycloak](https://github.com/marmelab/ra-keycloak/blob/main/packages/ra-keycloak/Readme.md)
-- <img src="./images/backend-logos/loopback4.svg" title="loopback Logo" style="width:16px;height:16px;"/> **[Loopback](https://loopback.io/doc/en/lb4/Authentication-overview.html)**: [appsmith dev.to tutorial](https://dev.to/appsmith/building-an-admin-dashboard-with-react-admin-86i#adding-authentication-to-reactadmin)
-- <img src="./images/backend-logos/openid.svg" title="openid Logo" style="width:16px;height:16px;"/> **[OpenID Connect (OIDC)](https://openid.net/connect/)**: [marmelab/ra-example-oauth](https://github.com/marmelab/ra-example-oauth)
-- <img src="./images/backend-logos/supabase.svg" title="supabase Logo" style="width:16px;height:16px;"/> **[Supabase](https://supabase.io/)**: [marmelab/ra-supabase](https://github.com/marmelab/ra-supabase/blob/main/packages/ra-supabase/README.md)
-- <img src="./images/backend-logos/surrealdb.svg" title="surrealdb Logo" style="width:16px;height:16px;"/> **[SurrealDB](https://surrealdb.com/)**: [djedi23/ra-surrealdb](https://github.com/djedi23/ra-surrealdb)
+- <img src="/shadcn-admin-kit/docs/images/backend-logos/appwrite.svg" title="Appwrite Logo" class="w-4 h-4 inline mr-1"/> **[Appwrite](https://appwrite.io/)**: [marmelab/ra-appwrite](https://github.com/marmelab/ra-appwrite)
+- <img src="/shadcn-admin-kit/docs/images/backend-logos/auth0.svg" title="auth0 Logo" class="w-4 h-4 inline mr-1"/> **[Auth0 by Okta](https://auth0.com/)**: [marmelab/ra-auth-auth0](https://github.com/marmelab/ra-auth-auth0/blob/main/packages/ra-auth-auth0/Readme.md)
+- <img src="/shadcn-admin-kit/docs/images/backend-logos/amplify.svg" title="amplify Logo" class="w-4 h-4 inline mr-1"/> **[AWS Amplify](https://docs.amplify.aws)**: [MrHertal/react-admin-amplify](https://github.com/MrHertal/react-admin-amplify)
+- <img src="/shadcn-admin-kit/docs/images/backend-logos/aws.png" title="cognito Logo" class="w-4 h-4 inline mr-1"/> **[AWS Cognito](https://docs.aws.amazon.com/cognito/latest/developerguide/setting-up-the-javascript-sdk.html)**: [marmelab/ra-auth-cognito](https://github.com/marmelab/ra-auth-cognito/blob/main/packages/ra-auth-cognito/Readme.md)
+- <img src="/shadcn-admin-kit/docs/images/backend-logos/microsoft.svg" title="azure Logo" class="w-4 h-4 inline mr-1"/> **[Microsoft Entra ID (using MSAL)](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-browser)**: [marmelab/ra-auth-msal](https://github.com/marmelab/ra-auth-msal/blob/main/packages/ra-auth-msal/Readme.md) ([Tutorial](https://marmelab.com/blog/2023/09/13/active-directory-integration-tutorial.html))
+- <img src="/shadcn-admin-kit/docs/images/backend-logos/casdoor.svg" title="casdoor Logo" class="w-4 h-4 inline mr-1"/> **[Casdoor](https://casdoor.com/)**: [NMB-Lab/reactadmin-casdoor-authprovider](https://github.com/NMB-Lab/reactadmin-casdoor-authprovider)
+- <img src="/shadcn-admin-kit/docs/images/backend-logos/directus.svg" title="directus Logo" class="w-4 h-4 inline mr-1"/> **[Directus](https://directus.io/)**: [marmelab/ra-directus](https://github.com/marmelab/ra-directus/blob/main/packages/ra-directus/Readme.md)
+- <img src="/shadcn-admin-kit/docs/images/backend-logos/firebase.png" title="firebase Logo" class="w-4 h-4 inline mr-1"/> **[Firebase Auth (Google, Facebook, GitHub, etc.)](https://firebase.google.com/docs/auth/web/firebaseui)**: [benwinding/react-admin-firebase](https://github.com/benwinding/react-admin-firebase#auth-provider)
+- <img src="/shadcn-admin-kit/docs/images/backend-logos/google.svg" title="google Logo" class="w-4 h-4 inline mr-1"/> **[Google Identity & Google Workspace](https://developers.google.com/identity/gsi/web/guides/overview)**: [marmelab/ra-auth-google](https://github.com/marmelab/ra-auth-google/blob/main/packages/ra-auth-google/Readme.md)
+- <img src="/shadcn-admin-kit/docs/images/backend-logos/keycloak.svg" title="keycloak Logo" class="w-4 h-4 inline mr-1"/> **[Keycloak](https://www.keycloak.org/)**: [marmelab/ra-keycloak](https://github.com/marmelab/ra-keycloak/blob/main/packages/ra-keycloak/Readme.md)
+- <img src="/shadcn-admin-kit/docs/images/backend-logos/loopback4.svg" title="loopback Logo" class="w-4 h-4 inline mr-1"/> **[Loopback](https://loopback.io/doc/en/lb4/Authentication-overview.html)**: [appsmith dev.to tutorial](https://dev.to/appsmith/building-an-admin-dashboard-with-react-admin-86i#adding-authentication-to-reactadmin)
+- <img src="/shadcn-admin-kit/docs/images/backend-logos/openid.svg" title="openid Logo" class="w-4 h-4 inline mr-1"/> **[OpenID Connect (OIDC)](https://openid.net/connect/)**: [marmelab/ra-example-oauth](https://github.com/marmelab/ra-example-oauth)
+- <img src="/shadcn-admin-kit/docs/images/backend-logos/supabase.svg" title="supabase Logo" class="w-4 h-4 inline mr-1"/> **[Supabase](https://supabase.io/)**: [marmelab/ra-supabase](https://github.com/marmelab/ra-supabase/blob/main/packages/ra-supabase/README.md)
+- <img src="/shadcn-admin-kit/docs/images/backend-logos/surrealdb.svg" title="surrealdb Logo" class="w-4 h-4 inline mr-1"/> **[SurrealDB](https://surrealdb.com/)**: [djedi23/ra-surrealdb](https://github.com/djedi23/ra-surrealdb)
 
 If you need to use an auth backend that isn't listed here, you can create your own authProvider by implementing the methods described above. Check out the [Writing an Auth Provider](https://marmelab.com/react-admin/AuthProviderWriting.html) guide for more details.
 

@@ -11,7 +11,7 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 [Documentation]: https://img.shields.io/badge/Documentation-blueviolet?style=for-the-badge
 
 [OnlineDemoLink]: https://marmelab.com/shadcn-admin-kit/demo 'Online Demo'
-[DocumentationLink]: ./docs/1-Install.md 'Documentation'
+[DocumentationLink]: https://marmelab.com/shadcn-admin-kit/docs 'Documentation'
 
 ## Features
 
@@ -43,7 +43,7 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 
 ## Getting started
 
-Check the [Quick Start Guide](./docs/2-Quick-Start-Guide.md) for a step-by-step guide to set up your first Admin app with `shadcn-admin-kit`.
+Check the [Quick Start Guide](https://marmelab.com/shadcn-admin-kit/docs/2-quick-start-guide) for a step-by-step guide to set up your first Admin app with `shadcn-admin-kit`.
 
 ## Exploring Components
 
@@ -51,7 +51,7 @@ Check the [Quick Start Guide](./docs/2-Quick-Start-Guide.md) for a step-by-step 
 
 ## Usage
 
-Read the [documentation](./docs/1-Install.md) to learn how to use `shadcn-admin-kit` in your project. The following sections provide a brief overview of the main concepts.
+Read the [documentation](https://marmelab.com/shadcn-admin-kit/docs/1-install) to learn how to use `shadcn-admin-kit` in your project. The following sections provide a brief overview of the main concepts.
 
 ### Use `<Admin>` As Root Component
 

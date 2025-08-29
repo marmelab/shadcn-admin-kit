@@ -1,4 +1,8 @@
-# Shadcn Admin Kit MCP Server
+---
+
+title: MCP Server
+
+---
 
 This project is compatible with the new `shadcn@canary registry:mcp` command, and contains Cursor rules to instruct the LLM how to setup the `<Admin>` component, the Data Provider, and the resources.
 

@@ -1,4 +1,8 @@
-# Guides and Concepts
+---
+
+title: Guides and Concepts
+
+---
 
 Shadcn-Admin-Kit is based on [react-admin](https://marmelab.com/react-admin/), so the react-admin documentation applies, for the most part, to Shadcn-Admin-Kit as well.
 

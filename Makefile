@@ -52,7 +52,15 @@ build-website: ## Build the website
 	pnpm run website:build
 	mv ./website/dist/* ./public/
 
-build: build-website build-demo build-registry ## Build all components
+build: build-website build-doc build-demo build-registry ## Build all components
 
 typecheck: ## Run TypeScript type checking
 	@pnpm run typecheck
+
+doc: ## launch doc web server
+	@cd docs && pnpm run dev
+
+build-doc: ## Build the doc website
+	rm -rf ./public/docs
+	pnpm run doc:build
+	mv ./docs/dist ./public/docs

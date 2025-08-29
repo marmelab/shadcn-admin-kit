@@ -9,6 +9,7 @@ export const customers: ResourceProps = {
   list: CustomerList,
   edit: CustomerEdit,
   create: CustomerCreate,
+  show: CustomerEdit,
   recordRepresentation: (record) => `${record.first_name} ${record.last_name}`,
   icon: Users,
 };
