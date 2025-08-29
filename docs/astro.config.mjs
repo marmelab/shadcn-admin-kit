@@ -50,6 +50,10 @@ export default defineConfig({
           autogenerate: { directory: "fields" },
         },
         {
+          label: "Inputs",
+          autogenerate: { directory: "inputs" },
+        },
+        {
           label: "Misc",
           autogenerate: { directory: "misc" },
         },
