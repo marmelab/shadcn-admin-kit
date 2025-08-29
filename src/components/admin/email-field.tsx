@@ -11,15 +11,7 @@ const EmailFieldImpl = <
 >(
   inProps: EmailFieldProps<RecordType>,
 ) => {
-  const {
-    className,
-    empty,
-    defaultValue,
-    source,
-    record,
-    resource: _,
-    ...rest
-  } = inProps;
+  const { className, empty, defaultValue, source, record, ...rest } = inProps;
   const value = useFieldValue({ defaultValue, source, record });
   const translate = useTranslate();
 

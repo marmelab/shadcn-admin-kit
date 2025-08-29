@@ -10,7 +10,6 @@ export const BadgeField = <RecordType extends RaRecord = RaRecord>({
   source,
   record,
   empty,
-  resource: _,
   variant = "outline",
   ...rest
 }: BadgeFieldProps<RecordType>) => {

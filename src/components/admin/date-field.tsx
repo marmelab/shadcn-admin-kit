@@ -43,7 +43,6 @@ const DateFieldImpl = <
     transform = defaultTransform,
     source,
     record,
-    resource: _,
     defaultValue,
     ...rest
   } = inProps;
