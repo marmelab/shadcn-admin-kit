@@ -1,22 +1,37 @@
-import { ExtractRecordPaths, RaRecord, useFieldValue } from "ra-core";
+import * as React from "react";
+import { RaRecord, useFieldValue, useTranslate } from "ra-core";
 import { Badge } from "@/components/ui/badge";
+import { FieldProps } from "@/lib/field.type.ts";
 
-export const BadgeField = <RecordType extends RaRecord = RaRecord>(
-  props: BadgeFieldProps<RecordType>
-) => {
-  const value = useFieldValue(props);
-  const { className, variant = "outline" } = props;
+type BadgeProps = React.ComponentProps<typeof Badge>;
+
+export const BadgeField = <RecordType extends RaRecord = RaRecord>({
+  defaultValue,
+  source,
+  record,
+  empty,
+  resource: _,
+  variant = "outline",
+  ...rest
+}: BadgeFieldProps<RecordType>) => {
+  const value = useFieldValue({ defaultValue, source, record });
+  const translate = useTranslate();
+
+  if (value == null) {
+    return empty && typeof empty === "string"
+      ? translate(empty, { _: empty })
+      : empty;
+  }
+
   return (
-    <Badge className={className} variant={variant}>
-      {value != null && typeof value !== "string" ? value.toString() : value}
+    <Badge variant={variant} {...rest}>
+      {typeof value !== "string" ? value.toString() : value}
     </Badge>
   );
 };
 
-export interface BadgeFieldProps<RecordType extends RaRecord = RaRecord> {
-  className?: string;
-  source: ExtractRecordPaths<RecordType>;
-  record?: RecordType;
-  resource?: string;
+export interface BadgeFieldProps<RecordType extends RaRecord = RaRecord>
+  extends FieldProps<RecordType>,
+    BadgeProps {
   variant?: "default" | "outline" | "secondary" | "destructive";
 }

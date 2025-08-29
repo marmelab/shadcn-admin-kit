@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
-import { type ReactNode, type ElementType } from "react";
+import { type ReactNode, type ElementType, HTMLAttributes } from "react";
 import {
   FieldTitle,
   useRecordContext,
@@ -26,13 +26,16 @@ export const RecordField = <
     label,
     render,
     source,
+    record: recordProp,
     variant,
     ...rest
   } = props;
   const resource = useResourceContext();
-  const record = useRecordContext<RecordType>(props);
+  const record = useRecordContext<RecordType>({ recordProp });
   const translate = useTranslate();
+
   if (!source && !label && !render) return null;
+
   return (
     <div
       className={cn(
@@ -91,7 +94,7 @@ type NoInfer<T> = T extends infer U ? U : never;
 
 export interface RecordFieldProps<
   RecordType extends Record<string, any> = Record<string, any>,
-> {
+> extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
   className?: string;
   empty?: ReactNode;

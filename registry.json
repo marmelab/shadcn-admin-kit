@@ -25,6 +25,7 @@
         "navigation-menu",
         "pagination",
         "popover",
+        "radio-group",
         "select",
         "separator",
         "sheet",
@@ -44,9 +45,11 @@
         "inflection",
         "lodash",
         "lucide-react",
+        "query-string",
         "ra-core",
         "ra-i18n-polyglot",
         "ra-language-english",
+        "react-dropzone",
         "react-hook-form",
         "react-router",
         "tailwind-merge",
@@ -130,6 +133,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/date-field.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/delete-button.tsx",
           "type": "registry:component"
         },
@@ -146,11 +153,23 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/email-field.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/export-button.tsx",
           "type": "registry:component"
         },
         {
           "path": "src/components/admin/field-toggle.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/file-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/file-input.tsx",
           "type": "registry:component"
         },
         {
@@ -206,6 +225,14 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/number-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/radio-button-group-input.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/ready.tsx",
           "type": "registry:component"
         },
@@ -242,6 +269,26 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/saved-queries.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/hooks/saved-queries.tsx",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/components/admin/search-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/select-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/select-input.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/show.tsx",
           "type": "registry:component"
         },
@@ -274,6 +321,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/sort-button.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/text-field.tsx",
           "type": "registry:component"
         },
@@ -294,11 +345,19 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/url-field.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/user-menu.tsx",
           "type": "registry:component"
         },
         {
           "path": "src/hooks/user-menu-context.tsx",
+          "type": "registry:hook"
+        },
+        {
+          "path": "src/hooks/useSupportCreateSuggestion.tsx",
           "type": "registry:hook"
         },
         {
@@ -312,6 +371,14 @@
         {
           "path": "src/hooks/array-input-context.tsx",
           "type": "registry:hook"
+        },
+        {
+          "path": "src/lib/field.type.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/lib/genericMemo.ts",
+          "type": "registry:lib"
         },
         {
           "path": "src/lib/i18nProvider.ts",
