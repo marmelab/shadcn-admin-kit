@@ -2,41 +2,50 @@
 title: "SingleFieldList"
 ---
 
-Inline list layout displaying one badge (or custom child) per record from the current `ListContext`.
+Inline list layout rendering its child once per record.
 
 ## Usage
 
+Use it inside any component creating a `ListContext` (e.g. [`<ArrayField>`](./ArrayField.md), [`<ReferenceArrayField>`](./ReferenceArrayField.md), [`<ReferenceManyField>`](./ReferenceManyField.md)).
+
+Here is an example of a Post show page showing the list of tags for the current post:
+
+```tsx {13}
+import {
+    Show,
+    TextField,
+    ReferenceArrayField,
+    SingleFieldList
+} from '@/components/admin';
+
+const PostShow = () => (
+    <Show>
+        <div className="flex flex-col gap-4">
+            <TextField source="title" />
+            <ReferenceArrayField label="Tags" reference="tags" source="tag_ids">
+                <SingleFieldList />
+            </ReferenceArrayField>
+        </div>
+    </Show>
+);
+```
+
+`<SingleFieldList>` creates one `RecordContext` per item in the list. By default, it renders each item as a badge, using [`<BadgeField>`](./BadgeField.md) and the resource [`recordRepresentation`](https://marmelab.com/react-admin//Resource.md#recordrepresentation).
+
+You can customize the rendering by providing a `children` or `render` prop:
+
 ```tsx
-<ArrayField source="tags">
-  <SingleFieldList />
-</ArrayField>
+<SingleFieldList>
+    <TextField source="name" />
+</SingleFieldList>
 
-<ReferenceArrayField source="category_ids" reference="categories">
-  <SingleFieldList />
-</ReferenceArrayField>
-
-<ReferenceArrayField source="category_ids" reference="categories">
-  <SingleFieldList render={(record, i) => <Badge key={i}>{record.name}</Badge>} />
-</ReferenceArrayField>
+<SingleFieldList render={(record) => <>{record.name</>} />
 ```
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `children` | `ReactNode` | `<Badge><RecordRepresentation/></Badge>` | Content for each record if no `render` provided |
-| `render` | `(record, index) => ReactNode` | - | Custom render function per record (overrides `children`) |
-| `className` | `string` | - | Extra classes on wrapper div |
-
-## Behavior
-
-- Reads records from surrounding `ListContext` (`data`).
-- For each record, provides a `RecordContext` so descendants (e.g. fields) can access it.
-- Rendering precedence: `render` > `children` > default badge with `<RecordRepresentation />`.
-- Layout: horizontal flex row with gap (`flex gap-2`).
-
-## Tips
-
-- Combine with `<ArrayField>` or `<ReferenceArrayField>` to show related items compactly.
-- Use `render` for performance when you just need a simple inline element instead of composing multiple field components.
-- Add wrapping container styles (e.g. `flex-wrap`) via `className` if the list may overflow.
+| Prop        | Required | Type                                   | Default                                 | Description                                              |
+|-------------|----------|----------------------------------------|-----------------------------------------|----------------------------------------------------------|
+| `children`  | Optional | `ReactNode`                            | `<BadgeField>`| Content for each record |
+| `className` | Optional | `string`                               | -                                       | Extra classes on wrapper div                             |
+| `render`    | Optional | `(record, index) => ReactNode`         | -                                       | Custom render function per record |

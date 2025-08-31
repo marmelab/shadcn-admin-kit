@@ -2,7 +2,7 @@
 title: "ColumnsButton"
 ---
 
-Lets the user choose the visible columns in a `<DataTable>`, and reorder them.
+Lets the user choose the visible columns in a [`<DataTable>`](./DataTable.md), and reorder them.
 
 ## Usage
 

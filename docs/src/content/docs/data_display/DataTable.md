@@ -14,6 +14,8 @@ Feature-rich table component with:
 - Conditional row and cell classes
 - Sticky Headers
 
+It leverages shadcn/ui's [Table](https://ui.shadcn.com/docs/components/table) component for the base markup and styling.
+
 ## Usage
 
 Use `<DataTable>` inside a `ListContext` (e.g., as a descendent of [`<List>`](../page/List.md) or [`<ReferenceManyField>`](./ReferenceManyField.md)). Define the table columns with its children using `<DataTable.Col>` components:

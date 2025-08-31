@@ -2,7 +2,7 @@
 title: "BulkActionsToolbar"
 ---
 
-Floating bar showing actions for currently selected rows in a list or DataTable.
+Floating bar showing actions for currently selected rows in a list or [`DataTable`](./DataTable.md).
 
 ## Usage
 
