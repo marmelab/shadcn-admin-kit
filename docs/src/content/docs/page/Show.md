@@ -52,6 +52,8 @@ export const ProductShow = () => (
 );
 ```
 
+`<RecordField>` is a flexible wrapper to display a label and a value (field component, render function, or children) with optional layout variants. See [RecordField documentation](../data_display/RecordField.md) for details.
+
 Components using `<Show>` can be used as the `show` prop of a `<Resource>` component:
 
 ```jsx
