@@ -46,16 +46,16 @@ export default defineConfig({
           items: ["page/list", "page/edit", "page/show", "page/create"],
         },
         {
-          label: "Fields",
-          autogenerate: { directory: "fields" },
+          label: "Data Display",
+          autogenerate: { directory: "data_display" },
         },
         {
-          label: "Inputs",
-          autogenerate: { directory: "inputs" },
+          label: "Data Edition",
+          autogenerate: { directory: "data_edition" },
         },
         {
-          label: "Buttons",
-          autogenerate: { directory: "buttons" },
+          label: "UI & Layout",
+          autogenerate: { directory: "chrome" },
         },
         {
           label: "Misc",
