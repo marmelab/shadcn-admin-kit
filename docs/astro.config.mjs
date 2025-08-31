@@ -81,6 +81,9 @@ export default defineConfig({
       ],
     ],
   },
+  redirects: {
+    "/": "/shadcn-admin-kit/docs/getting-started/install",
+  },
   vite: {
     plugins: [tailwindcss()],
   },
