@@ -15,13 +15,18 @@ import { ThemeProvider } from "@/components/admin/theme-provider";
 const defaultStore = localStorageStore();
 
 const AdminContext = (props: CoreAdminContextProps) => (
-  <ThemeProvider>
-    <CoreAdminContext {...props} />
-  </ThemeProvider>
+  <CoreAdminContext {...props} />
 );
 
 const AdminUI = (props: CoreAdminUIProps) => (
-  <CoreAdminUI layout={Layout} loginPage={LoginPage} ready={Ready} {...props} />
+  <ThemeProvider>
+    <CoreAdminUI
+      layout={Layout}
+      loginPage={LoginPage}
+      ready={Ready}
+      {...props}
+    />
+  </ThemeProvider>
 );
 
 export const Admin = (props: CoreAdminProps) => {
@@ -56,25 +61,23 @@ export const Admin = (props: CoreAdminProps) => {
       queryClient={queryClient}
       store={store}
     >
-      <ThemeProvider>
-        <AdminUI
-          accessDenied={accessDenied}
-          authCallbackPage={authCallbackPage}
-          authenticationError={authenticationError}
-          catchAll={catchAll}
-          dashboard={dashboard}
-          disableTelemetry={disableTelemetry}
-          error={error}
-          layout={layout}
-          loading={loading}
-          loginPage={loginPage}
-          ready={ready}
-          requireAuth={requireAuth}
-          title={title}
-        >
-          {children}
-        </AdminUI>
-      </ThemeProvider>
+      <AdminUI
+        accessDenied={accessDenied}
+        authCallbackPage={authCallbackPage}
+        authenticationError={authenticationError}
+        catchAll={catchAll}
+        dashboard={dashboard}
+        disableTelemetry={disableTelemetry}
+        error={error}
+        layout={layout}
+        loading={loading}
+        loginPage={loginPage}
+        ready={ready}
+        requireAuth={requireAuth}
+        title={title}
+      >
+        {children}
+      </AdminUI>
     </AdminContext>
   );
 };
