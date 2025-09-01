@@ -36,7 +36,9 @@ export default defineConfig({
         {
           label: "Application configuration",
           items: [
-            "app-configuration/app-configuration",
+            "app-configuration/admin",
+            "app-configuration/resource",
+            "app-configuration/customroutes",
             "app-configuration/dataproviders",
             "app-configuration/security",
           ],
