@@ -6,7 +6,7 @@ title: "Edit"
 
 The `<Edit>` component is the main component for edition pages. It fetches a record based on the URL, prepares a form submit handler, and renders the page title and actions. It is not responsible for rendering the actual form - that's the job of its child component (usually a form component, like [`<SimpleForm>`](https://marmelab.com/react-admin/SimpleForm.html)). This form component uses its children ([`<Input>`](https://marmelab.com/react-admin/Inputs.html) components) to render each form input.
 
-![Edit view](../images/customers-edit.png)
+![Edit view](./images/customers-edit.png)
 
 The `<Edit>` component calls `dataProvider.getOne()`, using the `id` from the URL. It creates a `RecordContext` with the result. It also creates a [`SaveContext`](https://marmelab.com/react-admin/useSaveContext.html) containing a `save` callback, which calls `dataProvider.update()` when executed, and [an `EditContext`](https://marmelab.com/react-admin/useEditContext.html) containing both the record and the callback.
 
@@ -76,7 +76,7 @@ You can customize the `<Edit>` component using the following props:
 
 The `<Edit>` component will render its children inside a `EditContext` provider, which the `save` function. Children can be any React node, but are usually a form component like [`<SimpleForm>`](https://marmelab.com/react-admin/SimpleForm.html), or the headless [`<Form>`](https://marmelab.com/react-admin/Form.html) component.
 
-![](../images/customers-edit-content.png)
+![](./images/customers-edit-content.png)
 
 ```tsx
 import {
@@ -135,7 +135,7 @@ export const PostEdit = () => (
 
 By default, the Edit component includes a toolbar with a button to navigate to the show view (if present) and a button to delete the current record. 
 
-![](../images/customers-edit-actions.png)
+![](./images/customers-edit-actions.png)
 
 You can replace these actions by your own elements using the `actions` prop:
 
@@ -414,7 +414,7 @@ const PostEdit = () => {
 }
 ```
 
-The `onError` function receives the error from the `dataProvider.update()` call. It is a JavaScript Error object (see [the dataProvider documentation for details](../../app-configuration/dataproviders/#writing-a-data-provider)).
+The `onError` function receives the error from the `dataProvider.update()` call. It is a JavaScript Error object (see [the dataProvider documentation for details](./DataProviders.md/#writing-a-data-provider)).
 
 The default `onError` function is:
 
@@ -435,7 +435,7 @@ If you want to have different failure side effects based on the button clicked b
 
 Once the `dataProvider.update()` request returns successfully, users see a success notification.
 
-![Edit notification](../images/update-notification.png)
+![Edit notification](./images/update-notification.png)
 
 `<Edit>` uses two successive translation keys to build the success message:
 
@@ -609,7 +609,7 @@ const App = () => (
 
 Just like `<Edit>`, `<EditGuesser>` fetches the data. It then analyzes the response, and guesses the inputs it should use to display a basic `<SimpleForm>` with the data. It also dumps the components it has guessed in the console, so you can copy it into your own code.
 
-![Guessed Edit](../images/customers-edit-guesser.png)
+![Guessed Edit](./images/customers-edit-guesser.png)
 
 ## Cleaning Up Empty Strings
 
@@ -830,7 +830,7 @@ export const BookEdit = () => {
 
 ## Access Control
 
-If your `authProvider` implements [Access Control](../../app-configuration/security/#access-control), `<Edit>`  will only render if the user has the "edit" access to the related resource.
+If your `authProvider` implements [Access Control](./Security.md#access-control), `<Edit>`  will only render if the user has the "edit" access to the related resource.
 
 For instance, for the `<PostEdit>`page below:
 
@@ -855,7 +855,7 @@ const PostEdit = () => (
 { action: "edit", resource: "posts" }
 ```
 
-Users without access will be redirected to the [Access Denied page](../../app-configuration/app-configuration/#admin).
+Users without access will be redirected to the [Access Denied page](./Admin.md).
 
 :::note*
 Access control is disabled when you use the `disableAuthentication` prop.

@@ -23,4 +23,4 @@ import { DataTable, BulkExportButton } from '@/components/admin';
 
 Additional props are passed to the underlying button (e.g., `className`).
 
-See the [`<List exporter>`](../page/List.md#exported-data) documentation for details on the `exporter` function.
+See the [`<List exporter>`](./List.md#exported-data) documentation for details on the `exporter` function.

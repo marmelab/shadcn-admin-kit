@@ -6,7 +6,7 @@ title: "List"
 
 The `<List>` component is the root component for list pages. It fetches a list of records from the data provider (via `ra-core` hooks), puts them in a [`ListContext`](https://marmelab.com/react-admin/useListContext.html), renders a default layout (breadcrumb, title, action buttons, inline filters, pagination), then renders its children (usually a [`<DataTable>`](https://marmelab.com/react-admin/DataTable.html)).
 
-![Simple users list](../images/users-list.png)
+![Simple users list](./images/users-list.png)
 
 ## Usage
 
@@ -81,7 +81,7 @@ These props will soon be supported: `aside`, `empty`, `emptyWhileLoading`.
 
 `<List>` itself doesn't render the list of records. It delegates this task to its children components. These children components grab the `data` from the [`ListContext`](https://marmelab.com/react-admin/useListContext.html) and render them on screen.
 
-![List children](../images/users-list-items.png)
+![List children](./images/users-list-items.png)
 
 shadcn-admin-kit provides several components that can read and display a list of records from a `ListContext`, each with a different layout:
 
@@ -151,7 +151,7 @@ You can also build contextual actions using anything from the list context (`isP
 
 The default title for a list view is the translation key `ra.page.list` that translates to [the plural name of the resource](https://marmelab.com/react-admin/TranslationTranslating.html#translating-resource-and-field-names) (e.g. "Posts").
 
-![List title](../images/users-list-title.png)
+![List title](./images/users-list-title.png)
 
 You can customize this title by providing a resource specific translation with the key `resources.RESOURCE.page.list` (e.g. `resources.posts.page.list`):
 
@@ -189,7 +189,7 @@ The title can be a string, a React element, or `false` to disable the title.
 
 By default, `<List>` displays a set of pagination controls at the bottom of the list.
 
-![Pagination in users list](../images/users-list-pagination.png)
+![Pagination in users list](./images/users-list-pagination.png)
 
 The `pagination` prop allows to replace the default pagination controls by your own.
 
@@ -313,7 +313,7 @@ export const PostList = () => (
 :::tip
 You can also display filters as a sidebar thanks to the [`<ToggleFilterButton>`](./ToggleFilterButton.md) component:
 
-![Filter sidebar](../images/filter-sidebar.png)
+![Filter sidebar](./images/filter-sidebar.png)
 :::
 
 For more details about customizing filters, see the [Filtering the List](https://marmelab.com/react-admin/FilteringTutorial.html#filtering-the-list) documentation.
@@ -657,7 +657,7 @@ const App = () => (
 
 Just like `<List>`, `<ListGuesser>` fetches the data. It then analyzes the response, and guesses the fields it should use to display a basic `<DataTable>` with the data. It also dumps the components it has guessed in the console, so you can copy it into your own code.
 
-![Guessed List](../images/posts-list-guesser.png)
+![Guessed List](./images/posts-list-guesser.png)
 
 ## Rendering An Empty List
 

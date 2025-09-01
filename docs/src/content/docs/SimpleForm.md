@@ -73,6 +73,6 @@ Or replace the entire toolbar via the `toolbar` prop on `<SimpleForm>`.
 ## Related
 
 - [`Form`](./Form.md) (headless version)
-- [`SaveButton`](../buttons/SaveButton.md)
-- [`CancelButton`](../buttons/CancelButton.md)
+- [`SaveButton`](./SaveButton.md)
+- [`CancelButton`](./CancelButton.md)
 - [`SimpleFormIterator`](./SimpleFormIterator.md)

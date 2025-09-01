@@ -4,7 +4,7 @@ title: "Create"
 
 The `<Create>` component is the main component for creation pages. It prepares a form submit handler, and renders the page title and actions. It is not responsible for rendering the actual form - that's the job of its child component (usually a form component, like [`<SimpleForm>`](https://marmelab.com/react-admin/SimpleForm.html)). This form component uses its children ([`<Input>`](https://marmelab.com/react-admin/Inputs.html) components) to render each form input.
 
-![product creation form](../images/products-create.png)
+![product creation form](./images/products-create.png)
 
 The `<Create>` component creates a `RecordContext` with an empty object `{}` by default. It also creates a [`SaveContext`](https://marmelab.com/react-admin/useSaveContext.html) containing a `save` callback, which calls `dataProvider.create()`, and [a `CreateContext`](https://marmelab.com/react-admin/useCreateContext.html) containing both the record and the callback.
 

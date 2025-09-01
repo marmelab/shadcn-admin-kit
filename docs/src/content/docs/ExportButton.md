@@ -4,7 +4,7 @@ title: "ExportButton"
 
 Exports the current list, with filters applied, but without pagination.
 
-It relies on [the `exporter` function](../page/List.md#exported-data) passed to the `<List>` component, via the `ListContext`. It's disabled for empty lists.
+It relies on [the `exporter` function](./List.md#exported-data) passed to the `<List>` component, via the `ListContext`. It's disabled for empty lists.
 
 ## Usage
 

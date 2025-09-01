@@ -98,7 +98,7 @@ export default function Page() {
 
 Finally, run `npm run dev` and go to `http://localhost:3000/admin` to access your admin app.
 
-![Welcome to shadcn-admin-kit!](../images/welcome.png)
+![Welcome to shadcn-admin-kit!](./images/welcome.png)
 
 Next step: Read the [Quick Start Guide](./2-Quick-Start-Guide.md) to learn how to use the components in your admin app.
 
@@ -254,6 +254,6 @@ yarn dev
 
 You should see this:
 
-![Welcome to shadcn-admin-kit!](../images/welcome.png)
+![Welcome to shadcn-admin-kit!](./images/welcome.png)
 
 Next step: Read the [Quick Start Guide](./2-Quick-Start-Guide.md) to learn how to use the components in your admin app.

@@ -4,7 +4,7 @@ title: "ToggleFilterButton"
 
 Enables or disable a particular filter in a list view.
 
-![Toggle filter button](../images/toggle-filter-button.png)
+![Toggle filter button](./images/toggle-filter-button.png)
 
 ## Usage
 

@@ -18,7 +18,7 @@ It leverages shadcn/ui's [Table](https://ui.shadcn.com/docs/components/table) co
 
 ## Usage
 
-Use `<DataTable>` inside a `ListContext` (e.g., as a descendent of [`<List>`](../page/List.md) or [`<ReferenceManyField>`](./ReferenceManyField.md)). Define the table columns with its children using `<DataTable.Col>` components:
+Use `<DataTable>` inside a `ListContext` (e.g., as a descendent of [`<List>`](./List.md) or [`<ReferenceManyField>`](./ReferenceManyField.md)). Define the table columns with its children using `<DataTable.Col>` components:
 
 ```tsx
 import { List, DataTable, ReferenceField, EditButton } from '@/components/admin';
@@ -165,8 +165,8 @@ export const PostList = () => (
 
 React-admin provides two bulk action buttons that you can use in data tables:
 
-- [`<BulkDeleteButton>`](../data_edition/BulkDeleteButton.md) (enabled by default)
-- [`<BulkExportButton>`](../data_edition/BulkExportButton.md) to export only the selection
+- [`<BulkDeleteButton>`](./BulkDeleteButton.md) (enabled by default)
+- [`<BulkExportButton>`](./BulkExportButton.md) to export only the selection
 
 You can write a custom bulk action button components using the [`useListContext`](https://marmelab.com/react-admin/useListContext.md) hook to get the following data and callbacks:
 
