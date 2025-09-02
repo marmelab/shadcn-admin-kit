@@ -106,6 +106,7 @@ export const Create = () => (
       choices={tags}
       optionText="label"
       create={<CreateTag />}
+      createLabel="Start typing to create a new tag"
       createItemLabel="Create %{item}"
     />
   </Wrapper>

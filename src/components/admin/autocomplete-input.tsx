@@ -145,6 +145,7 @@ export const AutocompleteInput = (
     getCreateItem,
     handleChange: handleChangeWithCreateSupport,
     createElement,
+    getOptionDisabled,
   } = useSupportCreateSuggestion({
     create,
     createLabel,
@@ -157,9 +158,12 @@ export const AutocompleteInput = (
     filter: filterValue,
   });
 
-  const createItem = create || onCreate ? getCreateItem(filterValue) : null;
+  const createItem =
+    (create || onCreate) && (filterValue !== "" || createLabel)
+      ? getCreateItem(filterValue)
+      : null;
   let finalChoices = allChoices;
-  if (create || onCreate) {
+  if (createItem) {
     finalChoices = [...finalChoices, createItem];
   }
 
@@ -213,19 +217,21 @@ export const AutocompleteInput = (
                   {finalChoices.map((choice) => {
                     const isCreateItem =
                       !!createItem && choice?.id === createItem.id;
+                    const disabled = getOptionDisabled(choice);
 
                     return (
                       <CommandItem
                         key={getChoiceValue(choice)}
                         value={
                           isCreateItem
-                            ? // if it's a create item, include the filter value so it is shown in the command input
-                              // a character before and after the filter value are required
+                            ? // if it's the create option, include the filter value so it is shown in the command input
+                              // characters before and after the filter value are required
                               // to show the option when the filter value starts or ends with a space
                               `?${filterValue}?`
                             : getChoiceValue(choice)
                         }
                         onSelect={() => handleChangeWithCreateSupport(choice)}
+                        disabled={disabled}
                       >
                         <Check
                           className={cn(
