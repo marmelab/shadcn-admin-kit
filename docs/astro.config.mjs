@@ -87,7 +87,6 @@ export default defineConfig({
             "deletebutton",
             "editbutton",
             "fileinput",
-            "form",
             "numberinput",
             "radiobuttongroupinput",
             "referencearrayinput",
