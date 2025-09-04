@@ -1,9 +1,4 @@
-import {
-  ComponentProps,
-  useCallback,
-  useEffect,
-  type ReactElement,
-} from "react";
+import { X } from "lucide-react";
 import {
   FieldTitle,
   InputProps,
@@ -14,8 +9,15 @@ import {
   useTranslate,
   type ChoicesProps,
 } from "ra-core";
-import { X } from "lucide-react";
+import {
+  ComponentProps,
+  useCallback,
+  useEffect,
+  type ReactElement,
+} from "react";
 
+import { FormError, FormField, FormLabel } from "@/components/admin/form";
+import { InputHelperText } from "@/components/admin/input-helper-text";
 import {
   Select,
   SelectContent,
@@ -24,13 +26,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
 import {
   SupportCreateSuggestionOptions,
   useSupportCreateSuggestion,
 } from "@/hooks/useSupportCreateSuggestion";
-import { FormField, FormLabel, FormError } from "@/components/admin/form";
-import { InputHelperText } from "@/components/admin/input-helper-text";
+import { cn } from "@/lib/utils";
 
 export const SelectInput = (props: SelectInputProps) => {
   const {
@@ -247,6 +247,7 @@ export const SelectInput = (props: SelectInputProps) => {
           >
             <SelectTrigger
               className={cn("w-full transition-all hover:bg-accent")}
+              disabled={field.disabled}
             >
               <SelectValue placeholder={renderEmptyItemOption()} />
 
