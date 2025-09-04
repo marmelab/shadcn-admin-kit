@@ -77,6 +77,10 @@
           "type": "registry:hook"
         },
         {
+          "path": "src/components/admin/authentication.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/autocomplete-input.tsx",
           "type": "registry:component"
         },
