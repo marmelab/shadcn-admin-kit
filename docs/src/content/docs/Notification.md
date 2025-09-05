@@ -2,7 +2,7 @@
 title: "Notification"
 ---
 
-Bridges react-admin notification system with `sonner` toasts, supporting undoable actions.
+Bridges Shadcn Admin Kit notification system with `sonner` toasts, supporting undoable actions.
 
 ## Usage
 

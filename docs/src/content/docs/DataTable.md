@@ -130,7 +130,7 @@ Bulk action buttons appear when users select one or several rows. Clicking on a 
 You can disable this feature by setting the `bulkActionButtons` prop to `false`:
 
 ```tsx
-import { DataTable, List } from 'react-admin';
+import { DataTable, List } from '@/components/admin';
 
 export const PostList = () => (
     <List>
@@ -163,7 +163,7 @@ export const PostList = () => (
 );
 ```
 
-React-admin provides two bulk action buttons that you can use in data tables:
+Shadcn Admin Kit provides two bulk action buttons that you can use in data tables:
 
 - [`<BulkDeleteButton>`](./BulkDeleteButton.md) (enabled by default)
 - [`<BulkExportButton>`](./BulkExportButton.md) to export only the selection
@@ -356,7 +356,7 @@ const PostList = () => (
 You can change the style of a row based on the record values by using the `rowClassName` prop. This prop is a function that takes the current record as an argument and returns a string.
 
 ```tsx
-import { DataTable, List } from 'react-admin';
+import { DataTable, List } from '@/components/admin';
 
 export const PostList = () => (
     <List>
@@ -374,7 +374,7 @@ export const PostList = () => (
 You can also change the style of a specific cell based on the record values by using the `conditionalClassName` prop of `<DataTable.Col>`. This prop is a function that takes the current record as an argument and returns a string.
 
 ```tsx
-import { DataTable, List } from 'react-admin';
+import { DataTable, List } from '@/components/admin';
 
 export const PostList = () => (
     <List>

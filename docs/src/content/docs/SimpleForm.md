@@ -79,7 +79,7 @@ export const UserCreate = () => (
 ```
 
 :::tip
-The `validate` function can return a promise for asynchronous validation. See [the Server-Side Validation section](https://marmelab.com/react-admin/Validation.md#server-side-validation) in the Validation documentation.
+The `validate` function can return a promise for asynchronous validation. See [the Server-Side Validation section](https://marmelab.com/ra-core/validation/#server-side-validation) in the Validation documentation.
 ::: 
 
 Alternatively, you can specify a `validate` prop directly in `<Input>` components, taking either a function or an array of functions. Ra-core already bundles a few validator functions, that you can just require, and use as input-level validators:
@@ -134,7 +134,7 @@ export const UserCreate = () => (
 ```
 
 :::tip
-If you pass a function as a message, react-admin calls this function with `{ args, value, values,translate, ...props }` as argument. For instance:
+If you pass a function as a message, Shadcn Admin Kit calls this function with `{ args, value, values,translate, ...props }` as argument. For instance:
 
 ```jsx
 const message = ({ translate }) => translate('myroot.validation.email_invalid');
@@ -305,7 +305,7 @@ export const TagEdit = () => (
 ```
 
 :::note
-Due to limitations in react-router, this feature only works if you use the default router provided by react-admin, or if you use a [Data Router](https://reactrouter.com/en/6.22.3/routers/picking-a-router).
+Due to limitations in react-router, this feature only works if you use the default router provided by Shadcn Admin Kit, or if you use a [Data Router](https://reactrouter.com/en/6.22.3/routers/picking-a-router).
 :::
 
 ## Toolbar
@@ -347,7 +347,7 @@ const PostEdit = () => (
 The basic usage of `<SimpleForm>` is to pass Input components as children. For non-editable fields, you can pass `readOnly` inputs, or even a [`<RecordField>`](./RecordField.md) component.
 
 ```jsx
-import { Edit, SimpleForm, TextInput, RecordField, TextField } from 'react-admin';
+import { Edit, SimpleForm, TextInput, RecordField, TextField } from '@/components/admin';
 
 const PostEdit = () => (
     <Edit>
@@ -399,7 +399,7 @@ const OrderEdit = () => (
 
 ## Headless Version
 
-To render a form without wrapping div and without toolbar, use ra-core's [`<Form>`](https://marmelab.com/react-admin/Form.html) component directly. It accepts the same props as `<SimpleForm>`, except `className` and `toolbar`.
+To render a form without wrapping div and without toolbar, use ra-core's [`<Form>`](https://marmelab.com/ra-core/form/) component directly. It accepts the same props as `<SimpleForm>`, except `className` and `toolbar`.
 
 This lets you implement custom layouts and submit behaviors.
 
