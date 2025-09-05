@@ -6,7 +6,7 @@ Displays number of related records for a `ReferenceMany` relation.
 
 ## Usage
 
-Use `<ReferenceManyCount>` anywhere inside a [`RecordContext`](https://marmelab.com/react-admin/useRecordContext.md). You must set the `reference` and `target` props to match the relationship:
+Use `<ReferenceManyCount>` anywhere inside a [`RecordContext`](https://marmelab.com/ra-core/userecordcontext/). You must set the `reference` and `target` props to match the relationship:
 
 - `reference` is the name of the related resource to fetch (e.g. `comments`)
 - `target` is the name of the field in the related resource that points to the current resource (e.g. `post_id`)

@@ -67,5 +67,5 @@ Tip: Which API endpoint does a resource rely on? The `<Resource>` component does
 | `options`               |          | `object`                                        | -       | Additional options for the resource                                                       |
 | `children`              |          | `Route`                                         | -       | Sub-routes for the resource                                                               |
 
-To learn more about these props, refer to [the `<Resource>` component documentation](https://marmelab.com/react-admin/Resource.html) on the react-admin website.
+To learn more about these props, refer to [the `<Resource>` component documentation](https://marmelab.com/ra-core/resource/) on the ra-core website.
 

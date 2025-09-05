@@ -16,7 +16,7 @@ You should end up with a welcome screen like this:
 
 ## Using an API as the Data Source
 
-`shadcn-admin-kit` apps are single-page applications (SPA) that run in the browser and fetch data from an API. Since there is no single standard for data exchanges between systems, `shadcn-admin-kit` uses an adapter to communicate with your API—this adapter is called a [Data Provider](https://marmelab.com/react-admin/DataProviders.html).
+`shadcn-admin-kit` apps are single-page applications (SPA) that run in the browser and fetch data from an API. Since there is no single standard for data exchanges between systems, `shadcn-admin-kit` uses an adapter to communicate with your API—this adapter is called a [Data Provider](./DataProviders.md).
 
 For this tutorial, we'll use [JSONPlaceholder](https://jsonplaceholder.typicode.com/), a fake REST API designed for prototyping and testing. Here is a sample response:
 
@@ -52,7 +52,7 @@ curl https://jsonplaceholder.typicode.com/users/2
 
 _JSONPlaceholder_ provides endpoints for users, posts, and comments. The admin app we'll build will allow you to Create, Retrieve, Update, and Delete (CRUD) these resources.
 
-We'll use a third-party package, `ra-data-json-server` to map the JSONPlaceholder API to the `shadcn-admin-kit` CRUD API. There are [dozens of data provider packages](https://marmelab.com/react-admin/DataProviderList.html) for various APIs and databases. You can also create your own if necessary. For now, let's make sure the app connects to JSONPlaceholder.
+We'll use a third-party package, `ra-data-json-server` to map the JSONPlaceholder API to the `shadcn-admin-kit` CRUD API. There are [dozens of data provider packages](./DataProviders.md#supported-data-provider-backends) for various APIs and databases. You can also create your own if necessary. For now, let's make sure the app connects to JSONPlaceholder.
 
 ```shell
 npm install ra-data-json-server
@@ -91,7 +91,7 @@ function App() {
 
 Let's add a list of users.
 
-The `<Admin>` component expects one or more [`<Resource>`](https://marmelab.com/react-admin/Resource.html) child components. Each resource maps a name to an API endpoint. To add a resource named `users`, edit the `App.tsx` file as follows:
+The `<Admin>` component expects one or more [`<Resource>`](./Resource.md) child components. Each resource maps a name to an API endpoint. To add a resource named `users`, edit the `App.tsx` file as follows:
 
 ```diff
 +import { Resource } from "ra-core";
@@ -112,7 +112,7 @@ export default App;
 
 The `<Resource name="users" />` line instructs `shadcn-admin-kit` to fetch "users" from the [https://jsonplaceholder.typicode.com/users](https://jsonplaceholder.typicode.com/users) URL. The `<Resource>` component also defines which React components to use for each CRUD operation (`list`, `create`, `edit`, and `show`).
 
-`list={ListGuesser}` tells `shadcn-admin-kit` to use the [`<ListGuesser>`](https://marmelab.com/react-admin/ListGuesser.html) component to display the list of users. This component _guesses_ the configuration for the list, including column names and types, based on the data fetched from the API.
+`list={ListGuesser}` tells `shadcn-admin-kit` to use the `<ListGuesser>` component to display the list of users. This component _guesses_ the configuration for the list, including column names and types, based on the data fetched from the API.
 
 Now, your app can display a list of users:
 
@@ -195,7 +195,7 @@ export const UserList = () => (
 );
 ```
 
-The root component, [`<List>`](https://marmelab.com/react-admin/List.html), reads the query parameters, fetches data from the API, and places the data in a React context. It also provides callbacks for filtering, pagination, and sorting, allowing child components to access and modify the list parameters. `<List>` performs many tasks, but its syntax remains straightforward:
+The root component, [`<List>`](./List.md), reads the query parameters, fetches data from the API, and places the data in a React context. It also provides callbacks for filtering, pagination, and sorting, allowing child components to access and modify the list parameters. `<List>` performs many tasks, but its syntax remains straightforward:
 
 ```tsx
 <List>
@@ -205,7 +205,7 @@ The root component, [`<List>`](https://marmelab.com/react-admin/List.html), read
 
 This demonstrates the goal of `shadcn-admin-kit`: helping developers build sophisticated applications with simple syntax.
 
-In most frameworks, "simple" often implies limited capabilities, making it challenging to extend beyond basic features. `shadcn-admin-kit` addresses this through _composition_. `<List>` handles data fetching, while rendering is delegated to its child—in this case, [`<DataTable>`](https://marmelab.com/react-admin/DataTable.html). Essentially, the code composes the functionalities of `<List>` and `<DataTable>` functionalities.
+In most frameworks, "simple" often implies limited capabilities, making it challenging to extend beyond basic features. `shadcn-admin-kit` addresses this through _composition_. `<List>` handles data fetching, while rendering is delegated to its child—in this case, [`<DataTable>`](./DataTable.md). Essentially, the code composes the functionalities of `<List>` and `<DataTable>` functionalities.
 
 ## Selecting Columns
 
@@ -231,12 +231,12 @@ In `shadcn-admin-kit`, most configuration is done through components. Instead of
 
 ## Writing A Custom Field
 
-So far, you've used [`<DataTable.Col>`](https://marmelab.com/react-admin/DataTable.html#datatablecol) directly. You can directly specify a field in your `DataTable.Col` using [the `field` prop](https://marmelab.com/react-admin/DataTable.html#field), which is useful when no custom props are needed for that field, or directly as children.
+So far, you've used [`<DataTable.Col>`](./DataTable.md#datatablecol) directly. You can directly specify a field in your `DataTable.Col` using [the `field` prop](./DataTable.md#field), which is useful when no custom props are needed for that field, or directly as children.
 
 In `shadcn-admin-kit`, fields are just React components.
 When rendered, they grab the `record` fetched from the API (e.g. `{ "id": 2, "name": "Ervin Howell", "website": "anastasia.net", ... }`) using a custom hook, and use the `source` prop (e.g. `website`) to get the value they should display (e.g. "anastasia.net").
 
-That means you can do the same to [write a custom field](https://marmelab.com/react-admin/Fields.html#writing-your-own-field-component). For instance, here is a simple `<UrlField>`:
+That means you can do the same to [write a custom field](https://marmelab.com/ra-core/fields/#writing-your-own-field-component). For instance, here is a simple `<UrlField>`:
 
 ```tsx
 // components/url-field.tsx
@@ -254,7 +254,7 @@ export function UrlField({ source }: { source: string }) {
 ```
 
 For each row, `<DataTable>` creates a `RecordContext` and stores the current record in it.
-[`useRecordContext`](https://marmelab.com/react-admin/useRecordContext.html) allows you to read that record.
+[`useRecordContext`](https://marmelab.com/ra-core/userecordcontext/) allows you to read that record.
 It's one of the 50+ headless hooks that `shadcn-admin-kit` exposes to let you build your own components without forcing a particular UI.
 
 You can then use the `<UrlField>` component in `<UserList>`.
@@ -316,7 +316,7 @@ export default App;
 
 ![Guessed posts list](./images/posts-list-guesser.png)
 
-The `ListGuesser` suggests using a [`<ReferenceField>`](https://marmelab.com/react-admin/ReferenceField.html) for the `userId` field.
+The `ListGuesser` suggests using a [`<ReferenceField>`](./ReferenceField.md) for the `userId` field.
 Let's play with this new field by creating the `PostList` component based on the code dumped by the guesser:
 
 ```tsx
@@ -366,7 +366,7 @@ When displaying the posts list, `shadcn-admin-kit` is smart enough to display th
 
 ![Post list with user names](./images/posts-list-user-name.png)
 
-**Tip**: To customize how to represent a record, set [the `recordRepresentation` prop of the `<Resource>`](https://marmelab.com/react-admin/Resource.html#recordrepresentation).
+**Tip**: To customize how to represent a record, set [the `recordRepresentation` prop of the `<Resource>`](https://marmelab.com/ra-core/resource/#recordrepresentation).
 
 The `<ReferenceField>` component fetches the reference data, creates a `RecordContext` with the result, and renders the record representation (or its children).
 
@@ -408,7 +408,7 @@ export const PostList = () => (
 
 ## Adding A Detail View
 
-So far, the admin only has list pages. Additionally, the user list doesn't render all columns, so you need to add a detail view to see all the user fields. The `<Resource>` component accepts a `show` component prop to define a detail view. Let's use the [`<ShowGuesser>`](https://marmelab.com/react-admin/ShowGuesser.html) to help bootstrap it:
+So far, the admin only has list pages. Additionally, the user list doesn't render all columns, so you need to add a detail view to see all the user fields. The `<Resource>` component accepts a `show` component prop to define a detail view. Let's use the `<ShowGuesser>` to help bootstrap it:
 
 ```diff
 import { Resource } from "ra-core";
@@ -468,7 +468,7 @@ You can now click on the user name in posts list to open its detailed view. Refe
 
 ## Adding Editing Capabilities
 
-An admin interface isn't just about displaying remote data; it should also allow editing records. `shadcn-admin-kit` provides an [`<Edit>`](https://marmelab.com/react-admin/Edit.html) component for this purpose. Let's use the [`<EditGuesser>`](https://marmelab.com/react-admin/EditGuesser.html) to help bootstrap it.
+An admin interface isn't just about displaying remote data; it should also allow editing records. `shadcn-admin-kit` provides an [`<Edit>`](./Edit.md) component for this purpose. Let's use the `<EditGuesser>` to help bootstrap it.
 
 ```diff
 import { Resource } from "ra-core";
@@ -570,13 +570,13 @@ export const PostEdit = () => (
 );
 ```
 
-If you've understood the `<List>` component, the `<Edit>` component will be no surprise. It's responsible for fetching the record and displaying the page title. It passes the record down to the [`<SimpleForm>`](https://marmelab.com/react-admin/SimpleForm.html) component, which is responsible for the form layout, default values, and validation. Just like `<DataTable>`, `<SimpleForm>` uses its children to determine the form inputs to display. It expects [_input components_](https://marmelab.com/react-admin/Inputs.html) as children. `<TextInput>` and `<ReferenceInput>` are such inputs.
+If you've understood the `<List>` component, the `<Edit>` component will be no surprise. It's responsible for fetching the record and displaying the page title. It passes the record down to the [`<SimpleForm>`](./SimpleForm.md) component, which is responsible for the form layout, default values, and validation. Just like `<DataTable>`, `<SimpleForm>` uses its children to determine the form inputs to display. It expects [_input components_](./DataEdition.mdx#inputs) as children. `<TextInput>` and `<ReferenceInput>` are such inputs.
 
 The `<ReferenceInput>` takes the same props as the `<ReferenceField>` (used earlier in the `<PostList>` page). `<ReferenceInput>` uses these props to fetch the API for possible references related to the current record (in this case, possible `users` for the current `post`). It then creates a context with the possible choices and renders an `<AutocompleteInput>`, which is responsible for displaying the choices and letting the user select one.
 
 ## Adding Creation Capabilities
 
-Let's allow users to create posts, too. Copy the `<PostEdit>` component into a `<PostCreate>`, and replace `<Edit>` with [`<Create>`](https://marmelab.com/react-admin/Create.html):
+Let's allow users to create posts, too. Copy the `<PostEdit>` component into a `<PostCreate>`, and replace `<Edit>` with [`<Create>`](./Create.md):
 
 ```diff
 import {
@@ -776,7 +776,7 @@ export const App = () => (
 
 Most admin apps require authentication. `shadcn-admin-kit` can check user credentials before displaying a page and redirect to a login page when the REST API returns a 403 error code.
 
-`shadcn-admin-kit` makes no assumption about your authentication strategy (basic auth, OAuth, custom route, etc.), but gives you the ability to add the auth logic at the right place - using [the `authProvider` object](https://marmelab.com/react-admin/Authentication.html).
+`shadcn-admin-kit` makes no assumption about your authentication strategy (basic auth, OAuth, custom route, etc.), but gives you the ability to add the auth logic at the right place - using [the `authProvider` object](./Security.md).
 
 For this tutorial, since there is no public authentication API, we can use a fake authentication provider that accepts every login request and stores the `username` in `localStorage`. Each page change will require that `localStorage` contains a `username` item.
 
@@ -843,7 +843,7 @@ Once the app reloads, it's now behind a login form that accepts everyone.
 
 ## Connecting To A Real API
 
-Here is the elephant in the room of this tutorial. In real-world projects, the dialect of your API (REST? GraphQL? Something else?) won't match the JSONPlaceholder dialect. [Writing a Data Provider](https://marmelab.com/react-admin/DataProviderWriting.html) is probably the first thing you'll have to do to make `shadcn-admin-kit` work, unless your API backend is already supported ([see the list here](https://marmelab.com/react-admin/DataProviderList.html)). Depending on your API, this can require a few hours of additional work.
+Here is the elephant in the room of this tutorial. In real-world projects, the dialect of your API (REST? GraphQL? Something else?) won't match the JSONPlaceholder dialect. [Writing a Data Provider](./DataProviders.md#writing-a-data-provider) is probably the first thing you'll have to do to make `shadcn-admin-kit` work, unless your API backend is already supported ([see the list here](./DataProviders.md#supported-data-provider-backends)). Depending on your API, this can require a few hours of additional work.
 
 `shadcn-admin-kit` delegates every data query to a Data Provider object, which acts as an adapter to your API. This makes `shadcn-admin-kit` capable of mapping any API dialect, using endpoints from several domains, etc.
 
@@ -981,4 +981,4 @@ const App = () => (
 
 `shadcn-admin-kit` was built with customization in mind. You can replace any `shadcn-admin-kit` component with a component of your own, for instance, to display a custom list layout or a different edit form for a given resource.
 
-Now that you've completed the tutorial, continue your journey with the [Guides and Concepts](https://marmelab.com/react-admin/Architecture.html) section.
+Now that you've completed the tutorial, continue your journey with the [Guides and Concepts](./Guides-And-Concepts.md) section.

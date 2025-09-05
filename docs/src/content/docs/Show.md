@@ -10,7 +10,7 @@ The `<Show>` component is a page component that renders a single record.
 
 - it calls `useShowController` to fetch the record from the dataProvider via `dataProvider.getOne()`,
 - it computes the default page title
-- it creates a `ShowContext` and a [`RecordContext`](https://marmelab.com/react-admin/useRecordContext.html),
+- it creates a `ShowContext` and a [`RecordContext`](https://marmelab.com/ra-core/userecordcontext/),
 - it renders the page layout with the correct title and actions
 - it renders its child component in a `<Card>`
 

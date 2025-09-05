@@ -64,5 +64,5 @@ Here are all the props accepted by the component:
 | `theme`               | Optional | `object`       | `default LightTheme` | The main (light) theme configuration                            |
 | `title`               | Optional | `string`       | -                    | The error page title                                            |
 
-To learn more about these props, refer to [the `<Admin>`component documentation](https://marmelab.com/react-admin/Admin.html) on th react-admin website.
+To learn more about these props, refer to [the `<CoreAdmin>` component documentation](https://marmelab.com/ra-core/coreadmin/) on the ra-core website.
 

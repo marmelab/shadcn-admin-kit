@@ -4,11 +4,11 @@ title: "Edit"
 ---
 
 
-The `<Edit>` component is the main component for edition pages. It fetches a record based on the URL, prepares a form submit handler, and renders the page title and actions. It is not responsible for rendering the actual form - that's the job of its child component (usually a form component, like [`<SimpleForm>`](https://marmelab.com/react-admin/SimpleForm.html)). This form component uses its children ([`<Input>`](https://marmelab.com/react-admin/Inputs.html) components) to render each form input.
+The `<Edit>` component is the main component for edition pages. It fetches a record based on the URL, prepares a form submit handler, and renders the page title and actions. It is not responsible for rendering the actual form - that's the job of its child component (usually a form component, like [`<SimpleForm>`](./SimpleForm.html)). This form component uses its children ([`<Input>`](./DataEdition.mdx#inputs) components) to render each form input.
 
 ![Edit view](./images/customers-edit.png)
 
-The `<Edit>` component calls `dataProvider.getOne()`, using the `id` from the URL. It creates a `RecordContext` with the result. It also creates a [`SaveContext`](https://marmelab.com/react-admin/useSaveContext.html) containing a `save` callback, which calls `dataProvider.update()` when executed, and [an `EditContext`](https://marmelab.com/react-admin/useEditContext.html) containing both the record and the callback.
+The `<Edit>` component calls `dataProvider.getOne()`, using the `id` from the URL. It creates a `RecordContext` with the result. It also creates a [`SaveContext`](https://marmelab.com/ra-core/usesavecontext/) containing a `save` callback, which calls `dataProvider.update()` when executed, and [an `EditContext`](https://marmelab.com/ra-core/useeditcontext/) containing both the record and the callback.
 
 ## Usage
 
@@ -74,7 +74,7 @@ You can customize the `<Edit>` component using the following props:
 
 ## Main Content Area
 
-The `<Edit>` component will render its children inside a `EditContext` provider, which the `save` function. Children can be any React node, but are usually a form component like [`<SimpleForm>`](https://marmelab.com/react-admin/SimpleForm.html), or the headless [`<Form>`](https://marmelab.com/react-admin/Form.html) component.
+The `<Edit>` component will render its children inside a `EditContext` provider, which the `save` function. Children can be any React node, but are usually a form component like [`<SimpleForm>`](./SimpleForm.md), or the headless [`<Form>`](https://marmelab.com/ra-core/form/) component.
 
 ![](./images/customers-edit-content.png)
 
@@ -159,12 +159,10 @@ export const PostEdit = () => (
 
 Common buttons used as Edit actions are:
 
-* [`<CreateButton>`](https://marmelab.com/react-admin/Buttons.html#createbutton) to create a new record
-* [`<ListButton>`](https://marmelab.com/react-admin/Buttons.html#listbutton) to go back to the list
-* [`<ShowButton>`](https://marmelab.com/react-admin/Buttons.html#showbutton) to go to the show page
-* [`<DeleteButton>`](https://marmelab.com/react-admin/Buttons.html#deletebutton) to delete the current record
-* [`<UpdateButton>`](https://marmelab.com/react-admin//UpdateButton.html) to trigger a change in the data
-* [`<CloneButton>`](https://marmelab.com/react-admin/Buttons.html#clonebutton) to clone the current record
+* [`<CreateButton>`](./CreateButton.md) to create a new record
+* [`<ListButton>`](./ListButton.md) to go back to the list
+* [`<ShowButton>`](./ShowButton.md) to go to the show page
+* [`<DeleteButton>`](./DeleteButton.md) to delete the current record
 
 And you can add your own button, leveraging the `useRecordContext()` hook:
 
@@ -198,7 +196,7 @@ const ResetViewsButton = () => {
 
 ## Page Title
 
-By default, the title for the Edit view is the translation key `ra.page.edit` that translates to “Edit [resource_name] [record representation]”. Check the [`<Resource recordRepresentation>`](https://marmelab.com/react-admin/Resource.html#recordrepresentation) prop for more details.
+By default, the title for the Edit view is the translation key `ra.page.edit` that translates to “Edit [resource_name] [record representation]”. Check the [`<Resource recordRepresentation>`](https://marmelab.com/ra-core/resource/#recordrepresentation) prop for more details.
 
 You can customize this title by providing a resource specific translation with the key `resources.RESOURCE.page.edit` (e.g. `resources.posts.page.edit`):
 
@@ -384,7 +382,7 @@ const PostEdit = () => {
 :::
 
 :::tip
-If you want to have different success side effects based on the button clicked by the user (e.g. if the creation form displays two submit buttons, one to "save and redirect to the list", and another to "save and display an empty form"), you can set the `mutationOptions` prop on [the `<SaveButton>` component](https://marmelab.com/react-admin/SaveButton.html), too.
+If you want to have different success side effects based on the button clicked by the user (e.g. if the creation form displays two submit buttons, one to "save and redirect to the list", and another to "save and display an empty form"), you can set the `mutationOptions` prop on [the `<SaveButton>` component](./SaveButton.md), too.
 :::
 
 Similarly, you can override the failure side effects with an `onError` option. By default, when the save action fails at the dataProvider level, react-admin shows a notification error.
@@ -444,7 +442,7 @@ Once the `dataProvider.update()` request returns successfully, users see a succe
 
 To customize the notification message, you can set custom translation for these keys in your i18nProvider.
 
-**Tip**: If you choose to use a custom translation, be aware that react-admin uses the same translation message for the `<BulkUpdateButton>`, so the message must support [pluralization](https://marmelab.com/react-admin/TranslationTranslating.html#interpolation-pluralization-and-default-translation):
+**Tip**: If you choose to use a custom translation, be aware that react-admin uses the same translation message for the `<BulkUpdateButton>`, so the message must support [pluralization](https://marmelab.com/ra-core/translationtranslating/#interpolation-pluralization-and-default-translation):
 
 ```jsx
 const englishMessages = {
@@ -568,7 +566,7 @@ export const UserEdit = () => {
 The `transform` function can also return a `Promise`, which allows you to do all sorts of asynchronous calls (e.g. to the `dataProvider`) during the transformation.
 
 :::tip
-If you want to have different transformations based on the button clicked by the user (e.g. if the creation form displays two submit buttons, one to "save", and another to "save and notify other admins"), you can set the `transform` prop on [the `<SaveButton>` component](https://marmelab.com/react-admin/SaveButton.html), too.
+If you want to have different transformations based on the button clicked by the user (e.g. if the creation form displays two submit buttons, one to "save", and another to "save and notify other admins"), you can set the `transform` prop on [the `<SaveButton>` component](./SaveButton.md), too.
 :::
 
 :::tip
@@ -644,7 +642,7 @@ export const UserEdit = () => {
 }
 ```
 
-As an alternative, you can clean up empty values at the input level, using [the `parse` prop](https://marmelab.com/react-admin/Inputs.html#transforming-input-value-tofrom-record).
+As an alternative, you can clean up empty values at the input level, using [the `parse` prop](https://marmelab.com/ra-core/useinput/#parse).
 
 ## Prefilling the Form
 
@@ -767,7 +765,7 @@ You probably also want to customize [the `redirect` prop](#redirection-after-sub
 
 ## Headless Version
 
-Besides fetching a record and preparing a save handler, `<Edit>` renders the default edition page layout (title, actions, a Material UI `<Card>`) and its children. If you need a custom edition layout, you may prefer [the `<EditBase>` component](https://marmelab.com/react-admin/EditBase.html), which only renders its children in an [`EditContext`](https://marmelab.com/react-admin/useEditContext.html).
+Besides fetching a record and preparing a save handler, `<Edit>` renders the default edition page layout (title, actions, a Material UI `<Card>`) and its children. If you need a custom edition layout, you may prefer [the `<EditBase>` component](https://marmelab.com/ra-core/editbase/), which only renders its children in an [`EditContext`](https://marmelab.com/ra-core/useeditcontext/).
 
 ```jsx
 import { EditBase } from "ra-core";
@@ -796,7 +794,7 @@ export const BookEdit = () => (
 
 In the previous example, `<SimpleForm>` grabs the record and the save handler from the `EditContext`.
 
-If you don't need the `EditContext`, you can use [the `useEditController` hook](https://marmelab.com/react-admin/useEditController.html), which does the same data fetching as `<EditBase>` but lets you render the content.
+If you don't need the `EditContext`, you can use [the `useEditController` hook](https://marmelab.com/ra-core/useeditcontroller/), which does the same data fetching as `<EditBase>` but lets you render the content.
 
 ```tsx
 import { useEditController } from "ra-core";

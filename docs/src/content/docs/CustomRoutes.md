@@ -51,4 +51,4 @@ Custom routes don’t automatically appear in the menu. You have to manually cus
 | `children` | Required | `ReactNode` | -       | The custom routes to render                                                          |
 | `noLayout` | Optional | `boolean`   | `false` | If true, the custom routes will not be wrapped in the main layout of the application |
 
-To learn more about these props, refer to [the `<CustomRoutes>` component documentation](https://marmelab.com/react-admin/CustomRoutes.html) on the react-admin website.
+To learn more about these props, refer to [the `<CustomRoutes>` component documentation](https://marmelab.com/ra-core/customroutes/) on the ra-core website.

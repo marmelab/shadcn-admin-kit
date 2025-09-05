@@ -73,7 +73,7 @@ const App = () => (
 
 Now, every page that requires authentication will redirect the user to the login page if they are not authenticated. After successful login, the user will be redirected back to the page they were trying to access.
 
-Check out the [Auth Provider Setup](https://marmelab.com/react-admin/Authentication.html) documentation for more details about sending credentials to the API, allowing anonymous access to certain pages, handling refresh tokens, and more. 
+Check out the [Auth Provider Setup](./Security.md#setup) documentation for more details about sending credentials to the API, allowing anonymous access to certain pages, handling refresh tokens, and more. 
 
 ## Supported Auth Backends
 
@@ -94,7 +94,7 @@ The community has built a few open-source Auth Providers that may fit your need:
 - <img src="/shadcn-admin-kit/docs/images/backend-logos/supabase.svg" title="supabase Logo" class="w-4 h-4 inline mr-1"/> **[Supabase](https://supabase.io/)**: [marmelab/ra-supabase](https://github.com/marmelab/ra-supabase/blob/main/packages/ra-supabase/README.md)
 - <img src="/shadcn-admin-kit/docs/images/backend-logos/surrealdb.svg" title="surrealdb Logo" class="w-4 h-4 inline mr-1"/> **[SurrealDB](https://surrealdb.com/)**: [djedi23/ra-surrealdb](https://github.com/djedi23/ra-surrealdb)
 
-If you need to use an auth backend that isn't listed here, you can create your own authProvider by implementing the methods described above. Check out the [Writing an Auth Provider](https://marmelab.com/react-admin/AuthProviderWriting.html) guide for more details.
+If you need to use an auth backend that isn't listed here, you can create your own authProvider by implementing the methods described above. Check out the [Writing an Auth Provider](https://marmelab.com/ra-core/authproviderwriting/) guide for more details.
 
 ## Access Control
 
@@ -166,4 +166,4 @@ The page components (`<List>`, `<Create>`, `<Edit>`, and `<Show>`) have built-in
 
 If the `authProvider` doesn’t implement the `canAccess` method, shadcn-admin-kit assumes the user can access all pages.
 
-To learn more about implementing access control, check out the [Access Control Guide](https://marmelab.com/react-admin/Permissions.html).
+To learn more about implementing access control, check out the [Access Control Guide](https://marmelab.com/ra-core/permissions/#access-control).

@@ -4,13 +4,13 @@ title: "List"
 
 ---
 
-The `<List>` component is the root component for list pages. It fetches a list of records from the data provider (via `ra-core` hooks), puts them in a [`ListContext`](https://marmelab.com/react-admin/useListContext.html), renders a default layout (breadcrumb, title, action buttons, inline filters, pagination), then renders its children (usually a [`<DataTable>`](https://marmelab.com/react-admin/DataTable.html)).
+The `<List>` component is the root component for list pages. It fetches a list of records from the data provider (via `ra-core` hooks), puts them in a [`ListContext`](https://marmelab.com/ra-core/uselistcontext/.html), renders a default layout (breadcrumb, title, action buttons, inline filters, pagination), then renders its children (usually a [`<DataTable>`](./DataTable.md)).
 
 ![Simple users list](./images/users-list.png)
 
 ## Usage
 
-Here is a minimal example to display a list of users with a [`<DataTable>`](https://marmelab.com/react-admin/DataTable.html):
+Here is a minimal example to display a list of users with a [`<DataTable>`](./DataTable.md):
 
 ```jsx
 // in src/users.jsx
@@ -79,16 +79,16 @@ These props will soon be supported: `aside`, `empty`, `emptyWhileLoading`.
 
 ## Main Content Area
 
-`<List>` itself doesn't render the list of records. It delegates this task to its children components. These children components grab the `data` from the [`ListContext`](https://marmelab.com/react-admin/useListContext.html) and render them on screen.
+`<List>` itself doesn't render the list of records. It delegates this task to its children components. These children components grab the `data` from the [`ListContext`](https://marmelab.com/ra-core/uselistcontext/.html) and render them on screen.
 
 ![List children](./images/users-list-items.png)
 
 shadcn-admin-kit provides several components that can read and display a list of records from a `ListContext`, each with a different layout:
 
-- [`<DataTable>`](https://marmelab.com/react-admin/DataTable.html) displays records in a table
-- [`<SingleFieldList>`](https://marmelab.com/react-admin/SingleFieldList.html) displays records inline, showing one field per record
+- [`<DataTable>`](./DataTable.md) displays records in a table
+- [`<SingleFieldList>`](./SingleFieldList.md) displays records inline, showing one field per record
 
-Alternatively to `children`, you can pass a `render` prop to `<List>`. It will receive the [`ListContext`](https://marmelab.com/react-admin/useListContext.html#return-value) as its argument, and should return a React node. This allows to inline the render logic for the list page.
+Alternatively to `children`, you can pass a `render` prop to `<List>`. It will receive the [`ListContext`](https://marmelab.com/ra-core/uselistcontext/.html#return-value) as its argument, and should return a React node. This allows to inline the render logic for the list page.
 
 ```tsx
 const PostList = () => (
@@ -149,7 +149,7 @@ You can also build contextual actions using anything from the list context (`isP
 
 ## Page Title
 
-The default title for a list view is the translation key `ra.page.list` that translates to [the plural name of the resource](https://marmelab.com/react-admin/TranslationTranslating.html#translating-resource-and-field-names) (e.g. "Posts").
+The default title for a list view is the translation key `ra.page.list` that translates to [the plural name of the resource](https://marmelab.com/ra-core/translationtranslating/#translating-resource-and-field-names) (e.g. "Posts").
 
 ![List title](./images/users-list-title.png)
 
@@ -316,7 +316,7 @@ You can also display filters as a sidebar thanks to the [`<ToggleFilterButton>`]
 ![Filter sidebar](./images/filter-sidebar.png)
 :::
 
-For more details about customizing filters, see the [Filtering the List](https://marmelab.com/react-admin/FilteringTutorial.html#filtering-the-list) documentation.
+For more details about customizing filters, see the [Filtering the List](https://marmelab.com/ra-core/filteringtutorial/) documentation.
 
 ## Exported Data
 
@@ -418,33 +418,11 @@ For complex (or large) exports, fetching all the related records and assembling 
 You may also remove the `<ExportButton>` by passing `false` to the `exporter` prop: `exporter={false}`.
 :::
 
-:::tip
-If you need to use [RBAC](https://marmelab.com/react-admin/AuthRBAC.html) to hide some columns based on user permissions, you can use `useExporterWithAccessControl` to apply access control to the exported records:
-
-```tsx
-import { List, useExporterWithAccessControl } from '@ra-enterprise/ra-rbac';
-import { myExporter } from './myExporter';
-
-export const PostList = () => {
-    const exporter = useExporterWithAccessControl({ exporter: myExporter })
-    return (
-        <List exporter={exporter}>
-            {/*...*/}
-        </List>
-    );
-}
-```
-:::
-
-:::tip
-Looking for an `<ImportButton>`? shadcn-admin-kit doesn't provide this feature, but the community has an excellent third-party module for CSV import: [benwinding/react-admin-import-csv](https://github.com/benwinding/react-admin-import-csv).
-:::
-
 ## Data Fetching Options
 
-`<List>` accepts a `queryOptions` prop to pass [query options](https://marmelab.com/react-admin/DataProviders.html#react-query-options) to the react-query client. Check react-query's [`useQuery` documentation](https://tanstack.com/query/v5/docs/react/reference/useQuery) for the list of available options.
+`<List>` accepts a `queryOptions` prop to pass [query options](https://marmelab.com/ra-core/actions/#query-options) to the react-query client. Check react-query's [`useQuery` documentation](https://tanstack.com/query/v5/docs/react/reference/useQuery) for the list of available options.
 
-This can be useful e.g. to pass [a custom `meta`](https://marmelab.com/react-admin/Actions.html#meta-parameter) to the `dataProvider.getList()` call.
+This can be useful e.g. to pass [a custom `meta`](https://marmelab.com/ra-core/actions/#meta-parameter) to the `dataProvider.getList()` call.
 
 ```jsx
 import { List } from 'shadcn-admin-kit';
@@ -480,7 +458,7 @@ const PostList = () => {
 }
 ```
 
-The `onError` function receives the error from the dataProvider call (`dataProvider.getList()`), which is a JavaScript Error object (see [the dataProvider documentation for details](https://marmelab.com/react-admin/DataProviderWriting.html#error-format)).
+The `onError` function receives the error from the dataProvider call (`dataProvider.getList()`), which is a JavaScript Error object (see [the dataProvider documentation for details](https://marmelab.com/ra-core/dataproviderwriting/#error-format)).
 
 If `dataProvider.getList()` returns additional metadata in the response under the `meta` key, you can access it in the list view using the `meta` property of the `ListContext`.
 
@@ -572,7 +550,7 @@ Notice we display some custom UI when there is no filter. This is because otherw
 
 ## Parameters Persistence
 
-By default, when users change the list parameters (sort, pagination, filters), shadcn-admin-kit stores them in localStorage so that users can come back to the list and find it in the same state as when they left it, using the internal [Store](https://marmelab.com/react-admin/Store.html). 
+By default, when users change the list parameters (sort, pagination, filters), shadcn-admin-kit stores them in localStorage so that users can come back to the list and find it in the same state as when they left it, using the internal [Store](https://marmelab.com/ra-core/store/). 
 
 Shadcn-admin-kit uses the current resource as the identifier to store the list parameters (under the key `${resource}.listParams`).
 
@@ -633,13 +611,13 @@ const Admin = () => {
 };
 ```
 
-**Tip:** The `storeKey` is actually passed to the underlying `useListController` hook, which you can use directly for more complex scenarios. See the [`useListController` doc](https://marmelab.com/react-admin/useListController.html#storekey) for more info.
+**Tip:** The `storeKey` is actually passed to the underlying `useListController` hook, which you can use directly for more complex scenarios. See the [`useListController` doc](https://marmelab.com/ra-core/uselistcontroller/#storekey) for more info.
 
 **Note:** *Selection state* will remain linked to a resource-based key regardless of the specified `storeKey` string. This is a design choice because if row selection is not tied to a resource, then when a user deletes a record it may remain selected without any ability to unselect it. If you want to allow custom `storeKey`'s for managing selection state, you will have to implement your own `useListController` hook and pass a custom key to the `useRecordSelection` hook. You will then need to implement your own `DeleteButton` and `BulkDeleteButton` to manually unselect rows when deleting records. You can still opt out of all store interactions including selection if you set it to `false`.
 
 ## Scaffolding a List page
 
-You can use [`<ListGuesser>`](https://marmelab.com/react-admin/ListGuesser.html) to quickly bootstrap a List view on top of an existing API, without adding the fields one by one.
+You can use `<ListGuesser>` to quickly bootstrap a List view on top of an existing API, without adding the fields one by one.
 
 ```jsx
 // in src/App.js
@@ -722,9 +700,8 @@ const Dashboard = () => (
 :::note
 If you need to set the list parameters to render a list of records *related to another record*, there are better components than `<List>` for that. Check out the following components, specialized in fetching and displaying a list of related records:
 
-- [`<ReferenceArrayField>`](https://marmelab.com/react-admin/ReferenceArrayField.html),
-- [`<ReferenceManyField>`](https://marmelab.com/react-admin/ReferenceManyField.html),
-- [`<ReferenceManyToManyField>`](https://marmelab.com/react-admin/ReferenceManyToManyField.html).
+- [`<ReferenceArrayField>`](./ReferenceArrayField.md),
+- [`<ReferenceManyField>`](./ReferenceManyField.md),
 :::
 
 If the `<List>` children allow to *modify* the list state (i.e. if they let users change the sort order, the filters, the selection, or the pagination), then you should also use the [`disableSyncWithLocation`](#disablesyncwithlocation) prop to prevent shadcn-admin-kit from changing the URL. This is the case e.g. if you use a `<DataTable>`, which lets users sort the list by clicking on column headers.
@@ -775,7 +752,7 @@ If you render more than one `<DataTable>` for the same resource in the same page
 
 ## Headless Version
 
-Besides fetching a list of records from the data provider, `<List>` renders the default list page layout (title, buttons, filters, a `<Card>`, pagination) and its children. If you need a custom list layout, you may prefer [the `<ListBase>` component](https://marmelab.com/react-admin/ListBase.html), which only renders its children in a [`ListContext`](https://marmelab.com/react-admin/useListContext.html).
+Besides fetching a list of records from the data provider, `<List>` renders the default list page layout (title, buttons, filters, a `<Card>`, pagination) and its children. If you need a custom list layout, you may prefer [the `<ListBase>` component](https://marmelab.com/ra-core/listbase/), which only renders its children in a [`ListContext`](https://marmelab.com/ra-core/uselistcontext/.html).
 
 ```jsx
 import { ListBase, WithListContext } from 'ra-core';
@@ -812,9 +789,9 @@ const ProductList = () => (
 );
 ```
 
-The previous example leverages [`<WithListContext>`](https://marmelab.com/react-admin/WithListContext.html) to grab the data that `<ListBase>` stores in the `ListContext`.
+The previous example leverages [`<WithListContext>`](https://marmelab.com/ra-core/withlistcontext/) to grab the data that `<ListBase>` stores in the `ListContext`.
 
-If you don't need the `ListContext`, you can use [the `useListController` hook](https://marmelab.com/react-admin/useListController.html), which does the same data fetching as `<ListBase>` but lets you render the content.
+If you don't need the `ListContext`, you can use [the `useListController` hook](https://marmelab.com/ra-core/uselistcontroller/), which does the same data fetching as `<ListBase>` but lets you render the content.
 
 ```jsx
 import { useListController } from 'shadcn-admin-kit';
@@ -842,11 +819,11 @@ const ProductList = () => {
 };
 ```
 
-`useListController` returns callbacks to sort, filter, and paginate the list, so you can build a complete List page. Check [the `useListController`hook documentation](https://marmelab.com/react-admin/useListController.html) for details.
+`useListController` returns callbacks to sort, filter, and paginate the list, so you can build a complete List page. Check [the `useListController`hook documentation](https://marmelab.com/ra-core/uselistcontroller/) for details.
 
 ## Access Control
 
-If your `authProvider` implements [Access Control](https://marmelab.com/react-admin/Permissions.html#access-control), `<List>`  will only render if the user can access the resource with the "list" action.
+If your `authProvider` implements [Access Control](https://marmelab.com/ra-core/permissions/#access-control), `<List>`  will only render if the user can access the resource with the "list" action.
 
 For instance, to render the `<PostList>` page below:
 
@@ -871,6 +848,6 @@ const PostList = () => (
 { action: "list", resource: "posts" }
 ```
 
-Users without access will be redirected to the [Access Denied page](https://marmelab.com/react-admin/Admin.html#accessdenied).
+Users without access will be redirected to the [Access Denied page](https://marmelab.com/ra-core/coreadmin/#accessdenied).
 
 **Note**: Access control is disabled when you use [the `disableAuthentication` prop](#disableauthentication).

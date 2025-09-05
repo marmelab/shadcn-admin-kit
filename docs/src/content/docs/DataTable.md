@@ -168,7 +168,7 @@ React-admin provides two bulk action buttons that you can use in data tables:
 - [`<BulkDeleteButton>`](./BulkDeleteButton.md) (enabled by default)
 - [`<BulkExportButton>`](./BulkExportButton.md) to export only the selection
 
-You can write a custom bulk action button components using the [`useListContext`](https://marmelab.com/react-admin/useListContext.md) hook to get the following data and callbacks:
+You can write a custom bulk action button components using the [`useListContext`](https://marmelab.com/ra-core/uselistcontext/.md) hook to get the following data and callbacks:
 
 - `selectedIds`: the identifiers of the currently selected items.
 - `onUnselectItems`: a callback to empty the selection.

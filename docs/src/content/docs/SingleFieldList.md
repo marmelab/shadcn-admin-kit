@@ -30,7 +30,7 @@ const PostShow = () => (
 );
 ```
 
-`<SingleFieldList>` creates one `RecordContext` per item in the list. By default, it renders each item as a badge, using [`<BadgeField>`](./BadgeField.md) and the resource [`recordRepresentation`](https://marmelab.com/react-admin//Resource.md#recordrepresentation).
+`<SingleFieldList>` creates one `RecordContext` per item in the list. By default, it renders each item as a badge, using [`<BadgeField>`](./BadgeField.md) and the resource [`recordRepresentation`](https://marmelab.com/ra-core/resource/#recordrepresentation).
 
 You can customize the rendering by providing a `children` or `render` prop:
 

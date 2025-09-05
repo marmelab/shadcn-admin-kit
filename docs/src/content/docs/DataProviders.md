@@ -20,7 +20,7 @@ Shadcn-admin-kit streamlines data fetching for administrative interfaces through
 
 The framework also simplifies working with relational APIs and incorporates real-time capabilities for collaborative applications. Authentication is handled by an `authProvider`, which manages user logins and tokens, subsequently utilized by the `dataProvider` for secure API requests.
 
-To learn more about the Data Provider, refer to the [Data Fetching documentation](https://marmelab.com/react-admin/DataFetchingGuide.html).
+To learn more about the Data Provider, refer to the [Data Fetching documentation](https://marmelab.com/ra-core/datafetchingguide/).
 
 ## Setup
 
@@ -71,13 +71,13 @@ That’s all it takes to make all shadcn-admin-kit components work with your API
 
 For your own API, look for a compatible data provider in the list of [supported API backends](#supported-data-provider-backends) or write your own.
 
-For more details about the data provider setup, refer to the [Data Provider Setup documentation](https://marmelab.com/react-admin/DataProviders.html).
+For more details about the data provider setup, refer to the [Data Provider Setup documentation](hhttps://marmelab.com/ra-core/dataproviders/).
 
 ## Supported Data Provider Backends
 
 Thanks to the Data Provider architecture, shadcn-admin-kit supports a lot of API backends. Check the list below for open-source packages developed and maintained by the core team and developers from the community.
 
-If you can't find a Data Provider for your backend below, no worries! [Writing a Data Provider](https://marmelab.com/react-admin/DataProviderWriting.html) takes a couple of hours, and won't prevent you from using shadcn-admin-kit.
+If you can't find a Data Provider for your backend below, no worries! [Writing a Data Provider](hhttps://marmelab.com/ra-core/dataproviderwriting/) takes a couple of hours, and won't prevent you from using shadcn-admin-kit.
 
 * <img src="/shadcn-admin-kit/docs/images/backend-logos/appwrite.svg" title="Appwrite Logo" class="w-4 h-4 inline mr-1"/> **[Appwrite](https://appwrite.io/)**: [marmelab/ra-appwrite](https://github.com/marmelab/ra-appwrite)
 * <img src="/shadcn-admin-kit/docs/images/backend-logos/amplify.svg" title="AWS Amplify Logo" class="w-4 h-4 inline mr-1"/>**[AWS Amplify](https://docs.amplify.aws)**: [MrHertal/react-admin-amplify](https://github.com/MrHertal/react-admin-amplify)
@@ -188,7 +188,7 @@ To call the data provider, shadcn-admin-kit combines a *method* (e.g. `getOne`),
 
 **Tip**: In comparison, HTTP requests require a *verb* (e.g. ‘GET’), an *url* (e.g. ‘http://myapi.com/posts’), a list of *headers* (like Content-Type) and a *body*.
 
-To learn more about writing a Data Provider, refer to the [Data Provider Writing documentation](https://marmelab.com/react-admin/DataProviderWriting.html).
+To learn more about writing a Data Provider, refer to the [Data Provider Writing documentation](https://marmelab.com/ra-core/dataproviderwriting/).
 
 ## Querying The API
 
@@ -263,4 +263,4 @@ const ApproveButton = () => {
 };
 ```
 
-For more information and examples, refer to the [Data Fetching documentation](https://marmelab.com/react-admin/Actions.html).
+For more information and examples, refer to the [Data Fetching documentation](https://marmelab.com/ra-core/actions/).

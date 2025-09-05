@@ -71,7 +71,7 @@ const optionRenderer = choice => `${choice.first_name} ${choice.last_name}`;
 <SelectField source="author" choices={authors} optionText={optionRenderer} />
 ```
 
-`optionText` also accepts a React Element. React-admin renders it once per choice, within a [`RecordContext`](https://marmelab.com/react-admin/useRecordContext.md) containing the related choice. You can use Field components there.
+`optionText` also accepts a React Element. React-admin renders it once per choice, within a [`RecordContext`](https://marmelab.com/ra-core/userecordcontext/) containing the related choice. You can use Field components there.
 
 ```jsx
 const choices = [

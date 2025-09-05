@@ -84,7 +84,7 @@ Configure the `<Resource recordRepresentation>` to render related records in a m
 
 ## Records Representation
 
-By default, `<ReferenceArrayField>` renders one string by related record, via a [`<SingleFieldList>`](https://marmelab.com/react-admin/SingleFieldList.md) with a [`<BadgeField>`](./BadgeField.md) child using the resource [`recordRepresentation`](https://marmelab.com/react-admin//Resource.md#recordrepresentation) as source.
+By default, `<ReferenceArrayField>` renders one string by related record, via a [`<SingleFieldList>`](./SingleFieldList.md) with a [`<BadgeField>`](./BadgeField.md) child using the resource [`recordRepresentation`](https://marmelab.com/ra-core/resource/#recordrepresentation) as source.
 
 You can change how the list of related records is rendered by passing a custom child reading the `ListContext`.
 

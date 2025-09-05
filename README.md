@@ -38,7 +38,7 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 - Routing: [React Router](https://reactrouter.com/)
 - API calls: [TanStack Query](https://tanstack.com/query/latest/)
 - Forms & Validation: [React Hook Form](https://react-hook-form.com/)
-- Admin Framework: [React Admin](https://marmelab.com/react-admin/)
+- Admin Framework: [Ra-Core](https://marmelab.com/ra-core/)
 - Type safety: [TypeScript](https://www.typescriptlang.org/)
 
 ## Getting started
@@ -57,7 +57,7 @@ Read the [documentation](https://marmelab.com/shadcn-admin-kit/docs/1-install) t
 
 The entry point of your application is the `<Admin>` component. It allows to configure the application adapters, routes, and UI.
 
-You'll need to specify a Data Provider to let the Admin know how to fetch data from your API. A Data Provider is an abstraction that allows you to connect your Admin to any API, whether it's REST, GraphQL, or any other protocol. You can choose from any of the [50+ Data Providers](https://marmelab.com/react-admin/DataProviderList.html), and you can even [build your own](https://marmelab.com/react-admin/DataProviderWriting.html).
+You'll need to specify a Data Provider to let the Admin know how to fetch data from your API. A Data Provider is an abstraction that allows you to connect your Admin to any API, whether it's REST, GraphQL, or any other protocol. You can choose from any of the [50+ Data Providers](https://marmelab.com/shadcn-admin-kit/docs/dataproviders/#supported-data-provider-backends), and you can even [build your own](https://marmelab.com/ra-core/dataproviderwriting/).
 
 The following example uses a simple REST adapter called `ra-data-simple-rest`:
 
@@ -125,7 +125,7 @@ export const CategoryList = () => (
 
 ### Adding Authentication
 
-You can configure authentication in your Admin by using the `authProvider` prop. There are many [authProviders](https://marmelab.com/react-admin/AuthProviderList.html) you can choose from, and you can also [build your own](https://marmelab.com/react-admin/AuthProviderWriting.html).
+You can configure authentication in your Admin by using the `authProvider` prop. There are many [authProviders](https://marmelab.com/shadcn-admin-kit/docs/security/#supported-auth-backends) you can choose from, and you can also [build your own](https://marmelab.com/ra-core/authproviderwriting/).
 
 Once your authProvider is set up, you can pass it to the `authProvider` prop, and the `<Admin>` component will automatically display the login page when the user is not authenticated.
 
@@ -210,7 +210,7 @@ export const ProductList = () => {
 
 ### Adding Custom Routes
 
-To register your own routes, pass one or several [`<CustomRoutes>`](https://marmelab.com/react-admin/CustomRoutes.html) elements as children of `<Admin>`. Declare as many [react-router](https://reactrouter.com/en/6/start/concepts#defining-routes) `<Route>` as you want inside them.
+To register your own routes, pass one or several [`<CustomRoutes>`](https://marmelab.com/shadcn-admin-kit/docs/customroutes/) elements as children of `<Admin>`. Declare as many [react-router](https://reactrouter.com/en/6/start/concepts#defining-routes) `<Route>` as you want inside them.
 
 ```tsx
 // in src/App.tsx

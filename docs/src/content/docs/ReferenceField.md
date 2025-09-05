@@ -36,7 +36,7 @@ export const PostShow = () => (
 );
 ```
 
-This component fetches a referenced record (`users` in this example) using the `dataProvider.getMany()` method, and renders the [`recordRepresentation`](https://marmelab.com/react-admin//Resource.md#recordrepresentation) (the record `id` field by default) wrapped in a link to the related user `<Edit>` page.
+This component fetches a referenced record (`users` in this example) using the `dataProvider.getMany()` method, and renders the [`recordRepresentation`](https://marmelab.com/ra-core/resource/#recordrepresentation) (the record `id` field by default) wrapped in a link to the related user `<Edit>` page.
 
 ## Props
 
@@ -56,7 +56,7 @@ This component fetches a referenced record (`users` in this example) using the `
 
 ## Record Representation
 
-By default, `<ReferenceField>` renders the [`recordRepresentation`](https://marmelab.com/react-admin//Resource.md#recordrepresentation) of the related record.
+By default, `<ReferenceField>` renders the [`recordRepresentation`](https://marmelab.com/ra-core/resource/#recordrepresentation) of the related record.
 
 So it's a good idea to configure the `<Resource recordRepresentation>` to render related records in a meaningful way. For instance, for the `users` resource, if you want the `<ReferenceField>` to display the full name of the author:
 
