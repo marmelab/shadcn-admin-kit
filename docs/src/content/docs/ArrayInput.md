@@ -146,7 +146,7 @@ You can leverage `react-hook-form`'s [`setValue`](https://react-hook-form.com/do
 
 However you need to know the `name` under which the input was registered in the form, and this name is dynamically generated depending on the index of the item in the array.
 
-To get the name of the input for a given index, you can leverage the `SourceContext` created by react-admin, which can be accessed using the `useSourceContext` hook.
+To get the name of the input for a given index, you can leverage the `SourceContext` created by ra-core, which can be accessed using the `useSourceContext` hook.
 
 This context provides a `getSource` function that returns the effective `source` for an input in the current context, which you can use as input name for `setValue`.
 
