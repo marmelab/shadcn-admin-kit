@@ -79,18 +79,6 @@ If you need to let users select more than one item in the list, check out the [`
 
 `*` `source` and `choices` are optional inside `<ReferenceInput>`.
 
-<style>
-.sl-markdown-content :is(th, td):not(:where(.not-content *)) {
-  padding: 0.5rem 0.5rem;
-}
-.sl-markdown-content table td:first-child {
-  min-width: 120px;
-  padding-left: 0;
-}
-.sl-markdown-content table td:last-child {
-  padding-right: 0;
-}
-</style>
 
 ## Defining Choices
 
