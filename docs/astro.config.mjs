@@ -24,6 +24,18 @@ export default defineConfig({
         },
       ],
       favicon: "/icon.png",
+      head: [
+        // add Umami analytics script tag.
+        {
+          tag: "script",
+          attrs: {
+            src: "https://gursikso.marmelab.com/script.js",
+            "data-website-id": "de7d7ee2-edef-4865-98f9-9dbfff042997",
+            defer: true,
+            async: true,
+          },
+        },
+      ],
       sidebar: [
         {
           label: "Getting Started",
