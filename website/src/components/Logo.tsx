@@ -1,8 +1,6 @@
-import {Code} from "lucide-react"
+import { LayoutDashboard } from "lucide-react";
 
 // @ts-expect-error just forwarding props
 export function Logo(props) {
-  return (
-    <Code {...props} />
-  );
+  return <LayoutDashboard {...props} />;
 }
