@@ -12,19 +12,19 @@ const features = [
   {
     name: "Get a head start",
     description:
-      "Kickstart your project with pre-built components that help you ship your admin faster than ever—no need to reinvent the wheel.",
+      "Kickstart your project with pre-built components—no need to reinvent the wheel.",
     icon: LayoutPanelLeft,
   },
   {
     name: "Trusted expertise",
     description:
-      "Maintained by senior developers with proven open-source expertise (80k+ stars).",
+      'Maintained by senior developers with proven open-source expertise (80k+ stars), who already authored <a href="https://github.com/marmelab/react-admin" class="underline">react-admin</a>.',
     icon: GraduationCap,
   },
   {
     name: "Headless",
     description:
-      "Exposes a rich library of hooks that can be used with any React component.",
+      'Based on <a href="https://marmelab.com/ra-core/" class="underline">ra-core</a>, a rich library of hooks that can be used with any React component.',
     icon: Plug,
   },
   {
@@ -73,7 +73,10 @@ export function Why() {
                     </div>
                     {feature.name}
                   </dt>
-                  <dd className="mt-2 text-gray-600">{feature.description}</dd>
+                  <dd
+                    className="mt-2 text-gray-600"
+                    dangerouslySetInnerHTML={{ __html: feature.description }}
+                  />
                 </div>
               ))}
             </dl>
