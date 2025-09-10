@@ -28,6 +28,16 @@ img.icon {
   color: var(--ec-frm-inlBtnFg);
 }
 
+.site-title {
+  color: var(--sl-color-white);
+  gap: 10px;
+}
+
+.site-title img {
+  width: 32px;
+  height: 32px;
+}
+
 /* 
    Improve props table layout
 */

@@ -24,6 +24,11 @@ export default defineConfig({
         },
       ],
       favicon: "/icon.png",
+      logo: {
+        light: "./public/logo-light.svg",
+        dark: "./public/logo-dark.svg",
+        alt: "Shadcn Admin Kit",
+      },
       head: [
         // add Umami analytics script tag.
         {
