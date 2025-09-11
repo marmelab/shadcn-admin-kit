@@ -43,7 +43,7 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 
 ## Getting started
 
-Check the [Quick Start Guide](https://marmelab.com/shadcn-admin-kit/docs/2-quick-start-guide) for a step-by-step guide to set up your first Admin app with `shadcn-admin-kit`.
+Check the [Quick Start Guide](https://marmelab.com/shadcn-admin-kit/docs/quick-start-guide/) for a step-by-step guide to set up your first Admin app with `shadcn-admin-kit`.
 
 ## Exploring Components
 
@@ -51,7 +51,7 @@ Check the [Quick Start Guide](https://marmelab.com/shadcn-admin-kit/docs/2-quick
 
 ## Usage
 
-Read the [documentation](https://marmelab.com/shadcn-admin-kit/docs/1-install) to learn how to use `shadcn-admin-kit` in your project. The following sections provide a brief overview of the main concepts.
+Read the [documentation](https://marmelab.com/shadcn-admin-kit/docs/install/) to learn how to use `shadcn-admin-kit` in your project. The following sections provide a brief overview of the main concepts.
 
 ### Use `<Admin>` As Root Component
 
@@ -110,8 +110,8 @@ The guessers will print out the guessed component code in the console. You can t
 // Example output
 Guessed List:
 
-import { DataTable } from "@/components/DataTable";
-import { List } from "@/components/List";
+import { DataTable } from "@/components/admin/DataTable";
+import { List } from "@/components/admin/List";
 
 export const CategoryList = () => (
     <List>
