@@ -100,7 +100,7 @@ Finally, run `npm run dev` and go to `http://localhost:3000/admin` to access you
 
 ![Welcome to shadcn-admin-kit!](./images/welcome.png)
 
-Next step: Read the [Quick Start Guide](./2-Quick-Start-Guide.md) to learn how to use the components in your admin app.
+Next step: Read the [Quick Start Guide](./Quick-Start-Guide.md) to learn how to use the components in your admin app.
 
 ## Install with Vite.js
 
