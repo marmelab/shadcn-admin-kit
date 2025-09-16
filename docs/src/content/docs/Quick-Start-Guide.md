@@ -8,7 +8,7 @@ In this tutorial, you will learn to create a web application with `shadcn-admin-
 
 ## Setting Up
 
-Follow the [installation instructions](./1-Install.md) to install `shadcn-admin-kit` in your project with Next.js, Vite.js, Remix, or any other framework of your choice.
+Follow the [installation instructions](./Install.md) to install `shadcn-admin-kit` in your project with Next.js, Vite.js, Remix, or any other framework of your choice.
 
 You should end up with a welcome screen like this:
 
