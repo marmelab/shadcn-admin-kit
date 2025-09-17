@@ -42,3 +42,10 @@ export const Step = () => (
     <FormValues />
   </Wrapper>
 );
+
+export const Disabled = () => (
+  <Wrapper>
+    <NumberInput source="price" disabled />
+    <FormValues />
+  </Wrapper>
+);

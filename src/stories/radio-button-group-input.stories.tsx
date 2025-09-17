@@ -10,19 +10,19 @@ export default {
 
 const record = {
   id: 1,
-  name: "John Doe",
-  gender: "male",
+  name: "Hello, World",
+  category: "lifestyle",
 };
 
-const genders = [
-  { id: "male", label: "He/Him" },
-  { id: "female", label: "She/Her" },
-  { id: "nonbinary", label: "They/Them" },
+const categories = [
+  { id: "tech", name: "Tech" },
+  { id: "lifestyle", name: "Lifestyle" },
+  { id: "people", name: "People" },
 ];
 
 const FormValues = () => {
   const values = useWatch();
-  return <pre>{JSON.stringify(values, null, 2)}</pre>;
+  return <pre className="mt-4">{JSON.stringify(values, null, 2)}</pre>;
 };
 
 const Wrapper = ({ children }: React.PropsWithChildren) => (
@@ -37,22 +37,42 @@ const Wrapper = ({ children }: React.PropsWithChildren) => (
 
 export const Basic = () => (
   <Wrapper>
-    <RadioButtonGroupInput
-      source="gender"
-      choices={genders}
-      optionText="label"
-    />
+    <RadioButtonGroupInput source="category" choices={categories} />
     <FormValues />
   </Wrapper>
 );
 
 export const Row = () => (
   <Wrapper>
+    <RadioButtonGroupInput source="category" choices={categories} row={true} />
+    <FormValues />
+  </Wrapper>
+);
+
+export const Disabled = () => (
+  <Wrapper>
+    <RadioButtonGroupInput source="category" choices={categories} disabled />
+    <FormValues />
+  </Wrapper>
+);
+
+export const Label = () => (
+  <Wrapper>
     <RadioButtonGroupInput
-      source="gender"
-      choices={genders}
-      optionText="label"
-      row={true}
+      source="category"
+      choices={categories}
+      label="Select category"
+    />
+    <FormValues />
+  </Wrapper>
+);
+
+export const HelperText = () => (
+  <Wrapper>
+    <RadioButtonGroupInput
+      source="category"
+      choices={categories}
+      helperText="Select category"
     />
     <FormValues />
   </Wrapper>

@@ -2,9 +2,11 @@
 title: "CreateButton"
 ---
 
-Navigates to the create page for the current (or specified) resource.
+Navigates to the create page for the curren resource.
 
 ## Usage
+
+Use the button without form when in a ResourceContext (e.g., inside a `<List>`):
 
 ```tsx {6}
 import { CreateButton, List, ExportButton } from '@/components/admin';
@@ -20,6 +22,8 @@ const PostList = () => (
     </List>
 );
 ```
+
+Clicking on the button navigates to the `create` route of the current resource (e.g., `/posts/create`).
 
 ## Props
 

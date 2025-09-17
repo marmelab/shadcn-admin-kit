@@ -6,11 +6,24 @@ Link button to the show page of the current record.
 
 ## Usage
 
-```tsx
-import { ShowButton } from '@/components/admin';
+Use the button without form when in a ResourceContext (e.g., inside an `<Edit>`):
 
-<ShowButton />
+```tsx {6}
+import { ShowButton, DeleteButton, Edit } from '@/components/admin';
+
+const PostEdit = () => (
+    <Edit
+        actions={<>
+            <ShowButton />
+            <DleteButton />
+        </>}
+    >
+        ...
+    </Edit>
+);
 ```
+
+Clicking on the button navigates to the `show` route of the current resource (e.g., `/posts/123/show`).
 
 ## Props
 
@@ -20,7 +33,3 @@ import { ShowButton } from '@/components/admin';
 | `label` | Optional | `string` | `ra.action.show` | i18n key / label |
 
 Additional props are passed to the underlying `<a>` element (e.g., `className`, `target`, `rel`).
-
-## Notes
-
-- Uses record and resource from context; must be inside a record row / show / edit context.

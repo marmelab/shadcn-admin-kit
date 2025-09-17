@@ -16,7 +16,9 @@ const PostEdit = () => (
 );
 ```
 
-It reads the resource from `ResourceContext` and record from `RecordContext`.
+By default, it reads the resource from `ResourceContext` and record from `RecordContext`.
+
+Upon success, the button redirects to the list view, and notifies the user with the key `resources.<resource>.notifications.deleted` (fallback `ra.notification.deleted`).
 
 ## Props
 

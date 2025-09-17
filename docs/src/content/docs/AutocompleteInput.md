@@ -2,7 +2,7 @@
 title: "AutocompleteInput"
 ---
 
-Form control that tets users choose a value in a list using a dropdown with autocompletion. This input allows editing record fields that are scalar values, e.g. `123`, `'admin'`, etc. 
+Form control that tets users choose a value in a list using a dropdown with autocompletion. This input allows editing record fields that are scalar values, e.g. `123`, `'admin'`, etc.
 
 ## Usage
 
@@ -19,8 +19,9 @@ import { AutocompleteInput } from '@/components/admin';
 ```
 
 By default, the possible choices are built from the `choices` prop, using:
-  - the `id` field as the option value,
-  - the `name` field as the option text
+
+- the `id` field as the option value,
+- the `name` field as the option text
 
 The form value for the source must be the selected value, e.g.
 
@@ -35,8 +36,9 @@ The form value for the source must be the selected value, e.g.
 :::tip
 Shadcn Admin Kit includes other components to edit such values:
 
- - [`<SelectInput>`](./SelectInput.md) renders a dropdown
- - [`<RadioButtonGroupInput>`](./RadioButtonGroupInput.md) renders a list of radio buttons
+- [`<SelectInput>`](./SelectInput.md) renders a dropdown
+- [`<RadioButtonGroupInput>`](./RadioButtonGroupInput.md) renders a list of radio buttons
+
  :::
 
 :::tip
@@ -56,6 +58,7 @@ If you need to let users select more than one item in the list, check out the [`
 | `debounce` | Optional | `number` | `250` | The delay to wait before calling the setFilter function injected when used in a ReferenceInput. |
 | `defaultValue` | Optional | `any` | `''` | The default value for the input |
 | `disabled` | Optional | `boolean` | `false` | If true, the input is disabled |
+| `disableValue` | Optional | `string` | `disabled` | Field marking disabled choices |
 | `emptyText` | Optional | `string` | `''` | The text to use for the empty element |
 | `emptyValue` | Optional | `any` | `''` | The value to use for the empty element |
 | `filterToQuery` | Optional | `string` => `Object` | `q => ({ q })` | How to transform the searchText into a parameter for the data provider |
@@ -78,7 +81,6 @@ If you need to let users select more than one item in the list, check out the [`
 | `validate` | Optional | `Function` &#124; `Function[]` | `-` | An array of validation functions or a single validation function |
 
 `*` `source` and `choices` are optional inside `<ReferenceInput>`.
-
 
 ## Defining Choices
 
@@ -146,7 +148,7 @@ When used inside a [`<ReferenceInput>`](./ReferenceInput.md), whenever users typ
 
 By default, the filter is built using the `q` parameter. This means that if the user types the string 'lorem', the filter will be `{ q: 'lorem' }`.
 
-You can customize the filter by setting the `filterToQuery` prop. It should be a function that returns a filter object. 
+You can customize the filter by setting the `filterToQuery` prop. It should be a function that returns a filter object.
 
 ```jsx
 const filterToQuery = searchText => ({ name_ilike: `%${searchText}%` });
@@ -162,7 +164,7 @@ You can pass a custom element as `optionText` to have `<AutocompleteInput>` rend
 
 `<AutocompleteInput>` will render the custom option element inside a [`<RecordContext>`](https://marmelab.com/ra-core/userecordcontext/), using the related choice as the `record` prop. You can use Field components there.
 
-However, as the underlying Material UI `<Autocomplete>` component requires that the current selection is a string, you must also pass a function as the `inputText` prop. This function should return a text representation of the current selection. You should also pass a `matchSuggestion` function to filter the choices based on the current selection.
+However, as the underlying `<Autocomplete>` component requires that the current selection is a string, you must also pass a function as the `inputText` prop. This function should return a text representation of the current selection. You should also pass a `matchSuggestion` function to filter the choices based on the current selection.
 
 ```jsx
 const choices = [
@@ -215,6 +217,7 @@ const OptionRenderer = () => {
 
 const optionText = <OptionRenderer />;
 ```
+
 :::
 
 ## Creating New Choices On The Fly
@@ -223,14 +226,13 @@ To allow users to add new options, pass a React element as the `create` prop. `<
 
 ```tsx
 import { 
-    Create, 
-    CreateBase, 
+    Edit,
     SimpleForm, 
     ReferenceInput, 
     AutocompleteInput, 
     TextInput, 
-    useCreateSuggestionContext 
-} from 'react-admin';
+} from '@/components/admin';
+import { useCreateSuggestionContext } from 'ra-core';
 
 const CreateTag = () => {
   const { onCancel, onCreate, filter } = useCreateSuggestionContext();

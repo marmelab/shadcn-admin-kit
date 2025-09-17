@@ -29,8 +29,9 @@ import { AutocompleteArrayInput } from '@/components/admin';
 ```
 
 By default, the possible choices are built from the `choices` prop, using:
-  - the `id` field as the option value,
-  - the `name` field as the option text
+
+- the `id` field as the option value,
+- the `name` field as the option text
 
 The form value for the source must be an array of the selected values, e.g.
 
@@ -46,14 +47,13 @@ The form value for the source must be an array of the selected values, e.g.
 `<AutocompleteArrayInput>` is a stateless component, so it only allows to *filter* the list of choices, not to *extend* it. If you need to populate the list of choices based on the result from a `fetch` call (and if [`<ReferenceArrayInput>`](./ReferenceArrayInput.md) doesn't cover your need), you'll have to write your own Input component.
 :::
 
-
 ## Props
 
 | Prop | Required | Type | Default | Description |
 |------|----------|------|---------|-------------|
 | `source` | Required* | `string` | - | Field name (inferred in ReferenceArrayInput) |
 | `choices` | Required* | `any[]` | - | List of choices |
-| `className` | Optional | `string` | - | Classes |
+| `className` | Optional | `string` | - | CSS Classes |
 | `disableValue` | Optional | `string` | `disabled` | The value to use for the disabled state |
 | `filterToQuery` | Optional | `(text:string)=>object` | `{ q: text }` | Server filter mapping |
 | `format` | Optional | `function` | - | Function to convert the value sent by the API to the value used by the form |
@@ -64,6 +64,7 @@ The form value for the source must be an array of the selected values, e.g.
 | `parse` | Optional | `function` | - | Function to convert the value from the form to the value sent to the API |
 | `placeholder` | Optional | `string` | 'Search…' | Input placeholder |
 | `translateChoice` | Optional | `boolean` | `!isFromReference` | Translate labels |
+| `validate` | Optional | `Validator \| Validator[]` | - | Validation |
 
 `*` `source` and `choices` are optional inside `<ReferenceArrayInput>`.
 
@@ -128,7 +129,7 @@ When used inside a [`<ReferenceArrayInput>`](./ReferenceArrayInput.md), whenever
 
 By default, the filter is built using the `q` parameter. This means that if the user types the string 'lorem', the filter will be `{ q: 'lorem' }`.
 
-You can customize the filter by setting the `filterToQuery` prop. It should be a function that returns a filter object. 
+You can customize the filter by setting the `filterToQuery` prop. It should be a function that returns a filter object.
 
 ```jsx
 const filterToQuery = searchText => ({ name_ilike: `%${searchText}%` });
