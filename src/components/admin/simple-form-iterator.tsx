@@ -37,17 +37,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  ArrayInputContextValue,
-  useArrayInput,
-} from "@/hooks/array-input-context";
+import { ArrayInputContextValue, useArrayInput } from "ra-core";
 import {
   SimpleFormIteratorContext,
   useSimpleFormIterator,
   SimpleFormIteratorItemContext,
   SimpleFormIteratorItemContextValue,
   useSimpleFormIteratorItem,
-} from "@/hooks/simple-form-iterator-context";
+} from "ra-core";
 import { Confirm } from "@/components/admin/confirm";
 import { IconButtonWithTooltip } from "@/components/admin/icon-button-with-tooltip.tsx";
 
