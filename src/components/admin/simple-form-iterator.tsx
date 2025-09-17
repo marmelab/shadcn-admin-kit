@@ -1,16 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import get from "lodash/get";
-import {
-  FormDataConsumer,
-  type RaRecord,
-  RecordContextProvider,
-  SourceContextProvider,
-  useRecordContext,
-  useResourceContext,
-  useSourceContext,
-  useTranslate,
-  useWrappedSource,
-} from "ra-core";
 import * as React from "react";
 import {
   Children,
@@ -21,6 +10,24 @@ import {
   useRef,
   useState,
 } from "react";
+import {
+  ArrayInputContextValue,
+  FormDataConsumer,
+  RecordContextProvider,
+  SimpleFormIteratorContext,
+  SimpleFormIteratorItemContext,
+  SimpleFormIteratorItemContextValue,
+  SourceContextProvider,
+  type RaRecord,
+  useArrayInput,
+  useRecordContext,
+  useResourceContext,
+  useSimpleFormIterator,
+  useSimpleFormIteratorItem,
+  useSourceContext,
+  useTranslate,
+  useWrappedSource,
+} from "ra-core";
 import { type UseFieldArrayReturn, useFormContext } from "react-hook-form";
 import {
   ArrowDownCircle,
@@ -37,17 +44,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  ArrayInputContextValue,
-  useArrayInput,
-} from "@/hooks/array-input-context";
-import {
-  SimpleFormIteratorContext,
-  useSimpleFormIterator,
-  SimpleFormIteratorItemContext,
-  SimpleFormIteratorItemContextValue,
-  useSimpleFormIteratorItem,
-} from "@/hooks/simple-form-iterator-context";
 import { Confirm } from "@/components/admin/confirm";
 import { IconButtonWithTooltip } from "@/components/admin/icon-button-with-tooltip.tsx";
 

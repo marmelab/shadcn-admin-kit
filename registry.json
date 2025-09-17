@@ -73,10 +73,6 @@
           "type": "registry:component"
         },
         {
-          "path": "src/hooks/array-input-context.tsx",
-          "type": "registry:hook"
-        },
-        {
           "path": "src/components/admin/authentication.tsx",
           "type": "registry:component"
         },
@@ -313,10 +309,6 @@
           "type": "registry:component"
         },
         {
-          "path": "src/hooks/simple-form-iterator-context.tsx",
-          "type": "registry:hook"
-        },
-        {
           "path": "src/components/admin/simple-show-layout.tsx",
           "type": "registry:component"
         },
@@ -357,10 +349,6 @@
           "type": "registry:component"
         },
         {
-          "path": "src/hooks/user-menu-context.tsx",
-          "type": "registry:hook"
-        },
-        {
           "path": "src/hooks/useSupportCreateSuggestion.tsx",
           "type": "registry:hook"
         },
@@ -373,10 +361,6 @@
           "type": "registry:component"
         },
         {
-          "path": "src/hooks/array-input-context.tsx",
-          "type": "registry:hook"
-        },
-        {
           "path": "src/lib/field.type.ts",
           "type": "registry:lib"
         },
@@ -386,10 +370,6 @@
         },
         {
           "path": "src/lib/i18nProvider.ts",
-          "type": "registry:lib"
-        },
-        {
-          "path": "src/lib/sanitizeInputRestProps.ts",
           "type": "registry:lib"
         },
         {
