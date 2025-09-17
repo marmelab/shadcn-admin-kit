@@ -1,8 +1,12 @@
 import { Download } from "lucide-react";
-import { RaRecord, Translate } from "ra-core";
+import {
+  RaRecord,
+  Translate,
+  useBulkExport,
+  UseBulkExportOptions,
+} from "ra-core";
 
 import { Button } from "../ui/button";
-import { useBulkExport, UseBulkExportOptions } from "ra-core";
 
 /**
  * Export the selected rows

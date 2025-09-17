@@ -1,10 +1,13 @@
-import { RecordContextProvider, ResourceContextProvider } from "ra-core";
+import {
+  RecordContextProvider,
+  ResourceContextProvider,
+  ArrayInputContext,
+} from "ra-core";
 import { describe, expect, it, vi } from "vitest";
 import { render } from "vitest-browser-react";
 import { FormProvider, useForm } from "react-hook-form";
 import { ArrayInput } from "./array-input";
 import { useContext, useEffect } from "react";
-import { ArrayInputContext } from "ra-core";
 
 function TestChild({ source }: { source: string }) {
   const arrayContext = useContext(ArrayInputContext);
