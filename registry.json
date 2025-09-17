@@ -361,10 +361,6 @@
           "type": "registry:component"
         },
         {
-          "path": "src/hooks/array-input-context.tsx",
-          "type": "registry:hook"
-        },
-        {
           "path": "src/lib/field.type.ts",
           "type": "registry:lib"
         },
