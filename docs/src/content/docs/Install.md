@@ -22,10 +22,11 @@ A prompt will asks you some questions, it is important that you answer:
 - `Yes` to `Would you like to use TypeScript?`
 - `Yes` to `Would you like to use Tailwind CSS?`
 - `No` to ` Would you like your code inside a ``src/`` directory? `
+- `Yes` to `Would you like to use App Router? (recommended)`
 - `Yes` to ` Would you like to customize the import alias (``@/*`` by default) `
 - `@/*` to `What import alias would you like configured?`
 
-Feel free to choose answers according to your needs for the other quetions. As for the App Router, this tutorial assumes that you are using it.
+Feel free to choose answers according to your needs for the other questions. As for the App Router, this tutorial assumes that you are using it.
 
 ```bash
 npx create-next-app@latest
@@ -44,7 +45,7 @@ Ok to proceed? (y) y
 ✔ What import alias would you like configured? … @/*
 ```
 
-Set the `verbatimModuleSyntax` option to `false` in your `tsconfig.app.json` file to avoid an [issue](https://github.com/shadcn-ui/ui/issues/6618) with the latest version of TypeScript.
+Set the `verbatimModuleSyntax` option to `false` in your `tsconfig.json` file to avoid an [issue](https://github.com/shadcn-ui/ui/issues/6618) with the latest version of TypeScript.
 
 ```json
 {
