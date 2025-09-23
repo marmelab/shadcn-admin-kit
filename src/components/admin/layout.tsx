@@ -1,5 +1,7 @@
+import { Suspense, useState, type ErrorInfo } from "react";
 import { cn } from "@/lib/utils";
 import { CoreLayoutProps } from "ra-core";
+import { ErrorBoundary } from "react-error-boundary";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { UserMenu } from "@/components/admin/user-menu";
 import { ThemeModeToggle } from "@/components/admin/theme-mode-toggle";
@@ -7,8 +9,14 @@ import { Notification } from "@/components/admin/notification";
 import { AppSidebar } from "@/components/admin/app-sidebar";
 import { RefreshButton } from "@/components/admin/refresh-button";
 import { LocalesMenuButton } from "@/components/admin/locales-menu-button";
+import { Error } from "@/components/admin/error";
+import { Loading } from "@/components/admin/loading";
 
 export const Layout = (props: CoreLayoutProps) => {
+  const [errorInfo, setErrorInfo] = useState<ErrorInfo | undefined>(undefined);
+  const handleError = (_: Error, info: ErrorInfo) => {
+    setErrorInfo(info);
+  };
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -20,7 +28,7 @@ export const Layout = (props: CoreLayoutProps) => {
           "sm:transition-[width] sm:duration-200 sm:ease-linear",
           "flex h-svh flex-col",
           "group-data-[scroll-locked=1]/body:h-full",
-          "has-[main.fixed-main]:group-data-[scroll-locked=1]/body:h-svh"
+          "has-[main.fixed-main]:group-data-[scroll-locked=1]/body:h-svh",
         )}
       >
         <header className="flex h-16 md:h-12 shrink-0 items-center gap-2 px-4">
@@ -31,7 +39,20 @@ export const Layout = (props: CoreLayoutProps) => {
           <RefreshButton />
           <UserMenu />
         </header>
-        <div className="flex flex-1 flex-col px-4 ">{props.children}</div>
+        <ErrorBoundary
+          onError={handleError}
+          fallbackRender={({ error, resetErrorBoundary }) => (
+            <Error
+              error={error}
+              errorInfo={errorInfo}
+              resetErrorBoundary={resetErrorBoundary}
+            />
+          )}
+        >
+          <Suspense fallback={<Loading />}>
+            <div className="flex flex-1 flex-col px-4 ">{props.children}</div>
+          </Suspense>
+        </ErrorBoundary>
       </main>
       <Notification />
     </SidebarProvider>
