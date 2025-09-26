@@ -4,7 +4,7 @@ title: MCP Server
 
 ---
 
-This project is compatible with the new `shadcn@canary registry:mcp` command, and contains Cursor rules to instruct the LLM how to setup the `<Admin>` component, the Data Provider, and the resources.
+This project is compatible with the new `shadcn mcp` command, and contains Cursor rules to instruct the LLM how to setup the `<Admin>` component, the Data Provider, and the resources.
 
 ## Prerequisites
 
@@ -32,29 +32,75 @@ Make sure to also properly configure the `tsconfig.json` and `tsconfig.app.json`
 
 <https://ui.shadcn.com/docs/installation/vite>
 
+Initialize ShadCN:
+
+```sh
+npx shadcn@latest init
+```
+
 ## Setup the registry MCP
+
+Follow the instructions to create a new MCP server named `shadcn` that uses the `shadcn@latest mcp` command to fetch components.
+
+### Claude Code
+
+Create a file named `.mcp.json` and copy the following content into it:
+
+```json
+{
+  "mcpServers": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["shadcn@latest", "mcp"]
+    }
+  }
+}
+```
+
+### Cursor
 
 Create a file named `.cursor/mcp.json` and copy the following content into it:
 
 ```json
 {
     "mcpServers": {
-        "shadcn-admin-kit": {
+        "shadcn": {
             "command": "npx",
             "args": [
-                "-y",
-                "shadcn@canary",
-                "registry:mcp"
-            ],
-            "env": {
-                "REGISTRY_URL": "https://marmelab.com/shadcn-admin-kit/r/registry.json"
-            }
+                "shadcn@latest",    
+                "mcp"
+            ]
         }
     }
 }
 ```
 
-This will create a new MCP server named `shadcn-admin-kit` that uses the `shadcn@canary registry:mcp` command to fetch components from the Shadcn Admin Kit registry.
+### VS Code
+
+Create a file named `.vscode/mcp.json` and copy the following content into it:
+
+```json
+{
+    "servers": {
+        "shadcn": {
+            "command": "npx",
+            "args": [
+                "shadcn@latest",    
+                "mcp"
+            ]
+        }
+    }
+}
+```
+
+### Update shadcn
+
+Then, update your `components.json` file by adding the shadcn-admin-kit registry:   
+```
+"registries": {
+    "@shadcn-admin-kit": "https://marmelab.com/shadcn-admin-kit/r/{name}.json"
+}
+```
 
 ## Start prompting
 
