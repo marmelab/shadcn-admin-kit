@@ -385,7 +385,12 @@
         {
           "path": "rules/registry.mdc",
           "type": "registry:file",
-          "target": "~/.cursor/rules/registry.mdc"
+          "target": "~/.cursor/rules/shadcn-admin-kit.mdc"
+        },
+        {
+          "path": "rules/registry.mdc",
+          "type": "registry:file",
+          "target": "~/.github/shadcn-admin-kit.instructions.md"
         }
       ]
     }
