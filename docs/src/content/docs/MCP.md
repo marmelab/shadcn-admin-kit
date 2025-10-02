@@ -4,7 +4,7 @@ title: MCP Server
 
 ---
 
-This project is compatible with the new `shadcn@canary registry:mcp` command, and contains Cursor rules to instruct the LLM how to setup the `<Admin>` component, the Data Provider, and the resources.
+This project is compatible with the new `shadcn mcp` command, and contains Cursor rules to instruct the LLM how to setup the `<Admin>` component, the Data Provider, and the resources.
 
 ## Prerequisites
 
@@ -32,29 +32,30 @@ Make sure to also properly configure the `tsconfig.json` and `tsconfig.app.json`
 
 <https://ui.shadcn.com/docs/installation/vite>
 
-## Setup the registry MCP
+Initialize ShadCN:
 
-Create a file named `.cursor/mcp.json` and copy the following content into it:
-
-```json
-{
-    "mcpServers": {
-        "shadcn-admin-kit": {
-            "command": "npx",
-            "args": [
-                "-y",
-                "shadcn@canary",
-                "registry:mcp"
-            ],
-            "env": {
-                "REGISTRY_URL": "https://marmelab.com/shadcn-admin-kit/r/registry.json"
-            }
-        }
-    }
-}
+```sh
+npx shadcn@latest init
 ```
 
-This will create a new MCP server named `shadcn-admin-kit` that uses the `shadcn@canary registry:mcp` command to fetch components from the Shadcn Admin Kit registry.
+## Setup the registry MCP
+
+Follow the [Shadcn instructions](https://ui.shadcn.com/docs/mcp#quick-start) to create a new MCP server named `shadcn` that uses the `shadcn@latest mcp` command to fetch components:
+
+```sh
+npx shadcn@latest mcp init --client claude
+npx shadcn@latest mcp init --client cursor
+npx shadcn@latest mcp init --client vscode
+```
+
+### Update shadcn
+
+Then, update your `components.json` file by adding the shadcn-admin-kit registry:   
+```
+"registries": {
+    "@shadcn-admin-kit": "https://marmelab.com/shadcn-admin-kit/r/{name}.json"
+}
+```
 
 ## Start prompting
 
@@ -62,6 +63,7 @@ You can now start prompting the LLM to create or edit the `<Admin>` component, t
 
 Some examples of prompts you can use:
 
-- "init this project using the registry"
-- "create a new admin and declare 3 resources in it: posts, comments and users"
+- "show me all available components in the shadcn-admin-kit registry"
+- "init this project using the shadcn-admin-kit registry"
+- "create a new admin using the shadcn-admin-kit registry and declare 3 resources in it: posts, comments and users"
 - "customize each resource to add a matching icon using the lucide library"
