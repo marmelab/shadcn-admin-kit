@@ -32,10 +32,7 @@ export function Header() {
             >
               Components
             </NavLink>
-            <NavLink
-              href="https://marmelab.com/shadcn-admin-kit/docs"
-              target="_blank"
-            >
+            <NavLink href="https://marmelab.com/shadcn-admin-kit/docs/install/">
               Doc
             </NavLink>
             <NavLink href="#pricing">Pricing</NavLink>
@@ -82,10 +79,7 @@ export function Header() {
                   </a>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="m-1">
-                  <a
-                    href="https://marmelab.com/shadcn-admin-kit/docs"
-                    target="_blank"
-                  >
+                  <a href="https://marmelab.com/shadcn-admin-kit/docs/install/">
                     Doc
                   </a>
                 </DropdownMenuItem>
