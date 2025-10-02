@@ -40,57 +40,12 @@ npx shadcn@latest init
 
 ## Setup the registry MCP
 
-Follow the instructions to create a new MCP server named `shadcn` that uses the `shadcn@latest mcp` command to fetch components.
+Follow the [Shadcn instructions](https://ui.shadcn.com/docs/mcp#quick-start) to create a new MCP server named `shadcn` that uses the `shadcn@latest mcp` command to fetch components:
 
-### Claude Code
-
-Create a file named `.mcp.json` and copy the following content into it:
-
-```json
-{
-  "mcpServers": {
-    "shadcn": {
-      "command": "npx",
-      "args": ["shadcn@latest", "mcp"]
-    }
-  }
-}
-```
-
-### Cursor
-
-Create a file named `.cursor/mcp.json` and copy the following content into it:
-
-```json
-{
-    "mcpServers": {
-        "shadcn": {
-            "command": "npx",
-            "args": [
-                "shadcn@latest",    
-                "mcp"
-            ]
-        }
-    }
-}
-```
-
-### VS Code
-
-Create a file named `.vscode/mcp.json` and copy the following content into it:
-
-```json
-{
-    "servers": {
-        "shadcn": {
-            "command": "npx",
-            "args": [
-                "shadcn@latest",    
-                "mcp"
-            ]
-        }
-    }
-}
+```sh
+npx shadcn@latest mcp init --client claude
+npx shadcn@latest mcp init --client cursor
+npx shadcn@latest mcp init --client vscode
 ```
 
 ### Update shadcn
@@ -108,6 +63,7 @@ You can now start prompting the LLM to create or edit the `<Admin>` component, t
 
 Some examples of prompts you can use:
 
-- "init this project using the registry"
-- "create a new admin and declare 3 resources in it: posts, comments and users"
+- "show me all available components in the shadcn-admin-kit registry"
+- "init this project using the shadcn-admin-kit registry"
+- "create a new admin using the shadcn-admin-kit registry and declare 3 resources in it: posts, comments and users"
 - "customize each resource to add a matching icon using the lucide library"
