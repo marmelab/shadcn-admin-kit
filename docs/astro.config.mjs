@@ -40,6 +40,10 @@ export default defineConfig({
             async: true,
           },
         },
+        {
+          tag: "script",
+          content: `window.addEventListener('load', () => document.querySelector('.site-title').href = 'https://marmelab.com/shadcn-admin-kit/')`,
+        },
       ],
       sidebar: [
         {
