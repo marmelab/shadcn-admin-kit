@@ -60,6 +60,7 @@ You can customize the `<Edit>` component using the following props:
 | `actions`             | Optional  | `ReactNode`         | -            | Override the actions toolbar with a custom component                                           |
 | `className`           | Optional  | `string`            | -            | Passed to the root component                                                                  |
 | `disableAuthentication`| Optional | `boolean`           | `false`      | Disable the authentication check                                                              |
+| `disableBreadcrumb`  | Optional  | `boolean`           | `false`      | Set to `true` to define a custom breadcrumb for the page, instead of the default one |
 | `emptyWhileLoading`   | Optional  | `boolean`           | `false`      | Set to `true` to return `null` while the edit is loading                                      |
 | `id`                  | Optional  | `string`/`number`   | -            | The id of the record to edit                                                                  |
 | `mutationMode`        | Optional  | `'undoable' \| 'optimistic' \| 'pessimistic'` | `'undoable'` | Switch to optimistic or pessimistic mutations                                                 |
@@ -104,7 +105,6 @@ Alternatively to `children`, you can use a `render` prop. It will receive the [`
 
 This allows to inline the render logic for the edition page.
 
-
 ```tsx
 export const PostEdit = () => (
     <Edit
@@ -128,12 +128,11 @@ export const PostEdit = () => (
 );
 ```
 
-
 **Tip**: When receiving a `render` prop, the `<Edit>` component will ignore the `children` prop.
 
 ## Actions Toolbar
 
-By default, the Edit component includes a toolbar with a button to navigate to the show view (if present) and a button to delete the current record. 
+By default, the Edit component includes a toolbar with a button to navigate to the show view (if present) and a button to delete the current record.
 
 ![](./images/customers-edit-actions.png)
 
@@ -259,7 +258,6 @@ export const PostEdit = () => (
 
 This can be useful e.g. to pass [a custom `meta`](./Actions.md#meta-parameter) to the `dataProvider.getOne()` call.
 
-
 ```jsx
 import { Edit, SimpleForm } from '@/components/admin';
 
@@ -284,7 +282,7 @@ const PostEdit = () => (
 
 Refer to the [useQuery documentation](https://tanstack.com/query/v5/docs/react/reference/useQuery) in the react-query website for a list of the possible options.
 
-## Mutation Options 
+## Mutation Options
 
 `<Edit>` calls `dataProvider.update()` via react-query's `useMutation` hook. You can customize the options you pass to this hook, e.g. to pass [a custom `meta`](./Actions.md#meta-parameter) to the `dataProvider.update()` call.
 
@@ -306,10 +304,9 @@ You can also use `mutationOptions` to override success or error side effects.
 
 ## Success and Error Side Effects
 
-By default, when the save action succeeds, Shadcn Admin Kit shows a notification, and redirects to the list page. 
+By default, when the save action succeeds, Shadcn Admin Kit shows a notification, and redirects to the list page.
 
 You can override this behavior and pass custom success side effects by providing a `mutationOptions` prop with an `onSuccess` key:
-
 
 ```jsx
 import { Edit, SimpleForm } from '@/components/admin';
@@ -379,6 +376,7 @@ const PostEdit = () => {
     );
 }
 ```
+
 :::
 
 :::tip
@@ -585,6 +583,7 @@ export const UserEdit = () => {
     );
 }
 ```
+
 :::
 
 ## Scaffolding An Edit Page
@@ -652,7 +651,6 @@ By default, the `<Edit>` view starts with the current `record`. However, if the 
 
 That means that if you want to create a link to an edition view, modifying immediately *some* values, all you have to do is to set the `state` prop of the `<EditButton>`:
 
-
 ```jsx
 import * as React from 'react';
 import { EditButton, DataTable, List } from '@/components/admin';
@@ -687,6 +685,7 @@ const ApproveButton = () => (
     />
 );
 ```
+
 :::
 
 Should you use the location `state` or the location `search`? The latter modifies the URL, so it's only necessary if you want to build cross-application links (e.g. from one admin to the other). In general, using the location `state` is a safe bet.

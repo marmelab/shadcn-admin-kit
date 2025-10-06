@@ -71,6 +71,7 @@ export const ListView = <RecordType extends RaRecord = RaRecord>(
   props: ListViewProps<RecordType>,
 ) => {
   const {
+    disableBreadcrumb,
     filters,
     pagination = defaultPagination,
     title,
@@ -97,16 +98,18 @@ export const ListView = <RecordType extends RaRecord = RaRecord>(
 
   return (
     <>
-      <Breadcrumb>
-        {hasDashboard && (
-          <BreadcrumbItem>
-            <Link to="/">
-              <Translate i18nKey="ra.page.dashboard">Home</Translate>
-            </Link>
-          </BreadcrumbItem>
-        )}
-        <BreadcrumbPage>{resourceLabel}</BreadcrumbPage>
-      </Breadcrumb>
+      {!disableBreadcrumb && (
+        <Breadcrumb>
+          {hasDashboard && (
+            <BreadcrumbItem>
+              <Link to="/">
+                <Translate i18nKey="ra.page.dashboard">Home</Translate>
+              </Link>
+            </BreadcrumbItem>
+          )}
+          <BreadcrumbPage>{resourceLabel}</BreadcrumbPage>
+        </Breadcrumb>
+      )}
 
       <FilterContext.Provider value={filters}>
         <div className="flex justify-between items-start flex-wrap gap-2 my-2">
@@ -133,6 +136,7 @@ const defaultPagination = <ListPagination />;
 
 export interface ListViewProps<RecordType extends RaRecord = RaRecord> {
   children?: ReactNode;
+  disableBreadcrumb?: boolean;
   render?: (props: ListControllerResult<RecordType, Error>) => ReactNode;
   actions?: ReactElement | false;
   filters?: ReactElement<FilterElementProps>[];

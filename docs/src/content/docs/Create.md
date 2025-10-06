@@ -69,6 +69,7 @@ You can customize the `<Create>` component using the following props:
 | `actions`           | Optional | `ReactNode`         | Default toolbar| Override the actions toolbar with a custom component                                             |
 | `className`         | Optional | `string`            | -              | Passed to the root component                                                                     |
 | `disableAuthentication` | Optional | `boolean`      | `false`         | Disable the authentication check                                                                 |
+| `disableBreadcrumb`  | Optional  | `boolean` | `false` | Set to `true` to define a custom breadcrumb for the page, instead of the default one |
 | `mutationMode`      | Optional | `string`            | `pessimistic`  | Switch to optimistic or undoable mutations                                                       |
 | `mutationOptions`   | Optional | `object`            | -              | Options for the `dataProvider.create()` call                                                     |
 | `record`            | Optional | `object`            | `{}`           | Initialize the form with a record                                                                |

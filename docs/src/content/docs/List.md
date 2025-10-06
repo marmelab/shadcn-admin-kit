@@ -60,6 +60,7 @@ You can find more advanced examples of `<List>` usage in the [demo](https://marm
 | `actions` | Optional | `ReactNode` | default action bar | Custom actions area (right side of header) |
 | `debounce` | Optional | `number` | `500` | Debounce (ms) for filter & sort changes |
 | `disableAuthentication` | Optional | `boolean` | `false` | Skip auth check for this page |
+| `disableBreadcrumb`  | Optional | `boolean` | `false` | Set to `true` to define a custom breadcrumb for the page, instead of the default one |
 | `disableSyncWithLocation` | Optional | `boolean` | `false` | Keep list params local (not in the URL) |
 | `exporter` | Optional | `false | (records, fetchRelated, dataProvider) => void` | - | Custom export logic (set `false` to hide Export button) |
 | `filters` | Optional | `ReactElement[]` | - | Array of filter input elements (displayed inline) |
@@ -122,8 +123,8 @@ When receiving a `render` prop, the `<List>` component will ignore the `children
 
 By default the page header shows a toolbar with 2 buttons:
 
-* `<CreateButton>` (if the resource has a create view)
-* `<ExportButton>` (unless `exporter={false}`)
+- `<CreateButton>` (if the resource has a create view)
+- `<ExportButton>` (unless `exporter={false}`)
 
 Provide an `actions` prop to completely replace that area:
 
@@ -232,6 +233,7 @@ export const PostList = () => (
     </List>
 );
 ```
+
 :::
 
 ## Sort
@@ -364,6 +366,7 @@ const PostList = () => (
     </List>
 )
 ```
+
 :::
 
 In many cases, you'll need more than simple object manipulation. You'll need to *augment* your objects based on relationships. For instance, the export for comments should include the title of the related post - but the export only exposes a `post_id` by default. For that purpose, the exporter receives a `fetchRelatedRecords` function as the second parameter. It fetches related records using your `dataProvider.getMany()` method and returns a promise.
@@ -550,7 +553,7 @@ Notice we display some custom UI when there is no filter. This is because otherw
 
 ## Parameters Persistence
 
-By default, when users change the list parameters (sort, pagination, filters), shadcn-admin-kit stores them in localStorage so that users can come back to the list and find it in the same state as when they left it, using the internal [Store](https://marmelab.com/ra-core/store/). 
+By default, when users change the list parameters (sort, pagination, filters), shadcn-admin-kit stores them in localStorage so that users can come back to the list and find it in the same state as when they left it, using the internal [Store](https://marmelab.com/ra-core/store/).
 
 Shadcn-admin-kit uses the current resource as the identifier to store the list parameters (under the key `${resource}.listParams`).
 
@@ -566,7 +569,7 @@ import {
     List,
     DataTable,
 } from 'shadcn-admin-kit';
-import { Route } from 'react-router-dom';
+import { Route } from 'react-router';
 
 const NewerBooks = () => (
     <List
@@ -702,6 +705,7 @@ If you need to set the list parameters to render a list of records *related to a
 
 - [`<ReferenceArrayField>`](./ReferenceArrayField.md),
 - [`<ReferenceManyField>`](./ReferenceManyField.md),
+
 :::
 
 If the `<List>` children allow to *modify* the list state (i.e. if they let users change the sort order, the filters, the selection, or the pagination), then you should also use the [`disableSyncWithLocation`](#disablesyncwithlocation) prop to prevent shadcn-admin-kit from changing the URL. This is the case e.g. if you use a `<DataTable>`, which lets users sort the list by clicking on column headers.
@@ -744,7 +748,6 @@ const Dashboard = () => (
     </div>
 )
 ```
-
 
 :::note
 If you render more than one `<DataTable>` for the same resource in the same page, they will share the selection state (i.e. the checked checkboxes). This is a design choice because if row selection is not tied to a resource, then when a user deletes a record it may remain selected without any ability to unselect it. You can get rid of the checkboxes by setting `<DataTable bulkActionButtons={false}>`.

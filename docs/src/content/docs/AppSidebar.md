@@ -109,7 +109,7 @@ To customize the menu items, edit the `SidebarContent` section. For example, if 
 ```tsx {2-3,35-42}
 // in @/components/admin/app-sidebar.tsx
 import { Settings } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-route";
 
 export function AppSidebar() {
   const hasDashboard = useHasDashboard();

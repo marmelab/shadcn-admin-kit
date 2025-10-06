@@ -81,8 +81,9 @@ That's enough to display the post show view above.
 | `render`       | Optional&nbsp;* | `(showContext) => ReactNode`       |         | A function rendering the record fields, receive the show context as its argument
 | `actions`        | Optional | `ReactElement`    |         | The actions to display in the toolbar
 | `className`      | Optional | `string`          |         | passed to the root component
-| `disable Authentication` | Optional | `boolean` |         | Set to `true` to disable the authentication check
-| `empty WhileLoading` | Optional | `boolean`     |         | Set to `true` to return `null` while the show is loading
+| `disableAuthentication` | Optional | `boolean` |         | Set to `true` to disable the authentication check
+| `disableBreadcrumb`  | Optional  | `boolean` | `false` | Set to `true` to define a custom breadcrumb for the page, instead of the default one
+| `emptyWhileLoading` | Optional | `boolean`     |         | Set to `true` to return `null` while the show is loading
 | `id`             | Optional | `string | number` |         | The record id. If not provided, it will be deduced from the URL
 | `queryOptions`   | Optional | `object`          |         | The options to pass to the `useQuery` hook
 | `resource`       | Optional | `string`          |         | The resource name, e.g. `posts`
