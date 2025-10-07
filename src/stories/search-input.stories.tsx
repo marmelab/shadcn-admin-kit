@@ -58,3 +58,16 @@ export const Basic = () => (
     <FormValues />
   </Wrapper>
 );
+
+export const LongPlaceholder = () => (
+  <Wrapper>
+    <div className="w-50">
+      <SearchInput
+        source="q"
+        alwaysOn
+        placeholder="Search name, email, company, id..."
+      />
+    </div>
+    <FormValues />
+  </Wrapper>
+);
