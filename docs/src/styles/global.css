@@ -5,6 +5,7 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 
 :root {
+  --sl-sidebar-width: 21.25rem;
   --sl-text-h2: 1.5rem;
   --sl-text-h3: 1.25rem;
   --sl-text-h4: 1.125rem;
@@ -54,4 +55,63 @@ img.icon {
 }
 .sl-markdown-content table tr td code {
   overflow-wrap: break-word;
+}
+
+a.enterprise {
+  position: relative;
+  padding-right: 26px;
+}
+
+a.enterprise .sl-badge {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+a.enterprise span:not(.sl-badge)::after {
+  content: "";
+  background-repeat: no-repeat;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 7px;
+  right: 6px;
+}
+
+a.enterprise span:not(.sl-badge)::after {
+  background-image: url("/public/premium-dark.svg");
+}
+a[aria-current="page"].enterprise span:not(.sl-badge)::after {
+  background-image: url("/public/premium-dark.svg");
+}
+
+[data-theme="light"] a.enterprise span:not(.sl-badge)::after {
+  background-image: url("/public/premium-light.svg");
+}
+[data-theme="light"]
+  a[aria-current="page"].enterprise
+  span:not(.sl-badge)::after {
+  background-image: url("/public/premium-dark.svg");
+}
+
+[data-theme="dark"] a.enterprise span:not(.sl-badge)::after {
+  background-image: url("/public/premium-dark.svg");
+}
+[data-theme="dark"]
+  a[aria-current="page"].enterprise
+  span:not(.sl-badge)::after {
+  background-image: url("/public/premium-light.svg");
+}
+
+@media (prefers-color-scheme: dark) {
+  a.enterprise span:not(.sl-badge)::after {
+    background-image: url("/public/premium-dark.svg");
+  }
+  a[aria-current="page"].enterprise span:not(.sl-badge)::after {
+    background-image: url("/public/premium-light.svg");
+  }
 }

@@ -62,7 +62,15 @@ export default defineConfig({
         },
         {
           label: "Page components",
-          items: ["list", "edit", "show", "create"],
+          items: [
+            "list",
+            enterpriseEntry("ListLive"),
+            "edit",
+            enterpriseEntry("EditLive"),
+            "show",
+            enterpriseEntry("ShowLive"),
+            "create",
+          ],
         },
         {
           label: "Data Display",
@@ -85,6 +93,7 @@ export default defineConfig({
             "referencefield",
             "referencemanycount",
             "referencemanyfield",
+            enterpriseEntry("ReferenceManyToManyFieldBase"),
             "selectfield",
             "singlefieldlist",
             "sortbutton",
@@ -112,6 +121,9 @@ export default defineConfig({
             "radiobuttongroupinput",
             "referencearrayinput",
             "referenceinput",
+            enterpriseEntry("ReferenceManyInputBase"),
+            enterpriseEntry("ReferenceManyToManyInputBase"),
+            enterpriseEntry("ReferenceOneInputBase"),
             "savebutton",
             "searchinput",
             "selectinput",
@@ -136,6 +148,18 @@ export default defineConfig({
             "refreshbutton",
             "spinner",
             "thememodetoggle",
+          ],
+        },
+        {
+          label: "Realtime",
+          items: [
+            enterpriseEntry("useGetListLive"),
+            enterpriseEntry("useGetOneLive"),
+            enterpriseEntry("useLockOnCall"),
+            enterpriseEntry("useLockOnMount"),
+            enterpriseEntry("usePublish"),
+            enterpriseEntry("useSubscribe"),
+            enterpriseEntry("useSubscribeCallback"),
           ],
         },
         {
@@ -174,3 +198,19 @@ export default defineConfig({
     assets: "astro-assets",
   },
 });
+
+/**
+ * @param {string} name
+ * @returns {any}
+ */
+function enterpriseEntry(name) {
+  return {
+    link: `${name.toLowerCase()}/`,
+    label: name,
+    attrs: { class: "enterprise" },
+    badge: {
+      text: "React Admin Enterprise",
+      variant: "default",
+    },
+  };
+}
