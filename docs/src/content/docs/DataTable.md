@@ -7,7 +7,6 @@ Feature-rich table component with:
 - Sortable headers with tooltips
 - Support for custom renderers and field components
 - Row click navigation (show/edit) logic
-- Expandable rows
 - Row selection & bulk actions toolbar
 - Column visibility & reordering (via [`ColumnsButton`](./ColumnsButton.md))
 - Pagination (via [`ListPagination`](./ListPagination.md))
@@ -54,10 +53,7 @@ It also accepts additional props to configure the behavior of that specific colu
 | `bulkActionsToolbar` | Optional | `ReactNode` | - | Full custom toolbar (overrides default) |
 | `className` | Optional | `string` | - | Wrapper classes |
 | `empty` | Optional | Element | `<Empty>` | The component to render when the list is empty. |
-| `expand`| Optional | Element | - | The component rendering the expand panel for each row. |
-| `expandSingle` | Optional | Boolean | `false` | Whether to allow only one expanded row at a time. |
 | `hiddenColumns`| Optional | Array | `[]`| The list of columns to hide by default (to be used with `ColumnsButton`) . |
-| `isRowExpandable` | Optional | Function | `() => true` | A function that returns whether a row is expandable. |
 | `isRowSelectable` | Optional | Function | `() => true` | A function that returns whether a row is selectable. |
 | `rowClassName` | Optional | `(record) => string` | - | Dynamic row classes |
 | `rowClick` | Optional | mixed | `show` | The action to trigger when the user clicks on a row. |
