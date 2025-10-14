@@ -145,6 +145,8 @@ export default defineConfig({
         {
           label: "Realtime",
           items: [
+            enterpriseEntry("ListLiveUpdate"),
+            enterpriseEntry("RecordLiveUpdate"),
             enterpriseEntry("useGetListLive"),
             enterpriseEntry("useGetOneLive"),
             enterpriseEntry("useLockOnCall"),

@@ -652,7 +652,7 @@ This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enter
 
 ```tsx {2,7}
 import { List } from 'shadcn-admin-kit';
-import { ListLiveUpdate } from '@react-admin/ra-realtime';
+import { ListLiveUpdate } from '@react-admin/ra-core-ee';
 
 const PostList = () => (
     <List>
