@@ -149,17 +149,14 @@ Edit `tsconfig.json` file. Add the `baseUrl` and `paths` properties to the `comp
 
 Add the following code to the `tsconfig.app.json` file to resolve paths, for your IDE:
 
-```json title="tsconfig.app.json" ins={4-9}
+```json title="tsconfig.app.json" ins={4-7}
 {
   "compilerOptions": {
     // ...
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": [ "./src/*" ]
     }
-    // ...
   }
 }
 ```
