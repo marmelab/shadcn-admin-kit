@@ -2,9 +2,11 @@
 title: "ReferenceManyInputBase"
 ---
 
-Use `<ReferenceManyInputBase>` in an edition or creation views to edit one-to-many relationships, e.g. to edit the variants of a product in the product edition view.
+Use `<ReferenceManyInputBase>` in an edition or creation view to edit one-to-many relationships, e.g. to edit the variants of a product in a product edition view.
 
 `<ReferenceManyInputBase>` fetches the related records, and renders them in a sub-form. When users add, remove of update related records, the `<ReferenceManyInputBase>` component stores these changes locally. When the users actually submit the form, `<ReferenceManyInputBase>` computes a diff with the existing relationship, and sends the related changes (additions, deletions, and updates) to the server.
+
+This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
 
 ## Usage
 
@@ -25,7 +27,7 @@ An example one-to-many relationship can be found in ecommerce systems: a product
 
 You probably want to let users edit variants directly from the product Edition view (instead of having to go to the variant Edition view). `<ReferenceManyInputBase>` allows to do that.
 
-```jsx
+```tsx
 import { Form, ReferenceInputBase } from "ra-core";
 import { AutocompleteInput } from "@/components/admin/autocomplete-input";
 import { Edit } from "@/components/admin/edit";
@@ -43,7 +45,11 @@ const ProductEdit = () => (
       <ReferenceInputBase source="category_id" reference="categories">
         <AutocompleteInput />
       </ReferenceInputBase>
-      <ReferenceManyInputBase reference="variants" target="product_id">
+      <ReferenceManyInputBase
+        reference="variants"
+        target="product_id"
+        disableReordering
+      >
         <SimpleFormIterator>
           <TextInput source="sku" />
           <SelectInput source="size" choices={sizes} />
@@ -60,7 +66,9 @@ const ProductEdit = () => (
 
 `<ReferenceManyInputBase>` persists the changes in the reference records (variants in the above example) after persisting the changes in the main resource (product in the above example). This means that you can also use `<ReferenceManyInputBase>` in `<Create>` views.
 
-**Tip**: `<ReferenceManyInputBase>` cannot be used with `undoable` mutations. You have to set `mutationMode="optimistic"` or `mutationMode="pessimistic"` in the parent `<Edit>` or `<Create>`, as in the example above.
+:::tip
+`<ReferenceManyInputBase>` cannot be used with `undoable` mutations. You have to set `mutationMode="optimistic"` or `mutationMode="pessimistic"` in the parent `<Edit>` or `<Create>`, as in the example above.
+:::
 
 ## Props
 
@@ -70,7 +78,9 @@ const ProductEdit = () => (
 | `reference`       | Required | `string`                  | -                                | The name of the resource for the referenced records, e.g. 'books'                                                        |
 | `children`        | Optional | `Element`                 | -                                | One or several elements that render a list of records based on a `ListContext`                                           |
 | `defaultValue`    | Optional | `array`                   | -                                | Default value of the input.                                                                                              |
+| `error`           | Optional | `Element`                 | -                                | The element to display when an error occurs while loading a reference                                                    |
 | `filter`          | Optional | `Object`                  | -                                | Filters to use when fetching the related records, passed to `getManyReference()`                                         |
+| `loading`         | Optional | `Element`                 | -                                | The element to display while loading a reference                                                                         |
 | `mutationOptions` | Optional | `UseMutationOptions`      | -                                | Options for the mutations (`create`, `update` and `delete`)                                                              |
 | `perPage`         | Optional | `number`                  | 25                               | Maximum number of referenced records to fetch                                                                            |
 | `queryOptions`    | Optional | `UseQueryOptions`         | -                                | Options for the queries (`getManyReferences`)                                                                            |
@@ -81,9 +91,9 @@ const ProductEdit = () => (
 
 ## `children`
 
-`<ReferenceManyInputBase>` creates an `ArrayInputContext`, so it accepts the same type of children as `<ArrayInput>`: a Form iterator. React-admin bundles one such iterator: `<SimpleFormIterator>`. It renders one row for each related record, giving the user the ability to add, remove, or edit related records.
+`<ReferenceManyInputBase>` creates an `ArrayInputContext`, so it accepts the same type of children as `<ArrayInput>`: a Form iterator. Shadcn Admin Kit bundles one such iterator: `<SimpleFormIterator>`. It renders one row for each related record, giving the user the ability to add, remove, or edit related records.
 
-```jsx
+```tsx
 <ReferenceManyInputBase reference="variants" target="product_id">
   <SimpleFormIterator>
     <TextInput source="sku" />
@@ -102,7 +112,7 @@ When the current record has no related records, `<ReferenceManyInputBase>` rende
 
 You can use the `defaultValue` prop to populate the list of related records in that case. It must be an array of objects.
 
-```jsx
+```tsx
 <ReferenceManyInputBase
   reference="variants"
   target="product_id"
@@ -122,11 +132,25 @@ You can use the `defaultValue` prop to populate the list of related records in t
 </ReferenceManyInputBase>
 ```
 
+## `error`
+
+To display a custom element when an error occurs while loading the reference, use the `error` prop:
+
+```tsx
+<ReferenceManyInputBase
+  reference="variants"
+  target="product_id"
+  error={<MyError />}
+>
+  ...
+</ReferenceManyInputBase>
+```
+
 ## `filter`
 
 You can filter the query used to populate the current values. Use the `filter` prop for that.
 
-```jsx
+```tsx
 <ReferenceManyInputBase
   reference="variants"
   target="product_id"
@@ -136,11 +160,25 @@ You can filter the query used to populate the current values. Use the `filter` p
 </ReferenceManyInputBase>
 ```
 
+## `loading`
+
+To display a custom element while loading the reference, use the `loading` prop:
+
+```tsx
+<ReferenceManyInputBase
+  reference="variants"
+  target="product_id"
+  loading={<Skeleton />}
+>
+  ...
+</ReferenceManyInputBase>
+```
+
 ## `perPage`
 
-By default, ra-core-ee restricts the possible values to 25 and displays no pagination control. You can change the limit by setting the `perPage` prop:
+By default, `<ReferenceManyInputBase>` only fetches the first 25 related records and displays no pagination control. You can change the limit by setting the `perPage` prop:
 
-```jsx
+```tsx
 <ReferenceManyInputBase reference="variants" target="product_id" perPage={10}>
   ...
 </ReferenceManyInputBase>
@@ -148,11 +186,11 @@ By default, ra-core-ee restricts the possible values to 25 and displays no pagin
 
 ## `rankSource`
 
-If the Form iterator you use as `ReferenceManyInputBase` children (e.g. `<SimpleFormIterator>`) provides controls to reorder the items in the list and the related records have a numeric rank field, you can enable the reordering feature by setting the `rankSource` prop.
+If the Form iterator used as child (e.g. `<SimpleFormIterator>`) provides controls to reorder the items in the list, and if the related records have a numeric rank field, you can enable the reordering feature by setting the `rankSource` prop.
 
 For example, if the variants have a `rank` field, you can set the `rankSource` prop like this:
 
-```jsx
+```tsx
 <ReferenceManyInputBase
   reference="variants"
   target="product_id"
@@ -175,7 +213,7 @@ The name of the resource to fetch for the related records.
 
 For instance, if you want to display the `variants` of a given `product`, the `reference` name should be `variants`:
 
-```jsx
+```tsx
 <ReferenceManyInputBase reference="books" target="author_id">
   ...
 </ReferenceManyInputBase>
@@ -185,7 +223,7 @@ For instance, if you want to display the `variants` of a given `product`, the `r
 
 By default, related records appear ordered by id desc. You can change this order by setting the `sort` prop (an object with `field` and `order` properties).
 
-```jsx
+```tsx
 <ReferenceManyInputBase
   reference="variants"
   target="product_id"
@@ -199,7 +237,7 @@ By default, related records appear ordered by id desc. You can change this order
 
 By default, `<ReferenceManyInputBase>` fetches the `references` for which the `target` field equals the current record `id`. You can customize the field that carries the identity of the current record by setting the `source` prop.
 
-```jsx
+```tsx
 <ReferenceManyInputBase reference="variants" target="product_id" source="_id">
   ...
 </ReferenceManyInputBase>
@@ -209,7 +247,7 @@ By default, `<ReferenceManyInputBase>` fetches the `references` for which the `t
 
 Name of the field carrying the relationship on the referenced resource. For instance, if a `product` has many `variants`, and each variant resource exposes an `product_id` field, the `target` would be `author_id`.
 
-```jsx
+```tsx
 <ReferenceManyInputBase reference="variants" target="product_id">
   ...
 </ReferenceManyInputBase>
@@ -219,7 +257,7 @@ Name of the field carrying the relationship on the referenced resource. For inst
 
 Just like regular inputs, you can use the `validate` prop to define custom validation rules for the list of references.
 
-```jsx
+```tsx
 import { minLength } from "ra-core";
 
 const ProductEdit = () => (
@@ -252,7 +290,7 @@ You can leverage `react-hook-form`'s [`setValue`](https://react-hook-form.com/do
 
 However you need to know the `name` under which the input was registered in the form, and this name is dynamically generated depending on the index of the item in the array.
 
-To get the name of the input for a given index, you can leverage the `SourceContext` created by react-admin, which can be accessed using the `useSourceContext` hook.
+To get the name of the input for a given index, you can leverage the `SourceContext` created by Shadcn Admin Kit, which can be accessed using the `useSourceContext` hook.
 
 This context provides a `getSource` function that returns the effective `source` for an input in the current context, which you can use as input name for `setValue`.
 
@@ -272,9 +310,7 @@ const PrefillEmail = () => {
   const onClick = () => {
     const firstName = getValues(sourceContext.getSource("first_name"));
     const lastName = getValues(sourceContext.getSource("last_name"));
-    const email = `${
-      firstName ? firstName.toLowerCase() : ""
-    }.${lastName ? lastName.toLowerCase() : ""}@school.com`;
+    const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@school.com`;
     setValue(sourceContext.getSource("email"), email);
   };
 
@@ -297,4 +333,6 @@ const StudentsInput = () => (
 );
 ```
 
-**Tip:** If you only need the item's index, you can leverage the [`useSimpleFormIteratorItem` hook](https://marmelab.com/react-admin/SimpleFormIterator.html#getting-the-element-index) instead.
+:::tip
+If you only need the item's index, you can leverage the [`useSimpleFormIteratorItem` hook](https://marmelab.com/react-admin/SimpleFormIterator.html#getting-the-element-index) instead.
+:::

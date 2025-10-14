@@ -71,7 +71,9 @@ useSubscribe(`messages/${name}`, (event) => {
 });
 ```
 
-**Tip**: Memoize the callback using `useCallback` to avoid unnecessary subscriptions/unsubscriptions.
+:::tip
+Memoize the callback using `useCallback` to avoid unnecessary subscriptions/unsubscriptions.
+:::
 
 ```tsx
 const callback = useCallback(

@@ -62,15 +62,7 @@ export default defineConfig({
         },
         {
           label: "Page components",
-          items: [
-            "list",
-            enterpriseEntry("ListLive"),
-            "edit",
-            enterpriseEntry("EditLive"),
-            "show",
-            enterpriseEntry("ShowLive"),
-            "create",
-          ],
+          items: ["list", "edit", "show", "create"],
         },
         {
           label: "Data Display",

@@ -64,7 +64,9 @@ const PostEdit = () => (
 );
 ```
 
-**Note**: If users close their tab/browser when on a page with a locked record, `useLockOnMount` will block the navigation and show a notification until the record is unlocked. Hence it's a good practice to give them a way to unlock the record manually, e.g. by using the `doUnlock` callback returned by the hook or the [`<LockStatusBase>`](./LockStatusBase.md) component.
+:::note
+If users close their tab/browser when on a page with a locked record, `useLockOnMount` will block the navigation and show a notification until the record is unlocked. Hence it's a good practice to give them a way to unlock the record manually, e.g. by using the `doUnlock` callback returned by the hook or the [`<LockStatusBase>`](./LockStatusBase.md) component.
+:::
 
 ## Parameters
 
@@ -93,7 +95,9 @@ const { isLocked, error, isLoading } = useLockOnMount({
 });
 ```
 
-**Tip**: If the record can't be locked because another user is already locking it, you can use [`react-query`'s retry feature](https://react-query-v3.tanstack.com/guides/mutations#retry) to try again later:
+:::tip
+If the record can't be locked because another user is already locking it, you can use [`react-query`'s retry feature](https://react-query-v3.tanstack.com/guides/mutations#retry) to try again later:
+:::
 
 ```tsx
 const { isLocked, error, isLoading } = useLockOnMount({

@@ -4,7 +4,11 @@ title: "ReferenceManyToManyInputBase"
 
 This component allows adding or removing relationships between two resources sharing an associative table. The changes in the associative table are sent to the dataProvider _when the user submits the form_ so that they can cancel the changes before submission.
 
-**Note**: The `<ReferenceManyToManyInputBase>` cannot currently display multiple records with the same id from the end reference resource even though they might have different properties in the associative table.
+:::note
+The `<ReferenceManyToManyInputBase>` cannot currently display multiple records with the same id from the end reference resource even though they might have different properties in the associative table.
+:::
+
+This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
 
 ## Usage
 
@@ -52,9 +56,13 @@ export const BandEdit = () => (
 
 Note that although all possible child components support a `defaultValue` prop, it will only be applied on create views.
 
-**Tip**: We don't recommend using `<ReferenceManyToManyInputBase>` in an edition view that has its `mutationMode` set to `undoable`. Indeed, even if users cancel the main mutation, the changes in the associative table will still be applied.
+:::tip
+We don't recommend using `<ReferenceManyToManyInputBase>` in an edition view that has its `mutationMode` set to `undoable`. Indeed, even if users cancel the main mutation, the changes in the associative table will still be applied.
+:::
 
-**Tip**: If you need to edit the fields of the associative table (e.g. the `date` in `performances`), you can use a [`<ReferenceManyInputBase>`](#referencemanyinputbase) instead of `<ReferenceManyToManyInputBase>`.
+:::tip
+If you need to edit the fields of the associative table (e.g. the `date` in `performances`), you can use a [`<ReferenceManyInputBase>`](#referencemanyinputbase) instead of `<ReferenceManyToManyInputBase>`.
+:::
 
 You will need to let users select the related record (`venue` in the example above) via a `<ReferenceInputBase>`:
 
@@ -212,7 +220,7 @@ By default, `<ReferenceManyToManyInputBase>` displays at most 25 entries from th
 
 `<ReferenceManyToManyInputBase>` displays a list of possible values from the reference table (e.g. `venues`) as suggestions in the input. It uses the `getList()` dataProvider call to fetch these possible values.
 
-By default, react-admin displays at most 25 possible values from the reference table (e.g. 25 `venues`). You can change the limit by setting the `perPageChoices` prop:
+By default, Shadcn Admin Kit displays at most 25 possible values from the reference table (e.g. 25 `venues`). You can change the limit by setting the `perPageChoices` prop:
 
 ```tsx
 <ReferenceManyToManyInputBase
@@ -268,7 +276,7 @@ By default, `<ReferenceManyToManyInputBase>` orders the possible values by `id` 
   reference="venues"
   through="performances"
   using="band_id,venue_id"
-  sort={{ field: "id", order: "DESC" }}
+  sort={{ field: "date", order: "DESC" }}
 >
   {/* ... */}
 </ReferenceManyToManyInputBase>
@@ -316,7 +324,7 @@ You must specify the associative table name using the `through` prop.
 
 ## `using`
 
-You can specify the columns to use in the associative using the `using` prop.
+You can specify the columns to use in the associative using the `using` prop. When not provided, the `using` prop defaults to `'[resource]_id,[reference]_id'`.
 
 ```tsx
 <ReferenceManyToManyInputBase
@@ -426,7 +434,7 @@ dataProvider.create("performances", {
 
 ## I18N
 
-This component uses specific translations for displaying notifications. As for all translations in react-admin, it's possible to customize the messages.
+This component uses specific translations for displaying notifications. As for all translations in Shadcn Admin Kit, it's possible to customize the messages.
 
 To create your own translations, you can use the TypeScript types to see the structure and see which keys are overridable.
 

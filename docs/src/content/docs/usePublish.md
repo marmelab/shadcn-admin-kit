@@ -6,7 +6,9 @@ Get a callback to publish an event on a topic. The callback returns a promise th
 
 `usePublish` calls `dataProvider.publish()` to publish the event. It leverages react-query's `useMutation` hook to provide a callback.
 
-**Note**: Events should generally be published by the server, in reaction to an action by an end user. They should seldom be published directly by the client. This hook is provided mostly for testing purposes, but you may use it in your own custom components if you know what you're doing.
+:::note
+Events should generally be published by the server, in reaction to an action by an end user. They should seldom be published directly by the client. This hook is provided mostly for testing purposes, but you may use it in your own custom components if you know what you're doing.
+:::
 
 This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
 

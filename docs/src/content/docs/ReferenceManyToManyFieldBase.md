@@ -4,7 +4,11 @@ title: "ReferenceManyToManyFieldBase"
 
 This component fetches a list of referenced records by lookup in an associative table and passes the records down to its child component, which must be an iterator component.
 
-Note: The `<ReferenceManyToManyFieldBase>` cannot currently display multiple records with the same id from the end reference resource, even though they might have different properties in the associative table.
+:::note
+The `<ReferenceManyToManyFieldBase>` cannot currently display multiple records with the same id from the end reference resource, even though they might have different properties in the associative table.
+:::
+
+This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
 
 ## Usage
 
@@ -54,11 +58,13 @@ export const BandShow = () => (
 
 | Prop           | Required | Type                                        | Default                          | Description                                                                                                                                                                                                      |
 | -------------- | -------- | ------------------------------------------- | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `children`     | Required | `element`                                   | -                                | An iterator element (e.g. `<WithListContext>`). The iterator element usually has one or more child `<Field>` components.                                                                                         |
+| `children`     | Required | `element`                                   | -                                | An iterator element (e.g. `<RecordsIterator>`). The iterator element usually has one or more child `<Field>` components.                                                                                         |
 | `reference`    | Required | `string`                                    | -                                | Name of the reference resource, e.g. 'venues'                                                                                                                                                                    |
 | `through`      | Required | `string`                                    | -                                | Name of the resource for the associative table, e.g. 'performances'                                                                                                                                              |
+| `error`        | Optional | `Element`                                   | -                                | The element to display when an error occurs while loading a reference                                                                                                                                            |
 | `filter`       | Optional | `object`                                    | `{}`                             | Filter for the associative table (passed to the `getManyReference()` call)                                                                                                                                       |
 | `joinLimit`    | Optional | `number`                                    | 100                              | Limit for the number of results fetched from the associative table. Should be **greater than `perPage`**                                                                                                         |
+| `loading`      | Optional | `Element`                                   | -                                | The element to display while loading a reference                                                                                                                                                                 |
 | `perPage`      | Optional | `number`                                    | 25                               | Limit the number of displayed result after `getManyReference` is called. Useful when using a pagination component. Should be **smaller than `joinLimit`**                                                        |
 | `queryOptions` | Optional | `UseQueryOptions`                           | -                                | Query options for the `getMany` and `getManyReference` calls                                                                                                                                                     |
 | `sort`         | Optional | `{ field: string, order: 'ASC' or 'DESC' }` | `{ field: 'id', order: 'DESC' }` | Sort for the associative table (passed to the `getManyReference()` call)                                                                                                                                         |
@@ -71,7 +77,7 @@ export const BandShow = () => (
 
 ```tsx
 import { Show } from "@/components/admin/show";
-import { WithListContext } from "ra-core";
+import { RecordsIterator } from "ra-core";
 import { ReferenceManyToManyFieldBase } from "@react-admin/ra-core-ee";
 
 export const BandShow = () => (
@@ -82,20 +88,31 @@ export const BandShow = () => (
       using="band_id,venue_id"
       label="Performances"
     >
-      <WithListContext
-        render={({ isPending, data }) =>
-          isPending ? (
-            <div>
-              {data.map((tag) => (
-                <span key={tag.id} label={tag.name} />
-              ))}
-            </div>
-          ) : null
-        }
-      />
+      <div>
+        <RecordsIterator
+          render={(record) => {
+            return <span label={tag.name} />;
+          }}
+        />
+      </div>
     </ReferenceManyToManyFieldBase>
   </Show>
 );
+```
+
+## `error`
+
+To display a custom element when an error occurs while loading the reference, use the `error` prop:
+
+```tsx
+<ReferenceManyToManyFieldBase
+  reference="venues"
+  through="performances"
+  using="band_id,venue_id"
+  error={<MyError />}
+>
+  ...
+</ReferenceManyToManyFieldBase>
 ```
 
 ## `filter`
@@ -110,6 +127,21 @@ You can filter the records of the associative table (e.g. `performances`) using 
   filter={{ date: "2018-08-31" }}
 >
   {/* ... */}
+</ReferenceManyToManyFieldBase>
+```
+
+## `loading`
+
+To display a custom element while loading the reference, use the `loading` prop:
+
+```tsx
+<ReferenceManyToManyFieldBase
+  reference="venues"
+  through="performances"
+  using="band_id,venue_id"
+  loading={<Skeleton />}
+>
+  ...
 </ReferenceManyToManyFieldBase>
 ```
 
@@ -186,7 +218,7 @@ By default, `<ReferenceManyToManyFieldBase>` orders the possible values by `id` 
   reference="venues"
   through="performances"
   using="band_id,venue_id"
-  sort={{ field: "id", order: "DESC" }}
+  sort={{ field: "date", order: "DESC" }}
 >
   {/* ... */}
 </ReferenceManyToManyFieldBase>
@@ -219,7 +251,7 @@ You must specify the associative table name using the `through` prop.
 
 ## `using`
 
-You can specify the columns to use in the associative `using` the using prop.
+You can specify the columns to use in the associative `using` the using prop. When not provided, the `using` prop defaults to `'[resource]_id,[reference]_id'`.
 
 ```tsx
 <ReferenceManyToManyFieldBase

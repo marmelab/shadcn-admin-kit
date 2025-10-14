@@ -86,7 +86,9 @@ const subscribe = useSubscribeCallback("backgroundJobs/recompute", (event) => {
 subscribe();
 ```
 
-**Tip**: Memoize the callback using `useCallback` to avoid unnecessary subscriptions/unsubscriptions.
+:::tip
+Memoize the callback using `useCallback` to avoid unnecessary subscriptions/unsubscriptions.
+:::
 
 ```tsx
 const callback = useCallback(
@@ -125,7 +127,7 @@ You can use the `once` option to subscribe to a topic only once, and then unsubs
 
 For instance, the following component subscribes to the `backgroundJobs/recompute` topic on click, displays a notification when the background job is complete, then unsubscribes:
 
-```jsx
+```tsx
 import { useDataProvider, useNotify } from "ra-core";
 import { useSubscribeCallback } from "@react-admin/ra-core-ee";
 import { Button } from "@/components/ui/button";

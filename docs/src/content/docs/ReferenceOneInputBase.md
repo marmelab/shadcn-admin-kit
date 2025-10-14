@@ -4,6 +4,8 @@ title: "ReferenceOneInput"
 
 Use `<ReferenceOneInputBase>` in an `<Edit>` or `<CreateBase>` view to edit one-to-one relationships, e.g. to edit the details of a book in the book edition view.
 
+This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
+
 ## Usage
 
 Here is an example one-to-one relationship: a `book` has at most one `book_details` row associated to it.
@@ -51,7 +53,9 @@ const BookEdit = () => (
 
 `<ReferenceOneInputBase>` persists the changes in the referenced record (book details in the above example) after persisting the changes in the main resource (book in the above example). This means that you can also use `<ReferenceOneInputBase>` in Create views.
 
-**Tip**: `<ReferenceOneInputBase>` does not support optimistic nor undoable mutations. You will need to set `mutationMode="pessimistic"` in the parent Edition component, as in the example above.
+:::tip
+`<ReferenceOneInputBase>` does not support optimistic nor undoable mutations. You will need to set `mutationMode="pessimistic"` in the parent Edition component, as in the example above.
+:::
 
 ## Props
 
@@ -74,7 +78,7 @@ const BookEdit = () => (
 
 `<ReferenceOneInputBase>` expects input components as its children, which will allow to edit the related record.
 
-```jsx
+```tsx
 <ReferenceOneInputBase reference="book_details" target="book_id">
   <NumberInput source="year" />
   <TextInput source="author" />
@@ -88,7 +92,7 @@ const BookEdit = () => (
 
 `<ReferenceOneInputBase>` allows to specify a default value for the related record. This is useful when the current record does not yet have a related record, and you want to pre-fill the related record with some default values.
 
-```jsx
+```tsx
 <ReferenceOneInputBase
   reference="book_details"
   target="book_id"
@@ -98,25 +102,11 @@ const BookEdit = () => (
 </ReferenceOneInputBase>
 ```
 
-## `filter`
-
-`<ReferenceOneInputBase>` allows to specify filters to use when fetching the related record. This can be useful when you need additional filters to select the related record.
-
-```jsx
-<ReferenceOneInputBase
-  reference="book_details"
-  target="book_id"
-  filter={{ reviewed: true }}
->
-  ...
-</ReferenceOneInputBase>
-```
-
 ## `error`
 
 To display a custom element when an error occurs while loading the reference, use the `error` prop:
 
-```jsx
+```tsx
 <ReferenceOneInputBase
   reference="book_details"
   target="book_id"
@@ -126,15 +116,29 @@ To display a custom element when an error occurs while loading the reference, us
 </ReferenceOneInputBase>
 ```
 
+## `filter`
+
+`<ReferenceOneInputBase>` allows to specify filters to use when fetching the related record. This can be useful when you need additional filters to select the related record.
+
+```tsx
+<ReferenceOneInputBase
+  reference="book_details"
+  target="book_id"
+  filter={{ reviewed: true }}
+>
+  ...
+</ReferenceOneInputBase>
+```
+
 ## `loading`
 
 To display a custom element while loading the reference, use the `loading` prop:
 
-```jsx
+```tsx
 <ReferenceOneInputBase
   reference="book_details"
   target="book_id"
-  error={<MySkeleton />}
+  loading={<Skeleton />}
 >
   ...
 </ReferenceOneInputBase>
@@ -162,7 +166,7 @@ The name of the resource to fetch for the related records.
 
 For instance, if you want to display the `book_details` of a given `book`, the `reference` name should be `book_details`:
 
-```jsx
+```tsx
 <ReferenceOneInputBase reference="book_details" target="book_id">
   ...
 </ReferenceOneInputBase>
@@ -172,7 +176,7 @@ For instance, if you want to display the `book_details` of a given `book`, the `
 
 `<ReferenceOneInputBase>` accepts a `render` function instead of `children` if you want more control over what to display in all possible states.
 
-```jsx
+```tsx
 <ReferenceOneInputBase
   reference="book_details"
   target="book_id"
@@ -196,7 +200,7 @@ For instance, if you want to display the `book_details` of a given `book`, the `
 
 `<ReferenceOneInputBase>` allows to specify the sort options used when fetching the related record. This can be useful when the relation table does not have an `id` column.
 
-```jsx
+```tsx
 <ReferenceOneInputBase
   reference="book_details"
   target="book_id"
@@ -210,7 +214,7 @@ For instance, if you want to display the `book_details` of a given `book`, the `
 
 By default, `<ReferenceManyInputBase>` fetches the `reference` for which the `target` field equals the current record `id`. You can customize the field that carries the identity of the current record by setting the `source` prop.
 
-```jsx
+```tsx
 <ReferenceOneInputBase reference="book_details" target="book_id" source="_id">
   ...
 </ReferenceOneInputBase>
@@ -220,7 +224,7 @@ By default, `<ReferenceManyInputBase>` fetches the `reference` for which the `ta
 
 Name of the field carrying the relationship on the referenced resource. For instance, if each `book` is linked to a record in `book_details`, and each `book_details` exposes a `book_id` field linking to the `book`, the `target` would be `book_id`.
 
-```jsx
+```tsx
 <ReferenceOneInputBase reference="book_details" target="book_id">
   ...
 </ReferenceOneInputBase>
@@ -255,7 +259,7 @@ You can leverage `react-hook-form`'s [`setValue`](https://react-hook-form.com/do
 
 However you need to know the `name` under which the inputs were registered in the form, and these names are dynamically generated by `<ReferenceOneInputBase>`.
 
-To get the name of a specific input, you can leverage the `SourceContext` created by react-admin, which can be accessed using the `useSourceContext` hook.
+To get the name of a specific input, you can leverage the `SourceContext` created by Shadcn Admin Kit, which can be accessed using the `useSourceContext` hook.
 
 This context provides a `getSource` function that returns the effective `source` for an input in the current context, which you can use as input name for `setValue`.
 
