@@ -47,7 +47,7 @@ Ok to proceed? (y) y
 
 Set the `verbatimModuleSyntax` option to `false` in your `tsconfig.json` file to avoid an [issue](https://github.com/shadcn-ui/ui/issues/6618) with the latest version of TypeScript.
 
-```json
+```json title="tsconfig.json" ins={4}
 {
   "compilerOptions": {
     // ...
@@ -66,8 +66,7 @@ This will add some components to the `components/admin` directory, and utilities
 
 You're ready to bootstrap your app. Create an `app/admin/AdminApp.tsx` component file that will contain the admin app.
 
-```tsx
-// app/admin/AdminApp.tsx
+```tsx title="app/admin/AdminApp.tsx"
 "use client";
 
 import { Admin } from "@/components/admin";
@@ -82,8 +81,7 @@ export default AdminApp;
 
 Expose that admin app at the `/admin` URL by adding a `app/admin/page.tsx` file. You'll have to dynamically import the admin component and render it with SSR disabled (since it's a SPA).
 
-```tsx
-// app/admin/page.tsx
+```tsx title="app/admin/page.tsx"
 "use client";
 
 import dynamic from "next/dynamic";
@@ -129,7 +127,7 @@ Replace everything in `src/index.css` with the following:
 
 Edit `tsconfig.json` file. Add the `baseUrl` and `paths` properties to the `compilerOptions` section of the `tsconfig.json` and `tsconfig.app.json` files:
 
-```diff
+```json title="tsconfig.json" ins={11-16}
 {
   "files": [],
   "references": [
@@ -140,33 +138,33 @@ Edit `tsconfig.json` file. Add the `baseUrl` and `paths` properties to the `comp
       "path": "./tsconfig.node.json"
     }
   ],
-+ "compilerOptions": {
-+   "baseUrl": ".",
-+   "paths": {
-+     "@/*": ["./src/*"]
-+   }
-+ }
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
 }
 ```
 
 Add the following code to the `tsconfig.app.json` file to resolve paths, for your IDE:
 
-```diff
+```json title="tsconfig.app.json" ins={4-9}
 {
   "compilerOptions": {
     // ...
-+   "baseUrl": ".",
-+   "paths": {
-+     "@/*": [
-+       "./src/*"
-+     ]
-+   }
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
     // ...
   }
 }
 ```
 
-Install node types and add the following code to the `vite.config.ts` so your app can resolve paths without error:
+Install node types:
 
 ```shell
 npm install -D @types/node
@@ -174,20 +172,22 @@ npm install -D @types/node
 yarn add -D @types/node
 ```
 
-```diff
-+import path from "path"
-+import tailwindcss from "@tailwindcss/vite"
+ Add the following code to the `vite.config.ts` so your app can resolve paths without error:
+
+```tsx title="vite.config.ts" ins={1-2,8-13}
+import path from "path"
+import tailwindcss from "@tailwindcss/vite"
 import react from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
  
 // https://vite.dev/config/
 export default defineConfig({
-+ plugins: [react(), tailwindcss()],
-+ resolve: {
-+   alias: {
-+     "@": path.resolve(__dirname, "./src"),
-+   },
-+ },
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
 })
 ```
 
@@ -209,18 +209,18 @@ npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-b
 
 **Warning**: you need to set the `verbatimModuleSyntax` option to `false` in your `tsconfig.app.json` file to avoid an [issue](https://github.com/shadcn-ui/ui/issues/6618) with the latest version of TypeScript.
 
-```diff
+```json title="tsconfig.app.json" ins={4}
 {
   "compilerOptions": {
     // ...
-+   "verbatimModuleSyntax": false
+     "verbatimModuleSyntax": false
   }
 }
 ```
 
 The main entry point of your new application is `main.tsx`, which renders the `App` component into the DOM.
 
-```tsx
+```tsx title="main.tsx"
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
@@ -235,7 +235,7 @@ createRoot(document.getElementById("root")!).render(
 
 The `<App>` component currently renders a default Vite application. You can replace all its content by the following to serve your new `shadcn-admin-kit` application.
 
-```tsx
+```tsx title="App.tsx"
 import { Admin } from "@/components/admin";
 
 function App() {
