@@ -90,3 +90,23 @@ That's enough to display the post show view above.
 | `title`          | Optional | `string | ReactElement | false` |   | The title to display in the App Bar
 
 `*` You must provide either `children` or `render`.
+
+## Live Updates
+
+If you want to subscribe to live updates the record (topic: `resource/[resource]/[id]`), add [the `<RecordLiveUpdate>` component](./RecordLiveUpdate.md) in your `<Show>` children.
+
+This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
+
+```tsx {2,7}
+import { TextField } from "@/components/admin/data-table";
+import { RecordLiveUpdate } from "@/components/admin/record-live-update";
+
+const PostList = () => (
+    <Show>
+        ...
+       <RecordLiveUpdate />
+    </Show>
+);
+```
+
+The show view will automatically update when the record is updated.
