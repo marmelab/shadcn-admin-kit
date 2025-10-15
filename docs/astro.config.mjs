@@ -143,17 +143,27 @@ export default defineConfig({
           ],
         },
         {
-          label: "Realtime",
+          label: "Real-time",
           items: [
+            enterpriseEntry("RealtimeFeatures", "Features"),
+            enterpriseEntry("RealtimeDataProviders", "Data Providers"),
             enterpriseEntry("ListLiveUpdate"),
             enterpriseEntry("RecordLiveUpdate"),
-            enterpriseEntry("useGetListLive"),
-            enterpriseEntry("useGetOneLive"),
-            enterpriseEntry("useLockOnCall"),
-            enterpriseEntry("useLockOnMount"),
-            enterpriseEntry("usePublish"),
-            enterpriseEntry("useSubscribe"),
-            enterpriseEntry("useSubscribeCallback"),
+            raCoreEntry("LockStatusBase"),
+            raCoreEntry("useLock"),
+            raCoreEntry("useUnlock"),
+            raCoreEntry("useGetLock"),
+            raCoreEntry("useGetLockLive"),
+            raCoreEntry("useGetLocks"),
+            raCoreEntry("useGetLocksLive"),
+            raCoreEntry("useLockCallbacks"),
+            raCoreEntry("useLockOnCall"),
+            raCoreEntry("useLockOnMount"),
+            raCoreEntry("usePublish"),
+            raCoreEntry("useSubscribe"),
+            raCoreEntry("useSubscribeCallback"),
+            raCoreEntry("useGetListLive"),
+            raCoreEntry("useGetOneLive"),
           ],
         },
         {
@@ -195,13 +205,30 @@ export default defineConfig({
 
 /**
  * @param {string} name
+ * @param {string | undefined} label
  * @returns {any}
  */
-function enterpriseEntry(name) {
+function enterpriseEntry(name, label = undefined) {
   return {
     link: `${name.toLowerCase()}/`,
-    label: name,
+    label: label ?? name,
     attrs: { class: "enterprise" },
+    badge: {
+      text: "React Admin Enterprise",
+      variant: "default",
+    },
+  };
+}
+
+/**
+ * @param {string} name
+ * @returns {any}
+ */
+function raCoreEntry(name) {
+  return {
+    link: `https://marmelab.com/ra-core/${name.toLowerCase()}/`,
+    label: name,
+    attrs: { class: "enterprise", target: "_blank", rel: "noreferrer" },
     badge: {
       text: "React Admin Enterprise",
       variant: "default",
