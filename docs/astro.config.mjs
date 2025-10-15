@@ -149,6 +149,7 @@ export default defineConfig({
             enterpriseEntry("RealtimeDataProviders", "Data Providers"),
             enterpriseEntry("ListLiveUpdate"),
             enterpriseEntry("RecordLiveUpdate"),
+            enterpriseEntry("EditLiveUpdate"),
             raCoreEntry("LockStatusBase"),
             raCoreEntry("useLock"),
             raCoreEntry("useUnlock"),

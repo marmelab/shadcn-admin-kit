@@ -58,16 +58,16 @@ Components using `<Show>` can be used as the `show` prop of a `<Resource>` compo
 
 ```jsx
 // in src/App.jsx
-import { Admin } from '@/copmponents/admin';
-import { Resource } from 'ra-core';
+import { Admin } from "@/copmponents/admin";
+import { Resource } from "ra-core";
 
-import { dataProvider } from './dataProvider';
-import { ProductShow } from './products';
+import { dataProvider } from "./dataProvider";
+import { ProductShow } from "./products";
 
 const App = () => (
-    <Admin dataProvider={dataProvider}>
-        <Resource name="products" show={ProductShow} />
-    </Admin>
+  <Admin dataProvider={dataProvider}>
+    <Resource name="products" show={ProductShow} />
+  </Admin>
 );
 ```
 
@@ -75,19 +75,19 @@ That's enough to display the post show view above.
 
 ## Props
 
-| Prop             | Required | Type              | Default | Description
-|------------------|----------|-------------------|---------|--------------------------------------------------------
-| `children`       | Optional&nbsp;* | `ReactNode`       |         | The components rendering the record fields
-| `render`       | Optional&nbsp;* | `(showContext) => ReactNode`       |         | A function rendering the record fields, receive the show context as its argument
-| `actions`        | Optional | `ReactElement`    |         | The actions to display in the toolbar
-| `className`      | Optional | `string`          |         | passed to the root component
-| `disableAuthentication` | Optional | `boolean` |         | Set to `true` to disable the authentication check
-| `disableBreadcrumb`  | Optional  | `boolean` | `false` | Set to `true` to define a custom breadcrumb for the page, instead of the default one
-| `emptyWhileLoading` | Optional | `boolean`     |         | Set to `true` to return `null` while the show is loading
-| `id`             | Optional | `string | number` |         | The record id. If not provided, it will be deduced from the URL
-| `queryOptions`   | Optional | `object`          |         | The options to pass to the `useQuery` hook
-| `resource`       | Optional | `string`          |         | The resource name, e.g. `posts`
-| `title`          | Optional | `string | ReactElement | false` |   | The title to display in the App Bar
+| Prop                    | Required         | Type                         | Default      | Description                                                                          |
+| ----------------------- | ---------------- | ---------------------------- | ------------ | ------------------------------------------------------------------------------------ | --------------------------------------------------------------- | ----------------------------------- |
+| `children`              | Optional&nbsp;\* | `ReactNode`                  |              | The components rendering the record fields                                           |
+| `render`                | Optional&nbsp;\* | `(showContext) => ReactNode` |              | A function rendering the record fields, receive the show context as its argument     |
+| `actions`               | Optional         | `ReactElement`               |              | The actions to display in the toolbar                                                |
+| `className`             | Optional         | `string`                     |              | passed to the root component                                                         |
+| `disableAuthentication` | Optional         | `boolean`                    |              | Set to `true` to disable the authentication check                                    |
+| `disableBreadcrumb`     | Optional         | `boolean`                    | `false`      | Set to `true` to define a custom breadcrumb for the page, instead of the default one |
+| `emptyWhileLoading`     | Optional         | `boolean`                    |              | Set to `true` to return `null` while the show is loading                             |
+| `id`                    | Optional         | `string                      | number`      |                                                                                      | The record id. If not provided, it will be deduced from the URL |
+| `queryOptions`          | Optional         | `object`                     |              | The options to pass to the `useQuery` hook                                           |
+| `resource`              | Optional         | `string`                     |              | The resource name, e.g. `posts`                                                      |
+| `title`                 | Optional         | `string                      | ReactElement | false`                                                                               |                                                                 | The title to display in the App Bar |
 
 `*` You must provide either `children` or `render`.
 
@@ -98,14 +98,14 @@ If you want to subscribe to live updates the record (topic: `resource/[resource]
 This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
 
 ```tsx {2,7}
-import { TextField } from "@/components/admin/data-table";
+import { Show } from "@/components/admin/show";
 import { RecordLiveUpdate } from "@/components/admin/record-live-update";
 
 const PostList = () => (
-    <Show>
-        ...
-       <RecordLiveUpdate />
-    </Show>
+  <Show>
+    ...
+    <RecordLiveUpdate />
+  </Show>
 );
 ```
 
