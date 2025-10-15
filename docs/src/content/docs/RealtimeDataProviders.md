@@ -64,7 +64,9 @@ const SaleList = () => (
 );
 ```
 
-**Tip:** Realtime features are not enabled in Supabase by default, you need to enable them. This can be done either from the [Replication](https://app.supabase.com/project/_/database/replication) section of your Supabase Dashboard, or by running the following SQL query with the [SQL Editor](https://app.supabase.com/project/_/sql):
+:::tip
+Realtime features are not enabled in Supabase by default, you need to enable them. This can be done either from the [Replication](https://app.supabase.com/project/_/database/replication) section of your Supabase Dashboard, or by running the following SQL query with the [SQL Editor](https://app.supabase.com/project/_/sql):
+:::
 
 ```sql
 begin;

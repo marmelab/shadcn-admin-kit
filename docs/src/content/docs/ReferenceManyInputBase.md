@@ -8,6 +8,8 @@ Use `<ReferenceManyInputBase>` in an edition or creation view to edit one-to-man
 
 This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
 
+![](./images/reference-many-input-base.png)
+
 ## Usage
 
 An example one-to-many relationship can be found in ecommerce systems: a product has many variants.

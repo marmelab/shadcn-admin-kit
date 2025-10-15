@@ -10,6 +10,8 @@ The `<ReferenceManyToManyInputBase>` cannot currently display multiple records w
 
 This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
 
+![](./images/reference-many-to-many-input-base.png)
+
 ## Usage
 
 Let's imagine that you're writing an app managing concerts for artists. The data model features a many-to-many relationship between the `bands` and `venues` tables through a `performances` associative table.

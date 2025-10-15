@@ -62,8 +62,8 @@ const PostList = () => (
 
 This feature leverages the following components and hooks:
 
-- [`<ListLiveUpdate>`](#ListLiveUpdate)
-- [`<RecordLiveUpdate>`](#RecordLiveUpdate)
+- [`<ListLiveUpdate>`](./ListLiveUpdate.md)
+- [`<RecordLiveUpdate>`](./RecordLiveUpdate.md)
 - <a href="https://marmelab.com/ra-core/usegetlistlive/" target="_blank" rel="noreferrer"><code>useGetListLive</code></a>
 - <a href="https://marmelab.com/ra-core/usegetonelive/" target="_blank" rel="noreferrer"><code>useGetOneLive</code></a>
 
