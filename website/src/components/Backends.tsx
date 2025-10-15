@@ -71,7 +71,7 @@ export function Backends() {
                 </div>
                 <Button asChild className="mt-6 lg:my-6">
                   <a
-                    href="https://marmelab.com/shadcn-admin-kit/docs/5-dataproviders"
+                    href="https://marmelab.com/shadcn-admin-kit/docs/dataproviders/"
                     target="_blank"
                   >
                     Learn More
