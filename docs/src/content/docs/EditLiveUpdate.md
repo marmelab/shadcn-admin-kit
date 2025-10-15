@@ -6,6 +6,8 @@ title: EditLiveUpdate
 
 This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
 
+![](./images/edit-live-update.png)
+
 ## Creating the Component
 
 ```tsx
