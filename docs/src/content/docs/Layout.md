@@ -12,18 +12,17 @@ Application shell including sidebar, header (breadcrumb portal, locale & theme t
 
 - The [AppSidebar](./AppSidebar.md) component for navigation
 - A header with a [breadcrumb](./Breadcrumb.md) portal, [locale](./LocalesMenuButton.md) and theme toggles, refresh button, and user menu
-- An error boundary for error handling 
-- A Suspense boundary for loading states
+- An error boundary for error handling (renders the [`<Error>`](./Error.md) component by default)
+- A Suspense boundary for loading states (renders the [`<Loading>`](./Loading.md) component by default)
 - A notification area for displaying toasts
 
 To customize all these elements, edit the `@/components/admin/layout.tsx` file.
 
-Here is a short version of the default layout component:
+Here is a short version of the default layout component.
 
 ```tsx title="@/components/admin/layout.tsx"
-import { Suspense, useState, type ErrorInfo } from "react";
+import { Suspense, useState, type ErrorInfo, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import { CoreLayoutProps } from "ra-core";
 import { ErrorBoundary } from "react-error-boundary";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { UserMenu } from "@/components/admin/user-menu";
@@ -35,7 +34,7 @@ import { LocalesMenuButton } from "@/components/admin/locales-menu-button";
 import { Error } from "@/components/admin/error";
 import { Loading } from "@/components/admin/loading";
 
-export const Layout = (props: CoreLayoutProps) => {
+export const Layout = (props: { children: ReactNode }) => {
   const [errorInfo, setErrorInfo] = useState<ErrorInfo | undefined>(undefined);
   const handleError = (_: Error, info: ErrorInfo) => {
     setErrorInfo(info);
@@ -73,6 +72,12 @@ export const Layout = (props: CoreLayoutProps) => {
 };
 ```
 
+## Props
+
+When rendering the `<Layout>` component, Shadcn Admin Kit passes it a single prop, `children`, which is the main content of the page (the current resource view, depending on the current route).
+
+## Building a Custom Layout
+
 Instead of customizing the Layout, you can also provide your own layout component by passing it to the `<Admin>` component:
 
 ```tsx
@@ -86,15 +91,22 @@ const App = () => (
 );
 ```
 
-A custom layout can be of any shape, but must render its children (the main content of the page). For example, here is a minimal layout:
+A custom layout can be of any shape, but must render its `children` (the main content of the page). For example, here is a minimal layout:
 
 ```tsx
-import { CoreLayoutProps } from "ra-core";
+import type { ReactNode } from "react";
+import { Notification } from "@/components/admin/notification";
 
-export const MyLayout = (props: CoreLayoutProps) => (
+export const MyLayout = (props: { children: ReactNode }) => (
   <div>
     <header>My custom header</header>
     <main>{props.children}</main>
     <footer>My custom footer</footer>
+    <Notification />
   </div>
 );
+```
+
+:::tip
+Don't forget to include the `<Notification>` component in your custom layout, so that toasts are displayed. It is also necessary for optimistic updates to work correctly.
+:::

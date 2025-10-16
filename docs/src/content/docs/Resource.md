@@ -69,3 +69,29 @@ Tip: Which API endpoint does a resource rely on? The `<Resource>` component does
 
 To learn more about these props, refer to [the `<Resource>` component documentation](https://marmelab.com/ra-core/resource/) on the ra-core website.
 
+## Lazy Loading
+
+If you need to speed up the initial loading of your application, you may want to enable code splitting using [`React.lazy()`](https://react.dev/reference/react/lazy). The default Shadcn Admin Kit layout uses [`Suspense`](https://react.dev/reference/react/Suspense), so there is no special setup required to use lazy loaded components in `<Resource>`.
+
+```tsx
+// in src/App.js
+import * as React from 'react';
+import { Admin } from "@/components/admin";
+import { Resource } from "ra-core";
+
+import { dataProvider } from './dataProvider';
+
+const OrderList = React.lazy(() => import('./orders/OrderList'));
+const OrderEdit = React.lazy(() => import('./orders/OrderEdit'));
+
+const App = () => (
+    <Admin dataProvider={dataProvider}>
+        <Resource name="orders" list={OrderList} edit={OrderEdit} />
+        ...
+    </Admin>
+);
+```
+
+When users navigate to the `/orders` route, Shadcn Admin Kit will display the [`<Loading>`](./Loading.md) component while the `OrderList` component is being loaded.
+
+![Loading](./images/loading.png)
