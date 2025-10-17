@@ -854,6 +854,26 @@ const PostEdit = () => (
 
 Users without access will be redirected to the [Access Denied page](./Admin.md).
 
-:::note*
+:::note
 Access control is disabled when you use the `disableAuthentication` prop.
 :::
+
+## Live Updates
+
+If you want to subscribe to live updates the record (topic: `resource/[resource]/[id]`), add [the `<EditLiveUpdate>` component](./EditLiveUpdate.md) in your `<Edit>` children.
+
+This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
+
+```tsx {2,7}
+import { Edit } from '@/components/admin/edit';
+import { EditLiveUpdate } from '@/components/admin/edit-live-update';
+
+const PostList = () => (
+    <Edit>
+        ...
+        <EditLiveUpdate />
+    </Edit>
+);
+```
+
+The edit view will warn the user when the record is updated.

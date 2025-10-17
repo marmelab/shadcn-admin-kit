@@ -12,7 +12,7 @@ The `<List>` component is the root component for list pages. It fetches a list o
 
 Here is a minimal example to display a list of users with a [`<DataTable>`](./DataTable.md):
 
-```jsx
+```tsx
 // in src/users.jsx
 import { DataTable, List } from "@/components/admin";
 
@@ -128,7 +128,7 @@ By default the page header shows a toolbar with 2 buttons:
 
 Provide an `actions` prop to completely replace that area:
 
-```jsx
+```tsx
 import { List, CreateButton, ExportButton, ColumnsButton } from 'shadcn-admin-kit';
 
 const MyActions = () => (
@@ -176,7 +176,7 @@ export const en = {
 
 You can also customize this title by specifying a custom `title` prop:
 
-```jsx
+```tsx
 export const PostList = () => (
     <List title="List of posts">
         ...
@@ -194,7 +194,7 @@ By default, `<List>` displays a set of pagination controls at the bottom of the 
 
 The `pagination` prop allows to replace the default pagination controls by your own.
 
-```jsx
+```tsx
 // in src/MyPagination.js
 import { TablePagination, List } from 'shadcn-admin-kit';
 
@@ -209,7 +209,7 @@ export const PostList = () => (
 
 By default, the list paginates results by groups of 10. You can override this setting by specifying the `perPage` prop:
 
-```jsx
+```tsx
 // in src/posts.js
 export const PostList = () => (
     <List perPage={25}>
@@ -240,7 +240,7 @@ export const PostList = () => (
 
 Pass an object literal as the `sort` prop to determine the default `field` and `order` used for sorting:
 
-```jsx
+```tsx
 export const PostList = () => (
     <List sort={{ field: 'published_at', order: 'DESC' }}>
         ...
@@ -254,7 +254,7 @@ export const PostList = () => (
 
 You can choose to always filter the list, without letting the user disable this filter - for instance to display only published posts. Write the filter to be passed to the data provider in the `filter` props:
 
-```jsx
+```tsx
 // in src/posts.js
 export const PostList = () => (
     <List filter={{ is_published: true }}>
@@ -274,7 +274,7 @@ The actual filter parameter sent to the data provider is the result of the combi
 
 You can add an array of filter Inputs to the List using the `filters` prop:
 
-```jsx
+```tsx
 const postFilters = [
     <SearchInput source="q" alwaysOn />,
     <TextInput label="Title" source="title" defaultValue="Hello, World!" />,
@@ -297,7 +297,7 @@ Filters will render as disabled inputs or menu items (depending on filter contex
 
 Filter Inputs are regular inputs. `<List>` hides them all by default, except those that have the `alwaysOn` prop. Note that inputs with `alwaysOn` don't accept `defaultValue`. You have to use the `filterDefaultValues` for those.
 
-```jsx
+```tsx
 // in src/posts.js
 const postFilters = [
     <TextInput label="Search" source="q" alwaysOn />,
@@ -341,7 +341,7 @@ For CSV conversion, you can import [jsonexport](https://github.com/kauegimenes/j
 
 Here is an example for a Posts exporter, omitting, adding, and reordering fields:
 
-```jsx
+```tsx
 // in PostList.js
 import { List } from 'shadcn-admin-kit';
 import { downloadCSV } ffrom 'ra-core';
@@ -427,7 +427,7 @@ You may also remove the `<ExportButton>` by passing `false` to the `exporter` pr
 
 This can be useful e.g. to pass [a custom `meta`](https://marmelab.com/ra-core/actions/#meta-parameter) to the `dataProvider.getList()` call.
 
-```jsx
+```tsx
 import { List } from 'shadcn-admin-kit';
 
 const PostList = () => (
@@ -441,7 +441,7 @@ With this option, shadcn-admin-kit will call `dataProvider.getList()` on mount w
 
 You can also use the `queryOptions` prop to override the default error side effect. By default, when the `dataProvider.getList()` call fails, shadcn-admin-kit shows an error notification. Here is how to show a custom notification instead:
 
-```jsx
+```tsx
 import { useNotify, useRedirect, List } from 'shadcn-admin-kit';
 
 const PostList = () => {
@@ -561,7 +561,7 @@ If you want to display multiple lists of the same resource and keep distinct sto
 
 In the example below, both lists `NewerBooks` and `OlderBooks` use the same resource ('books'), but their list parameters are stored separately (under the store keys `'newerBooks'` and `'olderBooks'` respectively). This allows to use both components in the same app, each having its own state (filters, sorting and pagination).
 
-```jsx
+```tsx
 import {
     Admin,
     CustomRoutes,
@@ -614,15 +614,19 @@ const Admin = () => {
 };
 ```
 
-**Tip:** The `storeKey` is actually passed to the underlying `useListController` hook, which you can use directly for more complex scenarios. See the [`useListController` doc](https://marmelab.com/ra-core/uselistcontroller/#storekey) for more info.
+:::tip
+The `storeKey` is actually passed to the underlying `useListController` hook, which you can use directly for more complex scenarios. See the [`useListController` doc](https://marmelab.com/ra-core/uselistcontroller/#storekey) for more info.
+:::
 
-**Note:** *Selection state* will remain linked to a resource-based key regardless of the specified `storeKey` string. This is a design choice because if row selection is not tied to a resource, then when a user deletes a record it may remain selected without any ability to unselect it. If you want to allow custom `storeKey`'s for managing selection state, you will have to implement your own `useListController` hook and pass a custom key to the `useRecordSelection` hook. You will then need to implement your own `DeleteButton` and `BulkDeleteButton` to manually unselect rows when deleting records. You can still opt out of all store interactions including selection if you set it to `false`.
+::note
+*Selection state* will remain linked to a resource-based key regardless of the specified `storeKey` string. This is a design choice because if row selection is not tied to a resource, then when a user deletes a record it may remain selected without any ability to unselect it. If you want to allow custom `storeKey`'s for managing selection state, you will have to implement your own `useListController` hook and pass a custom key to the `useRecordSelection` hook. You will then need to implement your own `DeleteButton` and `BulkDeleteButton` to manually unselect rows when deleting records. You can still opt out of all store interactions including selection if you set it to `false`.
+:::
 
 ## Scaffolding a List page
 
 You can use `<ListGuesser>` to quickly bootstrap a List view on top of an existing API, without adding the fields one by one.
 
-```jsx
+```tsx
 // in src/App.js
 import { Admin, ListGuesser } from 'shadcn-admin-kit';
 import { Resource } from 'ra-core';
@@ -639,6 +643,26 @@ const App = () => (
 Just like `<List>`, `<ListGuesser>` fetches the data. It then analyzes the response, and guesses the fields it should use to display a basic `<DataTable>` with the data. It also dumps the components it has guessed in the console, so you can copy it into your own code.
 
 ![Guessed List](./images/posts-list-guesser.png)
+
+## Live Updates
+
+If you want to subscribe to live updates on the list of records (topic: `resource/[resource]`), add [the `<ListLiveUpdate>` component](./ListLiveUpdate.md) in your `<List>` children.
+
+This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
+
+```tsx {2,7}
+import { List } from 'shadcn-admin-kit';
+import { ListLiveUpdate } from '@react-admin/ra-core-ee';
+
+const PostList = () => (
+    <List>
+        ...
+       <ListLiveUpdate />
+    </List>
+);
+```
+
+The list will automatically update when a new record is created, or an existing record is updated or deleted.
 
 ## Rendering An Empty List
 
@@ -662,7 +686,7 @@ const ProductList = () => (
 
 In that case, use the [`resource`](#resource), [`sort`](#sort), [`filter`](#filter-permanent-filter), and [`perPage`](#perpage) props to set the list parameters.
 
-```jsx
+```tsx
 import { List, DataTable, DateField } from 'shadcn-admin-kit';
 
 const Dashboard = () => (
@@ -710,7 +734,7 @@ If you need to set the list parameters to render a list of records *related to a
 
 If the `<List>` children allow to *modify* the list state (i.e. if they let users change the sort order, the filters, the selection, or the pagination), then you should also use the [`disableSyncWithLocation`](#disablesyncwithlocation) prop to prevent shadcn-admin-kit from changing the URL. This is the case e.g. if you use a `<DataTable>`, which lets users sort the list by clicking on column headers.
 
-```jsx
+```tsx
 import { List, DataTable, DateField } from 'shadcn-admin-kit';
 
 const Dashboard = () => (
@@ -757,7 +781,7 @@ If you render more than one `<DataTable>` for the same resource in the same page
 
 Besides fetching a list of records from the data provider, `<List>` renders the default list page layout (title, buttons, filters, a `<Card>`, pagination) and its children. If you need a custom list layout, you may prefer [the `<ListBase>` component](https://marmelab.com/ra-core/listbase/), which only renders its children in a [`ListContext`](https://marmelab.com/ra-core/uselistcontext/.html).
 
-```jsx
+```tsx
 import { ListBase, WithListContext } from 'ra-core';
 
 const ProductList = () => (
@@ -796,7 +820,7 @@ The previous example leverages [`<WithListContext>`](https://marmelab.com/ra-cor
 
 If you don't need the `ListContext`, you can use [the `useListController` hook](https://marmelab.com/ra-core/uselistcontroller/), which does the same data fetching as `<ListBase>` but lets you render the content.
 
-```jsx
+```tsx
 import { useListController } from 'shadcn-admin-kit';
 import { Card, CardContent, Container, Stack, Typography } from '@mui/material';
 
@@ -847,10 +871,12 @@ const PostList = () => (
 
 `<List>` will call `authProvider.canAccess()` using the following parameters:
 
-```jsx
+```tsx
 { action: "list", resource: "posts" }
 ```
 
 Users without access will be redirected to the [Access Denied page](https://marmelab.com/ra-core/coreadmin/#accessdenied).
 
-**Note**: Access control is disabled when you use [the `disableAuthentication` prop](#disableauthentication).
+:::note
+Access control is disabled when you use [the `disableAuthentication` prop](#disableauthentication).
+:::
