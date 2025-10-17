@@ -1,5 +1,5 @@
 ---
-title: "ReferenceManyInputBase"
+title: 'ReferenceManyInputBase'
 ---
 
 Use `<ReferenceManyInputBase>` in an edition or creation view to edit one-to-many relationships, e.g. to edit the variants of a product in a product edition view.
@@ -30,37 +30,37 @@ An example one-to-many relationship can be found in ecommerce systems: a product
 You probably want to let users edit variants directly from the product Edition view (instead of having to go to the variant Edition view). `<ReferenceManyInputBase>` allows to do that.
 
 ```tsx
-import { Form, ReferenceInputBase } from "ra-core";
-import { AutocompleteInput } from "@/components/admin/autocomplete-input";
-import { Edit } from "@/components/admin/edit";
-import { NumberInput } from "@/components/admin/number-input";
-import { SelectInput } from "@/components/admin/select-input";
-import { SimpleFormIterator } from "@/components/admin/simple-form-iterator";
-import { TextInput } from "@/components/admin/text-input";
-import { ReferenceManyInputBase } from "@react-admin/ra-core-ee";
+import { Form, ReferenceInputBase } from 'ra-core';
+import { AutocompleteInput } from '@/components/admin/autocomplete-input';
+import { Edit } from '@/components/admin/edit';
+import { NumberInput } from '@/components/admin/number-input';
+import { SelectInput } from '@/components/admin/select-input';
+import { SimpleFormIterator } from '@/components/admin/simple-form-iterator';
+import { TextInput } from '@/components/admin/text-input';
+import { ReferenceManyInputBase } from '@react-admin/ra-core-ee';
 
 const ProductEdit = () => (
-  <Edit mutationMode="optimistic">
-    <Form>
-      <TextInput source="name" />
-      <NumberInput source="price" />
-      <ReferenceInputBase source="category_id" reference="categories">
-        <AutocompleteInput />
-      </ReferenceInputBase>
-      <ReferenceManyInputBase
-        reference="variants"
-        target="product_id"
-        disableReordering
-      >
-        <SimpleFormIterator>
-          <TextInput source="sku" />
-          <SelectInput source="size" choices={sizes} />
-          <SelectInput source="color" choices={colors} />
-          <NumberInput source="stock" defaultValue={0} />
-        </SimpleFormIterator>
-      </ReferenceManyInputBase>
-    </Form>
-  </Edit>
+    <Edit mutationMode="optimistic">
+        <Form>
+            <TextInput source="name" />
+            <NumberInput source="price" />
+            <ReferenceInputBase source="category_id" reference="categories">
+                <AutocompleteInput />
+            </ReferenceInputBase>
+            <ReferenceManyInputBase
+                reference="variants"
+                target="product_id"
+                disableReordering
+            >
+                <SimpleFormIterator>
+                    <TextInput source="sku" />
+                    <SelectInput source="size" choices={sizes} />
+                    <SelectInput source="color" choices={colors} />
+                    <NumberInput source="stock" defaultValue={0} />
+                </SimpleFormIterator>
+            </ReferenceManyInputBase>
+        </Form>
+    </Edit>
 );
 ```
 
@@ -97,12 +97,12 @@ const ProductEdit = () => (
 
 ```tsx
 <ReferenceManyInputBase reference="variants" target="product_id">
-  <SimpleFormIterator>
-    <TextInput source="sku" />
-    <SelectInput source="size" choices={sizes} />
-    <SelectInput source="color" choices={colors} />
-    <NumberInput source="stock" defaultValue={0} />
-  </SimpleFormIterator>
+    <SimpleFormIterator>
+        <TextInput source="sku" />
+        <SelectInput source="size" choices={sizes} />
+        <SelectInput source="color" choices={colors} />
+        <NumberInput source="stock" defaultValue={0} />
+    </SimpleFormIterator>
 </ReferenceManyInputBase>
 ```
 
@@ -116,21 +116,21 @@ You can use the `defaultValue` prop to populate the list of related records in t
 
 ```tsx
 <ReferenceManyInputBase
-  reference="variants"
-  target="product_id"
-  defaultValue={[
-    { sku: "SKU_1", size: "S", color: "black", stock: 0 },
-    { sku: "SKU_2", size: "M", color: "black", stock: 0 },
-    { sku: "SKU_3", size: "L", color: "black", stock: 0 },
-    { sku: "SKU_4", size: "XL", color: "black", stock: 0 },
-  ]}
+    reference="variants"
+    target="product_id"
+    defaultValue={[
+        { sku: 'SKU_1', size: 'S', color: 'black', stock: 0 },
+        { sku: 'SKU_2', size: 'M', color: 'black', stock: 0 },
+        { sku: 'SKU_3', size: 'L', color: 'black', stock: 0 },
+        { sku: 'SKU_4', size: 'XL', color: 'black', stock: 0 },
+    ]}
 >
-  <SimpleFormIterator>
-    <TextInput source="sku" />
-    <SelectInput source="size" choices={sizes} />
-    <SelectInput source="color" choices={colors} />
-    <NumberInput source="stock" defaultValue={0} />
-  </SimpleFormIterator>
+    <SimpleFormIterator>
+        <TextInput source="sku" />
+        <SelectInput source="size" choices={sizes} />
+        <SelectInput source="color" choices={colors} />
+        <NumberInput source="stock" defaultValue={0} />
+    </SimpleFormIterator>
 </ReferenceManyInputBase>
 ```
 
@@ -140,11 +140,11 @@ To display a custom element when an error occurs while loading the reference, us
 
 ```tsx
 <ReferenceManyInputBase
-  reference="variants"
-  target="product_id"
-  error={<MyError />}
+    reference="variants"
+    target="product_id"
+    error={<MyError />}
 >
-  ...
+    ...
 </ReferenceManyInputBase>
 ```
 
@@ -154,11 +154,11 @@ You can filter the query used to populate the current values. Use the `filter` p
 
 ```tsx
 <ReferenceManyInputBase
-  reference="variants"
-  target="product_id"
-  filter={{ is_published: true }}
+    reference="variants"
+    target="product_id"
+    filter={{ is_published: true }}
 >
-  ...
+    ...
 </ReferenceManyInputBase>
 ```
 
@@ -168,11 +168,11 @@ To display a custom element while loading the reference, use the `loading` prop:
 
 ```tsx
 <ReferenceManyInputBase
-  reference="variants"
-  target="product_id"
-  loading={<Skeleton />}
+    reference="variants"
+    target="product_id"
+    loading={<Skeleton />}
 >
-  ...
+    ...
 </ReferenceManyInputBase>
 ```
 
@@ -182,7 +182,7 @@ By default, `<ReferenceManyInputBase>` only fetches the first 25 related records
 
 ```tsx
 <ReferenceManyInputBase reference="variants" target="product_id" perPage={10}>
-  ...
+    ...
 </ReferenceManyInputBase>
 ```
 
@@ -194,16 +194,16 @@ For example, if the variants have a `rank` field, you can set the `rankSource` p
 
 ```tsx
 <ReferenceManyInputBase
-  reference="variants"
-  target="product_id"
-  rankSource="rank"
+    reference="variants"
+    target="product_id"
+    rankSource="rank"
 >
-  <SimpleFormIterator>
-    <TextInput source="sku" />
-    <SelectInput source="size" choices={sizes} />
-    <SelectInput source="color" choices={colors} />
-    <NumberInput source="stock" defaultValue={0} />
-  </SimpleFormIterator>
+    <SimpleFormIterator>
+        <TextInput source="sku" />
+        <SelectInput source="size" choices={sizes} />
+        <SelectInput source="color" choices={colors} />
+        <NumberInput source="stock" defaultValue={0} />
+    </SimpleFormIterator>
 </ReferenceManyInputBase>
 ```
 
@@ -217,7 +217,7 @@ For instance, if you want to display the `variants` of a given `product`, the `r
 
 ```tsx
 <ReferenceManyInputBase reference="books" target="author_id">
-  ...
+    ...
 </ReferenceManyInputBase>
 ```
 
@@ -227,11 +227,11 @@ By default, related records appear ordered by id desc. You can change this order
 
 ```tsx
 <ReferenceManyInputBase
-  reference="variants"
-  target="product_id"
-  sort={{ field: "sku", order: "ASC" }}
+    reference="variants"
+    target="product_id"
+    sort={{ field: 'sku', order: 'ASC' }}
 >
-  ...
+    ...
 </ReferenceManyInputBase>
 ```
 
@@ -241,7 +241,7 @@ By default, `<ReferenceManyInputBase>` fetches the `references` for which the `t
 
 ```tsx
 <ReferenceManyInputBase reference="variants" target="product_id" source="_id">
-  ...
+    ...
 </ReferenceManyInputBase>
 ```
 
@@ -251,7 +251,7 @@ Name of the field carrying the relationship on the referenced resource. For inst
 
 ```tsx
 <ReferenceManyInputBase reference="variants" target="product_id">
-  ...
+    ...
 </ReferenceManyInputBase>
 ```
 
@@ -260,22 +260,22 @@ Name of the field carrying the relationship on the referenced resource. For inst
 Just like regular inputs, you can use the `validate` prop to define custom validation rules for the list of references.
 
 ```tsx
-import { minLength } from "ra-core";
+import { minLength } from 'ra-core';
 
 const ProductEdit = () => (
-  <Edit mutationMode="optimistic">
-    <Form>
-      <TextInput source="name" />
-      <ReferenceInput source="category_id" reference="categories" />
-      <ReferenceManyInputBase
-        reference="variants"
-        target="product_id"
-        validate={[minLength(2, "Please add at least 2 variants")]}
-      >
-        ...
-      </ReferenceManyInputBase>
-    </Form>
-  </Edit>
+    <Edit mutationMode="optimistic">
+        <Form>
+            <TextInput source="name" />
+            <ReferenceInput source="category_id" reference="categories" />
+            <ReferenceManyInputBase
+                reference="variants"
+                target="product_id"
+                validate={[minLength(2, 'Please add at least 2 variants')]}
+            >
+                ...
+            </ReferenceManyInputBase>
+        </Form>
+    </Edit>
 );
 ```
 
@@ -299,39 +299,39 @@ This context provides a `getSource` function that returns the effective `source`
 Here is an example where we leverage `getSource` and `setValue` to prefill the email input when the 'Prefill email' button is clicked:
 
 ```tsx
-import { useSourceContext } from "ra-core";
-import { SimpleFormIterator } from "@/components/admin/simple-form-iterator";
-import { TextInput } from "@/components/admin/text-input";
-import { ReferenceManyInputBase } from "@react-admin/ra-core-ee";
-import { useFormContext } from "react-hook-form";
+import { useSourceContext } from 'ra-core';
+import { SimpleFormIterator } from '@/components/admin/simple-form-iterator';
+import { TextInput } from '@/components/admin/text-input';
+import { ReferenceManyInputBase } from '@react-admin/ra-core-ee';
+import { useFormContext } from 'react-hook-form';
 
 const PrefillEmail = () => {
-  const sourceContext = useSourceContext();
-  const { setValue, getValues } = useFormContext();
+    const sourceContext = useSourceContext();
+    const { setValue, getValues } = useFormContext();
 
-  const onClick = () => {
-    const firstName = getValues(sourceContext.getSource("first_name"));
-    const lastName = getValues(sourceContext.getSource("last_name"));
-    const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@school.com`;
-    setValue(sourceContext.getSource("email"), email);
-  };
+    const onClick = () => {
+        const firstName = getValues(sourceContext.getSource('first_name'));
+        const lastName = getValues(sourceContext.getSource('last_name'));
+        const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@school.com`;
+        setValue(sourceContext.getSource('email'), email);
+    };
 
-  return <button onClick={onClick}>Prefill email</button>;
+    return <button onClick={onClick}>Prefill email</button>;
 };
 
 const StudentsInput = () => (
-  <ReferenceManyInputBase
-    reference="students"
-    target="teacher_id"
-    sort={{ field: "last_name", order: "ASC" }}
-  >
-    <SimpleFormIterator>
-      <TextInput source="first_name" helperText={false} />
-      <TextInput source="last_name" helperText={false} />
-      <TextInput source="email" helperText={false} />
-      <PrefillEmail />
-    </SimpleFormIterator>
-  </ReferenceManyInputBase>
+    <ReferenceManyInputBase
+        reference="students"
+        target="teacher_id"
+        sort={{ field: 'last_name', order: 'ASC' }}
+    >
+        <SimpleFormIterator>
+            <TextInput source="first_name" helperText={false} />
+            <TextInput source="last_name" helperText={false} />
+            <TextInput source="email" helperText={false} />
+            <PrefillEmail />
+        </SimpleFormIterator>
+    </ReferenceManyInputBase>
 );
 ```
 

@@ -1,5 +1,5 @@
 ---
-title: "ReferenceOneInput"
+title: 'ReferenceOneInput'
 ---
 
 Use `<ReferenceOneInputBase>` in an `<Edit>` or `<CreateBase>` view to edit one-to-one relationships, e.g. to edit the details of a book in the book edition view.
@@ -27,25 +27,25 @@ Here is an example one-to-one relationship: a `book` has at most one `book_detai
 You probably want to let users edit the book details directly from the book Edition view (instead of having to go to the book details Edition view). `<ReferenceOneInputBase>` allows to do that.
 
 ```tsx
-import { Edit } from "@/components/admin/edit";
-import { NumberInput } from "@/components/admin/number-input";
-import { TextInput } from "@/components/admin/text-input";
-import { Form } from "ra-core";
-import { ReferenceOneInputBase } from "@react-admin/ra-core-ee";
+import { Edit } from '@/components/admin/edit';
+import { NumberInput } from '@/components/admin/number-input';
+import { TextInput } from '@/components/admin/text-input';
+import { Form } from 'ra-core';
+import { ReferenceOneInputBase } from '@react-admin/ra-core-ee';
 
 const BookEdit = () => (
-  <Edit mutationMode="optimistic">
-    <Form>
-      <TextInput source="title" />
-      <ReferenceOneInputBase reference="book_details" target="book_id">
-        <NumberInput source="year" />
-        <TextInput source="author" />
-        <TextInput source="country" />
-        <TextInput source="genre" />
-        <NumberInput source="pages" />
-      </ReferenceOneInputBase>
-    </Form>
-  </Edit>
+    <Edit mutationMode="optimistic">
+        <Form>
+            <TextInput source="title" />
+            <ReferenceOneInputBase reference="book_details" target="book_id">
+                <NumberInput source="year" />
+                <TextInput source="author" />
+                <TextInput source="country" />
+                <TextInput source="genre" />
+                <NumberInput source="pages" />
+            </ReferenceOneInputBase>
+        </Form>
+    </Edit>
 );
 ```
 
@@ -80,11 +80,11 @@ const BookEdit = () => (
 
 ```tsx
 <ReferenceOneInputBase reference="book_details" target="book_id">
-  <NumberInput source="year" />
-  <TextInput source="author" />
-  <TextInput source="country" />
-  <TextInput source="genre" />
-  <NumberInput source="pages" />
+    <NumberInput source="year" />
+    <TextInput source="author" />
+    <TextInput source="country" />
+    <TextInput source="genre" />
+    <NumberInput source="pages" />
 </ReferenceOneInputBase>
 ```
 
@@ -94,11 +94,11 @@ const BookEdit = () => (
 
 ```tsx
 <ReferenceOneInputBase
-  reference="book_details"
-  target="book_id"
-  defaultValue={{ author: "Gustave Flaubert", year: 1857 }}
+    reference="book_details"
+    target="book_id"
+    defaultValue={{ author: 'Gustave Flaubert', year: 1857 }}
 >
-  ...
+    ...
 </ReferenceOneInputBase>
 ```
 
@@ -108,11 +108,11 @@ To display a custom element when an error occurs while loading the reference, us
 
 ```tsx
 <ReferenceOneInputBase
-  reference="book_details"
-  target="book_id"
-  error={<MyError />}
+    reference="book_details"
+    target="book_id"
+    error={<MyError />}
 >
-  ...
+    ...
 </ReferenceOneInputBase>
 ```
 
@@ -122,11 +122,11 @@ To display a custom element when an error occurs while loading the reference, us
 
 ```tsx
 <ReferenceOneInputBase
-  reference="book_details"
-  target="book_id"
-  filter={{ reviewed: true }}
+    reference="book_details"
+    target="book_id"
+    filter={{ reviewed: true }}
 >
-  ...
+    ...
 </ReferenceOneInputBase>
 ```
 
@@ -136,11 +136,11 @@ To display a custom element while loading the reference, use the `loading` prop:
 
 ```tsx
 <ReferenceOneInputBase
-  reference="book_details"
-  target="book_id"
-  loading={<Skeleton />}
+    reference="book_details"
+    target="book_id"
+    loading={<Skeleton />}
 >
-  ...
+    ...
 </ReferenceOneInputBase>
 ```
 
@@ -152,11 +152,11 @@ For instance, to pass a custom meta:
 
 ```tsx
 <ReferenceOneInputBase
-  reference="book_details"
-  target="book_id"
-  mutationOptions={{ meta: { foo: "bar" } }}
+    reference="book_details"
+    target="book_id"
+    mutationOptions={{ meta: { foo: 'bar' } }}
 >
-  ...
+    ...
 </ReferenceOneInputBase>
 ```
 
@@ -168,7 +168,7 @@ For instance, if you want to display the `book_details` of a given `book`, the `
 
 ```tsx
 <ReferenceOneInputBase reference="book_details" target="book_id">
-  ...
+    ...
 </ReferenceOneInputBase>
 ```
 
@@ -178,21 +178,21 @@ For instance, if you want to display the `book_details` of a given `book`, the `
 
 ```tsx
 <ReferenceOneInputBase
-  reference="book_details"
-  target="book_id"
-  render={({ isPending }) =>
-    isPending ? (
-      <Skeleton />
-    ) : (
-      <>
-        <NumberInput source="year" />
-        <TextInput source="author" />
-        <TextInput source="country" />
-        <TextInput source="genre" />
-        <NumberInput source="pages" />
-      </>
-    )
-  }
+    reference="book_details"
+    target="book_id"
+    render={({ isPending }) =>
+        isPending ? (
+            <Skeleton />
+        ) : (
+            <>
+                <NumberInput source="year" />
+                <TextInput source="author" />
+                <TextInput source="country" />
+                <TextInput source="genre" />
+                <NumberInput source="pages" />
+            </>
+        )
+    }
 />
 ```
 
@@ -202,11 +202,11 @@ For instance, if you want to display the `book_details` of a given `book`, the `
 
 ```tsx
 <ReferenceOneInputBase
-  reference="book_details"
-  target="book_id"
-  sort={{ field: "_id", order: "DESC" }}
+    reference="book_details"
+    target="book_id"
+    sort={{ field: '_id', order: 'DESC' }}
 >
-  ...
+    ...
 </ReferenceOneInputBase>
 ```
 
@@ -216,7 +216,7 @@ By default, `<ReferenceManyInputBase>` fetches the `reference` for which the `ta
 
 ```tsx
 <ReferenceOneInputBase reference="book_details" target="book_id" source="_id">
-  ...
+    ...
 </ReferenceOneInputBase>
 ```
 
@@ -226,7 +226,7 @@ Name of the field carrying the relationship on the referenced resource. For inst
 
 ```tsx
 <ReferenceOneInputBase reference="book_details" target="book_id">
-  ...
+    ...
 </ReferenceOneInputBase>
 ```
 
@@ -238,11 +238,11 @@ For instance, to pass a custom meta:
 
 ```tsx
 <ReferenceOneInputBase
-  reference="book_details"
-  target="book_id"
-  queryOptions={{ meta: { foo: "bar" } }}
+    reference="book_details"
+    target="book_id"
+    queryOptions={{ meta: { foo: 'bar' } }}
 >
-  ...
+    ...
 </ReferenceOneInputBase>
 ```
 
@@ -266,46 +266,46 @@ This context provides a `getSource` function that returns the effective `source`
 Here is an example where we leverage `getSource` and `setValue` to update some of the book details when the 'Update book details' button is clicked:
 
 ```tsx
-import { NumberInput } from "@/components/admin/number-input";
-import { TextInput } from "@/components/admin/text-input";
-import { useSourceContext } from "ra-core";
-import { ReferenceOneInputBase } from "@react-admin/ra-core-ee";
-import { useFormContext } from "react-hook-form";
+import { NumberInput } from '@/components/admin/number-input';
+import { TextInput } from '@/components/admin/text-input';
+import { useSourceContext } from 'ra-core';
+import { ReferenceOneInputBase } from '@react-admin/ra-core-ee';
+import { useFormContext } from 'react-hook-form';
 
 const UpdateBookDetails = () => {
-  const sourceContext = useSourceContext();
-  const { setValue } = useFormContext();
+    const sourceContext = useSourceContext();
+    const { setValue } = useFormContext();
 
-  const onClick = () => {
-    // Generate random values for year and pages
-    const year = 1000 + Math.floor(Math.random() * 1000);
-    const pages = 100 + Math.floor(Math.random() * 900);
-    setValue(sourceContext.getSource("year"), year);
-    setValue(sourceContext.getSource("pages"), pages);
-  };
+    const onClick = () => {
+        // Generate random values for year and pages
+        const year = 1000 + Math.floor(Math.random() * 1000);
+        const pages = 100 + Math.floor(Math.random() * 900);
+        setValue(sourceContext.getSource('year'), year);
+        setValue(sourceContext.getSource('pages'), pages);
+    };
 
-  return (
-    <Button onClick={onClick} size="small" sx={{ maxWidth: 200 }}>
-      Update book details
-    </Button>
-  );
+    return (
+        <Button onClick={onClick} size="small" sx={{ maxWidth: 200 }}>
+            Update book details
+        </Button>
+    );
 };
 
 const BookDetails = () => (
-  <ReferenceOneInputBase
-    reference="book_details"
-    target="book_id"
-    sort={sort}
-    filter={filter}
-  >
-    <div>
-      <NumberInput source="year" />
-      <TextInput source="author" />
-      <TextInput source="country" />
-      <TextInput source="genre" />
-      <NumberInput source="pages" />
-      <UpdateBookDetails />
-    </div>
-  </ReferenceOneInputBase>
+    <ReferenceOneInputBase
+        reference="book_details"
+        target="book_id"
+        sort={sort}
+        filter={filter}
+    >
+        <div>
+            <NumberInput source="year" />
+            <TextInput source="author" />
+            <TextInput source="country" />
+            <TextInput source="genre" />
+            <NumberInput source="pages" />
+            <UpdateBookDetails />
+        </div>
+    </ReferenceOneInputBase>
 );
 ```

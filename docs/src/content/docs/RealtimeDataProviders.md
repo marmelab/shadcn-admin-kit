@@ -25,42 +25,42 @@ This adapter subscribes to [Postgres Changes](https://supabase.com/docs/guides/r
 
 ```tsx
 import {
-  addRealTimeMethodsBasedOnSupabase,
-  ListLiveUpdate,
-} from "@react-admin/ra-core-ee";
-import { supabaseDataProvider } from "ra-supabase";
-import { createClient } from "@supabase/supabase-js";
-import { CoreAdmin, Resource, ListBase } from "ra-core";
+    addRealTimeMethodsBasedOnSupabase,
+    ListLiveUpdate,
+} from '@react-admin/ra-core-ee';
+import { supabaseDataProvider } from 'ra-supabase';
+import { createClient } from '@supabase/supabase-js';
+import { CoreAdmin, Resource, ListBase } from 'ra-core';
 
 const supabaseClient = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY,
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_ANON_KEY,
 );
 
 const dataProvider = supabaseDataProvider({
-  instanceUrl: process.env.SUPABASE_URL,
-  apiKey: process.env.SUPABASE_ANON_KEY,
-  supabaseClient,
+    instanceUrl: process.env.SUPABASE_URL,
+    apiKey: process.env.SUPABASE_ANON_KEY,
+    supabaseClient,
 });
 
 const realTimeDataProvider = addRealTimeMethodsBasedOnSupabase({
-  dataProvider,
-  supabaseClient,
+    dataProvider,
+    supabaseClient,
 });
 
 export const App = () => {
-  return (
-    <CoreAdmin dataProvider={realTimeDataProvider}>
-      <Resource name="sales" list={SaleList} />
-    </CoreAdmin>
-  );
+    return (
+        <CoreAdmin dataProvider={realTimeDataProvider}>
+            <Resource name="sales" list={SaleList} />
+        </CoreAdmin>
+    );
 };
 
 const SaleList = () => (
-  <List>
-    {/* List view */}
-    <ListLiveUpdate />
-  </List>
+    <List>
+        {/* List view */}
+        <ListLiveUpdate />
+    </List>
 );
 ```
 
@@ -109,41 +109,41 @@ Please follow the instructions from the [Supabase documentation](https://supabas
 The `@react-admin/ra-core-ee` package contains a function augmenting a regular (API-based) `dataProvider` with real-time methods based on the capabilities of [API-Platform](https://api-platform.com/). Use it as follows:
 
 ```tsx
-import { ListBase } from "ra-core";
+import { ListBase } from 'ra-core';
 import {
-  HydraAdmin,
-  ResourceGuesser,
-  FieldGuesser,
-  hydraDataProvider,
-} from "@api-platform/admin";
+    HydraAdmin,
+    ResourceGuesser,
+    FieldGuesser,
+    hydraDataProvider,
+} from '@api-platform/admin';
 import {
-  ListLiveUpdate,
-  addRealTimeMethodsBasedOnApiPlatform,
-} from "@react-admin/ra-core-ee";
+    ListLiveUpdate,
+    addRealTimeMethodsBasedOnApiPlatform,
+} from '@react-admin/ra-core-ee';
 
 const dataProvider = hydraDataProvider({
-  entrypoint: "https://localhost",
+    entrypoint: 'https://localhost',
 });
 const realTimeDataProvider = addRealTimeMethodsBasedOnApiPlatform(
-  // The original dataProvider (should be a hydra data provider passed by API-Platform)
-  dataProvider,
-  // The API-Platform Mercure Hub URL
-  "https://localhost/.well-known/mercure",
-  // JWT token to authenticate against the API-Platform Mercure Hub
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjdXJlIjp7InB1Ymxpc2giOlsiKiJdfX0.obDjwCgqtPuIvwBlTxUEmibbBf0zypKCNzNKP7Op2UM",
-  // The topic URL used by API-Platform (without a slash at the end)
-  "https://localhost",
+    // The original dataProvider (should be a hydra data provider passed by API-Platform)
+    dataProvider,
+    // The API-Platform Mercure Hub URL
+    'https://localhost/.well-known/mercure',
+    // JWT token to authenticate against the API-Platform Mercure Hub
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjdXJlIjp7InB1Ymxpc2giOlsiKiJdfX0.obDjwCgqtPuIvwBlTxUEmibbBf0zypKCNzNKP7Op2UM',
+    // The topic URL used by API-Platform (without a slash at the end)
+    'https://localhost',
 );
 
 const App = () => {
-  return (
-    <HydraAdmin
-      entrypoint="https://localhost"
-      dataProvider={realTimeDataProvider}
-    >
-      <ResourceGuesser name="greetings" list={GreetingsList} />
-    </HydraAdmin>
-  );
+    return (
+        <HydraAdmin
+            entrypoint="https://localhost"
+            dataProvider={realTimeDataProvider}
+        >
+            <ResourceGuesser name="greetings" list={GreetingsList} />
+        </HydraAdmin>
+    );
 };
 
 // Example for connecting a list of greetings
@@ -153,29 +153,29 @@ const GreetingsList = () => <ListBase>{/* List view */}</ListBase>;
 The `addRealTimeMethodsBasedOnApiPlatform` function also accepts an optional 5th argument allowing to customize the `transformTopicFromRaRealtime` function (responsible for transforming the `topic` argument from the `Admin` into a valid Mercure topic for Api Platform).
 
 ```ts
-import { hydraDataProvider } from "@api-platform/admin";
-import { addRealTimeMethodsBasedOnApiPlatform } from "@react-admin/ra-core-ee";
+import { hydraDataProvider } from '@api-platform/admin';
+import { addRealTimeMethodsBasedOnApiPlatform } from '@react-admin/ra-core-ee';
 
 const dataProvider = hydraDataProvider({
-  entrypoint: "https://localhost",
+    entrypoint: 'https://localhost',
 });
 
 function myTransformTopicFromRaRealtime(topic: string): string {
-  const [_basename, _resourcePrefix, resource, ...id] = topic.split("/");
-  if (!id || id.length === 0) {
-    return `/${resource}/{id}`;
-  }
-  const originId = id[2];
-  return `/${resource}/${originId}`;
+    const [_basename, _resourcePrefix, resource, ...id] = topic.split('/');
+    if (!id || id.length === 0) {
+        return `/${resource}/{id}`;
+    }
+    const originId = id[2];
+    return `/${resource}/${originId}`;
 }
 
 const realTimeDataProvider = addRealTimeMethodsBasedOnApiPlatform(
-  dataProvider,
-  "https://localhost/.well-known/mercure",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjdXJlIjp7InB1Ymxpc2giOlsiKiJdfX0.obDjwCgqtPuIvwBlTxUEmibbBf0zypKCNzNKP7Op2UM",
-  "https://localhost",
-  // Pass the custom transformTopicFromRaRealtime function here
-  myTransformTopicFromRaRealtime,
+    dataProvider,
+    'https://localhost/.well-known/mercure',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjdXJlIjp7InB1Ymxpc2giOlsiKiJdfX0.obDjwCgqtPuIvwBlTxUEmibbBf0zypKCNzNKP7Op2UM',
+    'https://localhost',
+    // Pass the custom transformTopicFromRaRealtime function here
+    myTransformTopicFromRaRealtime,
 );
 ```
 
@@ -184,20 +184,20 @@ const realTimeDataProvider = addRealTimeMethodsBasedOnApiPlatform(
 The `@react-admin/ra-core-ee` package contains a function augmenting a regular (API-based) `dataProvider` with real-time methods based on [a Mercure hub](https://mercure.rocks/). Use it as follows:
 
 ```tsx
-import { addRealTimeMethodsBasedOnMercure } from "@react-admin/ra-core-ee";
-import { CoreAdmin } from "ra-core";
+import { addRealTimeMethodsBasedOnMercure } from '@react-admin/ra-core-ee';
+import { CoreAdmin } from 'ra-core';
 
 const realTimeDataProvider = addRealTimeMethodsBasedOnMercure(
-  // original dataProvider
-  dataProvider,
-  // Mercure hub URL
-  "http://path.to.my.api/.well-known/mercure",
-  // JWT token to authenticate against the Mercure Hub
-  "eyJhbGciOiJIUzI1NiJ9.eyJtZXJjdXJlIjp7InB1Ymxpc2giOlsiKiJdLCJzdWJzY3JpYmUiOlsiKiJdfX0.SWKHNF9wneXTSjBg81YN5iH8Xb2iTf_JwhfUY5Iyhsw",
+    // original dataProvider
+    dataProvider,
+    // Mercure hub URL
+    'http://path.to.my.api/.well-known/mercure',
+    // JWT token to authenticate against the Mercure Hub
+    'eyJhbGciOiJIUzI1NiJ9.eyJtZXJjdXJlIjp7InB1Ymxpc2giOlsiKiJdLCJzdWJzY3JpYmUiOlsiKiJdfX0.SWKHNF9wneXTSjBg81YN5iH8Xb2iTf_JwhfUY5Iyhsw',
 );
 
 const App = () => (
-  <CoreAdmin dataProvider={realTimeDataProvider}>{/* ... */}</CoreAdmin>
+    <CoreAdmin dataProvider={realTimeDataProvider}>{/* ... */}</CoreAdmin>
 );
 ```
 
@@ -209,36 +209,36 @@ If you're using another transport for real-time messages (WebSockets, long polli
 let subscriptions = [];
 
 const dataProvider = {
-  // regular dataProvider methods like getList, getOne, etc,
-  // ...
-  subscribe: async (topic, subscriptionCallback) => {
-    subscriptions.push({ topic, subscriptionCallback });
-    return Promise.resolve({ data: null });
-  },
+    // regular dataProvider methods like getList, getOne, etc,
+    // ...
+    subscribe: async (topic, subscriptionCallback) => {
+        subscriptions.push({ topic, subscriptionCallback });
+        return Promise.resolve({ data: null });
+    },
 
-  unsubscribe: async (topic, subscriptionCallback) => {
-    subscriptions = subscriptions.filter(
-      (subscription) =>
-        subscription.topic !== topic ||
-        subscription.subscriptionCallback !== subscriptionCallback,
-    );
-    return Promise.resolve({ data: null });
-  },
+    unsubscribe: async (topic, subscriptionCallback) => {
+        subscriptions = subscriptions.filter(
+            (subscription) =>
+                subscription.topic !== topic ||
+                subscription.subscriptionCallback !== subscriptionCallback,
+        );
+        return Promise.resolve({ data: null });
+    },
 
-  publish: (topic, event) => {
-    if (!topic) {
-      return Promise.reject(new Error("missing topic"));
-    }
-    if (!event.type) {
-      return Promise.reject(new Error("missing event type"));
-    }
-    subscriptions.map(
-      (subscription) =>
-        topic === subscription.topic &&
-        subscription.subscriptionCallback(event),
-    );
-    return Promise.resolve({ data: null });
-  },
+    publish: (topic, event) => {
+        if (!topic) {
+            return Promise.reject(new Error('missing topic'));
+        }
+        if (!event.type) {
+            return Promise.reject(new Error('missing event type'));
+        }
+        subscriptions.map(
+            (subscription) =>
+                topic === subscription.topic &&
+                subscription.subscriptionCallback(event),
+        );
+        return Promise.resolve({ data: null });
+    },
 };
 ```
 
@@ -336,9 +336,9 @@ As for the mutation methods (`dataProvider.lock()`, `dataProvider.unlock()`), th
 
 - `resource`: the resource name (e.g. `'posts'`)
 - `params`: an object containing the following
-  - `id`: the record id (e.g. `123`)
-  - `identity`: an identifier (string or number) corresponding to the identity of the locker (e.g. `'julien'`). This could be an authentication token for instance.
-  - `meta`: an object that will be forwarded to the dataProvider (optional)
+    - `id`: the record id (e.g. `123`)
+    - `identity`: an identifier (string or number) corresponding to the identity of the locker (e.g. `'julien'`). This could be an authentication token for instance.
+    - `meta`: an object that will be forwarded to the dataProvider (optional)
 
 #### Locks Based On A Lock Resource
 
@@ -350,11 +350,11 @@ The `lock` resource should contain the following fields:
 
 ```json
 {
-  "id": 123,
-  "identity": "Toad",
-  "resource": "people",
-  "recordId": 18,
-  "createdAt": "2020-09-29 10:20"
+    "id": 123,
+    "identity": "Toad",
+    "resource": "people",
+    "recordId": 18,
+    "createdAt": "2020-09-29 10:20"
 }
 ```
 
@@ -363,15 +363,15 @@ Please note that the `identity` and the `createdAt` formats depend on your API.
 Here is how to use it in your Shadcn Admin Kit application:
 
 ```tsx
-import { CoreAdmin } from "ra-core";
-import { addLocksMethodsBasedOnALockResource } from "@react-admin/ra-core-ee";
+import { CoreAdmin } from 'ra-core';
+import { addLocksMethodsBasedOnALockResource } from '@react-admin/ra-core-ee';
 
 const dataProviderWithLocks = addLocksMethodsBasedOnALockResource(
-  dataProvider, // original dataProvider
+    dataProvider, // original dataProvider
 );
 
 const App = () => (
-  <CoreAdmin dataProvider={dataProviderWithLocks}>{/* ... */}</CoreAdmin>
+    <CoreAdmin dataProvider={dataProviderWithLocks}>{/* ... */}</CoreAdmin>
 );
 ```
 
@@ -382,57 +382,57 @@ Once you've set a real-time `dataProvider`, you can call the real-time methods i
 For instance, here is a component displaying messages posted to the 'messages' topic in real time:
 
 ```tsx
-import React, { useState } from "react";
-import { useDataProvider, useNotify } from "ra-core";
+import React, { useState } from 'react';
+import { useDataProvider, useNotify } from 'ra-core';
 
 const MessageList = () => {
-  const notify = useNotify();
-  const [messages, setMessages] = useState([]);
-  const dataProvider = useDataProvider();
+    const notify = useNotify();
+    const [messages, setMessages] = useState([]);
+    const dataProvider = useDataProvider();
 
-  useEffect(() => {
-    const callback = (event) => {
-      // event is like
-      // {
-      //     topic: 'messages',
-      //     type: 'created',
-      //     payload: 'New message',
-      // }
-      setMessages((messages) => [...messages, event.payload]);
-      notify("New message");
-    };
-    // subscribe to the 'messages' topic on mount
-    dataProvider.subscribe("messages", callback);
-    // unsubscribe on unmount
-    return () => dataProvider.unsubscribe("messages", callback);
-  }, [setMessages, notify, dataProvider]);
+    useEffect(() => {
+        const callback = (event) => {
+            // event is like
+            // {
+            //     topic: 'messages',
+            //     type: 'created',
+            //     payload: 'New message',
+            // }
+            setMessages((messages) => [...messages, event.payload]);
+            notify('New message');
+        };
+        // subscribe to the 'messages' topic on mount
+        dataProvider.subscribe('messages', callback);
+        // unsubscribe on unmount
+        return () => dataProvider.unsubscribe('messages', callback);
+    }, [setMessages, notify, dataProvider]);
 
-  return (
-    <ul>
-      {messages.map((message, index) => (
-        <li key={index}>{message}</li>
-      ))}
-    </ul>
-  );
+    return (
+        <ul>
+            {messages.map((message, index) => (
+                <li key={index}>{message}</li>
+            ))}
+        </ul>
+    );
 };
 ```
 
 And here is a button for publishing an event to the `messages` topic. All the subscribers to this topic will execute their callback:
 
 ```tsx
-import React from "react";
-import { useDataProvider, useNotify } from "ra-core";
+import React from 'react';
+import { useDataProvider, useNotify } from 'ra-core';
 
 const SendMessageButton = () => {
-  const dataProvider = useDataProvider();
-  const notify = useNotify();
-  const handleClick = () => {
-    dataProvider
-      .publish("messages", { type: "created", payload: "New message" })
-      .then(() => notify("Message sent"));
-  };
+    const dataProvider = useDataProvider();
+    const notify = useNotify();
+    const handleClick = () => {
+        dataProvider
+            .publish('messages', { type: 'created', payload: 'New message' })
+            .then(() => notify('Message sent'));
+    };
 
-  return <button onClick={handleClick}>Send new message</button>;
+    return <button onClick={handleClick}>Send new message</button>;
 };
 ```
 
@@ -460,27 +460,27 @@ publish(topic, event, options);
 For instance, in a chat application, when a user is typing a message, the following component publishes a `typing` event to the `chat/[channel]` topic:
 
 ```tsx
-import { useInput, useGetIdentity } from "ra-core";
-import { usePublish } from "@react-admin/ra-core-ee";
+import { useInput, useGetIdentity } from 'ra-core';
+import { usePublish } from '@react-admin/ra-core-ee';
 
 const MessageInput = ({ channel }) => {
-  const [publish, { isLoading }] = usePublish();
-  const { id, field, fieldState } = useInput({ source: "message" });
-  const { identity } = useGetIdentity();
+    const [publish, { isLoading }] = usePublish();
+    const { id, field, fieldState } = useInput({ source: 'message' });
+    const { identity } = useGetIdentity();
 
-  const handleUserInput = (event) => {
-    publish(`chat/${channel}`, {
-      type: "typing",
-      payload: { user: identity },
-    });
-  };
+    const handleUserInput = (event) => {
+        publish(`chat/${channel}`, {
+            type: 'typing',
+            payload: { user: identity },
+        });
+    };
 
-  return (
-    <label htmlFor={id}>
-      Type your message
-      <input id={id} {...field} onInput={handleUserInput} />
-    </label>
-  );
+    return (
+        <label htmlFor={id}>
+            Type your message
+            <input id={id} {...field} onInput={handleUserInput} />
+        </label>
+    );
 };
 ```
 
@@ -506,9 +506,9 @@ See the [CRUD events](#crud-events) section for more details.
 
 - `publish`: The callback to publish an event to a topic.
 - `state`: The state of the mutation ([see react-query documentation](https://react-query-v3.tanstack.com/reference/useMutation)). Notable properties:
-  - `isLoading`: Whether the mutation is loading.
-  - `error`: The error if the mutation failed.
-  - `data`: The published event if the mutation succeeded.
+    - `isLoading`: Whether the mutation is loading.
+    - `error`: The error if the mutation failed.
+    - `data`: The published event if the mutation succeeded.
 
 ```tsx
 const [publish, { isLoading, error, data }] = usePublish();
@@ -521,22 +521,22 @@ The `publish` callback accepts the following parameters:
 - `topic`: The topic to publish the event on.
 - `event`: The event to publish. It must contain a `type` property.
 - `options`: `useMutation` options ([see react-query documentation](https://react-query-v3.tanstack.com/reference/useMutation)). Notable properties:
-  - `onSuccess`: A callback to call when the event is published. It receives the published event as its first argument.
-  - `onError`: A callback to call when the event could not be published. It receives the error as its first argument.
-  - `retry`: Whether to retry on failure. Defaults to `0`.
+    - `onSuccess`: A callback to call when the event is published. It receives the published event as its first argument.
+    - `onError`: A callback to call when the event could not be published. It receives the error as its first argument.
+    - `retry`: Whether to retry on failure. Defaults to `0`.
 
 ```tsx
 const [publish] = usePublish();
 publish(
-  "chat/general",
-  {
-    type: "message",
-    payload: { user: "John", message: "Hello!" },
-  },
-  {
-    onSuccess: (event) => console.log("Event published", event),
-    onError: (error) => console.log("Could not publish event", error),
-    retry: 3,
-  },
+    'chat/general',
+    {
+        type: 'message',
+        payload: { user: 'John', message: 'Hello!' },
+    },
+    {
+        onSuccess: (event) => console.log('Event published', event),
+        onError: (error) => console.log('Could not publish event', error),
+        retry: 3,
+    },
 );
 ```

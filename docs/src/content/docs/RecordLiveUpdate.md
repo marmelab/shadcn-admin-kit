@@ -1,5 +1,5 @@
 ---
-title: "RecordLiveUpdate"
+title: 'RecordLiveUpdate'
 ---
 
 `<RecordLiveUpdate>` is a component that refreshes its parent `RecordContext` in a [`<Show>`](./Show.md) view when a record is updated.
@@ -13,24 +13,24 @@ The `LiveRecordUpdate` component can be created using the `useSubscribeToRecord`
 ```tsx
 // src/components/admin/record-live-update.tsx
 
-import { useSubscribeToRecord } from "@react-admin/ra-core-ee";
-import { Identifier, useShowContext } from "ra-core";
-import { useCallback } from "react";
+import { useSubscribeToRecord } from '@react-admin/ra-core-ee';
+import { Identifier, useShowContext } from 'ra-core';
+import { useCallback } from 'react';
 
 export const RecordLiveUpdate = (props: RecordLiveUpdateProps) => {
-  const { refetch } = useShowContext();
-  const handleUpdate = useCallback(() => {
-    refetch();
-  }, [refetch]);
+    const { refetch } = useShowContext();
+    const handleUpdate = useCallback(() => {
+        refetch();
+    }, [refetch]);
 
-  useSubscribeToRecord(handleUpdate, props.resource, props.id);
+    useSubscribeToRecord(handleUpdate, props.resource, props.id);
 
-  return null;
+    return null;
 };
 
 type RecordLiveUpdateProps = {
-  resource?: string;
-  id?: Identifier;
+    resource?: string;
+    id?: Identifier;
 };
 ```
 
@@ -39,15 +39,15 @@ type RecordLiveUpdateProps = {
 Add the `<RecordLiveUpdate>` in your `<Show>` children:
 
 ```tsx
-import { TextField } from "@/components/admin/data-table";
-import { RecordLiveUpdate } from "@/components/admin/record-live-update";
-import { Show } from "@/components/admin/show";
+import { TextField } from '@/components/admin/data-table';
+import { RecordLiveUpdate } from '@/components/admin/record-live-update';
+import { Show } from '@/components/admin/show';
 
 const PostList = () => (
-  <Show>
-    <TextField source="title" />
-    <RecordLiveUpdate />
-  </Show>
+    <Show>
+        <TextField source="title" />
+        <RecordLiveUpdate />
+    </Show>
 );
 ```
 

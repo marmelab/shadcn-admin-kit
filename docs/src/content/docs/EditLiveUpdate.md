@@ -13,69 +13,69 @@ This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enter
 ```tsx
 // src/components/admin/edit-live-update.tsx
 
-import { useSubscribeToRecord } from "@react-admin/ra-core-ee";
-import { useCloseNotification, useEditContext, useNotify } from "ra-core";
-import { useCallback, useMemo, useRef } from "react";
-import { Button } from "./button";
+import { useSubscribeToRecord } from '@react-admin/ra-core-ee';
+import { useCloseNotification, useEditContext, useNotify } from 'ra-core';
+import { useCallback, useMemo, useRef } from 'react';
+import { Button } from './button';
 
 export function EditLiveUpdate() {
-  const hasNotifiedRef = useRef(false);
-  const notify = useNotify();
+    const hasNotifiedRef = useRef(false);
+    const notify = useNotify();
 
-  const { refetch } = useEditContext();
+    const { refetch } = useEditContext();
 
-  const notificationContent = useMemo(() => {
-    return (
-      <RecordUpdatedNotification
-        refetch={async () => {
-          await refetch();
-          hasNotifiedRef.current = false;
-        }}
-      />
-    );
-  }, [refetch]);
+    const notificationContent = useMemo(() => {
+        return (
+            <RecordUpdatedNotification
+                refetch={async () => {
+                    await refetch();
+                    hasNotifiedRef.current = false;
+                }}
+            />
+        );
+    }, [refetch]);
 
-  const onLiveUpdate = useCallback(() => {
-    if (hasNotifiedRef.current) {
-      return;
-    }
+    const onLiveUpdate = useCallback(() => {
+        if (hasNotifiedRef.current) {
+            return;
+        }
 
-    hasNotifiedRef.current = true;
-    notify(notificationContent, {
-      type: "warning",
-      autoHideDuration: null,
-    });
-  }, [notify, notificationContent]);
+        hasNotifiedRef.current = true;
+        notify(notificationContent, {
+            type: 'warning',
+            autoHideDuration: null,
+        });
+    }, [notify, notificationContent]);
 
-  useSubscribeToRecord(onLiveUpdate);
+    useSubscribeToRecord(onLiveUpdate);
 
-  return null;
+    return null;
 }
 
 function RecordUpdatedNotification({
-  refetch,
+    refetch,
 }: RecordUpdatedNotificationProps) {
-  const close = useCloseNotification();
-  const handleClick = async () => {
-    await refetch();
-    close();
-  };
+    const close = useCloseNotification();
+    const handleClick = async () => {
+        await refetch();
+        close();
+    };
 
-  return (
-    <div className="h-6 inline-flex items-center">
-      <span>Record has been updated</span>
-      <Button
-        onClick={handleClick}
-        className="absolute top-50% right-4 h-6 px-2"
-      >
-        Refresh
-      </Button>
-    </div>
-  );
+    return (
+        <div className="h-6 inline-flex items-center">
+            <span>Record has been updated</span>
+            <Button
+                onClick={handleClick}
+                className="absolute top-50% right-4 h-6 px-2"
+            >
+                Refresh
+            </Button>
+        </div>
+    );
 }
 
 type RecordUpdatedNotificationProps = {
-  refetch(): Promise<void>;
+    refetch(): Promise<void>;
 };
 ```
 
@@ -84,14 +84,14 @@ type RecordUpdatedNotificationProps = {
 Add the `<EditLiveUpdate>` in your `<Edit>` children:
 
 ```tsx
-import { Edit } from "@/components/admin/edit";
-import { EditLiveUpdate } from "@/components/admin/edit-live-update";
+import { Edit } from '@/components/admin/edit';
+import { EditLiveUpdate } from '@/components/admin/edit-live-update';
 
 const PostList = () => (
-  <Edit>
-    ...
-    <EditLiveUpdate />
-  </Edit>
+    <Edit>
+        ...
+        <EditLiveUpdate />
+    </Edit>
 );
 ```
 

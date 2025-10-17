@@ -44,14 +44,14 @@ Ra-realtime provides **live updates** via specialized hooks and components. This
 For instance, include a `<ListLiveUpdate>` within a `<ListBase>` to have a list refreshing automatically when an element is added, updated, or deleted:
 
 ```tsx {2, 7}
-import { List } from "@/components/admin/list";
-import { ListLiveUpdate } from "@react-admin/ra-core-ee";
+import { List } from '@/components/admin/list';
+import { ListLiveUpdate } from '@react-admin/ra-core-ee';
 
 const PostList = () => (
-  <List>
-    ...other children
-    <ListLiveUpdate />
-  </List>
+    <List>
+        ...other children
+        <ListLiveUpdate />
+    </List>
 );
 ```
 
@@ -79,43 +79,43 @@ And last but not least, `@react-admin/ra-core-ee` provides a **lock mechanism** 
 A user can lock a resource, either by voluntarily asking for a lock or by editing a resource. When a resource is locked, other users can't edit it. When the lock is released, other users can edit the resource again.
 
 ```tsx
-import { Form, useCreate, useGetIdentity, useRecordContext } from "ra-core";
-import { useGetLockLive } from "@react-admin/ra-core-ee";
-import { TextInput, SelectInput } from "@components/admin/TextInput";
+import { Form, useCreate, useGetIdentity, useRecordContext } from 'ra-core';
+import { useGetLockLive } from '@react-admin/ra-core-ee';
+import { TextInput, SelectInput } from '@components/admin/TextInput';
 
 export const NewMessageForm = () => {
-  const [create, { isLoading: isCreating }] = useCreate();
-  const record = useRecordContext();
+    const [create, { isLoading: isCreating }] = useCreate();
+    const record = useRecordContext();
 
-  const { data: lock } = useGetLockLive("tickets", { id: record.id });
-  const { identity } = useGetIdentity();
-  const isFormDisabled = lock && lock.identity !== identity?.id;
+    const { data: lock } = useGetLockLive('tickets', { id: record.id });
+    const { identity } = useGetIdentity();
+    const isFormDisabled = lock && lock.identity !== identity?.id;
 
-  const [doLock] = useLockOnCall({ resource: "tickets" });
-  const handleSubmit = (values: any) => {
-    /* ... */
-  };
+    const [doLock] = useLockOnCall({ resource: 'tickets' });
+    const handleSubmit = (values: any) => {
+        /* ... */
+    };
 
-  return (
-    <Form onSubmit={handleSubmit}>
-      <TextInput
-        source="message"
-        multiline
-        onFocus={() => {
-          doLock();
-        }}
-        disabled={isFormDisabled}
-      />
-      <SelectInput
-        source="status"
-        choices={statusChoices}
-        disabled={isFormDisabled}
-      />
-      <button type="submit" disabled={isCreating || isFormDisabled}>
-        Submit
-      </button>
-    </Form>
-  );
+    return (
+        <Form onSubmit={handleSubmit}>
+            <TextInput
+                source="message"
+                multiline
+                onFocus={() => {
+                    doLock();
+                }}
+                disabled={isFormDisabled}
+            />
+            <SelectInput
+                source="status"
+                choices={statusChoices}
+                disabled={isFormDisabled}
+            />
+            <button type="submit" disabled={isCreating || isFormDisabled}>
+                Submit
+            </button>
+        </Form>
+    );
 };
 ```
 

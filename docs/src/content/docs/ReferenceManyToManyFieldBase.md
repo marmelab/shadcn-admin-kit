@@ -1,5 +1,5 @@
 ---
-title: "ReferenceManyToManyFieldBase"
+title: 'ReferenceManyToManyFieldBase'
 ---
 
 This component fetches a list of referenced records by lookup in an associative table and passes the records down to its child component, which must be an iterator component.
@@ -30,27 +30,27 @@ In this example, `bands.id` matches `performances.band_id`, and `performances.ve
 To allow users see the `venues` for a given `band` with `<RecordsIterator>`, wrap that component in `<ReferenceManyToManyFieldBase>` where you define the relationship via the `reference`, `through` and `using` props:
 
 ```tsx
-import { Show } from "@/components/admin/show";
-import { RecordsIterator } from "ra-core";
-import { ReferenceManyToManyFieldBase } from "@react-admin/ra-core-ee";
+import { Show } from '@/components/admin/show';
+import { RecordsIterator } from 'ra-core';
+import { ReferenceManyToManyFieldBase } from '@react-admin/ra-core-ee';
 
 export const BandShow = () => (
-  <Show>
-    <ReferenceManyToManyFieldBase
-      reference="venues"
-      through="performances"
-      using="band_id,venue_id"
-      label="Performances"
-    >
-      <ul>
-        <RecordsIterator
-          render={(record) => {
-            return <li>{record?.location}</li>;
-          }}
-        />
-      </ul>
-    </ReferenceManyToManyFieldBase>
-  </Show>
+    <Show>
+        <ReferenceManyToManyFieldBase
+            reference="venues"
+            through="performances"
+            using="band_id,venue_id"
+            label="Performances"
+        >
+            <ul>
+                <RecordsIterator
+                    render={(record) => {
+                        return <li>{record?.location}</li>;
+                    }}
+                />
+            </ul>
+        </ReferenceManyToManyFieldBase>
+    </Show>
 );
 ```
 
@@ -76,27 +76,27 @@ export const BandShow = () => (
 `<ReferenceManyToManyFieldBase>` expects an _iterator_ component as child, i.e. a component working inside a `ListContext`.
 
 ```tsx
-import { Show } from "@/components/admin/show";
-import { RecordsIterator } from "ra-core";
-import { ReferenceManyToManyFieldBase } from "@react-admin/ra-core-ee";
+import { Show } from '@/components/admin/show';
+import { RecordsIterator } from 'ra-core';
+import { ReferenceManyToManyFieldBase } from '@react-admin/ra-core-ee';
 
 export const BandShow = () => (
-  <Show>
-    <ReferenceManyToManyFieldBase
-      reference="venues"
-      through="performances"
-      using="band_id,venue_id"
-      label="Performances"
-    >
-      <div>
-        <RecordsIterator
-          render={(record) => {
-            return <span label={tag.name} />;
-          }}
-        />
-      </div>
-    </ReferenceManyToManyFieldBase>
-  </Show>
+    <Show>
+        <ReferenceManyToManyFieldBase
+            reference="venues"
+            through="performances"
+            using="band_id,venue_id"
+            label="Performances"
+        >
+            <div>
+                <RecordsIterator
+                    render={(record) => {
+                        return <span label={tag.name} />;
+                    }}
+                />
+            </div>
+        </ReferenceManyToManyFieldBase>
+    </Show>
 );
 ```
 
@@ -106,12 +106,12 @@ To display a custom element when an error occurs while loading the reference, us
 
 ```tsx
 <ReferenceManyToManyFieldBase
-  reference="venues"
-  through="performances"
-  using="band_id,venue_id"
-  error={<MyError />}
+    reference="venues"
+    through="performances"
+    using="band_id,venue_id"
+    error={<MyError />}
 >
-  ...
+    ...
 </ReferenceManyToManyFieldBase>
 ```
 
@@ -121,12 +121,12 @@ You can filter the records of the associative table (e.g. `performances`) using 
 
 ```tsx
 <ReferenceManyToManyFieldBase
-  reference="venues"
-  through="performances"
-  using="band_id,venue_id"
-  filter={{ date: "2018-08-31" }}
+    reference="venues"
+    through="performances"
+    using="band_id,venue_id"
+    filter={{ date: '2018-08-31' }}
 >
-  {/* ... */}
+    {/* ... */}
 </ReferenceManyToManyFieldBase>
 ```
 
@@ -136,12 +136,12 @@ To display a custom element while loading the reference, use the `loading` prop:
 
 ```tsx
 <ReferenceManyToManyFieldBase
-  reference="venues"
-  through="performances"
-  using="band_id,venue_id"
-  loading={<Skeleton />}
+    reference="venues"
+    through="performances"
+    using="band_id,venue_id"
+    loading={<Skeleton />}
 >
-  ...
+    ...
 </ReferenceManyToManyFieldBase>
 ```
 
@@ -151,12 +151,12 @@ By default, `<ReferenceManyToManyFieldBase>` fetches 100 entries in the join tab
 
 ```tsx
 <ReferenceManyToManyFieldBase
-  reference="venues"
-  through="performances"
-  using="band_id,venue_id"
-  joinLimit={50}
+    reference="venues"
+    through="performances"
+    using="band_id,venue_id"
+    joinLimit={50}
 >
-  {/* ... */}
+    {/* ... */}
 </ReferenceManyToManyFieldBase>
 ```
 
@@ -166,12 +166,12 @@ By default, `<ReferenceManyToManyFieldBase>` displays at most 25 entries from th
 
 ```tsx
 <ReferenceManyToManyFieldBase
-  reference="venues"
-  through="performances"
-  using="band_id,venue_id"
-  perPage={10}
+    reference="venues"
+    through="performances"
+    using="band_id,venue_id"
+    perPage={10}
 >
-  {/* ... */}
+    {/* ... */}
 </ReferenceManyToManyFieldBase>
 ```
 
@@ -183,12 +183,12 @@ You can for instance use it to pass [a custom meta](https://marmelab.com/ra-core
 
 ```tsx
 <ReferenceManyToManyFieldBase
-  reference="venues"
-  through="performances"
-  using="band_id,venue_id"
-  queryOptions={{ meta: { myParameter: "value" } }}
+    reference="venues"
+    through="performances"
+    using="band_id,venue_id"
+    queryOptions={{ meta: { myParameter: 'value' } }}
 >
-  {/* ... */}
+    {/* ... */}
 </ReferenceManyToManyFieldBase>
 ```
 
@@ -200,12 +200,12 @@ For instance, if you want to display the `venues` of a given `bands`, through `p
 
 ```tsx
 <ReferenceManyToManyFieldBase
-  source="id"
-  reference="venues"
-  resource="bands"
-  through="performances"
+    source="id"
+    reference="venues"
+    resource="bands"
+    through="performances"
 >
-  {/* ... */}
+    {/* ... */}
 </ReferenceManyToManyFieldBase>
 ```
 
@@ -215,12 +215,12 @@ By default, `<ReferenceManyToManyFieldBase>` orders the possible values by `id` 
 
 ```tsx
 <ReferenceManyToManyFieldBase
-  reference="venues"
-  through="performances"
-  using="band_id,venue_id"
-  sort={{ field: "date", order: "DESC" }}
+    reference="venues"
+    through="performances"
+    using="band_id,venue_id"
+    sort={{ field: 'date', order: 'DESC' }}
 >
-  {/* ... */}
+    {/* ... */}
 </ReferenceManyToManyFieldBase>
 ```
 
@@ -230,12 +230,12 @@ By default, `<ReferenceManyToManyFieldBase>` uses the `id` field as target for t
 
 ```tsx
 <ReferenceManyToManyFieldBase
-  source="_id"
-  reference="venues"
-  resource="bands"
-  through="performances"
+    source="_id"
+    reference="venues"
+    resource="bands"
+    through="performances"
 >
-  {/* ... */}
+    {/* ... */}
 </ReferenceManyToManyFieldBase>
 ```
 
@@ -245,7 +245,7 @@ You must specify the associative table name using the `through` prop.
 
 ```tsx
 <ReferenceManyToManyFieldBase reference="venues" through="performances">
-  {/* ... */}
+    {/* ... */}
 </ReferenceManyToManyFieldBase>
 ```
 
@@ -255,11 +255,11 @@ You can specify the columns to use in the associative `using` the using prop. Wh
 
 ```tsx
 <ReferenceManyToManyFieldBase
-  reference="venues"
-  through="performances"
-  using="band_id,venue_id"
+    reference="venues"
+    through="performances"
+    using="band_id,venue_id"
 >
-  {/* ... */}
+    {/* ... */}
 </ReferenceManyToManyFieldBase>
 ```
 
@@ -273,9 +273,9 @@ You can specify the columns to use in the associative `using` the using prop. Wh
 For instance, if the user displays the band of id `123`, `<ReferenceManyToManyFieldBase>` first issues the following query to the `dataProvider`:
 
 ```js
-dataProvider.getManyReference("performances", {
-  target: "band_id",
-  id: 123,
+dataProvider.getManyReference('performances', {
+    target: 'band_id',
+    id: 123,
 });
 ```
 
@@ -295,8 +295,8 @@ Let's say that the `dataProvider` returns the following response:
 Then, `<ReferenceManyToManyFieldBase>` issues a second query to the `dataProvider`:
 
 ```js
-dataProvider.getMany("venues", {
-  ids: [732, 874, 756],
+dataProvider.getMany('venues', {
+    ids: [732, 874, 756],
 });
 ```
 
