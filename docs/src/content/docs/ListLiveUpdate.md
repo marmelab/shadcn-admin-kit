@@ -36,7 +36,7 @@ To trigger refreshes of `<ListLiveUpdate>`, the API has to publish events contai
 }
 ```
 
-This also works with [`<ReferenceManyField>`](https://marmelab.com/react-admin/ReferenceManyField.html) or [`<ReferenceArrayField>`](https://marmelab.com/react-admin/ReferenceArrayField.html):
+This also works with [`<ReferenceManyField>`](./ReferenceManyField.md) or [`<ReferenceArrayField>`](./ReferenceArrayField.md):
 
 ```tsx
 import { DataTable } from '@/components/admin/data-table';

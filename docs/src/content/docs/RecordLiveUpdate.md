@@ -8,7 +8,7 @@ This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enter
 
 ## Creating the Component
 
-The `LiveRecordUpdate` component can be created using the `useSubscribeToRecord` from `@react-admin/ra-core-ee`. Here is an example of such a `RecordLiveUpdate` component:
+The `LiveRecordUpdate` component can be created using the <a href="https://marmelab.com/ra-core/usesubscribetorecord/" target="_blank" rel="noreferrer">`useSubscribeToRecord</a> from `@react-admin/ra-core-ee`. Here is an example of such a `RecordLiveUpdate` component:
 
 ```tsx
 // src/components/admin/record-live-update.tsx

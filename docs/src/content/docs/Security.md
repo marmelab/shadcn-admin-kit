@@ -8,10 +8,12 @@ Shadcn-Admin-Kit supports both authentication and authorization, allowing you to
 
 This documentation will explain the following concepts:
 
-- [The `authProvider` and its methods](#the-authprovider)
+- [The `authProvider`](#the-authprovider)
 - [How to set up an `authProvider` in your application](#setup)
 - [Available auth providers for popular authentication backends](#supported-auth-backends)
 - [How to implement access control using the `authProvider`](#access-control)
+- [Role-Based Access Control](#role-based-access-control)
+- [Building Role-Based Access Control with `getPermissionsFromRoles` and `canAccessWithPermissions`](#building-rbac)
 
 ## The `authProvider`
 
@@ -190,7 +192,7 @@ It is a builder block to implement the `authProvider.canAccess()` method, which 
 
 `getPermissionsFromRoles` takes a configuration object as argument containing the role definitions, the user roles, and the user permissions.
 
-It returns an array of permissions that can be passed to [`canAccessWithPermissions`](./canAccessWithPermissions.md).
+It returns an array of permissions that can be passed to [`canAccessWithPermissions`](#canaccesswithpermissions).
 
 ```ts
 import { getPermissionsFromRoles } from '@react-admin/ra-core-ee';
@@ -233,7 +235,7 @@ This function takes an object as argument with the following fields:
 
 ### canAccessWithPermissions
 
-`canAccessWithPermissions` is a helper function that facilitates the implementation of [Access Control](./Permissions.md#access-control) policies based on an underlying list of user roles and permissions.
+`canAccessWithPermissions` is a helper function that facilitates the implementation of <a href="https://marmelab.com/ra-core/permissions/" target="_blank" rel="noreferrer">Access Control</a> policies based on an underlying list of user roles and permissions.
 
 It is a builder block to implement the `authProvider.canAccess()` method, which is called by ra-core to check whether the current user has the right to perform a given action on a given resource or record.
 
@@ -273,7 +275,7 @@ Here are a few examples of permissions:
 When the `record` field is omitted, the permission is valid for all records.
 :::
 
-In most cases, the permissions are derived from user roles, which are fetched at login and stored in memory or in localStorage. Check the [`getPermissionsFromRoles`](./getPermissionsFromRoles.md) function to merge the permissions from multiple roles into a single flat array of permissions.
+In most cases, the permissions are derived from user roles, which are fetched at login and stored in memory or in localStorage. Check the [`getPermissionsFromRoles`](#getpermissionsfromroles) function to merge the permissions from multiple roles into a single flat array of permissions.
 
 #### Parameters
 
@@ -286,7 +288,7 @@ This function takes an object as argument with the following fields:
 | `resource`    | Required | `string`            | The resource for which to check users has the execution right |
 | `record`      | Required | `string`            | The record for which to check users has the execution right   |
 
-`canAccessWithPermissions` expects the `permissions` to be a flat array of permissions. It is your responsibility to fetch these permissions (usually during login). If the permissions are spread into several role definitions, you can merge them into a single array using the [`getPermissionsFromRoles`](./getPermissionsFromRoles.md) function.
+`canAccessWithPermissions` expects the `permissions` to be a flat array of permissions. It is your responsibility to fetch these permissions (usually during login). If the permissions are spread into several role definitions, you can merge them into a single array using the [`getPermissionsFromRoles`](#getpermissionsfromroles) function.
 
 ## Building RBAC
 
