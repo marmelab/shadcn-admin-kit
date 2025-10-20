@@ -86,7 +86,7 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "eslint-plugin-storybook": "^9.0.13",
     "globals": "^16.0.0",
-    "playwright": "^1.54.1",
+    "playwright": "^1.55.1",
     "postcss": "^8.4.40",
     "prettier": "^3.6.2",
     "react-error-boundary": "^6.0.0",

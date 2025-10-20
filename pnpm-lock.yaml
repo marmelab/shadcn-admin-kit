@@ -185,7 +185,7 @@ importers:
         version: 4.4.1(vite@6.3.6(@types/node@22.15.18)(jiti@2.5.1)(lightningcss@1.30.1))
       '@vitest/browser':
         specifier: ^3.2.4
-        version: 3.2.4(msw@2.8.2(@types/node@22.15.18)(typescript@5.7.3))(playwright@1.54.1)(vite@6.3.6(@types/node@22.15.18)(jiti@2.5.1)(lightningcss@1.30.1))(vitest@3.2.4)
+        version: 3.2.4(msw@2.8.2(@types/node@22.15.18)(typescript@5.7.3))(playwright@1.55.1)(vite@6.3.6(@types/node@22.15.18)(jiti@2.5.1)(lightningcss@1.30.1))(vitest@3.2.4)
       eslint:
         specifier: ^9.22.0
         version: 9.26.0(jiti@2.5.1)
@@ -202,8 +202,8 @@ importers:
         specifier: ^16.0.0
         version: 16.1.0
       playwright:
-        specifier: ^1.54.1
-        version: 1.54.1
+        specifier: ^1.55.1
+        version: 1.55.1
       postcss:
         specifier: ^8.4.40
         version: 8.5.3
@@ -4772,13 +4772,13 @@ packages:
     resolution: {integrity: sha512-ueGLflrrnvwB3xuo/uGob5pd5FN7l0MsLf0Z87o/UQmRtwjvfylfc9MurIxRAWywCYTgrvpXBcqjV4OfCYGCIQ==}
     engines: {node: '>=16.20.0'}
 
-  playwright-core@1.54.1:
-    resolution: {integrity: sha512-Nbjs2zjj0htNhzgiy5wu+3w09YetDx5pkrpI/kZotDlDUaYk0HVA5xrBVPdow4SAUIlhgKcJeJg4GRKW6xHusA==}
+  playwright-core@1.55.1:
+    resolution: {integrity: sha512-Z6Mh9mkwX+zxSlHqdr5AOcJnfp+xUWLCt9uKV18fhzA8eyxUd8NUWzAjxUh55RZKSYwDGX0cfaySdhZJGMoJ+w==}
     engines: {node: '>=18'}
     hasBin: true
 
-  playwright@1.54.1:
-    resolution: {integrity: sha512-peWpSwIBmSLi6aW2auvrUtf2DqY16YYcCMO8rTVx486jKmDTJg7UAhyrraP98GB8BoPURZP8+nxO7TSd4cPr5g==}
+  playwright@1.55.1:
+    resolution: {integrity: sha512-cJW4Xd/G3v5ovXtJJ52MAOclqeac9S/aGGgRzLabuF8TnIb6xHvMzKIa6JmrRzUkeXJgfL1MhukP0NK6l39h3A==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -7903,7 +7903,7 @@ snapshots:
       storybook: 9.0.13(@testing-library/dom@10.4.0)(prettier@3.6.2)
       ts-dedent: 2.2.0
     optionalDependencies:
-      '@vitest/browser': 3.2.4(msw@2.8.2(@types/node@22.15.18)(typescript@5.7.3))(playwright@1.54.1)(vite@6.3.6(@types/node@22.15.18)(jiti@2.5.1)(lightningcss@1.30.1))(vitest@3.2.4)
+      '@vitest/browser': 3.2.4(msw@2.8.2(@types/node@22.15.18)(typescript@5.7.3))(playwright@1.55.1)(vite@6.3.6(@types/node@22.15.18)(jiti@2.5.1)(lightningcss@1.30.1))(vitest@3.2.4)
       '@vitest/runner': 3.2.4
       vitest: 3.2.4(@types/debug@4.1.12)(@types/node@22.15.18)(@vitest/browser@3.2.4)(jiti@2.5.1)(lightningcss@1.30.1)(msw@2.8.2(@types/node@22.15.18)(typescript@5.7.3))
     transitivePeerDependencies:
@@ -8453,7 +8453,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/browser@3.2.4(msw@2.8.2(@types/node@22.15.18)(typescript@5.7.3))(playwright@1.54.1)(vite@6.3.6(@types/node@22.15.18)(jiti@2.5.1)(lightningcss@1.30.1))(vitest@3.2.4)':
+  '@vitest/browser@3.2.4(msw@2.8.2(@types/node@22.15.18)(typescript@5.7.3))(playwright@1.55.1)(vite@6.3.6(@types/node@22.15.18)(jiti@2.5.1)(lightningcss@1.30.1))(vitest@3.2.4)':
     dependencies:
       '@testing-library/dom': 10.4.0
       '@testing-library/user-event': 14.6.1(@testing-library/dom@10.4.0)
@@ -8465,7 +8465,7 @@ snapshots:
       vitest: 3.2.4(@types/debug@4.1.12)(@types/node@22.15.18)(@vitest/browser@3.2.4)(jiti@2.5.1)(lightningcss@1.30.1)(msw@2.8.2(@types/node@22.15.18)(typescript@5.7.3))
       ws: 8.18.2
     optionalDependencies:
-      playwright: 1.54.1
+      playwright: 1.55.1
     transitivePeerDependencies:
       - bufferutil
       - msw
@@ -10976,11 +10976,11 @@ snapshots:
 
   pkce-challenge@5.0.0: {}
 
-  playwright-core@1.54.1: {}
+  playwright-core@1.55.1: {}
 
-  playwright@1.54.1:
+  playwright@1.55.1:
     dependencies:
-      playwright-core: 1.54.1
+      playwright-core: 1.55.1
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -12253,7 +12253,7 @@ snapshots:
 
   vitest-browser-react@1.0.1(@types/react-dom@19.1.5(@types/react@19.1.4))(@types/react@19.1.4)(@vitest/browser@3.2.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vitest@3.2.4):
     dependencies:
-      '@vitest/browser': 3.2.4(msw@2.8.2(@types/node@22.15.18)(typescript@5.7.3))(playwright@1.54.1)(vite@6.3.6(@types/node@22.15.18)(jiti@2.5.1)(lightningcss@1.30.1))(vitest@3.2.4)
+      '@vitest/browser': 3.2.4(msw@2.8.2(@types/node@22.15.18)(typescript@5.7.3))(playwright@1.55.1)(vite@6.3.6(@types/node@22.15.18)(jiti@2.5.1)(lightningcss@1.30.1))(vitest@3.2.4)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
       vitest: 3.2.4(@types/debug@4.1.12)(@types/node@22.15.18)(@vitest/browser@3.2.4)(jiti@2.5.1)(lightningcss@1.30.1)(msw@2.8.2(@types/node@22.15.18)(typescript@5.7.3))
@@ -12289,7 +12289,7 @@ snapshots:
     optionalDependencies:
       '@types/debug': 4.1.12
       '@types/node': 22.15.18
-      '@vitest/browser': 3.2.4(msw@2.8.2(@types/node@22.15.18)(typescript@5.7.3))(playwright@1.54.1)(vite@6.3.6(@types/node@22.15.18)(jiti@2.5.1)(lightningcss@1.30.1))(vitest@3.2.4)
+      '@vitest/browser': 3.2.4(msw@2.8.2(@types/node@22.15.18)(typescript@5.7.3))(playwright@1.55.1)(vite@6.3.6(@types/node@22.15.18)(jiti@2.5.1)(lightningcss@1.30.1))(vitest@3.2.4)
     transitivePeerDependencies:
       - jiti
       - less
