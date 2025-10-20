@@ -17,7 +17,7 @@ In addition, to support the lock features, the `dataProvider` must implement 4 m
 - `getLock(resource, { id, meta })`
 - `getLocks(resource, { meta })`
 
-#### Supabase Adapter
+## Supabase Adapter
 
 The `@react-admin/ra-core-ee` package contains a function augmenting a regular (API-based) `dataProvider` with real-time methods based on the capabilities of [Supabase](https://supabase.com/docs/guides/realtime).
 
@@ -98,13 +98,13 @@ Have a look at the Supabase [Replication Setup](https://supabase.com/docs/guides
 | `dataProvider`   | Required | `DataProvider`   | -       | The base dataProvider to augment with realtime methods |
 | `supabaseClient` | Required | `SupabaseClient` | -       | The Supabase JS Client                                 |
 
-##### Custom Tokens
+## Custom Tokens
 
 You may choose to sign your own tokens to customize claims that can be checked in your RLS policies. In order to use these custom tokens with `addRealTimeMethodsBasedOnSupabase`, you must pass `apikey` in both Realtime's `headers` and `params` when creating the `supabaseClient`.
 
 Please follow the instructions from the [Supabase documentation](https://supabase.com/docs/guides/realtime/extensions/postgres-changes#custom-tokens) for more information about how to do so.
 
-#### API-Platform Adapter
+## API-Platform Adapter
 
 The `@react-admin/ra-core-ee` package contains a function augmenting a regular (API-based) `dataProvider` with real-time methods based on the capabilities of [API-Platform](https://api-platform.com/). Use it as follows:
 
@@ -179,7 +179,7 @@ const realTimeDataProvider = addRealTimeMethodsBasedOnApiPlatform(
 );
 ```
 
-#### Mercure Adapter
+## Mercure Adapter
 
 The `@react-admin/ra-core-ee` package contains a function augmenting a regular (API-based) `dataProvider` with real-time methods based on [a Mercure hub](https://mercure.rocks/). Use it as follows:
 
@@ -201,7 +201,7 @@ const App = () => (
 );
 ```
 
-#### Writing a Custom Adapter
+## Writing a Custom Adapter
 
 If you're using another transport for real-time messages (WebSockets, long polling, GraphQL subscriptions, etc.), you'll have to implement `subscribe`, `unsubscribe`, and `publish` yourself in your `dataProvider`. As an example, here is an implementation using a local variable, that `@react-admin/ra-core-ee` uses in tests:
 
@@ -244,7 +244,7 @@ const dataProvider = {
 
 You can check the behavior of the real-time components by using the default console logging provided in `addRealTimeMethodsInLocalBrowser`.
 
-#### Topic And Event Format
+## Topic And Event Format
 
 You've noticed that all the `dataProvider` real-time methods expect a `topic` as the first argument. A `topic` is just a string, identifying a particular real-time channel. Topics can be used e.g. to dispatch messages to different rooms in a chat application or to identify changes related to a particular record.
 
@@ -263,7 +263,7 @@ Here is an example event:
 
 For CRUD operations, `@react-admin/ra-core-ee` expects events to use the types 'created', 'updated', and 'deleted'.
 
-#### CRUD Events
+## CRUD Events
 
 Realtime features have deep integration with Shadcn Admin Kit, where most of the logic concerns Creation, Update or Deletion (CRUD) of records. To enable this integration, your real-time backend should publish the following events:
 
@@ -317,7 +317,7 @@ Realtime features have deep integration with Shadcn Admin Kit, where most of the
 }
 ```
 
-#### Lock Format
+## Lock Format
 
 A `lock` stores the record that is locked, the identity of the locker, and the time at which the lock was acquired. It is used to prevent concurrent editing of the same record. A typical lock looks like this:
 
@@ -340,7 +340,7 @@ As for the mutation methods (`dataProvider.lock()`, `dataProvider.unlock()`), th
     - `identity`: an identifier (string or number) corresponding to the identity of the locker (e.g. `'julien'`). This could be an authentication token for instance.
     - `meta`: an object that will be forwarded to the dataProvider (optional)
 
-#### Locks Based On A Lock Resource
+## Locks Based On A Lock Resource
 
 The `@react-admin/ra-core-ee` package offers a function augmenting a regular (API-based) `dataProvider` with locks methods based on a `locks` resource.
 
@@ -375,7 +375,7 @@ const App = () => (
 );
 ```
 
-#### Calling the `dataProvider` Methods Directly
+## Calling the `dataProvider` Methods Directly
 
 Once you've set a real-time `dataProvider`, you can call the real-time methods in your React components via the `useDataProvider` hook.
 
@@ -437,106 +437,3 @@ const SendMessageButton = () => {
 ```
 
 **Tip**: You should not need to call `publish()` directly very often. Most real-time backends publish events in reaction to a change in the data. So the previous example is fictive. In reality, a typical `<SendMessageButton>` would simply call `dataProvider.create('messages')`, and the API would create the new message AND publish the 'created' event to the real-time bus.
-
-### Hooks
-
-#### `usePublish`
-
-Get a callback to publish an event on a topic. The callback returns a promise that resolves when the event is published.
-
-`usePublish` calls `dataProvider.publish()` to publish the event. It leverages react-query's `useMutation` hook to provide a callback.
-
-**Note**: Events should generally be published by the server, in reaction to an action by an end user. They should seldom be published directly by the client. This hook is provided mostly for testing purposes, but you may use it in your own custom components if you know what you're doing.
-
-##### Usage
-
-`usePublish` returns a callback with the following signature:
-
-```tsx
-const publish = usePublish();
-publish(topic, event, options);
-```
-
-For instance, in a chat application, when a user is typing a message, the following component publishes a `typing` event to the `chat/[channel]` topic:
-
-```tsx
-import { useInput, useGetIdentity } from 'ra-core';
-import { usePublish } from '@react-admin/ra-core-ee';
-
-const MessageInput = ({ channel }) => {
-    const [publish, { isLoading }] = usePublish();
-    const { id, field, fieldState } = useInput({ source: 'message' });
-    const { identity } = useGetIdentity();
-
-    const handleUserInput = (event) => {
-        publish(`chat/${channel}`, {
-            type: 'typing',
-            payload: { user: identity },
-        });
-    };
-
-    return (
-        <label htmlFor={id}>
-            Type your message
-            <input id={id} {...field} onInput={handleUserInput} />
-        </label>
-    );
-};
-```
-
-The event format is up to you. It should at least contain a `type` property and may contain a `payload` property. The `payload` property can contain any data you want to send to the subscribers.
-
-Some hooks and components in this package are specialized to handle "CRUD" events, which are events with a `type` property set to `created`, `updated` or `deleted`. For instance:
-
-```js
-{
-    topic: `resource/${resource}/id`,
-    event: {
-        type: 'deleted',
-        payload: { ids: [id]},
-    },
-}
-```
-
-See the [CRUD events](#crud-events) section for more details.
-
-##### Return Value
-
-`usePublish` returns an array with the following values:
-
-- `publish`: The callback to publish an event to a topic.
-- `state`: The state of the mutation ([see react-query documentation](https://react-query-v3.tanstack.com/reference/useMutation)). Notable properties:
-    - `isLoading`: Whether the mutation is loading.
-    - `error`: The error if the mutation failed.
-    - `data`: The published event if the mutation succeeded.
-
-```tsx
-const [publish, { isLoading, error, data }] = usePublish();
-```
-
-##### Callback Parameters
-
-The `publish` callback accepts the following parameters:
-
-- `topic`: The topic to publish the event on.
-- `event`: The event to publish. It must contain a `type` property.
-- `options`: `useMutation` options ([see react-query documentation](https://react-query-v3.tanstack.com/reference/useMutation)). Notable properties:
-    - `onSuccess`: A callback to call when the event is published. It receives the published event as its first argument.
-    - `onError`: A callback to call when the event could not be published. It receives the error as its first argument.
-    - `retry`: Whether to retry on failure. Defaults to `0`.
-
-```tsx
-const [publish] = usePublish();
-publish(
-    'chat/general',
-    {
-        type: 'message',
-        payload: { user: 'John', message: 'Hello!' },
-    },
-    {
-        onSuccess: (event) => console.log('Event published', event),
-        onError: (error) => console.log('Could not publish event', error),
-        retry: 3,
-    },
-);
-```

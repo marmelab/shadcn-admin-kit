@@ -2,9 +2,24 @@
 title: Real-time Features
 ---
 
-`@react-admin/ra-core-ee` is part of the [React-Admin Enterprise Edition](https://marmelab.com/ra-enterprise/), and hosted in a private npm registry. You need to subscribe to one of the Enterprise Edition plans to install this package.
+`@react-admin/ra-core-ee` provides hooks and UI components for collaborative applications where several people work in parallel. It allows publishing and subscribing to real-time events, updating views when another user pushes a change, notifying end users of events, and preventing data loss when two editors work on the same resource concurrently with locks.
 
 You will need a data provider that supports real-time subscriptions. Check out the [Data Provider Requirements](./RealtimeDataProviders.md) section for more information.
+
+This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription. Once subscribed, the instructions to configure our private repository can be found in the [React-Admin Enterprise Edition documentation](https://react-admin-ee.marmelab.com/setup).
+
+Once you have configured our private repository, you can install the `@react-admin/ra-core-ee` with the following command:
+
+```bash
+# With NPM
+npm install @react-admin/ra-core-ee
+
+# With PNPM
+pnpm add @react-admin/ra-core-ee
+
+# With YARN
+yarn add @react-admin/ra-core-ee
+```
 
 ## Installation
 
@@ -31,11 +46,11 @@ This package supports various realtime infrastructures ([Mercure](https://mercur
 
 `@react-admin/ra-core-ee` provides a set of high-level hooks to make it easy to work with real-time events:
 
-- <a href="https://marmelab.com/ra-core/usepublish/" target="_blank" rel="noreferrer"><code>usePublish</code></a>
-- <a href="https://marmelab.com/ra-core/usesubscribetorecordlist/" target="_blank" rel="noreferrer"><code>useSubscribeToRecordList</code></a>
-- <a href="https://marmelab.com/ra-core/usesubscribecallback/" target="_blank" rel="noreferrer"><code>useSubscribeCallback</code></a>
-- <a href="https://marmelab.com/ra-core/usesubscribetorecord/" target="_blank" rel="noreferrer"><code>useSubscribeToRecord</code></a>
-- <a href="https://marmelab.com/ra-core/usesubscribetorecordlist/" target="_blank" rel="noreferrer"><code>useSubscribeToRecordList</code></a>
+- [`usePublish`](https://marmelab.com/ra-core/usepublish/)
+- [`useSubscribeToRecordList`](https://marmelab.com/ra-core/usesubscribetorecordlist/)
+- [`useSubscribeCallback`](https://marmelab.com/ra-core/usesubscribecallback/)
+- [`useSubscribeToRecord`](https://marmelab.com/ra-core/usesubscribetorecord/)
+- [`useSubscribeToRecordList`](https://marmelab.com/ra-core/usesubscribetorecordlist/)
 
 ## Live Updates
 
@@ -64,8 +79,8 @@ This feature leverages the following components and hooks:
 
 - [`<ListLiveUpdate>`](./ListLiveUpdate.md)
 - [`<RecordLiveUpdate>`](./RecordLiveUpdate.md)
-- <a href="https://marmelab.com/ra-core/usegetlistlive/" target="_blank" rel="noreferrer"><code>useGetListLive</code></a>
-- <a href="https://marmelab.com/ra-core/usegetonelive/" target="_blank" rel="noreferrer"><code>useGetOneLive</code></a>
+- [`useGetListLive`](https://marmelab.com/ra-core/usegetlistlive/)
+- [`useGetOneLive`](https://marmelab.com/ra-core/usegetonelive/)
 
 ## Locks
 
@@ -121,11 +136,11 @@ export const NewMessageForm = () => {
 
 This feature leverages the following hooks:
 
-- <a href="https://marmelab.com/ra-core/uselock/" target="_blank" rel="noreferrer"><code>useLock</code></a>
-- <a href="https://marmelab.com/ra-core/useunlock/" target="_blank" rel="noreferrer"><code>useUnlock</code></a>
-- <a href="https://marmelab.com/ra-core/usegetlock/" target="_blank" rel="noreferrer"><code>useGetLock</code></a>
-- <a href="https://marmelab.com/ra-core/usegetlocklive/" target="_blank" rel="noreferrer"><code>useGetLockLive</code></a>
-- <a href="https://marmelab.com/ra-core/usegetlocks/" target="_blank" rel="noreferrer"><code>useGetLocks</code></a>
-- <a href="https://marmelab.com/ra-core/usegetlockslive/" target="_blank" rel="noreferrer"><code>useGetLocksLive</code></a>
-- <a href="https://marmelab.com/ra-core/uselockoncall/" target="_blank" rel="noreferrer"><code>useLockOnCall</code></a>
-- <a href="https://marmelab.com/ra-core/uselockonmount/" target="_blank" rel="noreferrer"><code>useLockOnMount</code></a>
+- [`useLock`](https://marmelab.com/ra-core/uselock/)
+- [`useUnlock`](https://marmelab.com/ra-core/useunlock/)
+- [`useGetLock`](https://marmelab.com/ra-core/usegetlock/)
+- [`useGetLockLive`](https://marmelab.com/ra-core/usegetlocklive/)
+- [`useGetLocks`](https://marmelab.com/ra-core/usegetlocks/)
+- [`useGetLocksLive`](https://marmelab.com/ra-core/usegetlockslive/)
+- [`useLockOnCall`](https://marmelab.com/ra-core/uselockoncall/)
+- [`useLockOnMount`](https://marmelab.com/ra-core/uselockonmount/)

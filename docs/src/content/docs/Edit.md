@@ -860,11 +860,101 @@ Access control is disabled when you use the `disableAuthentication` prop.
 
 ## Live Updates
 
-If you want to subscribe to live updates the record (topic: `resource/[resource]/[id]`), add [the `<EditLiveUpdate>` component](./EditLiveUpdate.md) in your `<Edit>` children.
+If you want to subscribe to live updates the record (topic: `resource/[resource]/[id]`), you can rely on the [`useSubscribeToRecord`](https://marmelab.com/ra-core/usesubscribetorecord/). An sample use case would be to create an `<EditLiveUpdate>` component that warns user when a record has been updated in an [`<Edit>`](./Edit.md) view.
 
-This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
+![A notification alerting users that the record has changed inside an edit view](./images/edit-live-update.png)
 
-```tsx {2,7}
+This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.  Once subscribed, the instructions to configure our private repository can be found in the [React-Admin Enterprise Edition documentation](https://react-admin-ee.marmelab.com/setup).
+
+Once you have configured our private repository, you can install the `@react-admin/ra-core-ee` with the following command:
+
+```bash
+# With NPM
+npm install @react-admin/ra-core-ee
+
+# With PNPM
+pnpm add @react-admin/ra-core-ee
+
+# With YARN
+yarn add @react-admin/ra-core-ee
+```
+
+### Creating the Component
+
+```tsx
+// src/components/admin/edit-live-update.tsx
+
+import { useSubscribeToRecord } from '@react-admin/ra-core-ee';
+import { useCloseNotification, useEditContext, useNotify } from 'ra-core';
+import { useCallback, useMemo, useRef } from 'react';
+import { Button } from './button';
+
+export function EditLiveUpdate() {
+    const hasNotifiedRef = useRef(false);
+    const notify = useNotify();
+
+    const { refetch } = useEditContext();
+
+    const notificationContent = useMemo(() => {
+        return (
+            <RecordUpdatedNotification
+                refetch={async () => {
+                    await refetch();
+                    hasNotifiedRef.current = false;
+                }}
+            />
+        );
+    }, [refetch]);
+
+    const onLiveUpdate = useCallback(() => {
+        if (hasNotifiedRef.current) {
+            return;
+        }
+
+        hasNotifiedRef.current = true;
+        notify(notificationContent, {
+            type: 'warning',
+            autoHideDuration: null,
+        });
+    }, [notify, notificationContent]);
+
+    useSubscribeToRecord(onLiveUpdate);
+
+    return null;
+}
+
+function RecordUpdatedNotification({
+    refetch,
+}: RecordUpdatedNotificationProps) {
+    const close = useCloseNotification();
+    const handleClick = async () => {
+        await refetch();
+        close();
+    };
+
+    return (
+        <div className="h-6 inline-flex items-center">
+            <span>Record has been updated</span>
+            <Button
+                onClick={handleClick}
+                className="absolute top-50% right-4 h-6 px-2"
+            >
+                Refresh
+            </Button>
+        </div>
+    );
+}
+
+type RecordUpdatedNotificationProps = {
+    refetch(): Promise<void>;
+};
+```
+
+### Usage
+
+Add the `<EditLiveUpdate>` in your `<Edit>` children:
+
+```tsx
 import { Edit } from '@/components/admin/edit';
 import { EditLiveUpdate } from '@/components/admin/edit-live-update';
 
@@ -876,4 +966,14 @@ const PostList = () => (
 );
 ```
 
-The edit view will warn the user when the record is updated.
+To trigger warning with `<EditLiveUpdate>` with the record changes, the API has to publish events containing at least the followings:
+
+```js
+{
+    topic : '/resource/{resource}/{id}',
+    event: {
+        type: 'updated',
+        payload: { ids: [{listOfRecordIdentifiers}]},
+    }
+}
+```

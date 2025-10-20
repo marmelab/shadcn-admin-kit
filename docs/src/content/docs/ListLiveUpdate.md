@@ -4,6 +4,21 @@ title: 'ListLiveUpdate'
 
 `<ListLiveUpdate>` is an [Enterprise Edition](https://react-admin-ee.marmelab.com) component that refreshes its parent `ListContext` (e.g in a [`<List>`](./List.md)) when a record is created, updated, or deleted.
 
+Once subscribed to the [Enterprise Edition](https://marmelab.com/ra-enterprise/), the instructions to configure our private repository can be found in the [React-Admin Enterprise Edition documentation](https://react-admin-ee.marmelab.com/setup).
+
+Once you have configured our private repository, you can install the `@react-admin/ra-core-ee` with the following command:
+
+```bash
+# With NPM
+npm install @react-admin/ra-core-ee
+
+# With PNPM
+pnpm add @react-admin/ra-core-ee
+
+# With YARN
+yarn add @react-admin/ra-core-ee
+```
+
 ## Usage
 
 Add the `<ListLiveUpdate>` in your `<List>` children:
@@ -24,7 +39,7 @@ const PostList = () => (
 );
 ```
 
-To trigger refreshes of `<ListLiveUpdate>`, the API has to publish events containing at least the followings:
+To trigger a refresh of `<ListLiveUpdate>`, the API has to publish an event containing at least the following data:
 
 ```js
 {
@@ -68,6 +83,12 @@ const AuthorShow = () => (
     </Show>
 );
 ```
+
+## Props
+
+| Prop              | Required | Type       | Default | Description                                                                |
+| ----------------- | -------- | ---------- | ------- | -------------------------------------------------------------------------- |
+| `onEventReceived` | Optional | `function` | -       | A function that allows to customize side effects when an event is received |
 
 ## `onEventReceived`
 

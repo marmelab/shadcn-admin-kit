@@ -148,8 +148,6 @@ export default defineConfig({
             enterpriseEntry("RealtimeFeatures", "Features"),
             enterpriseEntry("RealtimeDataProviders", "Data Providers"),
             enterpriseEntry("ListLiveUpdate"),
-            enterpriseEntry("RecordLiveUpdate"),
-            enterpriseEntry("EditLiveUpdate"),
             raCoreEntry("LockStatusBase"),
             raCoreEntry("useLock"),
             raCoreEntry("useUnlock"),

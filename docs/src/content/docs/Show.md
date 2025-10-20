@@ -93,20 +93,76 @@ That's enough to display the post show view above.
 
 ## Live Updates
 
-If you want to subscribe to live updates the record (topic: `resource/[resource]/[id]`), add [the `<RecordLiveUpdate>` component](./RecordLiveUpdate.md) in your `<Show>` children.
+If you want to subscribe to live updates the record (topic: `resource/[resource]/[id]`), you can rely on the [`useSubscribeToRecord`](https://marmelab.com/ra-core/usesubscribetorecord/). A sample use case would be to create an `<RecordLiveUpdate>` component that refreshes its parent `RecordContext` in a [`<Show>`](./Show.md) view when a record is updated.
 
-This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
+This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription. Once subscribed, the instructions to configure our private repository can be found in the [React-Admin Enterprise Edition documentation](https://react-admin-ee.marmelab.com/setup).
 
-```tsx {2,7}
-import { Show } from "@/components/admin/show";
-import { RecordLiveUpdate } from "@/components/admin/record-live-update";
+Once you have configured our private repository, you can install the `@react-admin/ra-core-ee` with the following command:
+
+```bash
+# With NPM
+npm install @react-admin/ra-core-ee
+
+# With PNPM
+pnpm add @react-admin/ra-core-ee
+
+# With YARN
+yarn add @react-admin/ra-core-ee
+```
+
+### Creating the Component
+
+The `LiveRecordUpdate` component can be created using the <a href="https://marmelab.com/ra-core/usesubscribetorecord/" target="_blank" rel="noreferrer">`useSubscribeToRecord</a> from `@react-admin/ra-core-ee`. Here is an example of such a `RecordLiveUpdate` component:
+
+```tsx
+// src/components/admin/record-live-update.tsx
+
+import { useSubscribeToRecord } from '@react-admin/ra-core-ee';
+import { Identifier, useShowContext } from 'ra-core';
+import { useCallback } from 'react';
+
+export const RecordLiveUpdate = (props: RecordLiveUpdateProps) => {
+    const { refetch } = useShowContext();
+    const handleUpdate = useCallback(() => {
+        refetch();
+    }, [refetch]);
+
+    useSubscribeToRecord(handleUpdate, props.resource, props.id);
+
+    return null;
+};
+
+type RecordLiveUpdateProps = {
+    resource?: string;
+    id?: Identifier;
+};
+```
+
+### Usage
+
+Add the `<RecordLiveUpdate>` in your `<Show>` children:
+
+```tsx
+import { TextField } from '@/components/admin/data-table';
+import { RecordLiveUpdate } from '@/components/admin/record-live-update';
+import { Show } from '@/components/admin/show';
 
 const PostList = () => (
-  <Show>
-    ...
-    <RecordLiveUpdate />
-  </Show>
+    <Show>
+        <TextField source="title" />
+        <RecordLiveUpdate />
+    </Show>
 );
 ```
 
-The show view will automatically update when the record is updated.
+To trigger refreshes of `<RecordLiveUpdate>`, the API has to publish events containing at least the followings:
+
+```js
+{
+    topic : '/resource/{resource}/{id}',
+    event: {
+        type: 'updated',
+        payload: { ids: [{listOfRecordIdentifiers}]},
+    }
+}
+```
