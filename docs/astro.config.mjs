@@ -145,7 +145,7 @@ export default defineConfig({
         {
           label: "Real-time",
           items: [
-            enterpriseEntry("RealtimeFeatures", "Features"),
+            enterpriseEntry("RealtimeFeatures", "Introduction"),
             enterpriseEntry("RealtimeDataProviders", "Data Providers"),
             enterpriseEntry("ListLiveUpdate"),
             raCoreEntry("LockStatusBase"),
