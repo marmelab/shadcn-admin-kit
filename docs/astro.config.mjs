@@ -136,6 +136,7 @@ export default defineConfig({
             "refreshbutton",
             "spinner",
             "thememodetoggle",
+            "usermenu",
           ],
         },
         {

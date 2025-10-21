@@ -6,9 +6,11 @@ Forces a data refresh by invalidating react-query's query cache. All the data di
 
 It also displays a loading indicator while the data fetching is in progress.
 
+![Refresh Button](./images/refresh-button.jpg)
+
 ## Usage
 
-The default layout contains a `<RefreshButton>` in the top right corner.
+The default [`Layout`](./Layout.md) contains a `<RefreshButton>` in the top right corner.
 
 You can use it for your custom layouts:
 

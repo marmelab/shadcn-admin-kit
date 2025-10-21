@@ -11,7 +11,7 @@ Application shell including sidebar, header (breadcrumb portal, locale & theme t
 `<Layout>` wraps the main content of the page. It includes:
 
 - The [AppSidebar](./AppSidebar.md) component for navigation
-- A header with a [breadcrumb](./Breadcrumb.md) portal, [locale](./LocalesMenuButton.md) and theme toggles, refresh button, and user menu
+- A header with a [breadcrumb](./Breadcrumb.md) portal, [locale](./LocalesMenuButton.md) and [theme](./ThemeModeToggle.md) toggles, [refresh button](./RefreshButton.md), and [user menu](./UserMenu.md)
 - An error boundary for error handling (renders the [`<Error>`](./Error.md) component by default)
 - A Suspense boundary for loading states (renders the [`<Loading>`](./Loading.md) component by default)
 - A notification area for displaying toasts
