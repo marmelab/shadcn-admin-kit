@@ -2,18 +2,58 @@
 title: "Notification"
 ---
 
-Bridges Shadcn Admin Kit notification system with `sonner` toasts, supporting undoable actions.
+A notification compoonent based on Shadcn's `sonner` toasts, supporting undoable actions.
+
+![Notification](./images/notification.jpg)
 
 ## Usage
 
-Included in `Layout`. Can be used once at root.
+The `<Notification>` component is already included in the default [`<Layout>`](./Layout.md). It will display notifications triggered with the [`useNotify`](https://marmelab.com/ra-core/usenotify/) hook.
+
+```tsx
+import { useNotify } from 'ra-core';
+
+const NotifyButton = () => {
+    const notify = useNotify();
+    const handleClick = () => {
+        notify(`Comment approved`, { type: 'success' });
+    }
+    return <button onClick={handleClick}>Notify</button>;
+};
+```
+
+You can customize the notification component by editing the `@/components/admin/notification.tsx` file.
+
+If you write a custom layout, make sure to include the `<Notification>` component somewhere in your component tree, preferably near the root:
 
 ```tsx
 <Notification />
 ```
 
-## Behavior
+## Undoable Mutations
 
-- Listens to RA `useNotificationContext` queue.
-- Displays toast with optional Undo action for undoable mutations.
-- Registers `beforeunload` when undoable to prevent accidental navigation.
+The mutation hooks from `ra-core`, such as [`useDelete`](https://marmelab.com/ra-core/usedelete/) and [`useUpdate`](https://marmelab.com/ra-core/useupdate/), support [undoable mode](https://marmelab.com/ra-core/actions/#optimistic-rendering-and-undo). When using undoable mutations, the notification component will display an "Undo" button in the toast message, and the actual mutation will be delayed until the undo timeout expires.
+
+To enable the "undo" button in a notification, pass the `undoable: true` option to the `useNotify` call:
+
+```tsx
+import { useDelete, useNotify } from 'ra-core';
+
+const DeletePostButton = ({ id }) => {
+    const notify = useNotify();
+    const [deleteOne] = useDelete();
+    const handleClick = () => {
+        deleteOne(
+            'posts',
+            { id },
+            {
+                mutationMode: 'undoable',
+                onSuccess: () => {
+                    notify('Post deleted', { type: 'info', undoable: true });
+                }
+            }
+        );
+    }
+    return <button onClick={handleClick}>Delete</button>;
+};
+```
