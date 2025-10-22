@@ -134,7 +134,6 @@ export default defineConfig({
             "notification",
             "ready",
             "refreshbutton",
-            "spinner",
             "thememodetoggle",
             "usermenu",
           ],
