@@ -968,3 +968,62 @@ To trigger warning with `<EditLiveUpdate>` with the record changes, the API has 
     }
 }
 ```
+
+## Locking Edition
+
+Shadcn Admin Kit offers [Content locking features](./RealtimeFeatures.md) to automatically place a lock on a record when a user is editing it, preventing other users from editing the same record concurrently.
+
+To avoid concurrent edition of the same record by multiple users, you can use [the `useLockRecord` hook](https://marmelab.com/ra-core-uselockrecord/) inside your `<Edit>` view.
+
+:::note
+This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription. 
+:::
+
+For example, the following form locks a ticket record when the user focuses on the message input. If another user has already locked the ticket, the form inputs are disabled:
+
+```tsx
+import { Form, useCreate, useGetIdentity, useRecordContext } from 'ra-core';
+import { useGetLockLive, useLockOnCall } from '@react-admin/ra-core-ee';
+import { TextInput, SelectInput, SaveButton } from '@components/admin';
+
+export const NewMessageForm = () => {
+    const record = useRecordContext();
+
+    const { identity } = useGetIdentity();
+    const { data: lock } = useGetLockLive('tickets', { id: record.id });
+    const isLocked = lock && lock.identity !== identity?.id;
+
+    const [doLock] = useLockOnCall({ resource: 'tickets' });
+
+    return (
+        <Form onSubmit={handleSubmit}>
+            <TextInput
+                source="message"
+                multiline
+                onFocus={doLock}
+                disabled={isLocked}
+            />
+            <SelectInput
+                source="status"
+                choices={statusChoices}
+                onFocus={doLock}
+                disabled={isLocked}
+            />
+            <SaveButton disabled={isLocked} />
+        </Form>
+    );
+};
+```
+
+Use it in your `<Edit>` view as follows:
+
+```tsx
+import { Edit } from '@/components/admin/edit';
+import { NewMessageForm } from './NewMessageForm';
+
+const PostEdit = () => (
+    <Edit>
+        <NewMessageForm />
+    </Edit>
+);
+```
