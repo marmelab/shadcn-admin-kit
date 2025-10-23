@@ -6,6 +6,14 @@ Use `<ReferenceOneInputBase>` in an `<Edit>` or `<CreateBase>` view to edit one-
 
 This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
 
+## Installation
+
+```sh
+npm install --save @react-admin/ra-core-ee
+# or
+yarn add @react-admin/ra-core-ee
+```
+
 ## Usage
 
 Here is an example one-to-one relationship: a `book` has at most one `book_details` row associated to it.

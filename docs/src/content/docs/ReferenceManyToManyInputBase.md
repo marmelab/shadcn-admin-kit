@@ -4,13 +4,17 @@ title: 'ReferenceManyToManyInputBase'
 
 This component allows adding or removing relationships between two resources sharing an associative table. The changes in the associative table are sent to the dataProvider _when the user submits the form_ so that they can cancel the changes before submission.
 
-:::note
-The `<ReferenceManyToManyInputBase>` cannot currently display multiple records with the same id from the end reference resource even though they might have different properties in the associative table.
-:::
+![ReferenceManyToManyInputBase](./images/reference-many-to-many-input-base.png)
 
 This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
 
-![](./images/reference-many-to-many-input-base.png)
+## Installation
+
+```sh
+npm install --save @react-admin/ra-core-ee
+# or
+yarn add @react-admin/ra-core-ee
+```
 
 ## Usage
 
@@ -96,7 +100,13 @@ const BandEdit = () => (
 );
 ```
 
-**Limitation**: `<ReferenceManyToManyInputBase>` cannot be used to filter a list.
+:::note
+`<ReferenceManyToManyInputBase>` cannot be used to filter a list.
+:::
+
+:::note
+`<ReferenceManyToManyInputBase>` cannot currently display multiple records with the same id from the end reference resource even though they might have different properties in the associative table.
+:::
 
 ## Props
 

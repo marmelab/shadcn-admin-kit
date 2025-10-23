@@ -2,13 +2,19 @@
 title: 'ReferenceManyToManyFieldBase'
 ---
 
-This component fetches a list of referenced records by lookup in an associative table and passes the records down to its child component, which must be an iterator component.
+This component allows to render a list of records related to the current one in a many-to-many relationship. 
 
-:::note
-The `<ReferenceManyToManyFieldBase>` cannot currently display multiple records with the same id from the end reference resource, even though they might have different properties in the associative table.
-:::
+It fetches a list of referenced records by lookup in an associative table, creates a ListContext with the result, and delegates the rendering of the list to to its child component.
 
 This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
+
+## Installation
+
+```sh
+npm install --save @react-admin/ra-core-ee
+# or
+yarn add @react-admin/ra-core-ee
+```
 
 ## Usage
 
@@ -53,6 +59,10 @@ export const BandShow = () => (
     </Show>
 );
 ```
+
+:::note
+The `<ReferenceManyToManyFieldBase>` cannot currently display multiple records with the same id from the end reference resource, even though they might have different properties in the associative table.
+:::
 
 ## Props
 
