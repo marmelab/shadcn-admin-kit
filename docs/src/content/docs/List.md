@@ -646,9 +646,9 @@ Just like `<List>`, `<ListGuesser>` fetches the data. It then analyzes the respo
 
 ## Live Updates
 
-If you want to subscribe to live updates on the list of records (topic: `resource/[resource]`), add [the `<ListLiveUpdate>` component](./ListLiveUpdate.md) in your `<List>` children.
+Shadcn Admin Kit offers [Realtime features](./RealtimeFeatures.md) to automatically refresh the data on screen when it has been changed by another user.
 
-This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
+If you want to subscribe to live updates on the list of records, add [the `<ListLiveUpdate>` component](https://marmelab.com/ra-core/listliveupdate/) in your `<List>` children.
 
 ```tsx {2,7}
 import { List } from 'shadcn-admin-kit';
@@ -662,7 +662,11 @@ const PostList = () => (
 );
 ```
 
-The list will automatically update when a new record is created, or an existing record is updated or deleted.
+The list will automatically update when a new record is created, or an existing record is updated or deleted (check out the [CRUD events format](./RealtimeFeatures.md#crud-events) for details)
+
+:::note
+This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
+:::
 
 ## Rendering An Empty List
 

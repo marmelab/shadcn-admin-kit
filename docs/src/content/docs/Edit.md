@@ -860,26 +860,19 @@ Access control is disabled when you use the `disableAuthentication` prop.
 
 ## Live Updates
 
-If you want to subscribe to live updates the record (topic: `resource/[resource]/[id]`), you can rely on the [`useSubscribeToRecord`](https://marmelab.com/ra-core/usesubscribetorecord/). An sample use case would be to create an `<EditLiveUpdate>` component that warns user when a record has been updated in an [`<Edit>`](./Edit.md) view.
+Shadcn Admin Kit offers [Realtime features](./RealtimeFeatures.md) to automatically refresh the data on screen when it has been changed by another user.
+
+If you want to subscribe to live updates the record, you can rely on the [`useSubscribeToRecord`](https://marmelab.com/ra-core/usesubscribetorecord/) hook. 
+
+As sample use case, let's show how to warn the user when the record they're editing has been updated by another user.
 
 ![A notification alerting users that the record has changed inside an edit view](./images/edit-live-update.png)
 
-This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.  Once subscribed, the instructions to configure our private repository can be found in the [React-Admin Enterprise Edition documentation](https://react-admin-ee.marmelab.com/setup).
+:::note
+This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription. 
+:::
 
-Once you have configured our private repository, you can install the `@react-admin/ra-core-ee` with the following command:
-
-```bash
-# With NPM
-npm install @react-admin/ra-core-ee
-
-# With PNPM
-pnpm add @react-admin/ra-core-ee
-
-# With YARN
-yarn add @react-admin/ra-core-ee
-```
-
-### Creating the Component
+First, create an `EditLiveUpdate` component that uses the `useSubscribeToRecord` hook to subscribe to updates on the current record. When an update is received, it shows a notification with a "Refresh" button that refetches the record when clicked.
 
 ```tsx
 // src/components/admin/edit-live-update.tsx
@@ -950,9 +943,7 @@ type RecordUpdatedNotificationProps = {
 };
 ```
 
-### Usage
-
-Add the `<EditLiveUpdate>` in your `<Edit>` children:
+Then, add the `<EditLiveUpdate>` in your `<Edit>` children:
 
 ```tsx
 import { Edit } from '@/components/admin/edit';
