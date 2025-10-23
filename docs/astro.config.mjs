@@ -85,6 +85,7 @@ export default defineConfig({
             "referencefield",
             "referencemanycount",
             "referencemanyfield",
+            enterpriseEntry("ReferenceManyToManyFieldBase"),
             "selectfield",
             "singlefieldlist",
             "sortbutton",
@@ -112,6 +113,9 @@ export default defineConfig({
             "radiobuttongroupinput",
             "referencearrayinput",
             "referenceinput",
+            enterpriseEntry("ReferenceManyInputBase"),
+            enterpriseEntry("ReferenceManyToManyInputBase"),
+            enterpriseEntry("ReferenceOneInputBase"),
             "savebutton",
             "searchinput",
             "selectinput",
@@ -140,7 +144,7 @@ export default defineConfig({
         },
         {
           label: "Misc",
-          items: ["mcp"],
+          items: [enterpriseEntry("RealtimeFeatures", "Realtime"), "mcp"],
         },
       ],
     }),
@@ -174,3 +178,36 @@ export default defineConfig({
     assets: "astro-assets",
   },
 });
+
+/**
+ * @param {string} name
+ * @param {string | undefined} label
+ * @returns {any}
+ */
+function enterpriseEntry(name, label = undefined) {
+  return {
+    link: `${name.toLowerCase()}/`,
+    label: label ?? name,
+    attrs: { class: "enterprise" },
+    badge: {
+      text: "React Admin Enterprise",
+      variant: "default",
+    },
+  };
+}
+
+/**
+ * @param {string} name
+ * @returns {any}
+ */
+function raCoreEntry(name) {
+  return {
+    link: `https://marmelab.com/ra-core/${name.toLowerCase()}/`,
+    label: name,
+    attrs: { class: "enterprise", target: "_blank", rel: "noreferrer" },
+    badge: {
+      text: "React Admin Enterprise",
+      variant: "default",
+    },
+  };
+}
