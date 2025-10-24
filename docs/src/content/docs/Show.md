@@ -93,26 +93,17 @@ That's enough to display the post show view above.
 
 ## Live Updates
 
-If you want to subscribe to live updates the record (topic: `resource/[resource]/[id]`), you can rely on the [`useSubscribeToRecord`](https://marmelab.com/ra-core/usesubscribetorecord/). A sample use case would be to create an `<RecordLiveUpdate>` component that refreshes its parent `RecordContext` in a [`<Show>`](./Show.md) view when a record is updated.
+Shadcn Admin Kit offers [Realtime features](./RealtimeFeatures.md) to automatically refresh the data on screen when it has been changed by another user.
 
-This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription. Once subscribed, the instructions to configure our private repository can be found in the [React-Admin Enterprise Edition documentation](https://react-admin-ee.marmelab.com/setup).
+If you want to subscribe to live updates the record, you can rely on the [`useSubscribeToRecord`](https://marmelab.com/ra-core/usesubscribetorecord/) hook. 
 
-Once you have configured our private repository, you can install the `@react-admin/ra-core-ee` with the following command:
+A sample use case would be to refresh the `<Show>` view when the record has been updated by another user.
 
-```bash
-# With NPM
-npm install @react-admin/ra-core-ee
+:::note
+This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription. 
+:::
 
-# With PNPM
-pnpm add @react-admin/ra-core-ee
-
-# With YARN
-yarn add @react-admin/ra-core-ee
-```
-
-### Creating the Component
-
-The `LiveRecordUpdate` component can be created using the <a href="https://marmelab.com/ra-core/usesubscribetorecord/" target="_blank" rel="noreferrer">`useSubscribeToRecord</a> from `@react-admin/ra-core-ee`. Here is an example of such a `RecordLiveUpdate` component:
+First, create a `<RecordLiveUpdate>` component that uses the `useSubscribeToRecord` hook to subscribe to updates on the current record. When an update is received, it calls the `refetch` function from the `ShowContext` to refresh the record.
 
 ```tsx
 // src/components/admin/record-live-update.tsx
@@ -138,9 +129,7 @@ type RecordLiveUpdateProps = {
 };
 ```
 
-### Usage
-
-Add the `<RecordLiveUpdate>` in your `<Show>` children:
+Then, add the `<RecordLiveUpdate>` in your `<Show>` children:
 
 ```tsx
 import { TextField } from '@/components/admin/data-table';
