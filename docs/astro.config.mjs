@@ -169,7 +169,11 @@ export default defineConfig({
         },
         {
           label: "Misc",
-          items: [enterpriseEntry("RealtimeFeatures", "Realtime"), "mcp"],
+          items: [
+            enterpriseEntry("RealtimeFeatures", "Real-time"),
+            enterpriseEntry("SoftDeleteFeatures", "Soft Delete"),
+            "mcp",
+          ],
         },
       ],
     }),
