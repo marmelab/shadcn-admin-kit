@@ -10,11 +10,7 @@ export const SimpleForm = ({
   className,
   toolbar = defaultFormToolbar,
   ...rest
-}: {
-  children: ReactNode;
-  className?: string;
-  toolbar?: ReactNode;
-} & FormProps) => (
+}: SimpleFormProps) => (
   <Form
     className={cn(`flex flex-col gap-4 w-full max-w-lg`, className)}
     {...rest}
@@ -47,6 +43,12 @@ export const FormToolbar = ({
     )}
   </div>
 );
+
+export type SimpleFormProps = {
+  children: ReactNode;
+  className?: string;
+  toolbar?: ReactNode;
+} & FormProps;
 
 export interface FormToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;

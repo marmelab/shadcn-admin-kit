@@ -137,6 +137,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/date-input.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/delete-button.tsx",
           "type": "registry:component"
         },
