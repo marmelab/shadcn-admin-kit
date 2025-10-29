@@ -5,13 +5,13 @@ title: 'I18N'
 import video from './images/translation.mp4';
 
 <video controls autoplay playsinline muted loop class="w-full aspect-720/420">
-  <source src={video} type="video/mp4" />
-  Your browser does not support the video tag.
+    <source src={video} type="video/mp4" />
+    Your browser does not support the video tag.
 </video>
 
 The Shadcn Admin Kit user interface uses English as the default language. But you can also display the UI and content in other languages, allow changing language at runtime, and even lazy-loading optional languages to avoid increasing the bundle size with all translations.
 
-You will use translation features mostly via the `i18nProvider`, and a set of hooks (`useTranslate`, `useLocaleState`).
+You will use translation features mostly via the `i18nProvider`, the [`<Translate>`](https://marmelab.com/ra-core/translate/) component and a set of hooks ([`useTranslate`](https://marmelab.com/ra-core/usetranslate/), [`useLocaleState`](https://marmelab.com/ra-core/uselocalestate/)).
 
 We'll use a bit of custom vocabulary in this section:
 
@@ -39,7 +39,7 @@ export const i18nProvider = {
 
 Use the `<Admin i18nProvider>` prop to define the `i18nProvider` of a Shadcn Admin Kit app:
 
-```jsx
+```tsx
 import { i18nProvider } from './i18nProvider';
 
 const App = () => (
@@ -57,38 +57,43 @@ Shadcn Admin Kit components use translation keys for their text and rely on the 
 
 For instance, the following save button renders the word 'Save' in English and 'Enregistrer' in French. This is because the button actually renders the return value of the `i18nProvider.translate('ra.action.save')` method:
 
-```jsx
-import { useTranslate } from 'ra-core';
+```tsx
+import { Translate } from 'ra-core';
 
 const SaveButton = ({ doSave }) => {
-    const translate = useTranslate(); // returns the i18nProvider.translate() method
-    return <button onClick={doSave}>{translate('ra.action.save')}</button>;
+    return (
+        <button onClick={doSave}>
+            <Translate key="ra.action.save">Save</Translate>
+        </button>
+    );
 };
 ```
 
 If you build an app for users from several countries, you should do the same: always use translation keys instead of plain text in your own components:
 
-```jsx
+```tsx
 // in src/MyHelloButton.js
-import * as React from 'react';
-import { useTranslate } from 'ra-core';
+import { Translate } from 'ra-core';
 
 export const MyHelloButton = () => {
-    const translate = useTranslate();
     const handleClick = () => {
         /* ... */
     };
-    return <button>{translate('myroot.hello.world')}</button>;
+    return (
+        <button onClick={handleClick}>
+            <Translate key="myroot.hello.world">Hello World</Translate>
+        </button>
+    );
 };
 ```
 
-Check the [Translating the UI](https://marmelab.com/ra-core/translationtranslating/) for example usage of the `useTranslate` hook.
+Check the [Translating the UI](https://marmelab.com/ra-core/translationtranslating/) for example usage of the [`useTranslate`](https://marmelab.com/ra-core/usetranslate/) hook.
 
 ## `ra-i18n-polyglot`
 
 Although you can build an `i18nProvider` from scratch, Shadcn Admin Kit provides a package called `ra-i18n-polyglot` that leverages [the Polyglot.js library](https://airbnb.io/polyglot.js/) to build an `i18nProvider` based on a dictionary of translations.
 
-```jsx
+```tsx
 // in src/i18nProvider.js
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 import en from 'ra-language-english';
