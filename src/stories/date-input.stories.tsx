@@ -1,7 +1,12 @@
 import * as React from "react";
 import polyglotI18nProvider from "ra-i18n-polyglot";
 import englishMessages from "ra-language-english";
-import { CoreAdminContext, minValue, useRecordContext } from "ra-core";
+import {
+  CoreAdminContext,
+  minValue,
+  required,
+  useRecordContext,
+} from "ra-core";
 import { useFormContext, useWatch } from "react-hook-form";
 import get from "lodash/get";
 
@@ -13,6 +18,7 @@ import {
   DateInputProps,
 } from "@/components/admin";
 import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default { title: "Inputs/DateInput" };
 
@@ -24,13 +30,16 @@ export const Basic = ({ dateInputProps, simpleFormProps }: StoryProps) => (
 
 export const OnChangeValidation = ({
   dateInputProps = {
-    validate: () => {
-      return undefined;
-    },
+    validate: [required(), minValue("2022-10-26")],
   },
   simpleFormProps = { mode: "onChange" },
 }: StoryProps) => (
   <Wrapper simpleFormProps={simpleFormProps}>
+    <Alert>
+      <AlertDescription>
+        Published at must be after October 26, 2022
+      </AlertDescription>
+    </Alert>
     <DateInput source="publishedAt" {...dateInputProps} />
   </Wrapper>
 );
@@ -85,6 +94,11 @@ export const ReadOnly = () => (
 
 export const Validate = () => (
   <Wrapper>
+    <Alert>
+      <AlertDescription>
+        Published at must be after October 26, 2022
+      </AlertDescription>
+    </Alert>
     <DateInput source="publishedAt" validate={minValue("2022-10-26")} />
   </Wrapper>
 );
@@ -92,6 +106,7 @@ export const Validate = () => (
 export const Parse = ({ simpleFormProps }: StoryProps) => (
   <Wrapper simpleFormProps={simpleFormProps}>
     <DateInput source="publishedAt" parse={(value) => new Date(value)} />
+    <DateHelper source="publishedAt" value={new Date("2021-10-20")} />
   </Wrapper>
 );
 
