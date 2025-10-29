@@ -106,6 +106,7 @@ export default defineConfig({
             "bulkexportbutton",
             "cancelbutton",
             "createbutton",
+            "dateinput",
             "deletebutton",
             "editbutton",
             "fileinput",
