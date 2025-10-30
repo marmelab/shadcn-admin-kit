@@ -2,16 +2,21 @@
 title: 'Soft Delete'
 ---
 
-The soft delete feature is an [Enterprise Edition add-on](https://react-admin-ee.marmelab.com/documentation/ra-core-ee) that allows you to "delete" records without actually removing them from your database.
+Shadcn Admin Kit provides hooks and components to let users "delete" records without actually removing them from your database.
 
 Use it to:
 
 - Archive records safely instead of permanent deletion
+- Require a second confirmation step before permanent deletion ("four-eyes" principle)
 - Browse and filter all deleted records in a dedicated interface
 - Restore archived items individually or in bulk
 - Track who deleted what and when
 
 ## Installation
+
+The soft delete features require a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription. Once subscribed, follow the [instructions to get access to the private npm repository](https://react-admin-ee.marmelab.com/setup).
+
+You can then install the npm package providing the realtime features using your favorite package manager:
 
 ```bash
 npm install --save @react-admin/ra-core-ee
@@ -19,9 +24,32 @@ npm install --save @react-admin/ra-core-ee
 yarn add @react-admin/ra-core-ee
 ```
 
-You will need an active Enterprise Edition license to use this package. Please refer to the [Enterprise Edition documentation](https://react-admin-ee.marmelab.com) for more details.
+## Features
 
-## Data Provider
+The Soft Delete packages let you build a complete soft delete experience in your admin, including:
+
+- [`<SoftDeleteButton>`](./DeleteButton.md#soft-delete): A button that marks the current record as deleted instead of permanently deleting it.
+- [`<BulkSoftDeleteButton>`](./BulkDeleteButton.md#soft-delete): A button that marks the selected records as deleted instead of permanently deleting them.
+- [`<RestoreButton>`](./DeleteButton.md#restore-button): A button to restore a soft deleted record.
+- [`<DeletedRecordsListBase>`](https://marmelab.com/ra-core/deletedrecordslistbase/): A Deleted Records list view to browse and filter deleted records.
+- [`<ShowDeletedBase>`](https://marmelab.com/ra-core/showdeletedbase/): A Deleted Record show view to see the details of a deleted record.
+- [`<DeletedRecordRepresentation>`](https://marmelab.com/ra-core/deletedrecordrepresentation/): A component that renders the record representation of a deleted record.
+
+It leverages the following hooks to interact with the data provider:
+
+- [`useSoftDelete`](https://marmelab.com/ra-core/usesoftdelete/)
+- [`useSoftDeleteMany`](https://marmelab.com/ra-core/usesoftdeletemany/)
+- [`useGetListDeleted`](https://marmelab.com/ra-core/usegetlistdeleted/)
+- [`useGetOneDeleted`](https://marmelab.com/ra-core/usegetonedeleted/)
+- [`useRestoreOne`](https://marmelab.com/ra-core/userestoreone/)
+- [`useRestoreMany`](https://marmelab.com/ra-core/userestoremany/)
+- [`useHardDelete`](https://marmelab.com/ra-core/useharddelete/)
+- [`useHardDeleteMany`](https://marmelab.com/ra-core/useharddeletemany/)
+- [`useDeleteRecordsListController`](https://marmelab.com/ra-core/usedeletedrecordslistcontroller/)
+
+## Data Provider Requirements
+
+In order to use the Soft Delete features, your data provider must implement a few new methods.
 
 ### Methods
 
@@ -187,22 +215,9 @@ When using `addSoftDeleteInPlace`, avoid calling `getListDeleted` without a `res
 
 You can also write your own implementation. Feel free to look at these builders source code for inspiration. You can find it under your `node_modules` folder, e.g. at `node_modules/@react-admin/ra-core-ee/src/soft-delete/dataProvider/addSoftDeleteBasedOnResource.ts`.
 
-### Query and Mutation Hooks
-
-Each data provider verb has its own hook so you can use them in custom components:
-
-- `softDelete`: [`useSoftDelete`](https://marmelab.com/ra-core/usesoftdelete/)
-- `softDeleteMany`: [`useSoftDeleteMany`](https://marmelab.com/ra-core/usesoftdeletemany/)
-- `getListDeleted`: [`useGetListDeleted`](https://marmelab.com/ra-core/usegetlistdeleted/)
-- `getOneDeleted`: [`useGetOneDeleted`](https://marmelab.com/ra-core/usegetonedeleted/)
-- `restoreOne`: [`useRestoreOne`](https://marmelab.com/ra-core/userestoreone/)
-- `restoreMany`: [`useRestoreMany`](https://marmelab.com/ra-core/userestoremany/)
-- `hardDelete`: [`useHardDelete`](https://marmelab.com/ra-core/useharddelete/)
-- `hardDeleteMany`: [`useHardDeleteMany`](https://marmelab.com/ra-core/useharddeletemany/)
-
 ### `createMany`
 
-`ra-core-ee` provides a default implementation of the `createMany` method that simply calls `create` multiple times. However, some data providers may be able to create multiple records at once, which can greatly improve performances.
+The [`<BulkSoftDeleteButton>`](./BulkDeleteButton.md#soft-delete) has to create or update several records at once. If your data provider supports the `createMany` method to create multiple records at once, it will use it instead of calling `create` multiple times for performance reasons.
 
 ```tsx
 const dataProviderWithCreateMany = {
@@ -214,11 +229,3 @@ const dataProviderWithCreateMany = {
     },
 };
 ```
-
-## Components
-
-The Soft Delete features the following components that provides helpers to build applications that relies on that feature:
-
-- [`<DeletedRecordsListBase>`](https://marmelab.com/ra-core/deletedrecordslistbase/): A component that fetches a list of deleted records from the data provider
-- [`<ShowDeletedBase>`](https://marmelab.com/ra-core/showdeletedbase/): A component that replaces the <ShowBase> component when displaying a deleted record
-- [`<DeletedRecordRepresentation>`](https://marmelab.com/ra-core/deletedrecordrepresentation/): A component that renders the record representation of a deleted record.
