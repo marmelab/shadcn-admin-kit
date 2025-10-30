@@ -39,3 +39,49 @@ On error, it notifies with an error message or `ra.notification.http_error`, the
 | `resource` | Optional | `string` | inferred | Resource name (rarely needed) |
 
 Additional props are passed to the underlying shadcn/ui `<Button>` component.
+
+## Soft Delete
+
+If your data provider supports soft delete (see [Soft Delete Features](./SoftDeleteFeatures.md)), you can use an alternative `BulkSoftDeleteButton` that performs a soft delete instead of a permanent delete:
+
+```tsx
+import { type RaRecord, useResourceContext, useListContext } from "ra-core";
+import { Button } from "@/components/ui/button";
+import { useSoftDeleteMany } from "@react-admin/ra-core-ee";
+
+export function BulkSoftDeleteButton(props: BulkSoftDeleteButtonProps) {
+  const resource = useResourceContext(props);
+  const { selectedIds, onUnselectItems } = useListContext();
+  const [softDeleteMany, { isPending }] = useSoftDeleteMany();
+
+  const handleSoftDelete = () => {
+    softDeleteMany(
+      resource,
+      { ids: selectedIds },
+      {
+        onError: (err) => {
+          console.error("An error occurred while soft deleting", err);
+        },
+        onSuccess: () => {
+          onUnselectItems();
+        },
+      }
+    );
+  };
+
+  return (
+    <Button
+      type="button"
+      variant="destructive"
+      onClick={handleSoftDelete}
+      disabled={isPending}
+    >
+      Delete
+    </Button>
+  );
+}
+
+type BulkSoftDeleteButtonProps = {
+  resource?: string;
+};
+```
