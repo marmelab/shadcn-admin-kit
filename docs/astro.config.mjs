@@ -58,6 +58,7 @@ export default defineConfig({
             "customroutes",
             "dataproviders",
             "security",
+            "translation",
           ],
         },
         {
@@ -144,6 +145,18 @@ export default defineConfig({
           ],
         },
         {
+          label: "I18N Provider & Translations",
+          items: [
+            raCoreEntry("translationsetup", "Setting Up"),
+            raCoreEntry("translationlocales", "Supported Locales"),
+            raCoreEntry("translationtranslating", "Translating UI Components"),
+            raCoreEntry("translationwriting", "Writing an I18nProvider"),
+            raCoreEntry("translate", "Translate"),
+            raCoreEntry("uselocalestate", "useLocaleState"),
+            raCoreEntry("usetranslate", "useTranslate"),
+          ],
+        },
+        {
           label: "Misc",
           items: [enterpriseEntry("RealtimeFeatures", "Realtime"), "mcp"],
         },
@@ -199,15 +212,16 @@ function enterpriseEntry(name, label = undefined) {
 
 /**
  * @param {string} name
+ * @param {string | undefined} label
  * @returns {any}
  */
-function raCoreEntry(name) {
+function raCoreEntry(name, label = undefined) {
   return {
     link: `https://marmelab.com/ra-core/${name.toLowerCase()}/`,
-    label: name,
-    attrs: { class: "enterprise", target: "_blank", rel: "noreferrer" },
+    label: label ?? name,
+    attrs: { class: "ra-core", target: "_blank", rel: "noreferrer" },
     badge: {
-      text: "React Admin Enterprise",
+      text: "RA Core",
       variant: "default",
     },
   };

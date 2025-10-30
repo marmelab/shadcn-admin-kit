@@ -100,3 +100,33 @@ a[aria-current="page"].enterprise span:not(.sl-badge)::after {
   span:not(.sl-badge)::after {
   background-image: url("/public/premium-black.svg");
 }
+
+a.ra-core {
+  position: relative;
+  padding-right: 26px;
+}
+
+a.ra-core .sl-badge {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+a.ra-core span:not(.sl-badge)::after {
+  content: "";
+  background-repeat: no-repeat;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 6px;
+  right: 10px;
+}
+
+a.ra-core span:not(.sl-badge)::after {
+  background-size: contain;
+  background-image: url("/public/ra-core.svg");
+}
