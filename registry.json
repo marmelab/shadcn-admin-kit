@@ -1,13 +1,13 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "Shadcn Admin Kit",
-  "homepage": "https://github.com/marmelab/shadcn-admin-kit",
+  "homepage": "https://marmelab.com/shadcn-admin-kit/",
   "items": [
     {
-      "name": "shadcn-admin-kit-base",
+      "name": "admin",
       "type": "registry:block",
-      "title": "Shadcn Admin Kit Base",
-      "description": "Shadcn Admin Kit Base Components",
+      "title": "Shadcn Admin Kit Main Block",
+      "description": "The Admin component, along with all the necessary components to create an admin (such as List, Edit, DataTable, TextField, TextInput, etc.)",
       "registryDependencies": [
         "accordion",
         "alert",
@@ -375,22 +375,23 @@
         {
           "path": "src/lib/utils.ts",
           "type": "registry:lib"
+        },
+        {
+          "path": "rules/AGENTS.md",
+          "type": "registry:file",
+          "target": "~/AGENTS.md"
         }
       ]
     },
     {
-      "name": "shadcn-admin-kit",
-      "type": "registry:style",
+      "name": "example-admin",
+      "type": "registry:block",
+      "title": "Example Admin built with Shadcn Admin Kit",
+      "registryDependencies": ["@shadcn-admin-kit/admin"],
       "files": [
         {
-          "path": "rules/registry.mdc",
-          "type": "registry:file",
-          "target": "~/.cursor/rules/shadcn-admin-kit.mdc"
-        },
-        {
-          "path": "rules/registry.mdc",
-          "type": "registry:file",
-          "target": "~/.github/shadcn-admin-kit.instructions.md"
+          "path": "src/examples/example-admin.tsx",
+          "type": "registry:component"
         }
       ]
     }

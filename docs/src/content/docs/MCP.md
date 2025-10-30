@@ -13,7 +13,17 @@ This project is compatible with the new `shadcn mcp` command, and contains Curso
 
 ### Prerequisites
 
-It is recommended to use this registry within a **Vite** project that already has **Tailwind CSS v4** configured.
+It is recommended to use this registry within a **Next.js** or **Vite** project that already has **Tailwind CSS v4** configured.
+
+#### Using Next.js
+
+Example command to create a new Next.js project, configured with Shadcn UI and Tailwind CSS v4:
+
+```bash
+npx shadcn@latest init
+```
+
+#### Using Vite
 
 Example command to create a new Vite project:
 
