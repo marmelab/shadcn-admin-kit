@@ -13,7 +13,17 @@ This project is compatible with the new `shadcn mcp` command, and contains Curso
 
 ### Prerequisites
 
-It is recommended to use this registry within a **Vite** project that already has **Tailwind CSS v4** configured.
+It is recommended to use this registry within a **Next.js** or **Vite** project that already has **Tailwind CSS v4** configured.
+
+#### Using Next.js
+
+Example command to create a new Next.js project, configured with Shadcn UI and Tailwind CSS v4:
+
+```bash
+npx shadcn@latest init
+```
+
+#### Using Vite
 
 Example command to create a new Vite project:
 
@@ -83,8 +93,9 @@ The Shadcn Admin Kit documentation is also available through the [Context7 MCP S
 To allow GitHub Copilot Agent to browse the Shadcn Admin Kit documentation using Context7 in VSCode, you can add the following MCP server configuration to your `.vscode/mcp.json` file. You can generate your API key from the [Context7 Dashboard](https://context7.com/dashboard).
 
 ```json
-"mcp": {
+{
   "servers": {
+    // other MCP servers...
     "context7": {
       "type": "http",
       "url": "https://mcp.context7.com/mcp",

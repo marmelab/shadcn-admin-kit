@@ -210,6 +210,9 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
+      ra-data-json-server:
+        specifier: ^5.12.0
+        version: 5.12.2(react-dom@19.1.0(react@19.1.0))(react-hook-form@7.56.3(react@19.1.0))(react-router-dom@7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-router@7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       react-error-boundary:
         specifier: ^6.0.0
         version: 6.0.0(react@19.1.0)
@@ -4826,10 +4829,22 @@ packages:
       react-router: ^6.28.1 || ^7.1.1
       react-router-dom: ^6.28.1 || ^7.1.1
 
+  ra-core@5.12.2:
+    resolution: {integrity: sha512-NkvRtnv/o5w7ZFJ7XU0Mu8gK1RI2IWFZu4ymt9SP462sAj6CpKx5fHGdQE723tgkUxwPbzKbPX6ohAlFOzy7HQ==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+      react-hook-form: ^7.53.0
+      react-router: ^6.28.1 || ^7.1.1
+      react-router-dom: ^6.28.1 || ^7.1.1
+
   ra-data-fakerest@5.12.0:
     resolution: {integrity: sha512-2AFc6a0dJIx8BDvaMp09oC8zzTq8tV1K9E4imBli07p8mMG5/a/OTyGoYFrMW+/Iu7Uo52sDdXC3QTQvIHlipw==}
     peerDependencies:
       ra-core: ^5.0.0
+
+  ra-data-json-server@5.12.2:
+    resolution: {integrity: sha512-oXbGdQaCDUzmLOwopVUzA1RnYN+Y6jhpkfyCHwCIOmGuCmO1paC0zP+RngBjAFs7yfj2qz2VYyfn6adZBY5iSQ==}
 
   ra-i18n-polyglot@5.12.0:
     resolution: {integrity: sha512-LzBKHTSm65Mwu2SmqehbbxiAN3UD1gkCdvU0QWnhrKdWA5x3s+rNrmi5zmYe+ZpzQmcc0cIU9GeDdyRx1HjOsQ==}
@@ -11053,10 +11068,38 @@ snapshots:
       react-router: 7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react-router-dom: 7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
 
+  ra-core@5.12.2(react-dom@19.1.0(react@19.1.0))(react-hook-form@7.56.3(react@19.1.0))(react-router-dom@7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-router@7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0):
+    dependencies:
+      '@tanstack/react-query': 5.83.0(react@19.1.0)
+      date-fns: 3.6.0
+      eventemitter3: 5.0.1
+      inflection: 3.0.2
+      jsonexport: 3.2.0
+      lodash: 4.17.21
+      query-string: 7.1.3
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      react-error-boundary: 4.1.2(react@19.1.0)
+      react-hook-form: 7.56.3(react@19.1.0)
+      react-is: 19.1.0
+      react-router: 7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react-router-dom: 7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+
   ra-data-fakerest@5.12.0(ra-core@5.12.0(react-dom@19.1.0(react@19.1.0))(react-hook-form@7.56.3(react@19.1.0))(react-router-dom@7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-router@7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)):
     dependencies:
       fakerest: 4.1.2
       ra-core: 5.12.0(react-dom@19.1.0(react@19.1.0))(react-hook-form@7.56.3(react@19.1.0))(react-router-dom@7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-router@7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
+
+  ra-data-json-server@5.12.2(react-dom@19.1.0(react@19.1.0))(react-hook-form@7.56.3(react@19.1.0))(react-router-dom@7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-router@7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0):
+    dependencies:
+      query-string: 7.1.3
+      ra-core: 5.12.2(react-dom@19.1.0(react@19.1.0))(react-hook-form@7.56.3(react@19.1.0))(react-router-dom@7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-router@7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
+    transitivePeerDependencies:
+      - react
+      - react-dom
+      - react-hook-form
+      - react-router
+      - react-router-dom
 
   ra-i18n-polyglot@5.12.0(react-dom@19.1.0(react@19.1.0))(react-hook-form@7.56.3(react@19.1.0))(react-router-dom@7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-router@7.6.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0):
     dependencies:

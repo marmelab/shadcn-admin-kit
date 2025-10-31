@@ -31,7 +31,7 @@ cd ./temp
 pnpm install
 
 echo "Adding registry components"
-pnpm dlx shadcn@latest add http://localhost:8080/r/shadcn-admin-kit-base.json
+pnpm dlx shadcn@latest add http://localhost:8080/r/admin.json
 
 echo "Stopping registry server"
 kill $SERVER_PID

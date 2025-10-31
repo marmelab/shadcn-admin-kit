@@ -59,7 +59,7 @@ Set the `verbatimModuleSyntax` option to `false` in your `tsconfig.json` file to
 Next, pull the `shadcn-admin-kit` components using the `shadcn` command:
 
 ```bash
-npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
+npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/admin.json
 ```
 
 This will add some components to the `components/admin` directory, and utilities inside the `hooks` and `lib` directories.
@@ -201,7 +201,7 @@ You will be asked a few questions to configure `components.json`.
 You can now start adding components to your project. Let's start with the `shadcn-admin-kit` components.
 
 ```shell
-npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/shadcn-admin-kit-base.json
+npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/admin.json
 ```
 
 **Warning**: you need to set the `verbatimModuleSyntax` option to `false` in your `tsconfig.app.json` file to avoid an [issue](https://github.com/shadcn-ui/ui/issues/6618) with the latest version of TypeScript.
