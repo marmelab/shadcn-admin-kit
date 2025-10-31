@@ -95,6 +95,7 @@ export const ReviewList = () => {
         perPage={25}
         filters={isMobile ? undefined : filters}
         pagination={match ? false : undefined}
+        queryOptions={{ meta: { embed: ["customer", "product"] } }}
       >
         {isMobile ? (
           <ReviewListMobile />
@@ -243,12 +244,18 @@ const ReviewListDesktop = ({ selectedRow }: { selectedRow?: number }) => {
         source="date"
         render={(record) => new Date(record.date).toLocaleDateString()}
       />
-      <DataTable.Col source="customer_id">
+      <DataTable.Col
+        source="customer.last_name"
+        label="resources.reviews.fields.customer_id"
+      >
         <ReferenceField source="customer_id" reference="customers" link={false}>
           <FullNameField />
         </ReferenceField>
       </DataTable.Col>
-      <DataTable.Col source="product_id">
+      <DataTable.Col
+        source="product.reference"
+        label="resources.reviews.fields.product_id"
+      >
         <ReferenceField source="product_id" reference="products" link={false} />
       </DataTable.Col>
       <DataTable.Col

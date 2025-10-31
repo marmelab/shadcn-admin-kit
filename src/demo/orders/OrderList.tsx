@@ -53,6 +53,7 @@ export const OrderList = () => (
     filters={filters}
     perPage={25}
     actions={<ListActions />}
+    queryOptions={{ meta: { embed: ["customer"] } }}
   >
     <TabbedDataTable />
   </List>
@@ -121,7 +122,11 @@ const OrdersTable = ({ storeKey }: { storeKey: string }) => (
       render={(record) => new Date(record.date).toLocaleString()}
     />
     <DataTable.Col source="reference" className="hidden md:table-cell" />
-    <DataTable.Col source="customer_id" className="hidden md:table-cell">
+    <DataTable.Col
+      source="customer.last_name"
+      label="resources.orders.fields.customer_id"
+      className="hidden md:table-cell"
+    >
       <ReferenceField source="customer_id" reference="customers" link={false}>
         <FullNameField />
       </ReferenceField>
