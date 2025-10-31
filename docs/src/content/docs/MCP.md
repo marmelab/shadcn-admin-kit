@@ -93,8 +93,9 @@ The Shadcn Admin Kit documentation is also available through the [Context7 MCP S
 To allow GitHub Copilot Agent to browse the Shadcn Admin Kit documentation using Context7 in VSCode, you can add the following MCP server configuration to your `.vscode/mcp.json` file. You can generate your API key from the [Context7 Dashboard](https://context7.com/dashboard).
 
 ```json
-"mcp": {
+{
   "servers": {
+    // other MCP servers...
     "context7": {
       "type": "http",
       "url": "https://mcp.context7.com/mcp",
