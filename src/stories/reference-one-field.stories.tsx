@@ -1,9 +1,7 @@
+import { CoreAdminContext, RecordContextProvider, ResourceContextProvider, TestMemoryRouter } from "ra-core";
 import fakeRestProvider from "ra-data-fakerest";
-import { Resource, TestMemoryRouter } from "ra-core";
 
-import { Admin } from "@/components/admin/admin";
-import { ListGuesser } from "@/components/admin/list-guesser";
-import { Show } from "@/components/admin/show";
+import { ThemeProvider } from "@/components/admin";
 import { RecordField } from "@/components/admin/record-field";
 import { ReferenceOneField } from "@/components/admin/reference-one-field";
 
@@ -18,32 +16,38 @@ export default {
 };
 
 const fakeData = {
-  workouts: [{ id: 1, short_id: 'LegDay01', title: "Leg Day" }],
   workoutDetails: [
     { workout_id: 'LegDay01', duration: 120, note: 'Not very hard' },
   ],
 };
+
 const dataProvider = fakeRestProvider(fakeData, true);
 
-export const Basic = () => (
+const Wrapper = ({
+  children,
+  dataProvider,
+}: {
+  children: React.ReactNode;
+  dataProvider: any;
+}) => (
   <TestMemoryRouter initialEntries={["/workouts/1/show"]}>
-    <Admin dataProvider={dataProvider}>
-      <Resource
-        name="workouts"
-        list={ListGuesser}
-        show={
-          <Show>
-            <div className="flex flex-col gap-4">
-              <RecordField source="id" />
-              <RecordField source="title" />
-              <ReferenceOneField reference="workoutDetails" source="short_id" target="workout_id">
-                <RecordField source="note" label="Workout note" />
-              </ReferenceOneField>
-            </div>
-          </Show>
-        }
-      />
-    </Admin>
-  </TestMemoryRouter >
+    <ThemeProvider>
+      <CoreAdminContext dataProvider={dataProvider}>
+        <ResourceContextProvider value="workouts">
+          <RecordContextProvider value={{ id: 1, short_id: 'LegDay01', title: "Leg Day" }}>
+            {children}
+          </RecordContextProvider>
+        </ResourceContextProvider>
+      </CoreAdminContext>
+    </ThemeProvider>
+  </TestMemoryRouter >)
+
+
+export const Basic = () => (
+  <Wrapper dataProvider={dataProvider}>
+    <ReferenceOneField reference="workoutDetails" source="short_id" target="workout_id">
+      <RecordField source="note" label="Workout note" />
+    </ReferenceOneField></Wrapper>
+
 );
 
