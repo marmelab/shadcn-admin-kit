@@ -1,4 +1,4 @@
-import { CoreAdminContext, DataProvider, RecordContextProvider, ResourceContextProvider, TestMemoryRouter } from "ra-core";
+import { CoreAdminContext, RecordContextProvider, ResourceContextProvider, TestMemoryRouter } from "ra-core";
 import fakeRestProvider from "ra-data-fakerest";
 
 import { ThemeProvider } from "@/components/admin";
@@ -22,6 +22,19 @@ const fakeData = {
 };
 
 const dataProvider = fakeRestProvider(fakeData, true);
+
+const slowDataProvider = {
+  getManyReference: () => new Promise(resolve => {
+    setTimeout(() => {
+      resolve({
+        data: [
+          { id: 1, workout_id: 'CardioDay08', duration: 120, note: 'Slow cardio today.' },
+        ],
+        total: 1
+      });
+    }, 2000);
+  })
+};
 
 const Wrapper = ({
   children,
@@ -51,19 +64,6 @@ export const Basic = () => (
   </Wrapper>
 );
 
-const slowDataProvider = {
-  getManyReference: () => new Promise(resolve => {
-    setTimeout(() => {
-      resolve({
-        data: [
-          { id: 1, workout_id: 'CardioDay08', duration: 120, note: 'Slow cardio today.' },
-        ],
-        total: 1
-      });
-    }, 2000);
-  })
-};
-
 export const Loading = () => (
   <Wrapper dataProvider={slowDataProvider}>
     <ReferenceOneField reference="workoutDetails" source="short_id" target="workout_id">
@@ -72,3 +72,20 @@ export const Loading = () => (
   </Wrapper>
 )
 
+export const WithRenderProp = () => (
+  <Wrapper dataProvider={slowDataProvider}>
+    <ReferenceOneField
+      reference="workoutDetails"
+      source="short_id"
+      target="workout_id"
+      render={({ isPending, error, referenceRecord }) => {
+        if (isPending) {
+          return <p>Loading...</p>;
+        }
+        if (error) {
+          return <p style={{ color: 'red' }}>{error.toString()}</p>
+        }
+        return (<span>{referenceRecord ? referenceRecord.note : <b>No note.</b>}</span>)
+      }} />
+  </Wrapper>
+)
