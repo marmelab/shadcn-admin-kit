@@ -145,18 +145,6 @@ export default defineConfig({
           ],
         },
         {
-          label: "I18N Provider & Translations",
-          items: [
-            raCoreEntry("translationsetup", "Setting Up"),
-            raCoreEntry("translationlocales", "Supported Locales"),
-            raCoreEntry("translationtranslating", "Translating UI Components"),
-            raCoreEntry("translationwriting", "Writing an I18nProvider"),
-            raCoreEntry("translate", "Translate"),
-            raCoreEntry("uselocalestate", "useLocaleState"),
-            raCoreEntry("usetranslate", "useTranslate"),
-          ],
-        },
-        {
           label: "Misc",
           items: [
             enterpriseEntry("RealtimeFeatures", "Real-time"),
