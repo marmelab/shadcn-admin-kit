@@ -6,7 +6,6 @@ import { ListGuesser } from "@/components/admin/list-guesser";
 import { Show } from "@/components/admin/show";
 import { RecordField } from "@/components/admin/record-field";
 import { ReferenceOneField } from "@/components/admin/reference-one-field";
-import { TextField } from "@/components/admin";
 
 export default {
   title: "Fields/ReferenceOneField",
@@ -38,7 +37,7 @@ export const Basic = () => (
               <RecordField source="id" />
               <RecordField source="title" />
               <ReferenceOneField reference="workoutDetails" source="short_id" target="workout_id">
-                <TextField source="note" />
+                <RecordField source="note" label="Workout note" />
               </ReferenceOneField>
             </div>
           </Show>
