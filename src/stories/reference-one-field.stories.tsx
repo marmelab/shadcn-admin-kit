@@ -47,7 +47,7 @@ export const Basic = () => (
   <Wrapper dataProvider={dataProvider}>
     <ReferenceOneField reference="workoutDetails" source="short_id" target="workout_id">
       <RecordField source="note" label="Workout note" />
-    </ReferenceOneField></Wrapper>
-
+    </ReferenceOneField>
+  </Wrapper>
 );
 
