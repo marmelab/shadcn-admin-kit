@@ -36,6 +36,7 @@ export const ReferenceOneField = <
         render={render}
         loading={loading}
         error={error}
+        empty={empty}
         {...rest}
       />
     </ReferenceOneFieldBase>

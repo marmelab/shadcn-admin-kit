@@ -1,9 +1,10 @@
-import { CoreAdminContext, RecordContextProvider, ResourceContextProvider, TestMemoryRouter } from "ra-core";
+import { CoreAdminContext, I18nContextProvider, RecordContextProvider, ResourceContextProvider, TestMemoryRouter } from "ra-core";
 import fakeRestProvider from "ra-data-fakerest";
-
+import polyglotI18nProvider from "ra-i18n-polyglot";
 import { TextField, ThemeProvider } from "@/components/admin";
 import { RecordField } from "@/components/admin/record-field";
 import { ReferenceOneField } from "@/components/admin/reference-one-field";
+import englishMessages from "ra-language-english";
 
 export default {
   title: "Fields/ReferenceOneField",
@@ -14,6 +15,19 @@ export default {
     },
   },
 };
+
+const i18nProvider = polyglotI18nProvider(
+  () => ({
+    ...englishMessages,
+    resources: {
+      workouts: {
+        name: "Workouts",
+        not_found: 'Workout not found'
+      }
+    }
+  }),
+  'en'
+);
 
 const fakeData = {
   workoutDetails: [
@@ -39,6 +53,15 @@ const slowDataProvider = {
         total: 1
       });
     }, 2000);
+  })
+};
+
+const emptyDataProvider = {
+  getManyReference: () => new Promise(resolve => {
+    resolve({
+      data: [],
+      total: 0
+    });
   })
 };
 
@@ -105,5 +128,20 @@ export const InShowLayout = () => (
         <RecordField source="duration" label="Duration" />
       </ReferenceOneField>
     </div>
+  </Wrapper>
+)
+
+export const EmptyWithTranslate = () => (
+  <Wrapper dataProvider={emptyDataProvider}>
+    <I18nContextProvider value={i18nProvider}>
+      <ReferenceOneField
+        reference="workoutDetails"
+        source="short_id"
+        target="workout_id"
+        empty="resources.workouts.not_found"
+      >
+        <TextField source="note" />
+      </ReferenceOneField>
+    </I18nContextProvider>
   </Wrapper>
 )
