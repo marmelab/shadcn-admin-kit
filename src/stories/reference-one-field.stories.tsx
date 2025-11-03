@@ -1,4 +1,4 @@
-import { CoreAdminContext, RecordContextProvider, ResourceContextProvider, TestMemoryRouter } from "ra-core";
+import { CoreAdminContext, DataProvider, RecordContextProvider, ResourceContextProvider, TestMemoryRouter } from "ra-core";
 import fakeRestProvider from "ra-data-fakerest";
 
 import { ThemeProvider } from "@/components/admin";
@@ -50,4 +50,25 @@ export const Basic = () => (
     </ReferenceOneField>
   </Wrapper>
 );
+
+const slowDataProvider = {
+  getManyReference: () => new Promise(resolve => {
+    setTimeout(() => {
+      resolve({
+        data: [
+          { id: 1, workout_id: 'CardioDay08', duration: 120, note: 'Slow cardio today.' },
+        ],
+        total: 1
+      });
+    }, 2000);
+  })
+};
+
+export const Loading = () => (
+  <Wrapper dataProvider={slowDataProvider}>
+    <ReferenceOneField reference="workoutDetails" source="short_id" target="workout_id">
+      <RecordField source="note" label="Workout note" />
+    </ReferenceOneField>
+  </Wrapper>
+)
 
