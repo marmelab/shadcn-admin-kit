@@ -1,7 +1,7 @@
 import { CoreAdminContext, RecordContextProvider, ResourceContextProvider, TestMemoryRouter } from "ra-core";
 import fakeRestProvider from "ra-data-fakerest";
 
-import { ThemeProvider } from "@/components/admin";
+import { TextField, ThemeProvider } from "@/components/admin";
 import { RecordField } from "@/components/admin/record-field";
 import { ReferenceOneField } from "@/components/admin/reference-one-field";
 
@@ -17,7 +17,13 @@ export default {
 
 const fakeData = {
   workoutDetails: [
-    { workout_id: 'LegDay01', duration: 120, note: 'Not very hard' },
+    {
+      id: 1,
+      workout_id: 'LegDay01',
+      duration: 120,
+      name: 'Leg Day',
+      note: 'Not very hard. Bit tired after!'
+    },
   ],
 };
 
@@ -28,7 +34,7 @@ const slowDataProvider = {
     setTimeout(() => {
       resolve({
         data: [
-          { id: 1, workout_id: 'CardioDay08', duration: 120, note: 'Slow cardio today.' },
+          fakeData.workoutDetails[0]
         ],
         total: 1
       });
@@ -87,5 +93,17 @@ export const WithRenderProp = () => (
         }
         return (<span>{referenceRecord ? referenceRecord.note : <b>No note.</b>}</span>)
       }} />
+  </Wrapper>
+)
+
+export const InShowLayout = () => (
+  <Wrapper dataProvider={dataProvider}>
+    <div className="flex flex-col gap-4">
+      <TextField source="name" />
+      <ReferenceOneField reference="workoutDetails" source="short_id" target="workout_id">
+        <RecordField source="note" label="Workout note" />
+        <RecordField source="duration" label="Duration" />
+      </ReferenceOneField>
+    </div>
   </Wrapper>
 )
