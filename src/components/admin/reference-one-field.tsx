@@ -52,9 +52,7 @@ export interface ReferenceOneFieldViewProps<
   empty?: ReactNode;
   loading?: ReactNode;
   render?: (props: UseReferenceFieldControllerResult) => ReactNode;
-  resource?: string;
   translateChoice?: ((record: ReferenceRecordType) => string) | boolean;
-  resourceLinkPath?: LinkToType;
   error?: ReactNode;
 }
 
