@@ -37,6 +37,7 @@ export interface ReferenceOneFieldProps<
   record?: RecordType;
   sort?: SortPayload;
   link?: LinkToType;
+  offline?: ReactNode;
 }
 
 export interface ReferenceOneFieldViewProps {

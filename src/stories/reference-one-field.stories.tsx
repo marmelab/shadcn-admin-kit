@@ -1,10 +1,13 @@
-import { CoreAdminContext, I18nContextProvider, RecordContextProvider, ResourceContextProvider, TestMemoryRouter } from "ra-core";
+import { CoreAdminContext, I18nContextProvider, RecordContextProvider, ResourceContextProvider, TestMemoryRouter, useIsOffline } from "ra-core";
 import fakeRestProvider from "ra-data-fakerest";
 import polyglotI18nProvider from "ra-i18n-polyglot";
 import { TextField, ThemeProvider } from "@/components/admin";
 import { RecordField } from "@/components/admin/record-field";
 import { ReferenceOneField } from "@/components/admin/reference-one-field";
 import englishMessages from "ra-language-english";
+import React from "react";
+import { onlineManager } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
 
 export default {
   title: "Fields/ReferenceOneField",
@@ -157,6 +160,55 @@ export const EmptyWithTranslate = () => (
       >
         <TextField source="note" />
       </ReferenceOneField>
+    </I18nContextProvider>
+  </Wrapper>
+)
+const RenderChildOnDemand = ({ children }: { children: React.ReactNode }) => {
+  const [showChild, setShowChild] = React.useState(false);
+  return (
+    <>
+      <Button onClick={() => setShowChild(!showChild)}>
+        Toggle ReferenceOneField visibility
+      </Button>
+      {showChild && <div>{children}</div>}
+    </>
+  );
+};
+
+const SimulateOfflineButton = () => {
+  const isOffline = useIsOffline();
+  return (
+    <>
+      <Button
+        variant="outline"
+        onClick={() => onlineManager.setOnline(isOffline)}
+      >
+        {isOffline ? 'Simulate online' : 'Simulate offline'}
+      </Button>
+      <span>You are currently <b>{isOffline ? 'offline' : 'online'}</b></span>
+    </>
+  );
+};
+export const Offline = () => (
+  <Wrapper dataProvider={dataProvider} >
+    <I18nContextProvider value={i18nProvider}>
+      <div className="flex flex-col gap-4">
+        <RenderChildOnDemand>
+          <ReferenceOneField
+            reference="workoutDetails"
+            source="short_id"
+            target="workout_id"
+            offline={
+              <span style={{ color: 'orange' }}>
+                You are offline, cannot load data!
+              </span>
+            }
+          >
+            <TextField source="note" />
+          </ReferenceOneField>
+        </RenderChildOnDemand>
+        <SimulateOfflineButton />
+      </div>
     </I18nContextProvider>
   </Wrapper>
 )

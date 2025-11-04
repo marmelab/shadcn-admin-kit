@@ -61,7 +61,7 @@ const BookShow = () => (
 | `record` | Optional | `object` | Context record | Explicit record |
 | `render` | Optional | `(ctx)=>ReactNode` | - | Custom renderer receiving reference field context |
 | `link` | Optional | `LinkToType` | `edit` | Link target or false / function |
-
+| `offline` | Optional | `ReactNode` | - | The text or element to display when there is no network connectivity |
 
 ## Record Representation
 
