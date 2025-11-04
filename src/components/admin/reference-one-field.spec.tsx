@@ -1,4 +1,4 @@
-import { Basic, EmptyWithTranslate, WithRenderProp } from "@/stories/reference-one-field.stories";
+import { Basic, EmptyWithString, EmptyWithTranslate, WithRenderProp } from "@/stories/reference-one-field.stories";
 import { describe, expect, it } from "vitest";
 import { render } from "vitest-browser-react";
 
@@ -14,6 +14,11 @@ describe('ReferenceOneField', () => {
         const screen = render(<WithRenderProp />);
         await expect.element(screen.getByText(NOTE_TO_DISPLAY)).toBeInTheDocument();
     });
+
+    it('should show empty string', async () => {
+        const screen = render(<EmptyWithString />);
+        await expect.element(screen.getByText('This workout does not exists')).toBeInTheDocument();
+    })
 
     it('should translate emptyText', async () => {
         const screen = render(<EmptyWithTranslate />);

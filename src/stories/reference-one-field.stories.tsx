@@ -131,6 +131,21 @@ export const InShowLayout = () => (
   </Wrapper>
 )
 
+export const EmptyWithString = () => (
+  <Wrapper dataProvider={emptyDataProvider}>
+    <I18nContextProvider value={i18nProvider}>
+      <ReferenceOneField
+        reference="workoutDetails"
+        source="short_id"
+        target="workout_id"
+        empty="This workout does not exists"
+      >
+        <TextField source="note" />
+      </ReferenceOneField>
+    </I18nContextProvider>
+  </Wrapper>
+)
+
 export const EmptyWithTranslate = () => (
   <Wrapper dataProvider={emptyDataProvider}>
     <I18nContextProvider value={i18nProvider}>
