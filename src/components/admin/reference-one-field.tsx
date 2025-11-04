@@ -1,18 +1,62 @@
 import {
+  ExtractRecordPaths,
   LinkToType,
   RaRecord,
+  ReferenceOneFieldBase,
+  SortPayload,
+  TranslateFunction,
   type UseReferenceFieldControllerResult,
+  UseReferenceOneFieldControllerParams,
   useFieldValue,
   useGetRecordRepresentation,
   useReferenceFieldContext,
   useTranslate,
-  ExtractRecordPaths,
-  ReferenceOneFieldBase,
-  SortPayload,
-  UseReferenceOneFieldControllerParams,
 } from "ra-core";
 import { MouseEvent, ReactNode } from "react";
 import { Link } from "react-router";
+
+// useful to prevent click bubbling in a datagrid with rowClick
+const stopPropagation = (e: MouseEvent<HTMLAnchorElement>) =>
+  e.stopPropagation();
+
+// might be usefull for other components
+const renderEmpty = (translate: TranslateFunction, empty: ReferenceOneFieldProps['empty']) => {
+  return typeof empty === "string" ? (
+    <>{empty && translate(empty, { _: empty })}</>
+  ) : (
+    empty
+  );
+}
+
+export interface ReferenceOneFieldProps<
+  RecordType extends RaRecord = RaRecord,
+  ReferenceRecordType extends RaRecord = RaRecord
+> extends ReferenceOneFieldViewProps<ReferenceRecordType> {
+  source: ExtractRecordPaths<RecordType>;
+
+  queryOptions?: UseReferenceOneFieldControllerParams['queryOptions']
+  record?: RecordType;
+  sort?: SortPayload;
+  link?: LinkToType;
+}
+
+export interface ReferenceOneFieldViewProps<
+  ReferenceRecordType extends RaRecord = RaRecord
+> {
+  reference: string;
+  source: string;
+  target: string;
+
+  children?: ReactNode;
+  className?: string;
+  empty?: ReactNode;
+  loading?: ReactNode;
+  render?: (props: UseReferenceFieldControllerResult) => ReactNode;
+  resource?: string;
+  translateChoice?: ((record: ReferenceRecordType) => string) | boolean;
+  resourceLinkPath?: LinkToType;
+  error?: ReactNode;
+}
 
 export const ReferenceOneField = <
   RecordType extends RaRecord = RaRecord,
@@ -25,11 +69,7 @@ export const ReferenceOneField = <
   const translate = useTranslate();
 
   return id == null ? (
-    typeof empty === "string" ? (
-      <>{empty && translate(empty, { _: empty })}</>
-    ) : (
-      empty
-    )
+    renderEmpty(translate, empty)
   ) : (
     <ReferenceOneFieldBase {...rest}>
       <ReferenceOneFieldView<ReferenceRecordType>
@@ -42,25 +82,6 @@ export const ReferenceOneField = <
     </ReferenceOneFieldBase>
   );
 };
-
-export interface ReferenceOneFieldProps<
-  RecordType extends RaRecord = RaRecord,
-  ReferenceRecordType extends RaRecord = RaRecord
-> extends Partial<ReferenceOneFieldViewProps<ReferenceRecordType>> {
-  children?: ReactNode;
-  queryOptions?: UseReferenceOneFieldControllerParams['queryOptions']
-  record?: RecordType;
-  sort?: SortPayload;
-  reference: string;
-  translateChoice?: ((record: ReferenceRecordType) => string) | boolean;
-  link?: LinkToType;
-  source: ExtractRecordPaths<RecordType>;
-  target: string;
-}
-
-// useful to prevent click bubbling in a datagrid with rowClick
-const stopPropagation = (e: MouseEvent<HTMLAnchorElement>) =>
-  e.stopPropagation();
 
 export const ReferenceOneFieldView = <
   ReferenceRecordType extends RaRecord = RaRecord
@@ -88,11 +109,7 @@ export const ReferenceOneFieldView = <
     return loading;
   }
   if (!referenceRecord && empty !== false) {
-    return typeof empty === "string" ? (
-      <>{empty && translate(empty, { _: empty })}</>
-    ) : (
-      empty
-    );
+    return renderEmpty(translate, empty);
   }
 
   const child = render
@@ -111,20 +128,3 @@ export const ReferenceOneFieldView = <
 
   return <>{child}</>;
 };
-
-export interface ReferenceOneFieldViewProps<
-  ReferenceRecordType extends RaRecord = RaRecord
-> {
-  children?: ReactNode;
-  className?: string;
-  empty?: ReactNode;
-  loading?: ReactNode;
-  render?: (props: UseReferenceFieldControllerResult) => ReactNode;
-  reference: string;
-  source: string;
-  target: string;
-  resource?: string;
-  translateChoice?: ((record: ReferenceRecordType) => string) | boolean;
-  resourceLinkPath?: LinkToType;
-  error?: ReactNode;
-}
