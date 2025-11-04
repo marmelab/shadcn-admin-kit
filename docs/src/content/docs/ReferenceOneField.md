@@ -60,7 +60,6 @@ const BookShow = () => (
 | `queryOptions` | Optional | `UseQueryOptions` | - | TanStack Query options (meta, staleTime, etc.) |
 | `record` | Optional | `object` | Context record | Explicit record |
 | `render` | Optional | `(ctx)=>ReactNode` | - | Custom renderer receiving reference field context |
-| `translateChoice` | Optional | `boolean \| (record)=>string` | `true` | Translate referenced record representation |
 | `link` | Optional | `LinkToType` | `edit` | Link target or false / function |
 
 

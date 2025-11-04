@@ -30,8 +30,7 @@ const renderEmpty = (translate: TranslateFunction, empty: ReferenceOneFieldProps
 
 export interface ReferenceOneFieldProps<
   RecordType extends RaRecord = RaRecord,
-  ReferenceRecordType extends RaRecord = RaRecord
-> extends ReferenceOneFieldViewProps<ReferenceRecordType> {
+> extends ReferenceOneFieldViewProps {
   source: ExtractRecordPaths<RecordType>;
 
   queryOptions?: UseReferenceOneFieldControllerParams['queryOptions']
@@ -40,9 +39,7 @@ export interface ReferenceOneFieldProps<
   link?: LinkToType;
 }
 
-export interface ReferenceOneFieldViewProps<
-  ReferenceRecordType extends RaRecord = RaRecord
-> {
+export interface ReferenceOneFieldViewProps {
   reference: string;
   source: string;
   target: string;
@@ -52,15 +49,13 @@ export interface ReferenceOneFieldViewProps<
   empty?: ReactNode;
   loading?: ReactNode;
   render?: (props: UseReferenceFieldControllerResult) => ReactNode;
-  translateChoice?: ((record: ReferenceRecordType) => string) | boolean;
   error?: ReactNode;
 }
 
 export const ReferenceOneField = <
   RecordType extends RaRecord = RaRecord,
-  ReferenceRecordType extends RaRecord = RaRecord
 >(
-  props: ReferenceOneFieldProps<RecordType, ReferenceRecordType>
+  props: ReferenceOneFieldProps<RecordType>
 ) => {
   const { loading, error, empty, render, ...rest } = props;
   const id = useFieldValue<RecordType>(props);
@@ -70,7 +65,7 @@ export const ReferenceOneField = <
     renderEmpty(translate, empty)
   ) : (
     <ReferenceOneFieldBase {...rest}>
-      <ReferenceOneFieldView<ReferenceRecordType>
+      <ReferenceOneFieldView
         render={render}
         loading={loading}
         error={error}
@@ -81,10 +76,8 @@ export const ReferenceOneField = <
   );
 };
 
-export const ReferenceOneFieldView = <
-  ReferenceRecordType extends RaRecord = RaRecord
->(
-  props: ReferenceOneFieldViewProps<ReferenceRecordType>
+export const ReferenceOneFieldView = (
+  props: ReferenceOneFieldViewProps
 ) => {
   const {
     children,
