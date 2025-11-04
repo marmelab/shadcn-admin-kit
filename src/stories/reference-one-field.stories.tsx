@@ -189,6 +189,7 @@ const SimulateOfflineButton = () => {
     </>
   );
 };
+
 export const Offline = () => (
   <Wrapper dataProvider={dataProvider} >
     <I18nContextProvider value={i18nProvider}>
