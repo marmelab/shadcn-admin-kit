@@ -1,3 +1,4 @@
+// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import * as React from "react";
 import { FieldTitle, useResourceContext } from "ra-core";
 import { GripVertical } from "lucide-react";

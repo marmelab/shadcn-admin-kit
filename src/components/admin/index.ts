@@ -1,3 +1,4 @@
+// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 export * from "./admin";
 export * from "./app-sidebar";
 export * from "./array-field";

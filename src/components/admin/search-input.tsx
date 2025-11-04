@@ -1,3 +1,4 @@
+// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { useTranslate } from "ra-core";
 import { Search } from "lucide-react";
 import { TextInput, type TextInputProps } from "@/components/admin/text-input";

@@ -1,3 +1,4 @@
+// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { useTranslate } from "ra-core";
 import { isValidElement, ReactNode } from "react";
 import { FormDescription } from "@/components/admin/form";

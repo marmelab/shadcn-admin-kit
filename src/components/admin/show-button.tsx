@@ -1,3 +1,4 @@
+// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import React from "react";
 import { Link } from "react-router";
 import { buttonVariants } from "@/components/ui/button";

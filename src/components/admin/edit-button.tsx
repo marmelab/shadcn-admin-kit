@@ -1,3 +1,4 @@
+// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import React from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { Pencil } from "lucide-react";

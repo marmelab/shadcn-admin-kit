@@ -1,3 +1,4 @@
+// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { CircleX } from "lucide-react";
 import { Translate } from "ra-core";
 import { useNavigate } from "react-router";

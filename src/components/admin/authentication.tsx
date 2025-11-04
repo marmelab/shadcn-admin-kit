@@ -1,3 +1,4 @@
+// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { Link } from "react-router";
 import { Translate, useHandleAuthCallback, useTranslate } from "ra-core";
 import { CircleAlert, LockIcon } from "lucide-react";

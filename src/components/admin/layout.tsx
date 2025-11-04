@@ -1,3 +1,4 @@
+// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { Suspense, useState, type ErrorInfo } from "react";
 import { cn } from "@/lib/utils";
 import { CoreLayoutProps } from "ra-core";

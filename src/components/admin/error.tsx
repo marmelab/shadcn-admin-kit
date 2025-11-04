@@ -1,3 +1,4 @@
+// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import type { FallbackProps } from "react-error-boundary";
 
 import { useResetErrorBoundaryOnLocationChange, Translate } from "ra-core";

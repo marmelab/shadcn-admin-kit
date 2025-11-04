@@ -1,3 +1,4 @@
+// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HTMLAttributes } from "react";
 import { useFieldValue, useTranslate } from "ra-core";

@@ -1,3 +1,4 @@
+// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { AlertCircle, CheckCircle } from "lucide-react";
 import { useTranslate } from "ra-core";
 import * as React from "react";

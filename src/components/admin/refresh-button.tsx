@@ -1,3 +1,4 @@
+// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { useRefresh, useLoading } from "ra-core";
 import { Button } from "@/components/ui/button";
 import { LoaderCircle, RotateCw } from "lucide-react";

@@ -1,3 +1,4 @@
+// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { useFieldValue, useTranslate } from "ra-core";
 import React, { AnchorHTMLAttributes } from "react";
 
