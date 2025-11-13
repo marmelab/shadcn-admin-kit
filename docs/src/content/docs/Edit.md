@@ -862,14 +862,14 @@ Access control is disabled when you use the `disableAuthentication` prop.
 
 Shadcn Admin Kit offers [Realtime features](./RealtimeFeatures.md) to automatically refresh the data on screen when it has been changed by another user.
 
-If you want to subscribe to live updates the record, you can rely on the [`useSubscribeToRecord`](https://marmelab.com/ra-core/usesubscribetorecord/) hook. 
+If you want to subscribe to live updates the record, you can rely on the [`useSubscribeToRecord`](https://marmelab.com/ra-core/usesubscribetorecord/) hook.
 
 As sample use case, let's show how to warn the user when the record they're editing has been updated by another user.
 
 ![A notification alerting users that the record has changed inside an edit view](./images/edit-live-update.png)
 
 :::note
-This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription. 
+This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
 :::
 
 First, create an `EditLiveUpdate` component that uses the `useSubscribeToRecord` hook to subscribe to updates on the current record. When an update is received, it shows a notification with a "Refresh" button that refetches the record when clicked.
@@ -973,10 +973,10 @@ To trigger warning with `<EditLiveUpdate>` with the record changes, the API has 
 
 Shadcn Admin Kit offers [Content locking features](./RealtimeFeatures.md) to automatically place a lock on a record when a user is editing it, preventing other users from editing the same record concurrently.
 
-To avoid concurrent edition of the same record by multiple users, you can use [the `useLockRecord` hook](https://marmelab.com/ra-core-uselockrecord/) inside your `<Edit>` view.
+To avoid concurrent edition of the same record by multiple users, you can use [the `useLockOnCall` hook](https://marmelab.com/ra-core/uselockoncall/) inside your `<Edit>` view.
 
 :::note
-This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription. 
+This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
 :::
 
 For example, the following form locks a ticket record when the user focuses on the message input. If another user has already locked the ticket, the form inputs are disabled:
