@@ -1,6 +1,7 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { useListContext, useTranslate } from "ra-core";
-import { ChangeEvent, FormEvent, ReactElement, useState } from "react";
+import type { ChangeEvent, FormEvent, ReactElement } from "react";
+import { useState } from "react";
 import isEqual from "lodash/isEqual";
 
 import { Button } from "@/components/ui/button";

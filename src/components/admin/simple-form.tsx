@@ -1,7 +1,9 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import * as React from "react";
-import { Children, ReactNode } from "react";
-import { Form, type FormProps } from "ra-core";
+import type { ReactNode } from "react";
+import { Children } from "react";
+import type { FormProps } from "ra-core";
+import { Form } from "ra-core";
 import { cn } from "@/lib/utils";
 import { CancelButton } from "@/components/admin/cancel-button";
 import { SaveButton } from "@/components/admin/form";

@@ -1,18 +1,15 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import * as React from "react";
+import type { MouseEventHandler } from "react";
+import { createContext, useCallback, useContext, useMemo } from "react";
+import type {
+  CreateParams,
+  RaRecord,
+  TransformData,
+  UpdateParams,
+} from "ra-core";
 import {
-  createContext,
-  type MouseEventHandler,
-  useCallback,
-  useContext,
-  useMemo,
-} from "react";
-import {
-  type CreateParams,
-  type RaRecord,
   setSubmissionErrors,
-  type TransformData,
-  type UpdateParams,
   useRecordFromLocation,
   useSaveContext,
   useTranslate,

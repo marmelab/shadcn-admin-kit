@@ -16,9 +16,8 @@ import {
   FormLabel,
 } from "@/components/admin/form";
 import { Command as CommandPrimitive } from "cmdk";
+import type { ChoicesProps, InputProps } from "ra-core";
 import {
-  ChoicesProps,
-  InputProps,
   useChoices,
   useChoicesContext,
   useGetRecordRepresentation,

@@ -1,22 +1,19 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
-import {
-  Children,
-  createElement,
-  isValidElement,
-  useCallback,
-  type ReactNode,
-} from "react";
-import {
-  DataTableBase,
+import type { ReactNode } from "react";
+import { Children, createElement, isValidElement, useCallback } from "react";
+import type {
   DataTableBaseProps,
-  DataTableRenderContext,
   ExtractRecordPaths,
-  FieldTitle,
   HintedString,
   Identifier,
   RaRecord,
-  RecordContextProvider,
   SortPayload,
+} from "ra-core";
+import {
+  DataTableBase,
+  DataTableRenderContext,
+  FieldTitle,
+  RecordContextProvider,
   useDataTableCallbacksContext,
   useDataTableConfigContext,
   useDataTableDataContext,
@@ -65,7 +62,7 @@ import {
 const defaultBulkActionButtons = <BulkActionsToolbarChildren />;
 
 export function DataTable<RecordType extends RaRecord = RaRecord>(
-  props: DataTableProps<RecordType>
+  props: DataTableProps<RecordType>,
 ) {
   const {
     children,
@@ -130,9 +127,9 @@ const DataTableHead = ({ children }: { children: ReactNode }) => {
         ? selectedIds.concat(
             data
               .filter((record) => !selectedIds.includes(record.id))
-              .map((record) => record.id)
+              .map((record) => record.id),
           )
-        : []
+        : [],
     );
   };
   const selectableIds = Array.isArray(data)
@@ -215,7 +212,7 @@ const DataTableRow = ({
       if (!handleToggleItem) return;
       handleToggleItem(record.id, event);
     },
-    [handleToggleItem, record.id]
+    [handleToggleItem, record.id],
   );
 
   const handleClick = useCallback(async () => {
@@ -280,7 +277,7 @@ export interface DataTableProps<RecordType extends RaRecord = RaRecord>
 }
 
 export function DataTableColumn<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
 >(props: DataTableColumnProps<RecordType>) {
   const renderContext = useDataTableRenderContext();
   switch (renderContext) {
@@ -312,7 +309,7 @@ const reorderChildren = (children: ReactNode, columnRanks: number[]) =>
   }, []);
 
 function DataTableHeadCell<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
 >(props: DataTableColumnProps<RecordType>) {
   const {
     disableSort,
@@ -336,7 +333,7 @@ function DataTableHeadCell<
   const nextSortOrder =
     sort && sort.field === source
       ? oppositeOrder[sort.order]
-      : sortByOrder ?? "ASC";
+      : (sortByOrder ?? "ASC");
   const fieldLabel = translateLabel({
     label: typeof label === "string" ? label : undefined,
     resource,
@@ -406,7 +403,7 @@ const oppositeOrder: Record<SortPayload["order"], SortPayload["order"]> = {
 };
 
 function DataTableCell<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
 >(props: DataTableColumnProps<RecordType>) {
   const {
     children,
@@ -425,7 +422,7 @@ function DataTableCell<
   if (isColumnHidden) return null;
   if (!render && !field && !children && !source) {
     throw new Error(
-      "DataTableColumn: Missing at least one of the following props: render, field, children, or source"
+      "DataTableColumn: Missing at least one of the following props: render, field, children, or source",
     );
   }
 
@@ -435,21 +432,21 @@ function DataTableCell<
         "py-1",
         className,
         cellClassName,
-        record && conditionalClassName?.(record)
+        record && conditionalClassName?.(record),
       )}
     >
       {children ??
         (render
           ? record && render(record)
           : field
-          ? createElement(field, { source })
-          : get(record, source!))}
+            ? createElement(field, { source })
+            : get(record, source!))}
     </TableCell>
   );
 }
 
 export interface DataTableColumnProps<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
 > {
   className?: string;
   cellClassName?: string;
@@ -465,7 +462,7 @@ export interface DataTableColumnProps<
 }
 
 export function DataTableNumberColumn<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
 >(props: DataTableNumberColumnProps<RecordType>) {
   const {
     source,
@@ -490,7 +487,7 @@ export function DataTableNumberColumn<
 }
 
 export interface DataTableNumberColumnProps<
-  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>
+  RecordType extends RaRecord<Identifier> = RaRecord<Identifier>,
 > extends DataTableColumnProps<RecordType> {
   source: NoInfer<HintedString<ExtractRecordPaths<RecordType>>>;
   locales?: string | string[];

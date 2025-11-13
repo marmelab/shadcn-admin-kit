@@ -1,7 +1,8 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
-import { Suspense, useState, type ErrorInfo } from "react";
+import type { ErrorInfo } from "react";
+import { Suspense, useState } from "react";
 import { cn } from "@/lib/utils";
-import { CoreLayoutProps } from "ra-core";
+import type { CoreLayoutProps } from "ra-core";
 import { ErrorBoundary } from "react-error-boundary";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { UserMenu } from "@/components/admin/user-menu";

@@ -3,6 +3,7 @@ import * as React from "react";
 import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { humanize, singularize } from "inflection";
+import type { UseDeleteOptions, RedirectionSideEffect } from "ra-core";
 import {
   useDeleteWithUndoController,
   useGetRecordRepresentation,
@@ -10,8 +11,6 @@ import {
   useRecordContext,
   useResourceContext,
   useTranslate,
-  type UseDeleteOptions,
-  type RedirectionSideEffect,
 } from "ra-core";
 
 export type DeleteButtonProps = {

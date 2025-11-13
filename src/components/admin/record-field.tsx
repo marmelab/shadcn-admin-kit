@@ -1,18 +1,13 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  createElement,
-  type ReactNode,
-  type ElementType,
-  HTMLAttributes,
-} from "react";
+import type { ReactNode, ElementType, HTMLAttributes } from "react";
+import { createElement } from "react";
+import type { ExtractRecordPaths, HintedString } from "ra-core";
 import {
   FieldTitle,
   useRecordContext,
   useResourceContext,
   useTranslate,
-  type ExtractRecordPaths,
-  type HintedString,
 } from "ra-core";
 import { cn } from "@/lib/utils";
 

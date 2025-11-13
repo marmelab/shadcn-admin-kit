@@ -1,21 +1,16 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { X } from "lucide-react";
+import type { ChoicesProps, InputProps } from "ra-core";
 import {
   FieldTitle,
-  InputProps,
   useChoices,
   useChoicesContext,
   useGetRecordRepresentation,
   useInput,
   useTranslate,
-  type ChoicesProps,
 } from "ra-core";
-import {
-  ComponentProps,
-  useCallback,
-  useEffect,
-  type ReactElement,
-} from "react";
+import type { ComponentProps, ReactElement } from "react";
+import { useCallback, useEffect } from "react";
 
 import { FormError, FormField, FormLabel } from "@/components/admin/form";
 import { InputHelperText } from "@/components/admin/input-helper-text";

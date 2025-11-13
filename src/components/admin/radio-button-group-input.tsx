@@ -1,13 +1,7 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import * as React from "react";
-import {
-  type ChoicesProps,
-  type InputProps,
-  FieldTitle,
-  useChoices,
-  useChoicesContext,
-  useInput,
-} from "ra-core";
+import type { ChoicesProps, InputProps } from "ra-core";
+import { FieldTitle, useChoices, useChoicesContext, useInput } from "ra-core";
 import { cn } from "@/lib/utils";
 import {
   FormField,

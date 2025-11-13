@@ -1,12 +1,11 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import * as React from "react";
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
+import type { InputProps, UseReferenceArrayInputParams } from "ra-core";
 import {
-  InputProps,
   useReferenceArrayInputController,
   ResourceContextProvider,
   ChoicesContextProvider,
-  UseReferenceArrayInputParams,
 } from "ra-core";
 import { AutocompleteArrayInput } from "@/components/admin/autocomplete-array-input";
 
@@ -78,7 +77,7 @@ export const ReferenceArrayInput = (props: ReferenceArrayInputProps) => {
   } = props;
   if (React.Children.count(children) !== 1) {
     throw new Error(
-      "<ReferenceArrayInput> only accepts a single child (like <AutocompleteArrayInput>)"
+      "<ReferenceArrayInput> only accepts a single child (like <AutocompleteArrayInput>)",
     );
   }
 

@@ -1,12 +1,7 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import * as React from "react";
-import {
-  type InputProps,
-  useInput,
-  FieldTitle,
-  useEvent,
-  useResourceContext,
-} from "ra-core";
+import type { InputProps } from "ra-core";
+import { useInput, FieldTitle, useEvent, useResourceContext } from "ra-core";
 import {
   FormControl,
   FormError,

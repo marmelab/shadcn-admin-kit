@@ -1,25 +1,23 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import * as React from "react";
-import {
-  Children,
-  isValidElement,
-  type ComponentType,
-  type ReactElement,
-  type ReactNode,
-  useEffect,
+import type {
+  ComponentType,
+  ReactElement,
+  ReactNode,
   HTMLAttributes,
 } from "react";
+import { Children, isValidElement, useEffect } from "react";
+import type { InputProps } from "ra-core";
 import {
   FieldTitle,
-  InputProps,
   RecordContextProvider,
   shallowEqual,
   useInput,
   useTranslate,
 } from "ra-core";
+import type { DropzoneOptions } from "react-dropzone";
 import {
   useDropzone,
-  type DropzoneOptions,
   FileRejection,
   DropEvent,
   DropzoneInputProps,

@@ -1,8 +1,8 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { HTMLAttributes } from "react";
+import type { HTMLAttributes } from "react";
 import { useFieldValue, useTranslate } from "ra-core";
-import { FieldProps } from "@/lib/field.type.ts";
+import type { FieldProps } from "@/lib/field.type.ts";
 
 export const TextField = <
   RecordType extends Record<string, any> = Record<string, any>,

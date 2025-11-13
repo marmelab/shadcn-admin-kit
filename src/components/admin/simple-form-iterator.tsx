@@ -2,24 +2,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import get from "lodash/get";
 import * as React from "react";
-import {
-  Children,
-  type ReactElement,
-  ReactNode,
-  useCallback,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import {
+import type { ReactElement, ReactNode } from "react";
+import { Children, useCallback, useMemo, useRef, useState } from "react";
+import type {
   ArrayInputContextValue,
+  RaRecord,
+  SimpleFormIteratorItemContextValue,
+} from "ra-core";
+import {
   FormDataConsumer,
   RecordContextProvider,
   SimpleFormIteratorContext,
   SimpleFormIteratorItemContext,
-  SimpleFormIteratorItemContextValue,
   SourceContextProvider,
-  type RaRecord,
   useArrayInput,
   useRecordContext,
   useResourceContext,
@@ -29,7 +24,8 @@ import {
   useTranslate,
   useWrappedSource,
 } from "ra-core";
-import { type UseFieldArrayReturn, useFormContext } from "react-hook-form";
+import type { UseFieldArrayReturn } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import {
   ArrowDownCircle,
   ArrowUpCircle,

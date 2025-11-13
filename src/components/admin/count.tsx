@@ -1,10 +1,10 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
+import type { SortPayload } from "ra-core";
 import {
   useResourceContext,
   useGetList,
   useTimeout,
   useCreatePath,
-  SortPayload,
 } from "ra-core";
 import { CircleX, LoaderCircle } from "lucide-react";
 
@@ -42,7 +42,7 @@ export const Count = (props: CountProps) => {
   const resource = useResourceContext(props);
   if (!resource) {
     throw new Error(
-      "The Count component must be used inside a ResourceContext or must be passed a resource prop."
+      "The Count component must be used inside a ResourceContext or must be passed a resource prop.",
     );
   }
   const oneSecondHasPassed = useTimeout(timeout);

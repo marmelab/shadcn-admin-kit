@@ -2,14 +2,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
-import {
-  Translate,
-  useBulkDeleteController,
-  type RaRecord,
-  type UseBulkDeleteControllerParams,
-} from "ra-core";
+import type { RaRecord, UseBulkDeleteControllerParams } from "ra-core";
+import { Translate, useBulkDeleteController } from "ra-core";
 import { cn } from "@/lib/utils";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export const BulkDeleteButton = <
   RecordType extends RaRecord = any,

@@ -1,19 +1,14 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  ReactNode,
-  useEffect,
-  useState,
-  isValidElement,
-  Children,
-} from "react";
+import type { ReactNode } from "react";
+import { useEffect, useState, isValidElement, Children } from "react";
+import type { InferredTypeMap } from "ra-core";
 import {
   ShowBase,
   InferredElement,
   getElementsFromRecords,
   useResourceContext,
   useShowContext,
-  InferredTypeMap,
 } from "ra-core";
 import { capitalize, singularize } from "inflection";
 import { ShowView } from "@/components/admin/show";

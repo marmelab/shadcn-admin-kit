@@ -4,9 +4,9 @@ import {
   BreadcrumbItem,
   BreadcrumbPage,
 } from "@/components/admin/breadcrumb";
+import type { CreateBaseProps } from "ra-core";
 import {
   CreateBase,
-  type CreateBaseProps,
   Translate,
   useCreateContext,
   useCreatePath,
@@ -14,7 +14,7 @@ import {
   useHasDashboard,
   useResourceContext,
 } from "ra-core";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Link } from "react-router";
 import { cn } from "@/lib/utils";
 

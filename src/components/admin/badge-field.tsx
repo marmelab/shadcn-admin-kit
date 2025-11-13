@@ -1,8 +1,9 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import * as React from "react";
-import { RaRecord, useFieldValue, useTranslate } from "ra-core";
+import type { RaRecord } from "ra-core";
+import { useFieldValue, useTranslate } from "ra-core";
 import { Badge } from "@/components/ui/badge";
-import { FieldProps } from "@/lib/field.type.ts";
+import type { FieldProps } from "@/lib/field.type.ts";
 
 type BadgeProps = React.ComponentProps<typeof Badge>;
 

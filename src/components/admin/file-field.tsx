@@ -1,12 +1,8 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { HTMLAttributes } from "react";
 import get from "lodash/get";
-import {
-  type ExtractRecordPaths,
-  type HintedString,
-  useFieldValue,
-  useTranslate,
-} from "ra-core";
+import type { ExtractRecordPaths, HintedString } from "ra-core";
+import { useFieldValue, useTranslate } from "ra-core";
 import { cn } from "@/lib/utils";
 import type { FieldProps } from "@/lib/field.type.ts";
 

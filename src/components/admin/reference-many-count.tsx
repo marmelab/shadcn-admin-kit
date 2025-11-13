@@ -1,7 +1,6 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
+import type { RaRecord, SortPayload } from "ra-core";
 import {
-  RaRecord,
-  SortPayload,
   useCreatePath,
   useRecordContext,
   useReferenceManyFieldController,

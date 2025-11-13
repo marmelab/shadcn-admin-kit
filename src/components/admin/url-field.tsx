@@ -1,6 +1,7 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { useFieldValue, useTranslate } from "ra-core";
-import React, { AnchorHTMLAttributes } from "react";
+import type { AnchorHTMLAttributes } from "react";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import { genericMemo } from "@/lib/genericMemo";

@@ -24,9 +24,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import type { ChoicesProps, InputProps } from "ra-core";
 import {
-  ChoicesProps,
-  InputProps,
   useChoices,
   useChoicesContext,
   useGetRecordRepresentation,

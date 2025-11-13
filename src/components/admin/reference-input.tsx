@@ -1,5 +1,6 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
-import { ReferenceInputBase, ReferenceInputBaseProps } from "ra-core";
+import type { ReferenceInputBaseProps } from "ra-core";
+import { ReferenceInputBase } from "ra-core";
 import { AutocompleteInput } from "./autocomplete-input";
 
 export const ReferenceInput = (props: ReferenceInputProps) => {

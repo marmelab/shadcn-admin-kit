@@ -1,7 +1,8 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import * as React from "react";
 import { useCallback, useEffect } from "react";
-import { Toaster, type ToasterProps, toast } from "sonner";
+import type { ToasterProps } from "sonner";
+import { Toaster, toast } from "sonner";
 import { useTheme } from "@/components/admin/theme-provider";
 import {
   CloseNotificationContext,
@@ -56,8 +57,8 @@ export const Notification = (props: ToasterProps) => {
           ? typeof message === "string"
             ? translate(message, messageArgs)
             : React.isValidElement(message)
-            ? message
-            : undefined
+              ? message
+              : undefined
           : undefined;
 
         toast[type](finalMessage, {

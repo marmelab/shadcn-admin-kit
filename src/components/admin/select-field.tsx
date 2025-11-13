@@ -1,8 +1,9 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
-import { HTMLAttributes } from "react";
-import { ChoicesProps, useChoices, useFieldValue, useTranslate } from "ra-core";
+import type { HTMLAttributes } from "react";
+import type { ChoicesProps } from "ra-core";
+import { useChoices, useFieldValue, useTranslate } from "ra-core";
 
-import { FieldProps } from "@/lib/field.type.ts";
+import type { FieldProps } from "@/lib/field.type.ts";
 import { genericMemo } from "@/lib/genericMemo";
 
 /**

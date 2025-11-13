@@ -1,11 +1,7 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { Download } from "lucide-react";
-import {
-  RaRecord,
-  Translate,
-  useBulkExport,
-  UseBulkExportOptions,
-} from "ra-core";
+import type { RaRecord } from "ra-core";
+import { Translate, useBulkExport, UseBulkExportOptions } from "ra-core";
 
 import { Button } from "../ui/button";
 

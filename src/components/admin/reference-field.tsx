@@ -1,24 +1,26 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
-import {
+import type {
+  ExtractRecordPaths,
   LinkToType,
   RaRecord,
+  UseReferenceFieldControllerResult,
+} from "ra-core";
+import {
   ReferenceFieldBase,
-  type UseReferenceFieldControllerResult,
   useFieldValue,
   useGetRecordRepresentation,
   useReferenceFieldContext,
   useTranslate,
-  ExtractRecordPaths,
 } from "ra-core";
-import { MouseEvent, ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
 import { Link } from "react-router";
-import { UseQueryOptions } from "@tanstack/react-query";
+import type { UseQueryOptions } from "@tanstack/react-query";
 
 export const ReferenceField = <
   RecordType extends RaRecord = RaRecord,
-  ReferenceRecordType extends RaRecord = RaRecord
+  ReferenceRecordType extends RaRecord = RaRecord,
 >(
-  props: ReferenceFieldProps<RecordType, ReferenceRecordType>
+  props: ReferenceFieldProps<RecordType, ReferenceRecordType>,
 ) => {
   const { loading, error, empty, render, ...rest } = props;
   const id = useFieldValue<RecordType>(props);
@@ -44,7 +46,7 @@ export const ReferenceField = <
 
 export interface ReferenceFieldProps<
   RecordType extends RaRecord = RaRecord,
-  ReferenceRecordType extends RaRecord = RaRecord
+  ReferenceRecordType extends RaRecord = RaRecord,
 > extends Partial<ReferenceFieldViewProps<ReferenceRecordType>> {
   children?: ReactNode;
   queryOptions?: UseQueryOptions<RaRecord[], Error> & {
@@ -63,9 +65,9 @@ const stopPropagation = (e: MouseEvent<HTMLAnchorElement>) =>
   e.stopPropagation();
 
 export const ReferenceFieldView = <
-  ReferenceRecordType extends RaRecord = RaRecord
+  ReferenceRecordType extends RaRecord = RaRecord,
 >(
-  props: ReferenceFieldViewProps<ReferenceRecordType>
+  props: ReferenceFieldViewProps<ReferenceRecordType>,
 ) => {
   const {
     children,
@@ -113,7 +115,7 @@ export const ReferenceFieldView = <
 };
 
 export interface ReferenceFieldViewProps<
-  ReferenceRecordType extends RaRecord = RaRecord
+  ReferenceRecordType extends RaRecord = RaRecord,
 > {
   children?: ReactNode;
   className?: string;

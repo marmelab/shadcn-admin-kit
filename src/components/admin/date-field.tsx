@@ -1,9 +1,9 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
-import { HTMLAttributes } from "react";
+import type { HTMLAttributes } from "react";
 import { useFieldValue, useTranslate } from "ra-core";
 
 import { genericMemo } from "@/lib/genericMemo";
-import { FieldProps } from "@/lib/field.type.ts";
+import type { FieldProps } from "@/lib/field.type.ts";
 
 /**
  * Display a date value as a locale string.

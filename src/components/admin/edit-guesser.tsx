@@ -1,13 +1,14 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ReactNode, useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import { useEffect, useState } from "react";
+import type { InferredTypeMap } from "ra-core";
 import {
   EditBase,
   InferredElement,
   useResourceContext,
   useEditContext,
   getElementsFromRecords,
-  InferredTypeMap,
 } from "ra-core";
 import { capitalize, singularize } from "inflection";
 import { EditView } from "@/components/admin/edit";

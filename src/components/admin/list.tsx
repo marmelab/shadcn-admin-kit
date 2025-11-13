@@ -4,11 +4,9 @@ import {
   BreadcrumbItem,
   BreadcrumbPage,
 } from "@/components/admin/breadcrumb";
+import type { ListBaseProps, ListControllerResult, RaRecord } from "ra-core";
 import {
   ListBase,
-  ListBaseProps,
-  type ListControllerResult,
-  RaRecord,
   Translate,
   useGetResourceLabel,
   useHasDashboard,
@@ -16,7 +14,7 @@ import {
   useResourceDefinition,
   useTranslate,
 } from "ra-core";
-import { ReactElement, ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 import { Link } from "react-router";
 import { cn } from "@/lib/utils.ts";
 import { FilterContext, FilterElementProps } from "@/hooks/filter-context.tsx";

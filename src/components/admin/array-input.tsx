@@ -1,10 +1,8 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import {
   FieldTitle,
-  InputProps,
   OptionalResourceContextProvider,
   SourceContextProvider,
-  type SourceContextValue,
   composeSyncValidators,
   isRequired,
   useApplyInputDefaultValues,
@@ -15,6 +13,7 @@ import {
   sanitizeInputRestProps,
   ArrayInputContext,
 } from "ra-core";
+import type { InputProps, SourceContextValue } from "ra-core";
 import * as React from "react";
 import { useEffect } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
