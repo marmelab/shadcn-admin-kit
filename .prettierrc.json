@@ -3,8 +3,18 @@
     {
       "files": ["*.md", "*.mdx"],
       "options": {
-        "singleQuote": true,
-        "tabWidth": 4
+        "singleQuote": false,
+        "tabWidth": 2
+      }
+    },
+    {
+      "files": ["src/components/ui/*.tsx", "website/src/components/ui/*.tsx"],
+      "options": {
+        "endOfLine": "lf",
+        "semi": false,
+        "singleQuote": false,
+        "tabWidth": 2,
+        "trailingComma": "es5"
       }
     }
   ]

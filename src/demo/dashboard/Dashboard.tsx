@@ -54,7 +54,7 @@ export const Dashboard = () => {
           revenue: 0,
           nbNewOrders: 0,
           pendingOrders: [],
-        }
+        },
       );
     return {
       recentOrders: orders,

@@ -29,7 +29,7 @@ describe("ArrayField", () => {
         <ArrayField source="values">
           <TestConsumer />
         </ArrayField>
-      </RecordContextProvider>
+      </RecordContextProvider>,
     );
 
     await expect.element(screen.getByRole("list")).toBeInTheDocument();
@@ -46,7 +46,7 @@ describe("ArrayField", () => {
         <ArrayField source="values">
           <TestConsumer />
         </ArrayField>
-      </RecordContextProvider>
+      </RecordContextProvider>,
     );
 
     await expect.element(screen.getByRole("list")).toBeInTheDocument();
@@ -59,7 +59,7 @@ describe("ArrayField", () => {
         <ArrayField source="values">
           <TestConsumer />
         </ArrayField>
-      </RecordContextProvider>
+      </RecordContextProvider>,
     );
 
     await expect.element(screen.getByRole("list")).toBeInTheDocument();

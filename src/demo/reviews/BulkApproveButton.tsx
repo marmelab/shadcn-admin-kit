@@ -33,7 +33,7 @@ export const BulkApproveButton = () => {
           type: "error",
         });
       },
-    }
+    },
   );
 
   return (

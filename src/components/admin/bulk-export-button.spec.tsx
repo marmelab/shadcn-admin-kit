@@ -79,14 +79,14 @@ describe("BulkExportButton", () => {
     const screen = render(
       <TestWrapper>
         <BulkExportButton />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     await expect
       .element(
         screen.getByRole("button", {
           name: "ra.action.export",
-        })
+        }),
       )
       .toBeInTheDocument();
   });
@@ -97,7 +97,7 @@ describe("BulkExportButton", () => {
     const screen = render(
       <TestWrapper>
         <BulkExportButton exporter={mockBulkExport} />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     await screen
@@ -110,7 +110,7 @@ describe("BulkExportButton", () => {
       [{ id: 1, title: "Test Record 1" }],
       expect.any(Function),
       expect.any(Object),
-      "records"
+      "records",
     );
   });
 });

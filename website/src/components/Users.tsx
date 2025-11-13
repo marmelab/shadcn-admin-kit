@@ -18,7 +18,7 @@ export function Users() {
         <ul
           className={classNames(
             "mx-auto flex flex-wrap items-center justify-center gap-x-8 gap-y-12 md:cursor-pointer overflow-hidden transition-all",
-            expanded ? "md:max-h-100" : "md:max-h-48"
+            expanded ? "md:max-h-100" : "md:max-h-48",
           )}
           onClick={() => setExpanded((e) => !e)}
         >

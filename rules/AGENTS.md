@@ -74,16 +74,14 @@ Here is an example showing how to use it:
 "use client";
 
 import { Admin } from "@/components/admin/admin";
-import jsonServerProvider from 'ra-data-json-server';
+import jsonServerProvider from "ra-data-json-server";
 
 const dataProvider = jsonServerProvider(
-  "https://jsonplaceholder.typicode.com/"
+  "https://jsonplaceholder.typicode.com/",
 );
 
 export const App = () => (
-  <Admin dataProvider={dataProvider}>
-    {/* Resources go here */}
-  </Admin>
+  <Admin dataProvider={dataProvider}>{/* Resources go here */}</Admin>
 );
 ```
 
@@ -94,7 +92,7 @@ Then, you'll need to declare the routes of the application. `<Admin>` allows to 
 For each resource, you have to specify a `name` (which will map to the resources exposed by the API endpoint) and the `list`, `edit`, `create` and `show` components to use.
 
 If you used JSONPlaceholder at the previous step, you can pick among the following 6 resources:
-	
+
 - posts
 - comments
 - albums
@@ -110,14 +108,14 @@ Here is an example of how to use the guessers with a resource named `posts`:
 "use client";
 
 import { Resource } from "ra-core";
-import jsonServerProvider from 'ra-data-json-server';
+import jsonServerProvider from "ra-data-json-server";
 import { Admin } from "@/components/admin/admin";
 import { ListGuesser } from "@/components/admin/list-guesser";
 import { ShowGuesser } from "@/components/admin/show-guesser";
 import { EditGuesser } from "@/components/admin/edit-guesser";
 
 const dataProvider = jsonServerProvider(
-  "https://jsonplaceholder.typicode.com/"
+  "https://jsonplaceholder.typicode.com/",
 );
 
 export const App = () => (

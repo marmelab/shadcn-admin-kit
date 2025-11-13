@@ -50,8 +50,8 @@ export const ReviewEdit = ({ id }: any) => (
                 choice.id === "accepted"
                   ? "bg-green-400 dark:bg-green-800"
                   : choice.id === "rejected"
-                  ? "bg-red-400 dark:bg-red-800"
-                  : "bg-yellow-400 dark:bg-yellow-800"
+                    ? "bg-red-400 dark:bg-red-800"
+                    : "bg-yellow-400 dark:bg-yellow-800",
               )}
             />
             {choice.name}

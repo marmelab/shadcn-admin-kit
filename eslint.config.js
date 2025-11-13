@@ -37,5 +37,5 @@ export default tseslint.config(
       "no-console": ["error", { allow: ["warn", "error"] }],
     },
   },
-  storybook.configs["flat/recommended"]
+  storybook.configs["flat/recommended"],
 );

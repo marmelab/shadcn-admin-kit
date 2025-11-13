@@ -22,7 +22,7 @@ export const Basket = () => {
   const { isPending, data: products } = useGetMany<Product>(
     "products",
     { ids: productIds },
-    { enabled: !!record }
+    { enabled: !!record },
   );
   const productsById = products
     ? products.reduce((acc, product) => {

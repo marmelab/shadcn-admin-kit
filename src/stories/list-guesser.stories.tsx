@@ -1,10 +1,6 @@
 import { Resource, TestMemoryRouter } from "ra-core";
 import fakeRestProvider from "ra-data-fakerest";
-import {
-  Admin,
-  ListGuesser,
-  ShowGuesser,
-} from "@/components/admin";
+import { Admin, ListGuesser, ShowGuesser } from "@/components/admin";
 import { i18nProvider } from "@/lib/i18nProvider";
 
 export default {
@@ -154,53 +150,53 @@ const dataProvider = fakeRestProvider(data, process.env.NODE_ENV !== "test");
 
 export const Basic = () => (
   <TestMemoryRouter initialEntries={["/products"]}>
-      <Admin dataProvider={dataProvider} i18nProvider={i18nProvider}>
-        <Resource
-          name="products"
-          list={ListGuesser}
-          recordRepresentation="name"
-        />
-        <Resource name="categories" recordRepresentation="name" />
-        <Resource name="tags" recordRepresentation="name" />
-      </Admin>
+    <Admin dataProvider={dataProvider} i18nProvider={i18nProvider}>
+      <Resource
+        name="products"
+        list={ListGuesser}
+        recordRepresentation="name"
+      />
+      <Resource name="categories" recordRepresentation="name" />
+      <Resource name="tags" recordRepresentation="name" />
+    </Admin>
   </TestMemoryRouter>
 );
 
 export const LinkedShow = () => (
   <TestMemoryRouter initialEntries={["/products"]}>
-      <Admin dataProvider={dataProvider} i18nProvider={i18nProvider}>
-        <Resource
-          name="products"
-          list={ListGuesser}
-          show={ShowGuesser}
-          recordRepresentation="name"
-        />
-        <Resource name="categories" recordRepresentation="name" />
-        <Resource name="tags" recordRepresentation="name" />
-      </Admin>
+    <Admin dataProvider={dataProvider} i18nProvider={i18nProvider}>
+      <Resource
+        name="products"
+        list={ListGuesser}
+        show={ShowGuesser}
+        recordRepresentation="name"
+      />
+      <Resource name="categories" recordRepresentation="name" />
+      <Resource name="tags" recordRepresentation="name" />
+    </Admin>
   </TestMemoryRouter>
 );
 
 const delayedDataProvider = fakeRestProvider(
   data,
   process.env.NODE_ENV !== "test",
-  300
+  300,
 );
 
 export const ManyResources = () => (
   <TestMemoryRouter initialEntries={["/products"]}>
-      <Admin dataProvider={delayedDataProvider} i18nProvider={i18nProvider}>
-        <Resource
-          name="products"
-          list={ListGuesser}
-          recordRepresentation="name"
-        />
-        <Resource
-          name="categories"
-          list={ListGuesser}
-          recordRepresentation="name"
-        />
-        <Resource name="tags" list={ListGuesser} recordRepresentation="name" />
-      </Admin>
+    <Admin dataProvider={delayedDataProvider} i18nProvider={i18nProvider}>
+      <Resource
+        name="products"
+        list={ListGuesser}
+        recordRepresentation="name"
+      />
+      <Resource
+        name="categories"
+        list={ListGuesser}
+        recordRepresentation="name"
+      />
+      <Resource name="tags" list={ListGuesser} recordRepresentation="name" />
+    </Admin>
   </TestMemoryRouter>
 );

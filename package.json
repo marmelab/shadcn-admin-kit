@@ -10,6 +10,8 @@
     "website:dev": "vite --config website/vite.config.ts --port 5174",
     "website:build": "tsc -b website && vite build --config website/vite.config.ts",
     "lint": "eslint .",
+    "prettier:apply": "prettier --config ./.prettierrc.json --write --list-different \"**/*.{js,json,ts,tsx,css,md,html}\"",
+    "prettier:check": "prettier --config ./.prettierrc.json --check \"**/*.{js,json,ts,tsx,css,md,html}\"",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",

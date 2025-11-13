@@ -9,7 +9,7 @@ const DEFAULT_IDENTITY = data.users[0];
 export const authProvider: AuthProvider = {
   login: async ({ email, password }) => {
     const user = data.users.find(
-      (u) => u.email === email && u.password === password
+      (u) => u.email === email && u.password === password,
     );
 
     // simulate login delay
@@ -26,7 +26,7 @@ export const authProvider: AuthProvider = {
     return Promise.reject(
       new HttpError("Unauthorized", 401, {
         message: "Invalid email or password",
-      })
+      }),
     );
   },
   logout: () => {

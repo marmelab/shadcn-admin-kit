@@ -11,7 +11,7 @@ declare global {
 const areChatwootParamsValid = (
   baseUrl?: string,
   websiteToken?: string,
-  production?: boolean
+  production?: boolean,
 ) => {
   if (!baseUrl) {
     if (!production) {
@@ -37,7 +37,7 @@ const defaultSettings = {
 const loadChatwoot = (
   baseUrl: string,
   websiteToken: string,
-  settings: any = defaultSettings
+  settings: any = defaultSettings,
 ) => {
   window.chatwootSettings = settings;
 
@@ -93,7 +93,7 @@ export const Chatwoot = ({
     // to pages client side and their SDK does not provide any function
     // to hide the button, we have to hide it ourselves.
     const container = document.querySelector(
-      ".woot--bubble-holder"
+      ".woot--bubble-holder",
     ) as HTMLElement;
     if (typeof window.chatwootSDK !== "undefined") {
       if (!container) return;
