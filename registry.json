@@ -177,10 +177,6 @@
           "type": "registry:component"
         },
         {
-          "path": "src/hooks/filter-context.tsx",
-          "type": "registry:hook"
-        },
-        {
           "path": "src/components/admin/filter-form.tsx",
           "type": "registry:component"
         },

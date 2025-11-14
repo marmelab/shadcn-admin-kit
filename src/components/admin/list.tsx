@@ -6,6 +6,7 @@ import {
 } from "@/components/admin/breadcrumb";
 import type { ListBaseProps, ListControllerResult, RaRecord } from "ra-core";
 import {
+  FilterContext,
   ListBase,
   Translate,
   useGetResourceLabel,
@@ -17,7 +18,6 @@ import {
 import type { ReactElement, ReactNode } from "react";
 import { Link } from "react-router";
 import { cn } from "@/lib/utils.ts";
-import { FilterContext, FilterElementProps } from "@/hooks/filter-context.tsx";
 import { CreateButton } from "@/components/admin/create-button";
 import { ExportButton } from "@/components/admin/export-button";
 import { ListPagination } from "@/components/admin/list-pagination";
@@ -138,12 +138,8 @@ export interface ListViewProps<RecordType extends RaRecord = RaRecord> {
   disableBreadcrumb?: boolean;
   render?: (props: ListControllerResult<RecordType, Error>) => ReactNode;
   actions?: ReactElement | false;
-  filters?: ReactElement<FilterElementProps>[];
+  filters?: ReactNode[];
   pagination?: ReactNode;
   title?: ReactNode | string | false;
   className?: string;
 }
-
-export type FiltersType =
-  | ReactElement<FilterElementProps>
-  | ReactElement<FilterElementProps>[];
