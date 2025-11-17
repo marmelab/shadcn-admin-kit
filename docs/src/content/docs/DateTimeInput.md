@@ -1,38 +1,31 @@
 ---
-title: DateInput
+title: DateTimeInput
 ---
 
-import video from './images/date-input.mp4';
+`<DateTimeInput>` renders an HTML `<input type="datetime-local">` element, allowing users to enter a date and a time using a [date picker](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/datetime-local).
 
-Ideal for editing dates, `<DateInput>` renders an HTML `<input type="date">` element, that most browsers display as a [date picker](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date).
+![DateTimeInput](./images/date-time-input.png)
 
-<video controls autoplay playsinline muted loop class="w-full aspect-720/420">
-    <source src={video} type="video/mp4" />
-    Your browser does not support the video tag.
-</video>
-
-The appearance of `<DateInput>` depends on the browser, and falls back to a text input on browsers that do not support `<input type="date">`. The date formatting in this input depends on the user's locale.
+The appearance of `<DateTimeInput>` depends on the browser, and falls back to a text input on browsers that do not support `<input type="datetime-local">`. The date formatting in this input depends on the user's locale.
 
 ## Usage
 
 ```jsx
-import { DateInput } from '@/components/admin/date-input';
+import { DateTimeInput } from '@/components/admin/date-time-input';
 
-<DateInput source="published_at" />;
+<DateTimeInput source="published_at" />;
 ```
 
-The field value must be a string using the pattern `YYYY-MM-DD` (ISO 8601), e.g. `'2022-04-30'`. The returned input value will also be in this format, regardless of the browser locale.
+The field value should be an ISO date and time string with timezone using the pattern `YYYY-MM-DDTHH:mm:ss.sssZ` ([ISO 8601 Extended Format](https://en.wikipedia.org/wiki/ISO_8601)), e.g. `'2025-11-17T10:10:32.390Z'`. The returned input value will also be in this format, regardless of the browser locale.
 
-`<DateInput>` also accepts values that can be converted to a `Date` object, such as:
+`<DateTimeInput>` also accepts values that can be converted to a `Date` object, such as:
 
+- a `datetime-local` value string (e.g. `'2022-04-30T14:30'`),
 - a localized date string (e.g. `'30/04/2022'`),
-- an ISO date string (e.g. `'2022-04-30T00:00:00.000Z'`),
 - a `Date` object, or
 - a Linux timestamp (e.g. `1648694400000`).
 
-In these cases, `<DateInput>` will automatically convert the value to the `YYYY-MM-DD` format, and will return a `string`, or `null` if the date is invalid.
-
-**Note**: This conversion may change the date because of timezones. For example, the date string `'2022-04-30T00:00:00.000Z'` in Europe may be displayed as `'2022-04-29'` in Honolulu. If this is not what you want, use the [`format`](#format) prop to convert the date to UTC and return the formatted string as `yyyy-MM-dd` to the input. In this scenario you likely want the outgoing value to stay consistent with UTC too, so provide your own [`parse`](#parse) function to `<DateInput>` to transform it as needed.
+In these cases, `<DateTimeInput>` will automatically convert the value to the ISO 8601 Extended Format, and will return a `string`, or `null` if the date is invalid.
 
 ## Props
 
@@ -51,10 +44,12 @@ In these cases, `<DateInput>` will automatically convert the value to the `YYYY-
 
 ## `defaultValue`
 
-The `defaultValue` prop can be used to set the initial value of the input. It can be a string in the `YYYY-MM-DD` format, a `Date` object, or a timestamp.
+The `defaultValue` prop can be used to set the initial value of the input. It can be a ISO date and time string, a `Date` object, or a timestamp.
+
+For instance, to set the default value to the current date and time:
 
 ```tsx
-<DateInput source="publishedAt" defaultValue={new Date('2022-04-30')} />
+<DateTimeInput source="publishedAt" defaultValue={new Date()} />
 ```
 
 ## `format`
@@ -66,9 +61,9 @@ form state value --> format --> form input value (string)
 ```
 
 ```tsx
-<DateInput
+<DateTimeInput
     source="publishedAt"
-    format={(value) => new Date(value).toISOString().split('T')[0]}
+    format={(value) => new Date(value).toISOString()}
     parse={(value) => new Date(value)}
 />
 ```
@@ -88,9 +83,9 @@ form input value (string) ---> parse ---> form state value
 ```
 
 ```tsx
-<DateInput
+<DateTimeInput
     source="publishedAt"
-    format={(value) => new Date(value).toISOString().split('T')[0]}
+    format={(value) => new Date(value).toISOString()}
     parse={(value) => new Date(value)}
 />
 ```
@@ -103,10 +98,10 @@ To validate that a date is before or after a given date, use the `maxValue` and 
 
 ```jsx
 import { minValue } from 'ra-core';
-import { DateInput } from '@/components/admin/date-input';
+import { DateTimeInput } from '@/components/admin/date-input';
 
 // requires dates after October 10th, 2022
-<DateInput source="published" validate={minValue('2022-10-26')} />;
+<DateTimeInput source="published" validate={minValue('2022-10-26')} />;
 ```
 
 ## Internationalization

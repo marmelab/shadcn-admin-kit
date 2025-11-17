@@ -108,6 +108,7 @@ export default defineConfig({
             "cancelbutton",
             "createbutton",
             "dateinput",
+            "datetimeinput",
             "deletebutton",
             "editbutton",
             "fileinput",
