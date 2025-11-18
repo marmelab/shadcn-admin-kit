@@ -1,6 +1,5 @@
 // This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import type { FallbackProps } from "react-error-boundary";
-
 import { useResetErrorBoundaryOnLocationChange, Translate } from "ra-core";
 import { CircleAlert, History } from "lucide-react";
 import {
@@ -10,8 +9,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import type { HtmlHTMLAttributes } from "react";
-import { ErrorInfo } from "react";
+import type { HtmlHTMLAttributes, ErrorInfo } from "react";
 
 export const Error = (props: InternalErrorProps & {}) => {
   const { error, errorInfo, resetErrorBoundary, ...rest } = props;
