@@ -433,7 +433,10 @@ export default App;
 
 Now you can click on a user in the list to see their details:
 
-<https://github.com/user-attachments/assets/26dd16e2-8da8-4ee4-9f0d-4353af8a2298>
+<video controls autoplay playsinline muted loop>
+  <source src="https://github.com/user-attachments/assets/26dd16e2-8da8-4ee4-9f0d-4353af8a2298" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
 Just like for other guessed components, you can customize the show view by copying the code dumped by the `<ShowGuesser>` and modifying it to suit your needs. This is out of scope for this tutorial, so we'll leave it as is.
 
@@ -491,7 +494,10 @@ function App() {
 export default App;
 ```
 
-<https://github.com/user-attachments/assets/3642747a-9155-4e5d-8cdc-9dbb3c936e8b>
+<video controls autoplay playsinline muted loop>
+  <source src="https://github.com/user-attachments/assets/3642747a-9155-4e5d-8cdc-9dbb3c936e8b" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
 Users can display the edit page just by clicking on the Edit button. The form is already functional; it issues `PUT` requests to the REST API upon submission. The user is already editable and displayed thanks to the `recordRepresentation` of the "users" resource.
 
@@ -644,7 +650,10 @@ function App() {
 export default App;
 ```
 
-<https://github.com/user-attachments/assets/7a4cb133-9243-47bd-adb0-8e0e90a73193>
+<video controls autoplay playsinline muted loop>
+  <source src="https://github.com/user-attachments/assets/7a4cb133-9243-47bd-adb0-8e0e90a73193" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
 `shadcn-admin-kit` automatically adds a "create" button on top of the posts list to give access to the `create` component. And the creation form works; it issues a `POST` request to the REST API upon submission.
 
@@ -658,7 +667,10 @@ That's because `shadcn-admin-kit` uses _optimistic updates_. When a user edits a
 
 But there is an additional benefit: it also allows the "Undo" feature. Undo is already functional in the admin at this point. Try editing a record, then hit the "Undo" link in the black confirmation box before it slides out. You'll see that the app does not send the `UPDATE` query to the API and displays the non-modified data.
 
-<https://github.com/user-attachments/assets/9e5fd3ad-b585-4ee6-af50-655ec5a01b5a>
+<video controls autoplay playsinline muted loop>
+  <source src="https://github.com/user-attachments/assets/9e5fd3ad-b585-4ee6-af50-655ec5a01b5a" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
 Even though updates appear immediately due to optimistic rendering, `shadcn-admin-kit` only sends them to the server after a short delay (about 5 seconds). During this delay, the user can undo the action, and `shadcn-admin-kit` will never send the update.
 
@@ -691,7 +703,10 @@ export const PostList = () => (
 
 The first filter, 'q', takes advantage of a full-text functionality offered by JSONPlaceholder. There is a second filter with `userId`, and since it's a `<ReferenceInput>`, it's already populated with possible users.
 
-<https://github.com/user-attachments/assets/d5786c07-d23f-4990-9e2a-62d07504e018>
+<video controls autoplay playsinline muted loop>
+  <source src="https://github.com/user-attachments/assets/d5786c07-d23f-4990-9e2a-62d07504e018" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
 Filters are "search-as-you-type", meaning that when the user enters new values in the filter form, the list refreshes (via an API request) immediately.
 
@@ -732,7 +747,10 @@ function App() {
 export default App;
 ```
 
-<https://github.com/user-attachments/assets/26ec2d40-df9f-4a68-822c-c69cf008680e>
+<video controls autoplay playsinline muted loop>
+  <source src="https://github.com/user-attachments/assets/26ec2d40-df9f-4a68-822c-c69cf008680e" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
 ## Using a Custom Home Page
 
@@ -836,10 +854,7 @@ function App() {
 
 Once the app reloads, it's now behind a login form that accepts everyone.
 
-<video controls autoplay playsinline muted loop>
-  <source src="images/authentication." type="video/" />
-  Your browser does not support the video tag.
-</video>
+![Login form](./images/login.jpg)
 
 ## Connecting To A Real API
 
