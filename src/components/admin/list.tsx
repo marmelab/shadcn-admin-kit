@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils.ts";
 import { CreateButton } from "@/components/admin/create-button";
 import { ExportButton } from "@/components/admin/export-button";
 import { ListPagination } from "@/components/admin/list-pagination";
-import { FilterForm } from "@/components/admin/filter-form.tsx";
+import { FilterButton, FilterForm } from "@/components/admin/filter-form";
 
 export const List = <RecordType extends RaRecord = RaRecord>(
   props: ListProps<RecordType>,
@@ -117,6 +117,7 @@ export const ListView = <RecordType extends RaRecord = RaRecord>(
           </h2>
           {actions ?? (
             <div className="flex items-center gap-2">
+              {filters && filters.length > 0 ? <FilterButton /> : null}
               {hasCreate ? <CreateButton /> : null}
               {<ExportButton />}
             </div>
