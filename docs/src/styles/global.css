@@ -53,6 +53,9 @@ img.icon {
 .sl-markdown-content table tr td:has(code) {
   max-width: 140px;
 }
+.no-td-limit table tr td:has(code) {
+  max-width: initial;
+}
 .sl-markdown-content table tr td code {
   overflow-wrap: break-word;
 }

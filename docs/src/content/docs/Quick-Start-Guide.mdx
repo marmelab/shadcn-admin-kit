@@ -847,6 +847,8 @@ Here is the elephant in the room of this tutorial. In real-world projects, the d
 
 For instance, let's imagine you have to use the `my.api.url` REST API, which expects the following parameters:
 
+<div class="no-td-limit">
+
 | Action              | Expected API request                                                                    |
 | ------------------- | --------------------------------------------------------------------------------------- |
 | Get list            | `GET http://my.api.url/posts?sort=["title","ASC"]&range=[0, 24]&filter={"title":"bar"}` |
@@ -858,6 +860,8 @@ For instance, let's imagine you have to use the `my.api.url` REST API, which exp
 | Update records      | `PUT http://my.api.url/posts?filter={"id":[123,124,125]}`                               |
 | Delete a record     | `DELETE http://my.api.url/posts/123`                                                    |
 | Delete records      | `DELETE http://my.api.url/posts?filter={"id":[123,124,125]}`                            |
+
+</div>
 
 `shadcn-admin-kit` calls the Data Provider with one method for each of the actions on this list and expects a Promise in return. These methods are called `getList`, `getOne`, `getMany`, `getManyReference`, `create`, `update`, `updateMany`, `delete`, and `deleteMany`. It's the Data Provider's job to emit HTTP requests and transform the response into the format expected by `shadcn-admin-kit`.
 
