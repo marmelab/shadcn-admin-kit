@@ -26,22 +26,16 @@ export function Header() {
           </div>
           <div className="hidden md:flex items-center gap-x-0 lg:gap-x-2 xl:gap-x-6">
             <NavLink href="#features">Features</NavLink>
-            <NavLink
-              href="https://github.com/marmelab/shadcn-admin-kit/tree/main/src/components/admin"
-              target="_blank"
-            >
-              Components
-            </NavLink>
             <NavLink href="https://marmelab.com/shadcn-admin-kit/docs/install/">
               Doc
             </NavLink>
-            <NavLink href="#pricing">Pricing</NavLink>
             <NavLink
               href="https://marmelab.com/shadcn-admin-kit/demo"
               target="_blank"
             >
               Demo
             </NavLink>
+            <NavLink href="#pricing">Pricing</NavLink>
             <Button asChild>
               <a
                 href="https://github.com/marmelab/shadcn-admin-kit"
@@ -71,20 +65,9 @@ export function Header() {
                   <a href="#features">Features</a>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="m-1">
-                  <a
-                    href="https://github.com/marmelab/shadcn-admin-kit/tree/main/src/components/admin"
-                    target="_blank"
-                  >
-                    Components
-                  </a>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="m-1">
                   <a href="https://marmelab.com/shadcn-admin-kit/docs/install/">
                     Doc
                   </a>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="m-1">
-                  <a href="#pricing">Pricing</a>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="m-1">
                   <a
@@ -93,6 +76,9 @@ export function Header() {
                   >
                     Demo
                   </a>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="m-1">
+                  <a href="#pricing">Pricing</a>
                 </DropdownMenuItem>
                 <div className="w-full p-1">
                   <Button asChild className="w-full">

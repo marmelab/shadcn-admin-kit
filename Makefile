@@ -12,6 +12,8 @@ install-browsers: ## Install Playwright browsers
 run:
 	pnpm run dev
 
+start: run
+
 lint: ## Run linter
 	pnpm run lint
 
@@ -46,6 +48,8 @@ storybook: ## Start the storybook
 
 run-website: ## Run the website in development mode
 	pnpm run website:dev
+
+start-website: run-website
 
 build-website: ## Build the website
 	rm -rf ./public/assets ./public/img ./public/index.html

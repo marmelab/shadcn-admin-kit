@@ -5,7 +5,7 @@ const tiers = [
   {
     name: "Open-Source",
     id: "free-tier",
-    href: "https://github.com/marmelab/shadcn-admin-kit",
+    href: "https://marmelab.com/shadcn-admin-kit/docs/install/",
     price: "$0",
     priceFreq: "/month",
     description: "The one and only tier",
