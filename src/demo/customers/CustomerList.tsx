@@ -13,6 +13,7 @@ import {
   ToggleFilterButton,
   TextInput,
   ListPagination,
+  CreateButton,
 } from "@/components/admin";
 import { Badge } from "@/components/ui/badge";
 import { Clock, DollarSign, Mail } from "lucide-react";
@@ -46,6 +47,7 @@ export const CustomerList = () => {
       pagination={false}
       actions={
         <div className="flex items-center gap-2">
+          <CreateButton />
           <ColumnsButton />
           <ExportButton />
         </div>
