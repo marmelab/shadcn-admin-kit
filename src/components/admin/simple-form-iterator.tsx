@@ -161,6 +161,7 @@ export const SimpleFormIterator = (props: SimpleFormIteratorProps) => {
       total: fields.length,
       add: addField,
       remove: removeField,
+      clear: handleArrayClear,
       reOrder: handleReorder,
       source: finalSource,
     }),
