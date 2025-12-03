@@ -1,4 +1,3 @@
-// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback } from "react";
 import { Switch } from "@/components/ui/switch";
@@ -6,6 +5,34 @@ import { FormError, FormField, FormLabel } from "@/components/admin/form";
 import { useInput, FieldTitle } from "ra-core";
 import { InputHelperText } from "./input-helper-text";
 
+/**
+ * Toggle switch for boolean (true/false) values.
+ *
+ * Use `<BooleanInput>` for binary settings like "is published", "is active", or feature flags.
+ * Leverages shadcn's Switch component for a native-looking toggle. Note: this input doesn't
+ * support `null` values—use `<SelectInput>` for nullable booleans.
+ *
+ * @see {@link https://marmelab.com/shadcn-admin-kit/docs/booleaninput/ BooleanInput documentation}
+ * @see {@link https://ui.shadcn.com/docs/components/switch Switch documentation}
+ *
+ * @example
+ * import {
+ *   Edit,
+ *   SimpleForm,
+ *   BooleanInput,
+ *   TextInput,
+ * } from '@/components/admin';
+ *
+ * const PostEdit = () => (
+ *   <Edit>
+ *     <SimpleForm>
+ *       <TextInput source="title" />
+ *       <BooleanInput source="is_published" />
+ *       <BooleanInput source="allow_comments" />
+ *     </SimpleForm>
+ *   </Edit>
+ * );
+ */
 export const BooleanInput = (props: BooleanInputProps) => {
   const {
     className,

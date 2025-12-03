@@ -1,4 +1,3 @@
-// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { RecordContextProvider, useListContext } from "ra-core";
 import { describe, expect, it } from "vitest";
 import { render } from "vitest-browser-react";

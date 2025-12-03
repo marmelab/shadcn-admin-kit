@@ -1,4 +1,3 @@
-// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import * as React from "react";
 import { memo } from "react";
 import { ArrowUpDown, ChevronDown } from "lucide-react";
@@ -25,6 +24,29 @@ import {
 
 type ButtonProps = React.ComponentProps<typeof Button>;
 
+/**
+ * A button that opens a dropdown menu to change list sorting.
+ *
+ * Displays current sort field and order, and toggles between ASC and DESC when clicking the same field again.
+ *
+ * @see {@link https://marmelab.com/shadcn-admin-kit/docs/sortbutton/ SortButton documentation}
+ *
+ * @example
+ * import { SortButton } from '@/components/admin';
+ *
+ * const PostList = () => (
+ *   <List render={({ data }) => (
+ *     <div>
+ *       <SortButton fields={["title", "published_at"]} />
+ *       <ul>
+ *         {data.map(post => (
+ *           <li key={post.id}>{post.title}</li>
+ *         ))}
+ *       </ul>
+ *     </div>
+ *   )}>
+ * );
+ */
 const SortButtonComponent = (props: SortButtonProps) => {
   const {
     fields,

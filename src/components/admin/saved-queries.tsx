@@ -1,4 +1,3 @@
-// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { useListContext, useTranslate } from "ra-core";
 import type { ChangeEvent, FormEvent, ReactElement } from "react";
 import { useState } from "react";
@@ -20,6 +19,13 @@ import {
   useSavedQueries,
 } from "@/hooks/saved-queries.tsx";
 
+/**
+ * Dialog for saving the current list view query (filters, sort, pagination) as a named saved query.
+ *
+ * Used by FilterButton in the List view.
+ *
+ * @internal
+ */
 export const AddSavedQueryDialog = ({
   open,
   onClose,
@@ -100,6 +106,11 @@ export interface AddSavedQueryDialogProps {
   onClose: () => void;
 }
 
+/**
+ * Dialog for removing a saved query from the user's list.
+ *
+ * @internal
+ */
 export const RemoveSavedQueryDialog = ({
   open,
   onClose,

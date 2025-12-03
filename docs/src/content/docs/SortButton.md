@@ -16,14 +16,13 @@ const PostList = () => (
         <div>
             <SortButton fields={["title", "published_at"]} />
             <ul>
-                {data..map(post => (
+                {data.map(post => (
                     <li key={post.id}>{post.title}</li>
                 ))}
             </ul>
         </div>
     )}>
-)
-<SortButton fields={["title", "published_at"]} />
+);
 ```
 
 This button lets users pick the sort field, then the sort direction (ASC/DESC).

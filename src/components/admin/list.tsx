@@ -1,4 +1,3 @@
-// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -23,6 +22,34 @@ import { ExportButton } from "@/components/admin/export-button";
 import { ListPagination } from "@/components/admin/list-pagination";
 import { FilterButton, FilterForm } from "@/components/admin/filter-form";
 
+/**
+ * A complete list page with breadcrumb, title, filters, and pagination.
+ *
+ * It fetches a list of records from the data provider (via ra-core hooks),
+ * puts them in a ListContext, renders a default layout (breadcrumb, title,
+ * action buttons, inline filters, pagination), then renders its children
+ * (usually a <DataTable>).
+ *
+ * @see {@link https://marmelab.com/shadcn-admin-kit/docs/list/ List documentation}
+ *
+ * @example
+ * import { DataTable, List } from "@/components/admin";
+ *
+ * export const UserList = () => (
+ *   <List>
+ *     <DataTable>
+ *       <DataTable.Col source="id" />
+ *       <DataTable.Col source="name" />
+ *       <DataTable.Col source="username" />
+ *       <DataTable.Col source="email" />
+ *       <DataTable.Col source="address.street" />
+ *       <DataTable.Col source="phone" />
+ *       <DataTable.Col source="website" />
+ *       <DataTable.Col source="company.name" />
+ *     </DataTable>
+ *   </List>
+ * );
+ */
 export const List = <RecordType extends RaRecord = RaRecord>(
   props: ListProps<RecordType>,
 ) => {
@@ -66,6 +93,11 @@ export interface ListProps<RecordType extends RaRecord = RaRecord>
   extends ListBaseProps<RecordType>,
     ListViewProps<RecordType> {}
 
+/**
+ * The view component for List pages with layout and UI.
+ *
+ * @internal
+ */
 export const ListView = <RecordType extends RaRecord = RaRecord>(
   props: ListViewProps<RecordType>,
 ) => {

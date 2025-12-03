@@ -1,4 +1,3 @@
-// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ReactNode } from "react";
 import { useEffect, useState, isValidElement, Children } from "react";
@@ -21,6 +20,17 @@ import { BadgeField } from "@/components/admin/badge-field";
 import { SingleFieldList } from "@/components/admin/single-field-list";
 import { ReferenceArrayField } from "@/components/admin/reference-array-field";
 
+/**
+ * A show page that automatically generates fields from your data.
+ *
+ * Inspects the record to infer field types and automatically creates appropriate display fields.
+ * Useful for rapid prototyping. Logs generated code to console when enableLog is true.
+ *
+ * @example
+ * import { ShowGuesser } from '@/components/admin';
+ *
+ * export const PostShow = () => <ShowGuesser enableLog />;
+ */
 export const ShowGuesser = (props: { enableLog?: boolean }) => (
   <ShowBase>
     <ShowViewGuesser {...props} />

@@ -1,4 +1,3 @@
-// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { useState } from "react";
 import { Form, required, useLogin, useNotify } from "ra-core";
 import type { SubmitHandler, FieldValues } from "react-hook-form";
@@ -6,6 +5,15 @@ import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/admin/text-input";
 import { Notification } from "@/components/admin/notification";
 
+/**
+ * Login page displayed when authentication is enabled and the user is not authenticated.
+ *
+ * Automatically shown when an unauthenticated user tries to access a protected route.
+ * Handles login via authProvider.login() and displays error notifications on failure.
+ *
+ * @see {@link https://marmelab.com/shadcn-admin-kit/docs/loginpage LoginPage documentation}
+ * @see {@link https://marmelab.com/shadcn-admin-kit/docs/security Security documentation}
+ */
 export const LoginPage = (props: { redirectTo?: string }) => {
   const { redirectTo } = props;
   const [loading, setLoading] = useState(false);

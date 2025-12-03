@@ -1,4 +1,3 @@
-// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import * as React from "react";
 import { useEffect, useState } from "react";
 import type { InputProps } from "ra-core";
@@ -8,6 +7,28 @@ import { Input } from "@/components/ui/input";
 import { FormError } from "@/components/admin/form";
 import { InputHelperText } from "@/components/admin/input-helper-text";
 
+/**
+ * Input component for numeric values (integers and floats) with parsing and formatting support.
+ *
+ * Use `<NumberInput>` for prices, quantities, counts, or any numeric field. Manages a local string
+ * state internally so users can type incomplete numbers (e.g. '-' or '0.') before the value is parsed.
+ * Supports min/max constraints and step increments.
+ *
+ * @see {@link https://marmelab.com/shadcn-admin-kit/docs/numberinput/ NumberInput documentation}
+ *
+ * @example
+ * import { Edit, SimpleForm, NumberInput, TextInput } from '@/components/admin';
+ *
+ * const ProductEdit = () => (
+ *   <Edit>
+ *     <SimpleForm>
+ *       <TextInput source="name" />
+ *       <NumberInput source="price" step={0.01} min={0} />
+ *       <NumberInput source="quantity" min={0} />
+ *     </SimpleForm>
+ *   </Edit>
+ * );
+ */
 export const NumberInput = (props: NumberInputProps) => {
   const {
     label,

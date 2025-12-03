@@ -1,4 +1,3 @@
-// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import * as React from "react";
 import { FieldTitle, useResourceContext } from "ra-core";
 import { GripVertical } from "lucide-react";
@@ -6,7 +5,9 @@ import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 
 /**
- * UI to enable/disable a field
+ * A toggleable field item with drag-and-drop reordering, used by ColumnsSelector
+ *
+ * @internal
  */
 export const FieldToggle = (props: FieldToggleProps) => {
   const { selected, label, onToggle, onMove, source, index } = props;

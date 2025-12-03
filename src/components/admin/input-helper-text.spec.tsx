@@ -1,4 +1,3 @@
-// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { describe, expect, it } from "vitest";
 import { InputHelperText } from "./input-helper-text";
 import { render } from "vitest-browser-react";

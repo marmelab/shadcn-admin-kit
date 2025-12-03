@@ -1,4 +1,3 @@
-// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import {
   ScanFace,
   BookOpenText,
@@ -6,6 +5,14 @@ import {
   Github,
 } from "lucide-react";
 
+/**
+ * Splash screen displayed when no resources are configured yet.
+ *
+ * Provides helpful links to documentation, demo, and GitHub repository.
+ * Automatically shown when the admin app has no Resource children defined.
+ *
+ * @see {@link https://marmelab.com/shadcn-admin-kit/docs/ready/ Ready documentation}
+ */
 export const Ready = () => (
   <div className="flex flex-col h-screen">
     <div

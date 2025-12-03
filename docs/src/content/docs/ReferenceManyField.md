@@ -21,22 +21,24 @@ For instance, if an `author` has many `books`, and each book resource exposes an
 
 `<ReferenceManyField>` can render the titles of all the books by a given author.
 
-```jsx {8-13}
-import { Show, ReferenceManyField, DataTable, TextField, DateField } from '@/components/admin';
+```jsx {9-14}
+import { Show, ReferenceManyField, DataTable, DateField, RecordField } from '@/components/admin';
 
 const AuthorShow = () => (
-    <Show>
-        <div className="flex flex-col gap-4">
-            <TextField source="first_name" />
-            <TextField source="last_name" />
-            <ReferenceManyField reference="books" target="author_id" label="Books">
-              <DataTable>
-                <DataTable.Col source="title" />
-                <DataTable.Col source="published_at" field={DateField} />
-              </DataTable>
-            </ReferenceManyField>
-        </div>
-    </Show>
+  <Show>
+    <div className="flex flex-col gap-4">
+      <RecordField source="first_name" />
+      <RecordField source="last_name" />
+      <RecordField label="Books">
+        <ReferenceManyField reference="books" target="author_id" label="Books">
+          <DataTable>
+            <DataTable.Col source="title" />
+            <DataTable.Col source="published_at" field={DateField} />
+          </DataTable>
+        </ReferenceManyField>
+      </RecordField>
+    </div>
+  </Show>
 );
 ```
 

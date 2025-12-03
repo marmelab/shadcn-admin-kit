@@ -32,7 +32,7 @@ export const UserList = () => (
 );
 
 // in src/App.jsx
-import { Admin } from 'shadcn-admin-kit';
+import { Admin } from '@/components/admin';
 import { Resource } from 'ra-core';
 import jsonServerProvider from 'ra-data-json-server';
 
@@ -129,7 +129,7 @@ By default the page header shows a toolbar with 2 buttons:
 Provide an `actions` prop to completely replace that area:
 
 ```tsx
-import { List, CreateButton, ExportButton, ColumnsButton } from 'shadcn-admin-kit';
+import { List, CreateButton, ExportButton, ColumnsButton } from '@/components/admin';
 
 const MyActions = () => (
     <div className="flex items-center gap-2">
@@ -196,7 +196,7 @@ The `pagination` prop allows to replace the default pagination controls by your 
 
 ```tsx
 // in src/MyPagination.js
-import { TablePagination, List } from 'shadcn-admin-kit';
+import { TablePagination, List } from '@/components/admin';
 
 const PostPagination = () => <TablePagination rowsPerPageOptions={[10, 25, 50, 100]} />;
 
@@ -223,8 +223,8 @@ The default pagination component's `rowsPerPageOptions` includes options of 5, 1
 
 ```diff
 // in src/MyPagination.js
--import { List } from 'shadcn-admin-kit';
-+import { List, Pagination } from 'shadcn-admin-kit';
+-import { List } from '@/components/admin';
++import { List, Pagination } from '@/components/admin';
 
 export const PostList = () => (
 -    <List perPage={6}>
@@ -343,7 +343,7 @@ Here is an example for a Posts exporter, omitting, adding, and reordering fields
 
 ```tsx
 // in PostList.js
-import { List } from 'shadcn-admin-kit';
+import { List } from '@/components/admin';
 import { downloadCSV } ffrom 'ra-core';
 import jsonExport from 'jsonexport/dist';
 
@@ -375,7 +375,7 @@ Here is an example for a Comments exporter, fetching related Posts:
 
 ```tsx
 // in CommentList.js
-import { List } from 'shadcn-admin-kit';
+import { List } from '@/components/admin';
 import { downloadCSV, type FetchRelatedRecords } from 'ra-core';
 import jsonExport from 'jsonexport/dist';
 
@@ -428,7 +428,7 @@ You may also remove the `<ExportButton>` by passing `false` to the `exporter` pr
 This can be useful e.g. to pass [a custom `meta`](https://marmelab.com/ra-core/actions/#meta-parameter) to the `dataProvider.getList()` call.
 
 ```tsx
-import { List } from 'shadcn-admin-kit';
+import { List } from '@/components/admin';
 
 const PostList = () => (
     <List queryOptions={{ meta: { foo: 'bar' } }}>
@@ -442,7 +442,7 @@ With this option, shadcn-admin-kit will call `dataProvider.getList()` on mount w
 You can also use the `queryOptions` prop to override the default error side effect. By default, when the `dataProvider.getList()` call fails, shadcn-admin-kit shows an error notification. Here is how to show a custom notification instead:
 
 ```tsx
-import { useNotify, useRedirect, List } from 'shadcn-admin-kit';
+import { useNotify, useRedirect, List } from '@/components/admin';
 
 const PostList = () => {
     const notify = useNotify();
@@ -568,7 +568,7 @@ import {
     Resource,
     List,
     DataTable,
-} from 'shadcn-admin-kit';
+} from '@/components/admin';
 import { Route } from 'react-router';
 
 const NewerBooks = () => (
@@ -628,7 +628,7 @@ You can use `<ListGuesser>` to quickly bootstrap a List view on top of an existi
 
 ```tsx
 // in src/App.js
-import { Admin, ListGuesser } from 'shadcn-admin-kit';
+import { Admin, ListGuesser } from '@/components/admin';
 import { Resource } from 'ra-core';
 import { dataProvider } from './dataProvider';
 
@@ -651,7 +651,7 @@ Shadcn Admin Kit offers [Realtime features](./RealtimeFeatures.md) to automatica
 If you want to subscribe to live updates on the list of records, add [the `<ListLiveUpdate>` component](https://marmelab.com/ra-core/listliveupdate/) in your `<List>` children.
 
 ```tsx {2,7}
-import { List } from 'shadcn-admin-kit';
+import { List } from '@/components/admin';
 import { ListLiveUpdate } from '@react-admin/ra-core-ee';
 
 const PostList = () => (
@@ -675,7 +675,7 @@ When there is no data, shadcn-admin-kit displays a special page inviting the use
 You can set the `empty` props value to `false` to render an empty list instead.
 
 ```tsx
-import { List } from 'shadcn-admin-kit';
+import { List } from '@/components/admin';
 
 const ProductList = () => (
     <List empty={false}>
@@ -691,7 +691,7 @@ const ProductList = () => (
 In that case, use the [`resource`](#resource), [`sort`](#sort), [`filter`](#filter-permanent-filter), and [`perPage`](#perpage) props to set the list parameters.
 
 ```tsx
-import { List, DataTable, DateField } from 'shadcn-admin-kit';
+import { List, DataTable, DateField } from '@/components/admin';
 
 const Dashboard = () => (
     <div className="space-y-10">
@@ -739,7 +739,7 @@ If you need to set the list parameters to render a list of records *related to a
 If the `<List>` children allow to *modify* the list state (i.e. if they let users change the sort order, the filters, the selection, or the pagination), then you should also use the [`disableSyncWithLocation`](#disablesyncwithlocation) prop to prevent shadcn-admin-kit from changing the URL. This is the case e.g. if you use a `<DataTable>`, which lets users sort the list by clicking on column headers.
 
 ```tsx
-import { List, DataTable, DateField } from 'shadcn-admin-kit';
+import { List, DataTable, DateField } from '@/components/admin';
 
 const Dashboard = () => (
     <div className="space-y-10">
@@ -825,7 +825,7 @@ The previous example leverages [`<WithListContext>`](https://marmelab.com/ra-cor
 If you don't need the `ListContext`, you can use [the `useListController` hook](https://marmelab.com/ra-core/uselistcontroller/), which does the same data fetching as `<ListBase>` but lets you render the content.
 
 ```tsx
-import { useListController } from 'shadcn-admin-kit';
+import { useListController } from '@/components/admin';
 import { Card, CardContent, Container, Stack, Typography } from '@mui/material';
 
 const ProductList = () => {
@@ -859,7 +859,7 @@ If your `authProvider` implements [Access Control](https://marmelab.com/ra-core/
 For instance, to render the `<PostList>` page below:
 
 ```tsx
-import { List, DataTable } from 'shadcn-admin-kit';
+import { List, DataTable } from '@/components/admin';
 
 // Resource name is "posts"
 const PostList = () => (

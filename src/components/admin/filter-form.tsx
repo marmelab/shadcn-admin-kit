@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import * as React from "react";
 import type { HtmlHTMLAttributes, ReactNode } from "react";
 import { useCallback, useEffect, useState, isValidElement } from "react";
@@ -43,6 +42,13 @@ import {
   RemoveSavedQueryDialog,
 } from "@/components/admin/saved-queries.tsx";
 
+/**
+ * A form for filter inputs with live updates. Included by default in List.
+ *
+ * To be used in conjunction with FilterButton.
+ *
+ * @see {@link https://marmelab.com/shadcn-admin-kit/docs/list/#filter-button--form-combo FilterForm documentation}
+ */
 export const FilterForm = (inProps: FilterFormProps) => {
   const { filters: filtersProps, ...rest } = inProps;
   const filters = useFilterContext() || filtersProps;
@@ -205,6 +211,14 @@ export interface FilterFormInputProps {
 
 const emptyRecord = {};
 
+/**
+ * A button that opens a dropdown to add, remove, and manage filters.
+ *
+ * Displays available filters, saved queries, and options to save or clear current filters.
+ * Works with the FilterForm to provide a complete filtering UI.
+ *
+ * @see {@link https://marmelab.com/shadcn-admin-kit/docs/list/#filter-button--form-combo FilterForm documentation}
+ */
 export const FilterButton = (props: FilterButtonProps) => {
   const {
     filters: filtersProp,

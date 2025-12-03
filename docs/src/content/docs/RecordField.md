@@ -19,7 +19,6 @@ const PostShow = () => (
         label="dimensions"
         render={record => `${record.width}x${record.height}`}
       />
-      </RecordField>
       <RecordField source="price">
         <NumberField source="price" options={
           style: 'currency',

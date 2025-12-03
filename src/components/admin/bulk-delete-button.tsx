@@ -1,4 +1,3 @@
-// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
@@ -7,6 +6,32 @@ import { Translate, useBulkDeleteController } from "ra-core";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 
+/**
+ * A button that deletes multiple selected records at once.
+ *
+ * Allows to delete selected records in a DataTable. Use within
+ * the bulkActionsButtons prop of DataTable or inside BulkActionsToolbar.
+ *
+ * @see {@link https://marmelab.com/shadcn-admin-kit/docs/bulkdeletebutton/ BulkDeleteButton documentation}
+ *
+ * @example
+ * import { BulkDeleteButton, BulkExportButton, DataTable, List } from '@/components/admin';
+ *
+ * export const PostList = () => (
+ *   <List>
+ *     <DataTable
+ *       bulkActionsButtons={
+ *         <>
+ *           <BulkExportButton />
+ *           <BulkDeleteButton />
+ *         </>
+ *       }
+ *     >
+ *       ...
+ *     </DataTable>
+ *   </List>
+ * );
+ */
 export const BulkDeleteButton = <
   RecordType extends RaRecord = any,
   MutationOptionsError = unknown,

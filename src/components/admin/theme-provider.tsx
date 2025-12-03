@@ -1,4 +1,3 @@
-// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { createContext, useContext, useEffect } from "react";
 import { useStore } from "ra-core";
 
@@ -22,6 +21,11 @@ const initialState: ThemeProviderState = {
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
+/**
+ * Theme provider that enables light, dark, and system theme modes.
+ *
+ * @internal
+ */
 export function ThemeProvider({
   children,
   defaultTheme = "system",

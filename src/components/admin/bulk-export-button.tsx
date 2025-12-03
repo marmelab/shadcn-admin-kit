@@ -1,4 +1,3 @@
-// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { Download } from "lucide-react";
 import type { RaRecord } from "ra-core";
 import { Translate, useBulkExport, UseBulkExportOptions } from "ra-core";
@@ -10,7 +9,9 @@ import { Button } from "../ui/button";
  *
  * To be used inside the <DataTable bulkActionsButtons> prop.
  *
- * @example // basic usage
+ * @see {@link https://marmelab.com/shadcn-admin-kit/docs/bulkexportbutton/ BulkExportButton documentation}
+ *
+ * @example
  * import { BulkDeleteButton, BulkExportButton, DataTable, List } from '@/components/admin';
  *
  * export const PostList = () => (

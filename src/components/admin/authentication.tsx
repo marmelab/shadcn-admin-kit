@@ -1,4 +1,3 @@
-// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import { Link } from "react-router";
 import { Translate, useHandleAuthCallback, useTranslate } from "ra-core";
 import { CircleAlert, LockIcon } from "lucide-react";
@@ -7,19 +6,21 @@ import { Button } from "@/components/ui/button";
 import { Loading } from "@/components/admin/loading";
 
 /**
- * A standalone page to be used in a route called by external authentication services (e.g. OAuth)
- * after the user has been authenticated.
+ * A standalone page to be used as a redirection target for external authentication services (e.g. OAuth)
  *
- * Copy and adapt this component to implement your own login logic
- * (e.g. to show a different waiting screen, start onboarding procedures, etc.).
+ * It displays a loading indicator while processing the authentication response,
+ * then redirects to the admin app or shows an error message if authentication fails.
+ *
+ * @see {@link https://marmelab.com/shadcn-admin-kit/docs/security/ Security documentation}
  *
  * @example
- *     import MyAuthCallbackPage from './MyAuthCallbackPage';
- *     const App = () => (
- *         <Admin authCallbackPage={MyAuthCallbackPage} authProvider={authProvider}>
- *             ...
- *         </Admin>
- *     );
+ * import { Admin } from "@/components/admin";
+ * import MyAuthCallbackPage from './MyAuthCallbackPage';
+ * const App = () => (
+ *     <Admin authCallbackPage={MyAuthCallbackPage} authProvider={authProvider}>
+ *         ...
+ *     </Admin>
+ * );
  */
 export const AuthCallback = () => {
   const { error } = useHandleAuthCallback();
@@ -39,6 +40,20 @@ export interface AuthErrorProps {
   message?: string;
 }
 
+/**
+ * Authentication error page displayed when authentication fails.
+ *
+ * @see {@link https://marmelab.com/shadcn-admin-kit/docs/security/ Security documentation}
+ *
+ * @example
+ * import { Admin } from "@/components/admin";
+ * import MyAuthErrorPage from './MyAuthErrorPage';
+ * const App = () => (
+ *   <Admin authenticationError={MyAuthErrorPage} authProvider={authProvider}>
+ *     ...
+ *   </Admin>
+ * );
+ */
 export const AuthError = (props: AuthErrorProps) => {
   const {
     className,

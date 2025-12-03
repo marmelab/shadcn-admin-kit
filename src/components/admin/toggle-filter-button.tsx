@@ -1,4 +1,3 @@
-// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { cn } from "@/lib/utils";
@@ -8,6 +7,24 @@ import matches from "lodash/matches";
 import pickBy from "lodash/pickBy";
 import { CircleX } from "lucide-react";
 
+/**
+ * A button that toggles a specific filter value on/off.
+ *
+ * Renders a button that applies or removes a filter when clicked. Shows a close icon when the
+ * filter is active. Useful for quick filter presets like status or category.
+ *
+ * @see {@link https://marmelab.com/shadcn-admin-kit/docs/togglefilterbutton/ ToggleFilterButton documentation}
+ *
+ * @example
+ * import { ToggleFilterButton } from '@/components/admin';
+ *
+ * const PostFilters = () => (
+ *   <div className="flex flex-row gap-2">
+ *     <ToggleFilterButton label="Published" value={{ status: 'published' }} />
+ *     <ToggleFilterButton label="Draft" value={{ status: 'draft' }} />
+ *   </div>
+ * );
+ */
 export const ToggleFilterButton = ({
   label,
   size = "sm",

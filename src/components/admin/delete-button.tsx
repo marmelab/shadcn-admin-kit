@@ -1,4 +1,3 @@
-// This file is part of Shadcn Admin Kit (https://github.com/marmelab/shadcn-admin-kit)
 import * as React from "react";
 import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -31,6 +30,23 @@ export type DeleteButtonProps = {
     | "link";
 };
 
+/**
+ * A button that deletes a record with undo capability.
+ *
+ * Renders a destructive button that deletes the current record and shows an undo notification.
+ * Automatically redirects after deletion and works with the RecordContext.
+ *
+ * @see {@link https://marmelab.com/shadcn-admin-kit/docs/deletebutton/ DeleteButton documentation}
+ *
+ * @example
+ * import { DeleteButton, Edit } from '@/components/admin';
+ *
+ * const PostEdit = () => (
+ *     <Edit actions={<DeleteButton />}>
+ *         ...
+ *     </Edit>
+ * );
+ */
 export const DeleteButton = (props: DeleteButtonProps) => {
   const {
     label: labelProp,
