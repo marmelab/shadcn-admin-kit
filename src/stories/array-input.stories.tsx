@@ -129,7 +129,10 @@ export const WithArrayInputValidation = ({
   <StoryWrapper theme={theme}>
     <ResourceContextProvider value="posts">
       <SimpleForm>
-        <ArrayInput source="tags" validate={minLength(5)}>
+        <ArrayInput
+          source="tags"
+          validate={minLength(5, "Must have at least 5 items")}
+        >
           <SimpleFormIterator>
             <TextInput source="name" validate={required()} />
           </SimpleFormIterator>
