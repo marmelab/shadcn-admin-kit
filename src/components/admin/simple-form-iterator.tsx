@@ -3,6 +3,11 @@ import get from "lodash/get";
 import * as React from "react";
 import type { ReactElement } from "react";
 import { useState } from "react";
+import type {
+  RaRecord,
+  SimpleFormIteratorDisableRemoveFunction,
+  SimpleFormIteratorItemBaseProps,
+} from "ra-core";
 import {
   RecordContextProvider,
   SimpleFormIteratorBase,
@@ -16,9 +21,6 @@ import {
   useSimpleFormIteratorItem,
   useTranslate,
   useWrappedSource,
-  type RaRecord,
-  type SimpleFormIteratorDisableRemoveFunction,
-  type SimpleFormIteratorItemBaseProps,
 } from "ra-core";
 import type { UseFieldArrayReturn } from "react-hook-form";
 import {

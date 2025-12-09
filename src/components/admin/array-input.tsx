@@ -1,12 +1,12 @@
+import * as React from "react";
+import type { InputProps } from "ra-core";
 import {
   FieldTitle,
   isRequired,
   useSourceContext,
   sanitizeInputRestProps,
   ArrayInputBase,
-  type InputProps,
 } from "ra-core";
-import * as React from "react";
 
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
