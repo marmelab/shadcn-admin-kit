@@ -29,12 +29,32 @@ export function Header() {
             <NavLink href="https://marmelab.com/shadcn-admin-kit/docs/install/">
               Doc
             </NavLink>
-            <NavLink
-              href="https://marmelab.com/shadcn-admin-kit/demo"
-              target="_blank"
-            >
-              Demo
-            </NavLink>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="text-md inline-block rounded-lg px-2 py-1 text-slate-700 hover:bg-slate-100 hover:text-slate-900">
+                Demos
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className="w-64"
+                onCloseAutoFocus={(e) => e.preventDefault()}
+              >
+                <DropdownMenuItem className="m-1">
+                  <a
+                    href="https://marmelab.com/shadcn-admin-kit/demo"
+                    target="_blank"
+                  >
+                    E-Commerce
+                  </a>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="m-1">
+                  <a
+                    href="https://marmelab.com/atomic-crm-demo/"
+                    target="_blank"
+                  >
+                    CRM
+                  </a>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <NavLink href="#pricing">Pricing</NavLink>
             <Button asChild>
               <a
@@ -74,7 +94,15 @@ export function Header() {
                     href="https://marmelab.com/shadcn-admin-kit/demo"
                     target="_blank"
                   >
-                    Demo
+                    Demo E-Commerce
+                  </a>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="m-1">
+                  <a
+                    href="https://marmelab.com/atomic-crm-demo/"
+                    target="_blank"
+                  >
+                    Demo CRM
                   </a>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="m-1">
