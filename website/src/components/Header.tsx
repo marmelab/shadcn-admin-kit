@@ -41,6 +41,7 @@ export function Header() {
                   <a
                     href="https://marmelab.com/shadcn-admin-kit/demo"
                     target="_blank"
+                    className="flex-1"
                   >
                     E-Commerce
                   </a>
@@ -49,6 +50,7 @@ export function Header() {
                   <a
                     href="https://marmelab.com/atomic-crm-demo/"
                     target="_blank"
+                    className="flex-1"
                   >
                     CRM
                   </a>
@@ -82,10 +84,15 @@ export function Header() {
                 onCloseAutoFocus={(e) => e.preventDefault()}
               >
                 <DropdownMenuItem className="m-1">
-                  <a href="#features">Features</a>
+                  <a href="#features" className="flex-1">
+                    Features
+                  </a>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="m-1">
-                  <a href="https://marmelab.com/shadcn-admin-kit/docs/install/">
+                  <a
+                    href="https://marmelab.com/shadcn-admin-kit/docs/install/"
+                    className="flex-1"
+                  >
                     Doc
                   </a>
                 </DropdownMenuItem>
@@ -93,6 +100,7 @@ export function Header() {
                   <a
                     href="https://marmelab.com/shadcn-admin-kit/demo"
                     target="_blank"
+                    className="flex-1"
                   >
                     Demo E-Commerce
                   </a>
@@ -101,18 +109,22 @@ export function Header() {
                   <a
                     href="https://marmelab.com/atomic-crm-demo/"
                     target="_blank"
+                    className="flex-1"
                   >
                     Demo CRM
                   </a>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="m-1">
-                  <a href="#pricing">Pricing</a>
+                  <a href="#pricing" className="flex-1">
+                    Pricing
+                  </a>
                 </DropdownMenuItem>
                 <div className="w-full p-1">
                   <Button asChild className="w-full">
                     <a
                       href="https://github.com/marmelab/shadcn-admin-kit"
                       target="_blank"
+                      className="flex-1"
                     >
                       <img
                         src={GithubLogo}
