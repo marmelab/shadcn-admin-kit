@@ -75,7 +75,7 @@
     "@storybook/addon-a11y": "^10.1.7",
     "@storybook/addon-docs": "^10.1.7",
     "@storybook/addon-vitest": "^10.1.7",
-    "@storybook/react-vite": "^10.1.7",
+    "@storybook/react-vite": "^10.1.8",
     "@tailwindcss/postcss": "^4.1.11",
     "@types/lodash": "^4.17.16",
     "@types/node": "^22.15.3",
