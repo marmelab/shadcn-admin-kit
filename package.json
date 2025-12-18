@@ -94,11 +94,11 @@
     "ra-data-json-server": "^5.12.0",
     "react-error-boundary": "^6.0.0",
     "shadcn": "2.6.0-canary.3",
-    "storybook": "^10.1.7",
+    "storybook": "^10.1.10",
     "tw-animate-css": "^1.2.8",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.26.1",
-    "vite": "^7.1.11",
+    "vite": "^7.1.12",
     "vitest": "^3.2.4",
     "vitest-browser-react": "^1.0.1"
   },
