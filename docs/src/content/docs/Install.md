@@ -8,6 +8,7 @@ title: Installation
 
 - [Install with Next.js](#install-with-nextjs)
 - [Install with Vite](#install-with-vitejs)
+- [Install with React-Router](#install-with-react-router)
 
 ## Install with Next.js
 
@@ -214,3 +215,104 @@ You should see this:
 ![Welcome to shadcn-admin-kit!](./images/welcome.png)
 
 Next step: Read the [Quick Start Guide](./Quick-Start-Guide.mdx) to learn how to use the components in your admin app.
+
+## Install with React-Router
+
+You can setup a Shadcn Admin Kit application with React-Router v7 (a.k.a. Remix v3) as follows. First, creating a new React Router project with the following command:
+
+```shell
+npx create-react-router@latest 
+```
+
+This script will ask you for more details about your project. You can use the following options:
+
+- The name you want to give to your project, e.g. `my-app`
+- Initialize a new git repository? Choose Yes
+- Install dependencies with npm? Choose Yes
+
+Initialize shadcn in your new project:
+
+```shell
+cd my-app
+npx shadcn@latest init
+```
+
+Next, install the Shadcn Admin Kit components:
+
+```shell
+npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/admin.json
+```
+
+This will add some components to the `app/components/admin` and `app/components/ui` directories, as well as some utilities inside the `app/hooks/` and `app/lib/` directories.
+
+Shadcn Admin Kit depends on the `react-router-dom` package. It used to be a direct dependency of `react-router`, but it's not anymore in v7 so you'll have to add it manually. Check the version of React Router that has been installed by `create-react-router` and **use the exact same version**. At the time of writing this tutorial, it is `7.10.1`.
+
+```shell
+npm add react-router-dom@7.10.1
+```
+
+Next, add a `/admin` route to your application by editing the `app/routes.ts` file and adding the following route:
+
+```tsx title="app/routes.ts"
+import { type RouteConfig, index, route } from "@react-router/dev/routes";
+
+export default [
+  index("routes/home.tsx"),
+  route("/admin/*", "routes/admin.tsx"),
+] satisfies RouteConfig;
+```
+
+Now create the `app/routes/admin.tsx` file:
+
+```tsx title="app/routes/admin.tsx"
+import AdminApp from "~/admin/App";
+
+export default function App() {
+  return <AdminApp />;
+}
+```
+
+Then, create the `app/admin/App.tsx` file that will contain the admin app:
+
+```tsx title="app/admin/App.tsx"
+import { Admin } from "~/components/admin";
+
+const App = () => <Admin basename="/admin"></Admin>;
+
+export default App;
+```
+
+:::note
+The convention for react-router applications is to use `~/` as prefix for imports, while other frameworks use `@/`. The Shadcn Admin Kit documentation uses `@/` everywhere, make sure to adapt the import paths accordingly.
+:::
+
+Edit the `tsconfig.json` file to avoid an [unsolved shadcn/ui bug](https://github.com/shadcn-ui/ui/issues/6618):
+
+```diff lang="json"
+// tsconfig.app.json
+{
+  "compilerOptions": {
+    // ...
+-   "verbatimModuleSyntax": true,
++   "verbatimModuleSyntax": false,
+    },
+}
+```
+
+It's time to test! Run the following command to run your project.
+
+```shell
+npm run dev
+# or
+yarn dev
+```
+
+Now go to `http://localhost:5173/admin` in your browser. You should see this:
+
+![Welcome to shadcn-admin-kit!](./images/welcome.png)
+
+:::tip
+If you're getting a `ReferenceError: document is not defined`error at this stage, it's probably because the versions of `react-router` and `react-router-dom` are mismatched. Make sure to use the exact same version for both packages.
+:::
+
+Next step: Read the [Quick Start Guide](./Quick-Start-Guide.mdx) to learn how to use the components in your admin app. -
