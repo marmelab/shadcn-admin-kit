@@ -38,6 +38,10 @@ npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/admin.json
 
 This will add some components to the `components/admin` and `components/ui` directories, as well as some utilities inside the `hooks/` and `lib/` directories.
 
+:::note
+The `shadcn` CLI tool has [known issues](https://github.com/shadcn-ui/ui/issues/8778) with Windows. If you are using Windows and encounter problems, please switch to a WSL terminal or use a different OS.
+:::
+
 You're ready to bootstrap your app. Create an `app/admin` directory and an `app/admin/App.tsx` component file that will contain the admin app.
 
 ```tsx title="app/admin/App.tsx"
@@ -202,6 +206,10 @@ const App = () => <Admin></Admin>;
 export default App;
 ```
 
+:::note
+The `shadcn` CLI tool has [known issues](https://github.com/shadcn-ui/ui/issues/8778) with Windows. If you are using Windows and encounter problems, please switch to a WSL terminal or use a different OS.
+:::
+
 It's time to test! Run the following command to run your project.
 
 ```shell
@@ -244,6 +252,10 @@ npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/admin.json
 ```
 
 This will add some components to the `app/components/admin` and `app/components/ui` directories, as well as some utilities inside the `app/hooks/` and `app/lib/` directories.
+
+:::note
+The `shadcn` CLI tool has [known issues](https://github.com/shadcn-ui/ui/issues/8778) with Windows. If you are using Windows and encounter problems, please switch to a WSL terminal or use a different OS.
+:::
 
 Shadcn Admin Kit depends on the `react-router-dom` package. It used to be a direct dependency of `react-router`, but it's not anymore in v7 so you'll have to add it manually. Check the version of React Router that has been installed by `create-react-router` and **use the exact same version**. At the time of writing this tutorial, it is `7.10.1`.
 
