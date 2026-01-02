@@ -84,6 +84,7 @@ export default defineConfig({
             "recordfield",
             "referencearrayfield",
             "referencefield",
+            "referenceonefield",
             "referencemanycount",
             "referencemanyfield",
             enterpriseEntry("ReferenceManyToManyFieldBase"),
