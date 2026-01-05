@@ -196,9 +196,9 @@ The `pagination` prop allows to replace the default pagination controls by your 
 
 ```tsx
 // in src/MyPagination.js
-import { TablePagination, List } from '@/components/admin';
+import { List, ListPagination } from '@/components/admin';
 
-const PostPagination = () => <TablePagination rowsPerPageOptions={[10, 25, 50, 100]} />;
+const PostPagination = () => <ListPagination rowsPerPageOptions={[10, 25, 50, 100]} />;
 
 export const PostList = () => (
     <List pagination={<PostPagination />}>
@@ -224,11 +224,11 @@ The default pagination component's `rowsPerPageOptions` includes options of 5, 1
 ```diff
 // in src/MyPagination.js
 -import { List } from '@/components/admin';
-+import { List, Pagination } from '@/components/admin';
++import { List, ListPagination } from '@/components/admin';
 
 export const PostList = () => (
 -    <List perPage={6}>
-+    <List perPage={6} pagination={<Pagination rowsPerPageOptions={[6, 12, 24, 36]} />}>
++    <List perPage={6} pagination={<ListPagination rowsPerPageOptions={[6, 12, 24, 36]} />}>
         ...
     </List>
 );
