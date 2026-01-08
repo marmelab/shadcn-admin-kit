@@ -24,12 +24,12 @@ import {
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { SavedQuery } from "@/hooks/saved-queries.tsx";
+import type { SavedQuery } from "@/hooks/saved-queries";
 import {
   extractValidSavedQueries,
   useSavedQueries,
-} from "@/hooks/saved-queries.tsx";
-import { Button } from "@/components/ui/button.tsx";
+} from "@/hooks/saved-queries";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -40,7 +40,7 @@ import {
 import {
   AddSavedQueryDialog,
   RemoveSavedQueryDialog,
-} from "@/components/admin/saved-queries.tsx";
+} from "@/components/admin/saved-queries";
 
 /**
  * A form for filter inputs with live updates. Included by default in List.
@@ -168,6 +168,9 @@ export const FilterFormInput = (inProps: FilterFormInputProps) => {
   const { filterElement, handleHide, className } = inProps;
   const resource = useResourceContext(inProps);
   const translate = useTranslate();
+  const { alwaysOn: _, ...filterElementProps } = filterElement.props;
+  const filterElementType =
+    typeof filterElement === "string" ? filterElement : filterElement.type;
 
   return (
     <div
@@ -177,7 +180,8 @@ export const FilterFormInput = (inProps: FilterFormInputProps) => {
         className,
       )}
     >
-      {React.cloneElement(filterElement, {
+      {React.createElement(filterElementType, {
+        ...filterElementProps,
         resource,
         record: emptyRecord,
         size: filterElement.props.size ?? "small",
