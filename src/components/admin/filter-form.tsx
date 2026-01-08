@@ -24,9 +24,9 @@ import {
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { SavedQuery } from "@/hooks/saved-queries.tsx";
 import {
   extractValidSavedQueries,
-  SavedQuery,
   useSavedQueries,
 } from "@/hooks/saved-queries.tsx";
 import { Button } from "@/components/ui/button.tsx";

@@ -4,7 +4,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import { genericMemo } from "@/lib/genericMemo";
-import { FieldProps } from "@/lib/field.type.ts";
+import type { FieldProps } from "@/lib/field.type.ts";
 
 /**
  * Displays a URL as a clickable hyperlink.
