@@ -54,7 +54,7 @@ const Wrapper = ({ children }: React.PropsWithChildren) => {
 
 export const Basic = () => (
   <Wrapper>
-    <SearchInput source="q" alwaysOn />
+    <SearchInput source="q" />
     <FormValues />
   </Wrapper>
 );
@@ -64,7 +64,6 @@ export const LongPlaceholder = () => (
     <div className="w-50">
       <SearchInput
         source="q"
-        alwaysOn
         placeholder="Search name, email, company, id..."
       />
     </div>
