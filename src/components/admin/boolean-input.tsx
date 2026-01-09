@@ -80,7 +80,7 @@ export const BooleanInput = (props: BooleanInputProps) => {
       <div className="flex items-center space-x-2">
         <Switch
           id={id}
-          checked={Boolean(field.value)}
+          checked={parseBoolean(field.value)}
           onFocus={onFocus}
           onCheckedChange={handleChange}
         />
@@ -115,3 +115,11 @@ export interface BooleanInputProps {
   source: string;
   validate?: any;
 }
+
+const parseBoolean = (value: unknown): boolean => {
+  if (typeof value === "boolean") return value;
+  if (typeof value === "string") {
+    return value.toLowerCase() === "true";
+  }
+  return Boolean(value);
+};
