@@ -27,6 +27,7 @@ export * from "./edit";
 export * from "./email-field";
 export * from "./error";
 export * from "./export-button";
+export * from "./image-field";
 export * from "./field-toggle";
 export * from "./file-field";
 export * from "./file-input";
