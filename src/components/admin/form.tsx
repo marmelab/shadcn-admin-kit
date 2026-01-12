@@ -9,7 +9,6 @@ import type {
 } from "ra-core";
 import {
   setSubmissionErrors,
-  useRecordFromLocation,
   useSaveContext,
   useTranslate,
   ValidationError,
@@ -179,7 +178,7 @@ const SaveButton = <RecordType extends RaRecord = RaRecord>(
     type = "submit",
     transform,
     variant = "default",
-    alwaysEnable = false,
+    alwaysEnable = true,
     ...rest
   } = props;
   const translate = useTranslate();
@@ -189,20 +188,13 @@ const SaveButton = <RecordType extends RaRecord = RaRecord>(
   // useFormState().isDirty might differ from useFormState().dirtyFields (https://github.com/react-hook-form/react-hook-form/issues/4740)
   // We destructure both isDirty and dirtyFields to ensure proper React Hook Form Proxy subscription,
   // and use fallback logic for robustness across different versions.
-  // This is especially important when React Compiler is enabled
+  // This is especially important when React Compiler is enabled.
   const isFormDirty = isDirty || Object.keys(dirtyFields).length > 0;
-  // Use form isDirty, isValidating and form context saving to enable or disable the save button
-  // if alwaysEnable is undefined and the form wasn't prefilled
-  const recordFromLocation = useRecordFromLocation();
-  const disabled = valueOrDefault(
-    alwaysEnable === false || alwaysEnable === undefined
-      ? undefined
-      : !alwaysEnable,
+  const disabled =
     disabledProp ||
-      (!isFormDirty && recordFromLocation == null) ||
-      isValidating ||
-      isSubmitting,
-  );
+    (!alwaysEnable && !isFormDirty) ||
+    isValidating ||
+    isSubmitting;
 
   warning(
     type === "submit" &&
@@ -297,10 +289,6 @@ export type SaveButtonProps<RecordType extends RaRecord = RaRecord> =
     React.ComponentProps<"button"> & {
       alwaysEnable?: boolean;
     };
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const valueOrDefault = (value: any, defaultValue: any) =>
-  typeof value === "undefined" ? defaultValue : value;
 
 export {
   // eslint-disable-next-line react-refresh/only-export-components
