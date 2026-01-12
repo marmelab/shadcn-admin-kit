@@ -189,6 +189,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/image-field.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/index.ts",
           "type": "registry:component"
         },

@@ -79,6 +79,7 @@ export default defineConfig({
             "emailfield",
             "exportbutton",
             "filefield",
+            "imagefield",
             "listpagination",
             "numberfield",
             "recordfield",
