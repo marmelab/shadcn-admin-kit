@@ -178,23 +178,13 @@ const SaveButton = <RecordType extends RaRecord = RaRecord>(
     type = "submit",
     transform,
     variant = "default",
-    alwaysEnable = true,
     ...rest
   } = props;
   const translate = useTranslate();
   const form = useFormContext();
   const saveContext = useSaveContext();
-  const { isDirty, dirtyFields, isValidating, isSubmitting } = useFormState();
-  // useFormState().isDirty might differ from useFormState().dirtyFields (https://github.com/react-hook-form/react-hook-form/issues/4740)
-  // We destructure both isDirty and dirtyFields to ensure proper React Hook Form Proxy subscription,
-  // and use fallback logic for robustness across different versions.
-  // This is especially important when React Compiler is enabled.
-  const isFormDirty = isDirty || Object.keys(dirtyFields).length > 0;
-  const disabled =
-    disabledProp ||
-    (!alwaysEnable && !isFormDirty) ||
-    isValidating ||
-    isSubmitting;
+  const { isValidating, isSubmitting } = useFormState();
+  const disabled = disabledProp || isValidating || isSubmitting;
 
   warning(
     type === "submit" &&
@@ -285,10 +275,7 @@ interface Props<
 }
 
 export type SaveButtonProps<RecordType extends RaRecord = RaRecord> =
-  Props<RecordType> &
-    React.ComponentProps<"button"> & {
-      alwaysEnable?: boolean;
-    };
+  Props<RecordType> & React.ComponentProps<"button">;
 
 export {
   // eslint-disable-next-line react-refresh/only-export-components

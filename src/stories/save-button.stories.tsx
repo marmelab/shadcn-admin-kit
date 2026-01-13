@@ -43,20 +43,42 @@ export const Default = () => (
 
 /**
  * Example showing how to disable the button when form is pristine (unchanged).
- * Set `alwaysEnable={false}` to enable this behavior.
+ * Use the `disabled` prop with custom logic from useFormState().
+ *
+ * Important: When using useFormState(), you MUST destructure the properties you want to
+ * subscribe to (e.g., `isDirty`, `dirtyFields`). This is required for React Hook Form's
+ * Proxy-based subscription system to work correctly.
  */
-export const DisabledWhenPristine = () => (
-  <Wrapper>
-    <TextInput source="title" />
-    <div className="mt-4">
-      <SaveButton alwaysEnable={false} />
-    </div>
-    <p className="mt-4 text-sm text-muted-foreground">
-      This SaveButton is disabled when the form is pristine. Change the input
-      value to enable it.
-    </p>
-  </Wrapper>
-);
+export const DisabledWhenPristine = () => {
+  const CustomToolbar = () => {
+    const { isDirty, dirtyFields } = useFormState();
+    // Use both isDirty and dirtyFields for robustness across React Hook Form versions
+    // This ensures proper Proxy subscription and handles edge cases
+    const isFormDirty = isDirty || Object.keys(dirtyFields).length > 0;
+    return (
+      <div className="space-y-2">
+        <SaveButton disabled={!isFormDirty} />
+        <p className="text-sm text-muted-foreground">
+          Button is {isFormDirty ? "enabled" : "disabled"} - isDirty:{" "}
+          {String(isDirty)}, dirtyFields: {JSON.stringify(dirtyFields)}
+        </p>
+      </div>
+    );
+  };
+
+  return (
+    <Wrapper>
+      <TextInput source="title" />
+      <div className="mt-4">
+        <CustomToolbar />
+      </div>
+      <p className="mt-4 text-sm text-muted-foreground">
+        This SaveButton is disabled when the form is pristine. Change the input
+        value to enable it.
+      </p>
+    </Wrapper>
+  );
+};
 
 /**
  * Custom disabled logic using useFormState() hook.

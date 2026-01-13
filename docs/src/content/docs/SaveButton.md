@@ -16,15 +16,9 @@ const PostEdit = () => (
 );
 ```
 
-By default, the SaveButton is always enabled (`alwaysEnable={true}`). This follows UX best practices to avoid confusing users about why a button is disabled ([see Nielsen Norman Group guidelines](https://www.nngroup.com/videos/why-disabled-buttons-hurt-ux-and-how-to-fix-them/)).
+By default, the SaveButton is always enabled. This follows UX best practices to avoid confusing users about why a button is disabled ([see Nielsen Norman Group guidelines](https://www.nngroup.com/videos/why-disabled-buttons-hurt-ux-and-how-to-fix-them/)).
 
-To disable the button when the form is pristine, set `alwaysEnable={false}`:
-
-```tsx
-<SaveButton alwaysEnable={false} />
-```
-
-For custom disabled logic, you can also use the `disabled` prop with `useFormState()`:
+To disable the button when the form is pristine, use the `disabled` prop with `useFormState()`:
 
 ```tsx
 import { SaveButton, useFormState } from "@/components/admin";
@@ -43,11 +37,10 @@ On click, it triggers the `handleSubmit` callback from the form context.
 
 ## Props
 
-| Prop              | Required | Type                                                                | Default          | Description                                                                                   |
-| ----------------- | -------- | ------------------------------------------------------------------- | ---------------- | --------------------------------------------------------------------------------------------- |
-| `alwaysEnable`    | Optional | `boolean`                                                           | `true`           | When `true`, button is always enabled. When `false`, button is disabled when form is pristine |
-| `className`       | Optional | `string`                                                            | -                | Extra classes                                                                                 |
-| `disabled`        | Optional | `boolean`                                                           | -                | Force disabled                                                                                |
+| Prop              | Required | Type                                                                | Default          | Description                                                             |
+| ----------------- | -------- | ------------------------------------------------------------------- | ---------------- | ----------------------------------------------------------------------- |
+| `className`       | Optional | `string`                                                            | -                | Extra classes                                                           |
+| `disabled`        | Optional | `boolean`                                                           | -                | Force disabled                                                          |
 | `icon`            | Optional | `ReactNode`                                                         | Save icon        | Custom icon                                                                                   |
 | `label`           | Optional | `string`                                                            | `ra.action.save` | i18n key                                                                                      |
 | `mutationOptions` | Optional | `object`                                                            | -                | Options for the `dataProvider.create()` or `dataProvider.update()` call                       |
