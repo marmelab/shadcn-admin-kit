@@ -87,6 +87,7 @@ export default defineConfig({
             "referencefield",
             "referencemanycount",
             "referencemanyfield",
+            "referenceonefield",
             enterpriseEntry("ReferenceManyToManyFieldBase"),
             "selectfield",
             "singlefieldlist",
