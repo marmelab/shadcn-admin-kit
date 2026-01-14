@@ -1,7 +1,14 @@
-import { CoreAdminContext, I18nContextProvider, RecordContextProvider, ResourceContextProvider, TestMemoryRouter, useIsOffline } from "ra-core";
+import {
+  CoreAdminContext,
+  I18nContextProvider,
+  RecordContextProvider,
+  ResourceContextProvider,
+  TestMemoryRouter,
+  useIsOffline,
+} from "ra-core";
 import fakeRestProvider from "ra-data-fakerest";
 import polyglotI18nProvider from "ra-i18n-polyglot";
-import { TextField, ThemeProvider } from "@/components/admin";
+import { TextField, ThemeProvider, SimpleShowLayout } from "@/components/admin";
 import { RecordField } from "@/components/admin/record-field";
 import { ReferenceOneField } from "@/components/admin/reference-one-field";
 import englishMessages from "ra-language-english";
@@ -25,21 +32,21 @@ const i18nProvider = polyglotI18nProvider(
     resources: {
       workouts: {
         name: "Workouts",
-        not_found: 'Workout not found'
-      }
-    }
+        not_found: "Workout not found",
+      },
+    },
   }),
-  'en'
+  "en",
 );
 
 const fakeData = {
   workoutDetails: [
     {
       id: 1,
-      workout_id: 'LegDay01',
+      workout_id: "LegDay01",
       duration: 120,
-      name: 'Leg Day',
-      note: 'Not very hard. Bit tired after!'
+      name: "Leg Day",
+      note: "Not very hard. Bit tired after!",
     },
   ],
 };
@@ -47,25 +54,25 @@ const fakeData = {
 const dataProvider = fakeRestProvider(fakeData, true);
 
 const slowDataProvider = {
-  getManyReference: () => new Promise(resolve => {
-    setTimeout(() => {
-      resolve({
-        data: [
-          fakeData.workoutDetails[0]
-        ],
-        total: 1
-      });
-    }, 2000);
-  })
+  getManyReference: () =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          data: [fakeData.workoutDetails[0]],
+          total: 1,
+        });
+      }, 2000);
+    }),
 };
 
 const emptyDataProvider = {
-  getManyReference: () => new Promise(resolve => {
-    resolve({
-      data: [],
-      total: 0
-    });
-  })
+  getManyReference: () =>
+    new Promise((resolve) => {
+      resolve({
+        data: [],
+        total: 0,
+      });
+    }),
 };
 
 const Wrapper = ({
@@ -79,18 +86,24 @@ const Wrapper = ({
     <ThemeProvider>
       <CoreAdminContext dataProvider={dataProvider}>
         <ResourceContextProvider value="workouts">
-          <RecordContextProvider value={{ id: 1, short_id: 'LegDay01', title: "Leg Day" }}>
+          <RecordContextProvider
+            value={{ id: 1, short_id: "LegDay01", title: "Leg Day" }}
+          >
             {children}
           </RecordContextProvider>
         </ResourceContextProvider>
       </CoreAdminContext>
     </ThemeProvider>
-  </TestMemoryRouter >)
-
+  </TestMemoryRouter>
+);
 
 export const Basic = () => (
   <Wrapper dataProvider={dataProvider}>
-    <ReferenceOneField reference="workoutDetails" source="short_id" target="workout_id">
+    <ReferenceOneField
+      reference="workoutDetails"
+      source="short_id"
+      target="workout_id"
+    >
       <RecordField source="note" label="Workout note" />
     </ReferenceOneField>
   </Wrapper>
@@ -98,11 +111,16 @@ export const Basic = () => (
 
 export const Loading = () => (
   <Wrapper dataProvider={slowDataProvider}>
-    <ReferenceOneField reference="workoutDetails" source="short_id" target="workout_id">
+    <ReferenceOneField
+      reference="workoutDetails"
+      source="short_id"
+      target="workout_id"
+      loading={<p>Loading...</p>}
+    >
       <RecordField source="note" label="Workout note" />
     </ReferenceOneField>
   </Wrapper>
-)
+);
 
 export const WithRenderProp = () => (
   <Wrapper dataProvider={slowDataProvider}>
@@ -115,24 +133,34 @@ export const WithRenderProp = () => (
           return <p>Loading...</p>;
         }
         if (error) {
-          return <p style={{ color: 'red' }}>{error.toString()}</p>
+          return <p style={{ color: "red" }}>{error.toString()}</p>;
         }
-        return (<span>{referenceRecord ? referenceRecord.note : <b>No note.</b>}</span>)
-      }} />
+        return (
+          <span>
+            {referenceRecord ? referenceRecord.note : <b>No note.</b>}
+          </span>
+        );
+      }}
+    />
   </Wrapper>
-)
+);
 
 export const InShowLayout = () => (
   <Wrapper dataProvider={dataProvider}>
-    <div className="flex flex-col gap-4">
+    <SimpleShowLayout>
       <TextField source="name" />
-      <ReferenceOneField reference="workoutDetails" source="short_id" target="workout_id">
-        <RecordField source="note" label="Workout note" />
+      <ReferenceOneField
+        reference="workoutDetails"
+        source="short_id"
+        target="workout_id"
+        label="Workout Details"
+      >
+        <RecordField source="note" label="Note" />
         <RecordField source="duration" label="Duration" />
       </ReferenceOneField>
-    </div>
+    </SimpleShowLayout>
   </Wrapper>
-)
+);
 
 export const EmptyWithString = () => (
   <Wrapper dataProvider={emptyDataProvider}>
@@ -147,7 +175,7 @@ export const EmptyWithString = () => (
       </ReferenceOneField>
     </I18nContextProvider>
   </Wrapper>
-)
+);
 
 export const EmptyWithTranslate = () => (
   <Wrapper dataProvider={emptyDataProvider}>
@@ -162,7 +190,7 @@ export const EmptyWithTranslate = () => (
       </ReferenceOneField>
     </I18nContextProvider>
   </Wrapper>
-)
+);
 const RenderChildOnDemand = ({ children }: { children: React.ReactNode }) => {
   const [showChild, setShowChild] = React.useState(false);
   return (
@@ -183,15 +211,17 @@ const SimulateOfflineButton = () => {
         variant="outline"
         onClick={() => onlineManager.setOnline(isOffline)}
       >
-        {isOffline ? 'Simulate online' : 'Simulate offline'}
+        {isOffline ? "Simulate online" : "Simulate offline"}
       </Button>
-      <span>You are currently <b>{isOffline ? 'offline' : 'online'}</b></span>
+      <span>
+        You are currently <b>{isOffline ? "offline" : "online"}</b>
+      </span>
     </>
   );
 };
 
 export const Offline = () => (
-  <Wrapper dataProvider={dataProvider} >
+  <Wrapper dataProvider={dataProvider}>
     <I18nContextProvider value={i18nProvider}>
       <div className="flex flex-col gap-4">
         <RenderChildOnDemand>
@@ -200,7 +230,7 @@ export const Offline = () => (
             source="short_id"
             target="workout_id"
             offline={
-              <span style={{ color: 'orange' }}>
+              <span style={{ color: "orange" }}>
                 You are offline, cannot load data!
               </span>
             }
@@ -212,4 +242,4 @@ export const Offline = () => (
       </div>
     </I18nContextProvider>
   </Wrapper>
-)
+);
