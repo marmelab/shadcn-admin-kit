@@ -44,6 +44,24 @@ It is the responsibility of your `dataProvider` to send the file to the server (
 
 Files are accepted or rejected based on the `accept`, `multiple`, `minSize` and `maxSize` props.
 
+## Image previews
+
+Use `<ImageField>` to show image thumbnails for the selected files.
+
+![FileInput with ImageField example](./images/file-input-image-field.png)
+
+```tsx
+import { FileInput, ImageField } from '@/components/admin';
+
+<FileInput source="pictures" multiple accept={{ 'image/*': [] }}>
+  <ImageField
+    source="src"
+    title="title"
+    className="[&_img]:h-24 [&_img]:w-24 [&_img]:rounded-md [&_img]:object-cover"
+  />
+</FileInput>
+```
+
 ## Props
 
 | Prop | Required | Type | Default | Description |
