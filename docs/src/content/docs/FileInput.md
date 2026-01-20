@@ -74,3 +74,21 @@ If `multiple` is set to `false` and additional files are dropped, all files besi
     <FileField source="src" title="title" />
 </FileInput>
 ```
+
+## Image Input
+
+You can use `<FileInput>` to upload images as well. Set the `accept` prop to accept only image files, and use [`<ImageField>`](./ImageField.md) as the child component to show image previews.
+
+![FileInput with ImageField example](./images/file-input-image-field.png)
+
+```tsx
+import { FileInput, ImageField } from '@/components/admin';
+
+<FileInput source="pictures" multiple accept={{ 'image/*': [] }}>
+  <ImageField
+    source="src"
+    title="title"
+    className="[&_img]:h-24 [&_img]:w-24 [&_img]:rounded-md [&_img]:object-cover"
+  />
+</FileInput>
+```
