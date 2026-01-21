@@ -292,8 +292,9 @@ const DataTableEmpty = () => {
   );
 };
 
-export interface DataTableProps<RecordType extends RaRecord = RaRecord>
-  extends Partial<DataTableBaseProps<RecordType>> {
+export interface DataTableProps<
+  RecordType extends RaRecord = RaRecord,
+> extends Partial<DataTableBaseProps<RecordType>> {
   children: ReactNode;
   className?: string;
   rowClassName?: (record: RecordType) => string | undefined;
