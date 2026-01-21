@@ -16,7 +16,7 @@
     "@astrojs/starlight": "^0.35.2",
     "@astrojs/starlight-tailwind": "^4.0.1",
     "@expressive-code/plugin-collapsible-sections": "^0.41.3",
-    "@tailwindcss/vite": "^4.1.11",
+    "@tailwindcss/vite": "^4.1.18",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "astro": "^5.16.9",
@@ -28,7 +28,7 @@
     "rehype-code-group": "^0.2.4",
     "sharp": "^0.34.2",
     "starlight-package-managers": "^0.11.0",
-    "tailwindcss": "^4.1.11"
+    "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
