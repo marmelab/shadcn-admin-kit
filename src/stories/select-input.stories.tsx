@@ -3,6 +3,7 @@ import {
   CoreAdminContext,
   Form,
   RecordContextProvider,
+  useCreateSuggestionContext,
   useTranslate,
 } from "ra-core";
 import { i18nProvider } from "@/lib/i18nProvider.ts";
@@ -16,7 +17,6 @@ import {
 import { Label } from "@/components/ui/label.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { useCreateSuggestionContext } from "@/hooks/useSupportCreateSuggestion.tsx";
 import { SelectInput, ThemeProvider } from "@/components/admin";
 import { useWatch } from "react-hook-form";
 
