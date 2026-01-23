@@ -281,10 +281,6 @@
           "type": "registry:component"
         },
         {
-          "path": "src/hooks/saved-queries.tsx",
-          "type": "registry:hook"
-        },
-        {
           "path": "src/components/admin/search-input.tsx",
           "type": "registry:component"
         },
@@ -357,10 +353,6 @@
           "type": "registry:component"
         },
         {
-          "path": "src/hooks/useSupportCreateSuggestion.tsx",
-          "type": "registry:hook"
-        },
-        {
           "path": "src/components/admin/error.tsx",
           "type": "registry:component"
         },
@@ -370,10 +362,6 @@
         },
         {
           "path": "src/lib/field.type.ts",
-          "type": "registry:lib"
-        },
-        {
-          "path": "src/lib/genericMemo.ts",
           "type": "registry:lib"
         },
         {
