@@ -6,6 +6,9 @@ import { cn } from "@/lib/utils";
 /**
  * A button that selects all records (up to a limit) for the current list.
  *
+ * Uses ListContext.getData when available to select across all pages,
+ * falling back to onSelectAll otherwise.
+ *
  * To be used inside the <DataTable bulkActionsButtons> prop or in BulkActionsToolbar.
  *
  * @see {@link https://marmelab.com/shadcn-admin-kit/docs/selectallbutton/ SelectAllButton documentation}
@@ -28,10 +31,18 @@ export const SelectAllButton = <RecordType extends RaRecord = RaRecord>({
   onClick,
   ...props
 }: SelectAllButtonProps<RecordType>) => {
-  const { onSelectAll } = useListContext<RecordType>();
+  const { getData, onSelect, onSelectAll } = useListContext<RecordType>();
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onSelectAll({ limit, queryOptions });
+  const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (getData) {
+      const records = await getData({
+        maxResults: limit,
+        meta: queryOptions?.meta,
+      });
+      onSelect(records?.map((record) => record.id) ?? []);
+    } else {
+      onSelectAll({ limit, queryOptions });
+    }
     onClick?.(event);
   };
 
