@@ -1,3 +1,5 @@
+import type { MouseEvent } from "react";
+import { useState } from "react";
 import type { RaRecord, UseGetListOptions } from "ra-core";
 import { Translate, useListContext } from "ra-core";
 import { Button } from "@/components/ui/button";
@@ -31,9 +33,10 @@ export const SelectAllButton = <RecordType extends RaRecord = RaRecord>({
   onClick,
   ...props
 }: SelectAllButtonProps<RecordType>) => {
+  const [isSelected, setIsSelected] = useState(false);
   const { getData, onSelect, onSelectAll } = useListContext<RecordType>();
 
-  const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = async (event: MouseEvent<HTMLButtonElement>) => {
     if (getData) {
       const records = await getData({
         maxResults: limit,
@@ -44,8 +47,12 @@ export const SelectAllButton = <RecordType extends RaRecord = RaRecord>({
       onSelectAll({ limit, queryOptions });
     }
     onClick?.(event);
+    setIsSelected(true);
   };
 
+  if (isSelected) {
+    return null;
+  }
   return (
     <Button
       type="button"
