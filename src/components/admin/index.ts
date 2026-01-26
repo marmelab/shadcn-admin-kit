@@ -55,6 +55,7 @@ export * from "./reference-many-field";
 export * from "./refresh-button";
 export * from "./saved-queries";
 export * from "./search-input";
+export * from "./select-all-button";
 export * from "./select-field";
 export * from "./select-input";
 export * from "./show-button";
