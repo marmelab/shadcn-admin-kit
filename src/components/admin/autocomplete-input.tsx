@@ -124,10 +124,8 @@ export const AutocompleteInput = (
   const [filterValue, setFilterValue] = React.useState("");
 
   const [open, setOpen] = React.useState(false);
-  const fieldValue = field.value;
-  const fieldOnChange = field.onChange;
   const selectedChoice = allChoices.find(
-    (choice) => getChoiceValue(choice) === fieldValue,
+    (choice) => getChoiceValue(choice) === field.value,
   );
 
   const getInputText = useCallback(
@@ -153,8 +151,8 @@ export const AutocompleteInput = (
 
   const handleChange = useCallback(
     (choice: any) => {
-      if (fieldValue === getChoiceValue(choice) && !isRequired) {
-        fieldOnChange("");
+      if (field.value === getChoiceValue(choice) && !isRequired) {
+        field.onChange("");
         setFilterValue("");
         if (isFromReference) {
           setFilters(filterToQuery(""));
@@ -162,12 +160,11 @@ export const AutocompleteInput = (
         setOpen(false);
         return;
       }
-      fieldOnChange(getChoiceValue(choice));
+      field.onChange(getChoiceValue(choice));
       setOpen(false);
     },
     [
-      fieldValue,
-      fieldOnChange,
+      field,
       getChoiceValue,
       isRequired,
       setFilterValue,
