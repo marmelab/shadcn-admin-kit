@@ -47,27 +47,19 @@ export const ExportButton = (props: ExportButtonProps) => {
     className = "cursor-pointer",
   } = props;
   const {
-    filter,
-    filterValues,
-    resource,
-    sort,
-    exporter: exporterFromContext,
+    getData,
     total,
+    resource,
+    exporter: exporterFromContext,
   } = useListContext();
   const exporter = customExporter || exporterFromContext;
   const dataProvider = useDataProvider();
   const notify = useNotify();
   const handleClick = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
-      dataProvider
-        .getList(resource, {
-          sort,
-          filter: filter ? { ...filterValues, ...filter } : filterValues,
-          pagination: { page: 1, perPage: maxResults },
-          meta,
-        })
+      getData?.({ maxResults, meta })
         .then(
-          ({ data }) =>
+          (data) =>
             exporter &&
             exporter(
               data,
@@ -84,18 +76,7 @@ export const ExportButton = (props: ExportButtonProps) => {
         onClick(event);
       }
     },
-    [
-      dataProvider,
-      exporter,
-      filter,
-      filterValues,
-      maxResults,
-      notify,
-      onClick,
-      resource,
-      sort,
-      meta,
-    ],
+    [dataProvider, exporter, getData, notify, onClick, resource],
   );
 
   return (
