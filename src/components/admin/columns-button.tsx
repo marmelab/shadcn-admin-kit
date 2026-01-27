@@ -186,7 +186,7 @@ export const ColumnsSelector = ({ children }: ColumnsSelectorProps) => {
             })}
             className="pr-8"
           />
-          <Search className="absolute right-2 top-2 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
           {columnFilter && (
             <button
               onClick={() => setColumnFilter("")}
