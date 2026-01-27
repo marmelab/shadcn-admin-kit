@@ -71,5 +71,6 @@ export * from "./text-input";
 export * from "./toggle-filter-button";
 export * from "./theme-mode-toggle";
 export * from "./theme-provider";
+export * from "./use-theme";
 export * from "./url-field";
 export * from "./user-menu";

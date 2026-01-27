@@ -337,7 +337,15 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/theme-context.ts",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/theme-provider.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/use-theme.ts",
           "type": "registry:component"
         },
         {
