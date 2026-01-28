@@ -57,7 +57,13 @@ export const ExportButton = (props: ExportButtonProps) => {
   const notify = useNotify();
   const handleClick = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
-      getData?.({ maxResults, meta })
+      if (!getData) {
+        throw new Error(
+          "ListContext.getData must be defined to use ExportButton.",
+        );
+      }
+
+      getData({ maxResults, meta })
         .then(
           (data) =>
             exporter &&
