@@ -286,9 +286,12 @@ const isPromise = (value: any): value is Promise<any> =>
   value && typeof value.then === "function";
 
 const DataTableEmpty = () => {
+  const translate = useTranslate();
   return (
     <Alert>
-      <AlertDescription>No results found.</AlertDescription>
+      <AlertDescription>
+        {translate("ra.page.no_results", { _: "No results found." })}
+      </AlertDescription>
     </Alert>
   );
 };

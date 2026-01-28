@@ -247,7 +247,11 @@ export const AutocompleteInput = (
                   }}
                 />
                 <CommandList>
-                  <CommandEmpty>No matching item found.</CommandEmpty>
+                  <CommandEmpty>
+                    {translate("ra.page.no_matches", {
+                      _: "No matching items found.",
+                    })}
+                  </CommandEmpty>
                   <CommandGroup>
                     {finalChoices.map((choice) => {
                       const isCreateItem =
