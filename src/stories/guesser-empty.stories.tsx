@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import polyglotI18nProvider from "ra-i18n-polyglot";
 import { I18nContextProvider } from "ra-core";
+import type { TranslationMessages } from "ra-core";
 import { GuesserEmpty } from "@/components/admin/guesser-empty";
 import { ThemeProvider } from "@/components/admin";
 
@@ -22,10 +23,17 @@ const StoryWrapper = ({
 }) => <ThemeProvider defaultTheme={theme}>{children}</ThemeProvider>;
 
 const englishProvider = polyglotI18nProvider(
-  () => ({
-    "ra.guesser.empty.title": "No data to display",
-    "ra.guesser.empty.message": "Please check your data provider",
-  }),
+  () =>
+    ({
+      ra: {
+        guesser: {
+          empty: {
+            title: "No data to display",
+            message: "Please check your data provider",
+          },
+        },
+      },
+    }) as unknown as TranslationMessages,
   "en",
 );
 

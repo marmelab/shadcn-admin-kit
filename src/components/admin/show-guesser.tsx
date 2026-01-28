@@ -56,13 +56,6 @@ const ShowViewGuesser = (props: ShowGuesserProps) => {
     ...rest
   } = props;
 
-  if (!record && !isLoading && !isPending && !error) {
-    if (empty === false) {
-      return null;
-    }
-    return empty === undefined ? <GuesserEmpty /> : empty;
-  }
-
   useEffect(() => {
     setChild(null);
   }, [resource]);
@@ -115,6 +108,13 @@ ${inferredChild.getRepresentation()}
       );
     }
   }, [record, child, resource, enableLog]);
+
+  if (!record && !isLoading && !isPending && !error) {
+    if (empty === false) {
+      return null;
+    }
+    return empty === undefined ? <GuesserEmpty /> : empty;
+  }
 
   return <ShowView {...rest}>{child}</ShowView>;
 };

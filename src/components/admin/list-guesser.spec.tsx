@@ -1,24 +1,40 @@
 import { describe, expect, it } from "vitest";
 import { render } from "vitest-browser-react";
-import { CoreAdminContext, type DataProvider } from "ra-core";
+import {
+  CoreAdminContext,
+  type DataProvider,
+  type GetListResult,
+  type GetManyReferenceResult,
+  type GetManyResult,
+  type GetOneResult,
+  type UpdateResult,
+  type UpdateManyResult,
+  type CreateResult,
+  type DeleteResult,
+  type DeleteManyResult,
+  type RaRecord,
+} from "ra-core";
 import { MemoryRouter } from "react-router";
 import { ListGuesser } from "./list-guesser";
 import { i18nProvider } from "@/lib/i18nProvider";
 
+const emptyRecord = { id: 1 } satisfies RaRecord;
+
 const dataProvider: DataProvider = {
-  getList: async () => ({ data: [], total: 0 }),
-  getOne: async () => ({ data: { id: 1 } }),
-  getMany: async () => ({ data: [] }),
-  getManyReference: async () => ({ data: [], total: 0 }),
-  update: async (_resource, params) => ({ data: params.data }),
-  updateMany: async () => ({ data: [] }),
-  create: async (_resource, params) => ({
-    data: { id: 1, ...params.data },
-  }),
-  delete: async (_resource, params) => ({
-    data: params.previousData ?? { id: params.id },
-  }),
-  deleteMany: async () => ({ data: [] }),
+  getList: async () =>
+    ({ data: [], total: 0 }) as GetListResult<RaRecord>,
+  getOne: async () => ({ data: emptyRecord }) as GetOneResult<RaRecord>,
+  getMany: async () => ({ data: [] }) as GetManyResult<RaRecord>,
+  getManyReference: async () =>
+    ({ data: [], total: 0 }) as GetManyReferenceResult<RaRecord>,
+  update: async (_resource, params) =>
+    ({ data: params.data }) as UpdateResult<RaRecord>,
+  updateMany: async () => ({ data: [] }) as UpdateManyResult,
+  create: async (_resource, params) =>
+    ({ data: { ...emptyRecord, ...params.data } }) as CreateResult<RaRecord>,
+  delete: async (_resource, params) =>
+    ({ data: params.previousData ?? emptyRecord }) as DeleteResult<RaRecord>,
+  deleteMany: async () => ({ data: [] }) as DeleteManyResult,
 };
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (

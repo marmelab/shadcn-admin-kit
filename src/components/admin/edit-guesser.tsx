@@ -63,13 +63,6 @@ const EditViewGuesser = (props: EditGuesserProps) => {
     ...rest
   } = props;
 
-  if (!record && !isLoading && !isPending && !error) {
-    if (empty === false) {
-      return null;
-    }
-    return empty === undefined ? <GuesserEmpty /> : empty;
-  }
-
   useEffect(() => {
     setChild(null);
   }, [resource]);
@@ -121,6 +114,13 @@ ${representation}
       );
     }
   }, [record, child, resource, enableLog]);
+
+  if (!record && !isLoading && !isPending && !error) {
+    if (empty === false) {
+      return null;
+    }
+    return empty === undefined ? <GuesserEmpty /> : empty;
+  }
 
   return <EditView {...rest}>{child}</EditView>;
 };
