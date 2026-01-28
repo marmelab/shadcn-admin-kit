@@ -76,7 +76,16 @@ export const ExportButton = (props: ExportButtonProps) => {
         onClick(event);
       }
     },
-    [dataProvider, exporter, getData, notify, onClick, resource],
+    [
+      dataProvider,
+      exporter,
+      getData,
+      notify,
+      onClick,
+      resource,
+      maxResults,
+      meta,
+    ],
   );
 
   return (
