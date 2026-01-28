@@ -19,6 +19,7 @@ import { ArrayField } from "@/components/admin/array-field";
 import { BadgeField } from "@/components/admin/badge-field";
 import { SingleFieldList } from "@/components/admin/single-field-list";
 import { ReferenceArrayField } from "@/components/admin/reference-array-field";
+import { GuesserEmpty } from "@/components/admin/guesser-empty";
 
 /**
  * A show page that automatically generates fields from your data.
@@ -31,22 +32,36 @@ import { ReferenceArrayField } from "@/components/admin/reference-array-field";
  *
  * export const PostShow = () => <ShowGuesser enableLog />;
  */
-export const ShowGuesser = (props: { enableLog?: boolean }) => (
-  <ShowBase>
-    <ShowViewGuesser {...props} />
-  </ShowBase>
-);
+export const ShowGuesser = (props: ShowGuesserProps) => {
+  const { empty, ...rest } = props;
+  return (
+    <ShowBase>
+      <ShowViewGuesser empty={empty} {...rest} />
+    </ShowBase>
+  );
+};
 
-const ShowViewGuesser = (props: { enableLog?: boolean }) => {
+const ShowViewGuesser = (props: ShowGuesserProps) => {
   const resource = useResourceContext();
 
   if (!resource) {
     throw new Error(`Cannot use <ShowGuesser> outside of a ResourceContext`);
   }
 
-  const { record } = useShowContext();
+  const { record, isLoading, isPending, error } = useShowContext();
   const [child, setChild] = useState<ReactNode>(null);
-  const { enableLog = process.env.NODE_ENV === "development", ...rest } = props;
+  const {
+    enableLog = process.env.NODE_ENV === "development",
+    empty,
+    ...rest
+  } = props;
+
+  if (!record && !isLoading && !isPending && !error) {
+    if (empty === false) {
+      return null;
+    }
+    return empty === undefined ? <GuesserEmpty /> : empty;
+  }
 
   useEffect(() => {
     setChild(null);
@@ -103,6 +118,11 @@ ${inferredChild.getRepresentation()}
 
   return <ShowView {...rest}>{child}</ShowView>;
 };
+
+interface ShowGuesserProps {
+  enableLog?: boolean;
+  empty?: ReactNode;
+}
 
 const showFieldTypes: InferredTypeMap = {
   show: {
