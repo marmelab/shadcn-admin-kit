@@ -148,6 +148,13 @@ const data = {
 
 const dataProvider = fakeRestProvider(data, process.env.NODE_ENV !== "test");
 
+const emptyDataProvider = fakeRestProvider(
+  { products: [] },
+  process.env.NODE_ENV !== "test",
+);
+
+const EmptyCreate = () => null;
+
 export const Basic = () => (
   <TestMemoryRouter initialEntries={["/products"]}>
     <Admin dataProvider={dataProvider} i18nProvider={i18nProvider}>
@@ -158,6 +165,19 @@ export const Basic = () => (
       />
       <Resource name="categories" recordRepresentation="name" />
       <Resource name="tags" recordRepresentation="name" />
+    </Admin>
+  </TestMemoryRouter>
+);
+
+export const Empty = () => (
+  <TestMemoryRouter initialEntries={["/products"]}>
+    <Admin dataProvider={emptyDataProvider} i18nProvider={i18nProvider}>
+      <Resource
+        name="products"
+        list={ListGuesser}
+        create={EmptyCreate}
+        recordRepresentation="name"
+      />
     </Admin>
   </TestMemoryRouter>
 );
