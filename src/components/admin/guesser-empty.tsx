@@ -5,16 +5,7 @@ import { useTranslate } from "ra-core";
 export const GuesserEmpty = ({
   title = "ra.guesser.empty.title",
   message = "ra.guesser.empty.message",
-}: GuesserEmptyProps) => (
-  <GuesserEmptyBase title={title} message={message} />
-);
-
-export interface GuesserEmptyProps {
-  title?: ReactNode;
-  message?: ReactNode;
-}
-
-const GuesserEmptyBase = ({ title, message }: GuesserEmptyProps) => {
+}: GuesserEmptyProps) => {
   const translate = useTranslate();
   const resolvedTitle =
     typeof title === "string" ? translate(title, { _: title }) : title;
@@ -29,3 +20,8 @@ const GuesserEmptyBase = ({ title, message }: GuesserEmptyProps) => {
     </div>
   );
 };
+
+export interface GuesserEmptyProps {
+  title?: ReactNode;
+  message?: ReactNode;
+}
