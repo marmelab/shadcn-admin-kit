@@ -40,10 +40,9 @@ import { GuesserEmpty } from "@/components/admin/guesser-empty";
  * );
  */
 export const EditGuesser = (props: EditGuesserProps) => {
-  const { empty, ...rest } = props;
   return (
     <EditBase>
-      <EditViewGuesser empty={empty} {...rest} />
+      <EditViewGuesser {...props} />
     </EditBase>
   );
 };
@@ -117,7 +116,7 @@ ${representation}
 
   if (!record && !isLoading && !isPending && !error) {
     if (empty === false) {
-      return null;
+      return <EditView {...rest}>{child}</EditView>;
     }
     return empty === undefined ? <GuesserEmpty /> : empty;
   }
