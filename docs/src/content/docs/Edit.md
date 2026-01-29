@@ -606,6 +606,8 @@ const App = () => (
 
 Just like `<Edit>`, `<EditGuesser>` fetches the data. It then analyzes the response, and guesses the inputs it should use to display a basic `<SimpleForm>` with the data. It also dumps the components it has guessed in the console, so you can copy it into your own code.
 
+When the data provider returns no record, `<EditGuesser>` renders an empty state by default. You can override it using the `empty` prop (including `empty={false}` to render nothing).
+
 ![Guessed Edit](./images/customers-edit-guesser.png)
 
 ## Cleaning Up Empty Strings

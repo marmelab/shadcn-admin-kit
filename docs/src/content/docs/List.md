@@ -642,6 +642,8 @@ const App = () => (
 
 Just like `<List>`, `<ListGuesser>` fetches the data. It then analyzes the response, and guesses the fields it should use to display a basic `<DataTable>` with the data. It also dumps the components it has guessed in the console, so you can copy it into your own code.
 
+When the data provider returns no records, `<ListGuesser>` renders an empty state by default. You can override it using the `empty` prop (including `empty={false}` to render nothing).
+
 ![Guessed List](./images/posts-list-guesser.png)
 
 ## Live Updates
