@@ -93,7 +93,7 @@ const App = () => (
 
 Just like `<Show>`, `<ShowGuesser>` fetches the data. It then analyzes the response, and guesses the fields it should use to display a basic layout with the data. It also dumps the components it has guessed in the console, so you can copy it into your own code.
 
-When the data provider returns no record, `<ShowGuesser>` renders an empty state by default. You can override it using the `empty` prop (including `empty={false}` to render nothing).
+When the data provider returns no record, `<ShowGuesser>` renders an empty state by default. You can override it using the `empty` prop (including `empty={null}` to render nothing).
 
 ## Props
 

@@ -642,7 +642,7 @@ const App = () => (
 
 Just like `<List>`, `<ListGuesser>` fetches the data. It then analyzes the response, and guesses the fields it should use to display a basic `<DataTable>` with the data. It also dumps the components it has guessed in the console, so you can copy it into your own code.
 
-When the data provider returns no records, `<ListGuesser>` renders an empty state by default. You can override it using the `empty` prop (including `empty={false}` to render nothing).
+When the data provider returns no records, `<ListGuesser>` renders an empty state by default. You can override it using the `empty` prop (including `empty={null}` to render nothing).
 
 ![Guessed List](./images/posts-list-guesser.png)
 
@@ -674,7 +674,7 @@ This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enter
 
 When there is no data, shadcn-admin-kit displays a special page inviting the user to create the first record. This page can be customized using [the `empty` prop](#empty).
 
-You can set the `empty` props value to `false` to render an empty list instead.
+You can set the `empty` props value to `false` to disable the empty page and render the list layout instead.
 
 ```tsx
 import { List } from '@/components/admin';
