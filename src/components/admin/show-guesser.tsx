@@ -33,10 +33,9 @@ import { GuesserEmpty } from "@/components/admin/guesser-empty";
  * export const PostShow = () => <ShowGuesser enableLog />;
  */
 export const ShowGuesser = (props: ShowGuesserProps) => {
-  const { empty, ...rest } = props;
   return (
     <ShowBase>
-      <ShowViewGuesser empty={empty} {...rest} />
+      <ShowViewGuesser {...props} />
     </ShowBase>
   );
 };
