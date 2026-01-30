@@ -6,16 +6,13 @@ import {
   ListBase,
   getElementsFromRecords,
   InferredElement,
-  useGetResourceLabel,
   useListContext,
   usePrevious,
-  useResourceDefinition,
   useResourceContext,
-  useTranslate,
 } from "ra-core";
 import { useLocation } from "react-router";
 import type { ListProps, ListViewProps } from "@/components/admin/list";
-import { ListView } from "@/components/admin/list";
+import { Empty, ListView } from "@/components/admin/list";
 import { capitalize, singularize } from "inflection";
 import { DataTable } from "@/components/admin/data-table";
 import { ArrayField } from "@/components/admin/array-field";
@@ -23,7 +20,6 @@ import { BadgeField } from "@/components/admin/badge-field";
 import { ReferenceField } from "@/components/admin/reference-field";
 import { SingleFieldList } from "@/components/admin/single-field-list";
 import { ReferenceArrayField } from "@/components/admin/reference-array-field";
-import { CreateButton } from "@/components/admin/create-button";
 
 /**
  * A list page that automatically generates a DataTable from your data.
@@ -74,7 +70,7 @@ export const ListGuesser = <RecordType extends RaRecord = RaRecord>(
       debounce={debounce}
       disableAuthentication={disableAuthentication}
       disableSyncWithLocation={disableSyncWithLocation}
-      empty={empty === undefined ? <ListGuesserEmpty /> : empty}
+      empty={empty === undefined ? <Empty /> : empty}
       exporter={exporter}
       filter={filter}
       filterDefaultValues={filterDefaultValues}
@@ -161,33 +157,6 @@ ${inferredChild.getRepresentation()}
   }, [data, child, resource, enableLog]);
 
   return <ListView {...rest}>{child}</ListView>;
-};
-
-const ListGuesserEmpty = () => {
-  const translate = useTranslate();
-  const resource = useResourceContext();
-  const getResourceLabel = useGetResourceLabel();
-  const { hasCreate } = useResourceDefinition({ resource });
-  if (!resource) {
-    return null;
-  }
-  const resourceLabel = getResourceLabel(resource, 2);
-
-  return (
-    <div className="flex min-h-[50vh] flex-col items-center justify-center gap-2 text-center">
-      <h2 className="text-2xl font-semibold">
-        {translate("ra.page.empty", { name: resourceLabel })}
-      </h2>
-      {hasCreate ? (
-        <>
-          <p className="text-muted-foreground">
-            {translate("ra.page.invite")}
-          </p>
-          <CreateButton />
-        </>
-      ) : null}
-    </div>
-  );
 };
 
 const listFieldTypes = {
