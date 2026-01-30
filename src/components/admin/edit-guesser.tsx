@@ -114,10 +114,7 @@ ${representation}
     }
   }, [record, child, resource, enableLog]);
 
-  if (!record && !isLoading && !isPending && !error) {
-    if (empty === false) {
-      return <EditView {...rest}>{child}</EditView>;
-    }
+  if (!record && !isLoading && !isPending && !error && empty !== false) {
     return empty === undefined ? <GuesserEmpty /> : empty;
   }
 
