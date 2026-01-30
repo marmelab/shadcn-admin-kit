@@ -108,7 +108,10 @@ ${inferredChild.getRepresentation()}
     }
   }, [record, child, resource, enableLog]);
 
-  if (!record && !isLoading && !isPending && !error && empty !== false) {
+  if (!record && !isLoading && !isPending && !error) {
+    if (empty === false) {
+      return <ShowView {...rest}>{child}</ShowView>;
+    }
     return empty === undefined ? <GuesserEmpty /> : empty;
   }
 
