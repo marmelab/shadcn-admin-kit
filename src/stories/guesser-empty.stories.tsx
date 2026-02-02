@@ -6,7 +6,7 @@ import { GuesserEmpty } from "@/components/admin/guesser-empty";
 import { ThemeProvider } from "@/components/admin";
 
 export default {
-  title: "Layout/Empty",
+  title: "Layout/GuesserEmpty",
   parameters: {
     docs: {
       codePanel: true,
