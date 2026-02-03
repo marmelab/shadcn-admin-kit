@@ -80,6 +80,7 @@ export default defineConfig({
             "exportbutton",
             "filefield",
             "imagefield",
+            "infinitelist",
             "listpagination",
             "numberfield",
             "recordfield",
