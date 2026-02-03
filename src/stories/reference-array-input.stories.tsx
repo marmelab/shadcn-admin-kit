@@ -1,9 +1,10 @@
-import { Resource, TestMemoryRouter } from "ra-core";
+import { Resource, required, TestMemoryRouter } from "ra-core";
 import polyglotI18nProvider from "ra-i18n-polyglot";
 import englishMessages from "ra-language-english";
 import fakeRestProvider from "ra-data-fakerest";
 
 import { Admin } from "@/components/admin/admin";
+import { AutocompleteArrayInput } from "@/components/admin/autocomplete-array-input";
 import { Create } from "@/components/admin/create";
 import { EditGuesser } from "@/components/admin/edit-guesser";
 import { ListGuesser } from "@/components/admin/list-guesser";
@@ -48,6 +49,33 @@ export const Basic = () => (
                 resource="posts"
                 source="tags_ids"
               />
+            </SimpleForm>
+          </Create>
+        }
+        edit={EditGuesser}
+        show={ShowGuesser}
+      />
+    </Admin>
+  </TestMemoryRouter>
+);
+
+export const WithValidation = () => (
+  <TestMemoryRouter initialEntries={["/posts/create"]}>
+    <Admin dataProvider={dataProvider} i18nProvider={i18nProvider}>
+      <Resource name="tags" recordRepresentation={"name"} />
+      <Resource
+        name="posts"
+        list={ListGuesser}
+        create={
+          <Create resource="posts" record={{ tags_ids: [] }}>
+            <SimpleForm>
+              <ReferenceArrayInput
+                reference="tags"
+                resource="posts"
+                source="tags_ids"
+              >
+                <AutocompleteArrayInput validate={required()} />
+              </ReferenceArrayInput>
             </SimpleForm>
           </Create>
         }
