@@ -4,6 +4,7 @@ import {
   Form,
   RecordContextProvider,
   useCreateSuggestionContext,
+  useRecordContext,
   useTranslate,
 } from "ra-core";
 import { i18nProvider } from "@/lib/i18nProvider.ts";
@@ -18,6 +19,7 @@ import { Label } from "@/components/ui/label.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { AutocompleteInput, ThemeProvider } from "@/components/admin";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 export default {
   title: "Inputs/AutocompleteInput",
@@ -27,6 +29,7 @@ const record = {
   id: 1,
   name: "John Doe",
   tag_id: "enthusiast",
+  contact_id: 1,
 };
 
 const tags = [
@@ -34,6 +37,45 @@ const tags = [
   { id: "football fan", label: "Football Fan" },
   { id: "vip", label: "VIP" },
   { id: "musician", label: "Musician" },
+];
+
+const contacts = [
+  {
+    id: 1,
+    first_name: "John",
+    last_name: "Doe",
+    title: "Senior Developer",
+    company_name: "Tech Corp",
+    avatar:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face",
+  },
+  {
+    id: 2,
+    first_name: "Jane",
+    last_name: "Smith",
+    title: "Product Manager",
+    company_name: "Innovation Incorporated",
+    avatar:
+      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=40&h=40&fit=crop&crop=face",
+  },
+  {
+    id: 3,
+    first_name: "Mike",
+    last_name: "Johnson",
+    title: "Designer",
+    company_name: "Creative Studio",
+    avatar:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face",
+  },
+  {
+    id: 4,
+    first_name: "Sarah",
+    last_name: "Wilson",
+    title: "Marketing Director",
+    company_name: null,
+    avatar:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face",
+  },
 ];
 
 const Wrapper = ({ children }: React.PropsWithChildren) => (
@@ -108,6 +150,41 @@ export const Create = () => (
       create={<CreateTag />}
       createLabel="Start typing to create a new tag"
       createItemLabel="Create %{item}"
+    />
+  </Wrapper>
+);
+
+const ContactOptionRender = () => {
+  const record = useRecordContext();
+  if (!record) return null;
+  return (
+    <div className="flex flex-row gap-4 items-center justify-start whitespace-normal text-left">
+      <Avatar>
+        <AvatarImage
+          src={record.avatar}
+          alt={`${record.first_name} ${record.last_name}`}
+        />
+      </Avatar>
+      <div className="flex flex-col items-start gap-1">
+        <span>
+          {record.first_name} {record.last_name}
+        </span>
+        <span className="text-xs text-muted-foreground">
+          {record.title}
+          {record.title && record.company_name && " at "}
+          {record.company_name}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+export const OptionText = () => (
+  <Wrapper>
+    <AutocompleteInput
+      source="contact_id"
+      choices={contacts}
+      optionText={<ContactOptionRender />}
     />
   </Wrapper>
 );
