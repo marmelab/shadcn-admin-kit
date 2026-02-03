@@ -73,6 +73,26 @@ const App = () => (
 
 That's enough to display the post show view above.
 
+## Scaffolding A Show Page
+
+You can use `<ShowGuesser>` to quickly bootstrap a Show view on top of an existing API, without adding the fields one by one.
+
+```tsx
+// in src/App.js
+import { Admin, ShowGuesser } from "@/components/admin";
+import { Resource } from "ra-core";
+import { dataProvider } from "./dataProvider";
+
+const App = () => (
+  <Admin dataProvider={dataProvider}>
+    {/* ... */}
+    <Resource name="products" show={ShowGuesser} />
+  </Admin>
+);
+```
+
+Just like `<Show>`, `<ShowGuesser>` fetches the data. It then analyzes the response, and guesses the fields it should use to display a basic layout with the data. It also dumps the components it has guessed in the console, so you can copy it into your own code.
+
 ## Props
 
 | Prop             | Required | Type              | Default | Description

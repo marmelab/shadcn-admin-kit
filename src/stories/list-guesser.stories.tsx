@@ -1,6 +1,7 @@
 import { Resource, TestMemoryRouter } from "ra-core";
 import fakeRestProvider from "ra-data-fakerest";
 import { Admin, ListGuesser, ShowGuesser } from "@/components/admin";
+import type { ListProps } from "@/components/admin/list";
 import { i18nProvider } from "@/lib/i18nProvider";
 
 export default {
@@ -148,6 +149,14 @@ const data = {
 
 const dataProvider = fakeRestProvider(data, process.env.NODE_ENV !== "test");
 
+const emptyDataProvider = fakeRestProvider(
+  { products: [] },
+  process.env.NODE_ENV !== "test",
+);
+
+const EmptyCreate = () => null;
+const CustomEmpty = () => <div>Custom empty</div>;
+
 export const Basic = () => (
   <TestMemoryRouter initialEntries={["/products"]}>
     <Admin dataProvider={dataProvider} i18nProvider={i18nProvider}>
@@ -161,6 +170,35 @@ export const Basic = () => (
     </Admin>
   </TestMemoryRouter>
 );
+
+export const Empty = ({ empty }: { empty?: ListProps["empty"] }) => (
+  <TestMemoryRouter initialEntries={["/products"]}>
+    <Admin dataProvider={emptyDataProvider} i18nProvider={i18nProvider}>
+      <Resource
+        name="products"
+        list={<ListGuesser empty={empty} />}
+        create={EmptyCreate}
+        recordRepresentation="name"
+      />
+    </Admin>
+  </TestMemoryRouter>
+);
+
+Empty.args = {
+  empty: undefined,
+};
+
+Empty.argTypes = {
+  empty: {
+    type: "select",
+    options: ["undefined (default)", "false", "custom"],
+    mapping: {
+      "undefined (default)": undefined,
+      false: false,
+      custom: <CustomEmpty />,
+    },
+  },
+};
 
 export const LinkedShow = () => (
   <TestMemoryRouter initialEntries={["/products"]}>
