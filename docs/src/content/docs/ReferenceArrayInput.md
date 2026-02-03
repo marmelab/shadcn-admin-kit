@@ -145,7 +145,8 @@ You can pass a validation function to `<ReferenceArrayInput>` *child component*,
 For instance, to make the selection required, and the selection control is an `<AutocompleteArrayInput>` (the default), set [the `<AutocompleteArrayInput validate>` prop](./AutocompleteArrayInput.md) as follows:
 
 ```jsx
-import { ReferenceArrayInput, AutocompleteArrayInput, required } from '@/components/admin';
+import { ReferenceArrayInput, AutocompleteArrayInput } from '@/components/admin';
+import { required } from 'ra-core';
 
 <ReferenceArrayInput source="tags_ids" reference="tags">
     <AutocompleteArrayInput validate={required()} />
