@@ -71,9 +71,9 @@ export const LongPlaceholder = () => (
   </Wrapper>
 );
 
-export const Clearable = () => (
+export const DisableClearable = () => (
   <Wrapper>
-    <SearchInput source="q" clearable />
+    <SearchInput source="q" disableClearable />
     <FormValues />
   </Wrapper>
 );
