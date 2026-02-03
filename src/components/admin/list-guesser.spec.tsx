@@ -41,7 +41,10 @@ describe("ListGuesser", () => {
     });
 
     await expect
-      .element(screen.getByText("No Posts yet."))
+      .element(screen.getByText("No data to display"))
+      .toBeInTheDocument();
+    await expect
+      .element(screen.getByText("Please check your data provider"))
       .toBeInTheDocument();
   });
 
@@ -64,7 +67,7 @@ describe("ListGuesser", () => {
     });
 
     await expect
-      .element(screen.getByText("No Posts yet."))
+      .element(screen.getByText("No data to display"))
       .not.toBeInTheDocument();
   });
 });

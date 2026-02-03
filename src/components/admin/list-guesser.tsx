@@ -12,7 +12,7 @@ import {
 } from "ra-core";
 import { useLocation } from "react-router";
 import type { ListProps, ListViewProps } from "@/components/admin/list";
-import { Empty, ListView } from "@/components/admin/list";
+import { ListView } from "@/components/admin/list";
 import { capitalize, singularize } from "inflection";
 import { DataTable } from "@/components/admin/data-table";
 import { ArrayField } from "@/components/admin/array-field";
@@ -20,6 +20,7 @@ import { BadgeField } from "@/components/admin/badge-field";
 import { ReferenceField } from "@/components/admin/reference-field";
 import { SingleFieldList } from "@/components/admin/single-field-list";
 import { ReferenceArrayField } from "@/components/admin/reference-array-field";
+import { GuesserEmpty } from "@/components/admin/guesser-empty";
 
 /**
  * A list page that automatically generates a DataTable from your data.
@@ -70,7 +71,7 @@ export const ListGuesser = <RecordType extends RaRecord = RaRecord>(
       debounce={debounce}
       disableAuthentication={disableAuthentication}
       disableSyncWithLocation={disableSyncWithLocation}
-      empty={empty === undefined ? <Empty /> : empty}
+      empty={empty === undefined ? <GuesserEmpty /> : empty}
       exporter={exporter}
       filter={filter}
       filterDefaultValues={filterDefaultValues}

@@ -19,7 +19,6 @@ import { ArrayField } from "@/components/admin/array-field";
 import { BadgeField } from "@/components/admin/badge-field";
 import { SingleFieldList } from "@/components/admin/single-field-list";
 import { ReferenceArrayField } from "@/components/admin/reference-array-field";
-import { GuesserEmpty } from "@/components/admin/guesser-empty";
 
 /**
  * A show page that automatically generates fields from your data.
@@ -49,11 +48,7 @@ const ShowViewGuesser = (props: ShowGuesserProps) => {
 
   const { record, isLoading, isPending, error } = useShowContext();
   const [child, setChild] = useState<ReactNode>(null);
-  const {
-    enableLog = process.env.NODE_ENV === "development",
-    empty,
-    ...rest
-  } = props;
+  const { enableLog = process.env.NODE_ENV === "development", ...rest } = props;
 
   useEffect(() => {
     setChild(null);
@@ -108,16 +103,11 @@ ${inferredChild.getRepresentation()}
     }
   }, [record, child, resource, enableLog]);
 
-  if (!record && !isLoading && !isPending && !error && empty !== false) {
-    return empty === undefined ? <GuesserEmpty /> : empty;
-  }
-
   return <ShowView {...rest}>{child}</ShowView>;
 };
 
 interface ShowGuesserProps {
   enableLog?: boolean;
-  empty?: ReactNode;
 }
 
 const showFieldTypes: InferredTypeMap = {

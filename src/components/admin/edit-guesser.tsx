@@ -17,7 +17,6 @@ import { BooleanInput } from "@/components/admin/boolean-input";
 import { ReferenceInput } from "@/components/admin/reference-input";
 import { AutocompleteInput } from "@/components/admin/autocomplete-input";
 import { ReferenceArrayInput } from "@/components/admin/reference-array-input";
-import { GuesserEmpty } from "@/components/admin/guesser-empty";
 
 /**
  * An edit page that automatically generates a form from your data.
@@ -56,11 +55,7 @@ const EditViewGuesser = (props: EditGuesserProps) => {
 
   const { record, isLoading, isPending, error } = useEditContext();
   const [child, setChild] = useState<ReactNode>(null);
-  const {
-    enableLog = process.env.NODE_ENV === "development",
-    empty,
-    ...rest
-  } = props;
+  const { enableLog = process.env.NODE_ENV === "development", ...rest } = props;
 
   useEffect(() => {
     setChild(null);
@@ -114,16 +109,11 @@ ${representation}
     }
   }, [record, child, resource, enableLog]);
 
-  if (!record && !isLoading && !isPending && !error && empty !== false) {
-    return empty === undefined ? <GuesserEmpty /> : empty;
-  }
-
   return <EditView {...rest}>{child}</EditView>;
 };
 
 interface EditGuesserProps {
   enableLog?: boolean;
-  empty?: ReactNode;
 }
 
 const editFieldTypes: InferredTypeMap = {
