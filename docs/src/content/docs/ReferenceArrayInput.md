@@ -138,6 +138,20 @@ import { ReferenceArrayInput, AutocompleteArrayInput } from '@/components/admin'
 </ReferenceArrayInput>
 ```
 
+## `validate`
+
+You can pass a validation function to `<ReferenceArrayInput>` *child component*, because **`<ReferenceArrayInput>` doesn't have a `validate` prop**. It is the responsibility of the child component to validate the input value.
+
+For instance, to make the selection required, and the selection control is an `<AutocompleteArrayInput>` (the default), set [the `<AutocompleteArrayInput validate>` prop](./AutocompleteArrayInput.md) as follows:
+
+```jsx
+import { ReferenceArrayInput, AutocompleteArrayInput, required } from '@/components/admin';
+
+<ReferenceArrayInput source="tags_ids" reference="tags">
+    <AutocompleteArrayInput validate={required()} />
+</ReferenceArrayInput>
+```
+
 ## Customizing The Filter Query
 
 By default, `<ReferenceArrayInput>` renders an `<AutocompleteArrayInput>`, which lets users type a search term to filter the possible values. `<ReferenceArrayInput>` calls `dataProvider.getList()` using the search term as filter, using the format `filter: { q: [search term] }`.
