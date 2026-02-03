@@ -46,7 +46,7 @@ const ShowViewGuesser = (props: ShowGuesserProps) => {
     throw new Error(`Cannot use <ShowGuesser> outside of a ResourceContext`);
   }
 
-  const { record, isLoading, isPending, error } = useShowContext();
+  const { record } = useShowContext();
   const [child, setChild] = useState<ReactNode>(null);
   const { enableLog = process.env.NODE_ENV === "development", ...rest } = props;
 

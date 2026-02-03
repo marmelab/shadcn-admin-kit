@@ -53,7 +53,7 @@ const EditViewGuesser = (props: EditGuesserProps) => {
     throw new Error(`Cannot use <EditGuesser> outside of a ResourceContext`);
   }
 
-  const { record, isLoading, isPending, error } = useEditContext();
+  const { record } = useEditContext();
   const [child, setChild] = useState<ReactNode>(null);
   const { enableLog = process.env.NODE_ENV === "development", ...rest } = props;
 
