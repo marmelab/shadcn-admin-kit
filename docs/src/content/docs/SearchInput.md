@@ -38,6 +38,7 @@ By default, `<SearchInput>` uses the `q` source, which is a common convention fo
 |------|----------|------|---------|-------------|
 | `className` | Optional | `string` | - | Wrapper classes |
 | `disabled` | Optional | `boolean` | `false` | Disable control |
+| `disableClearable` | Optional | `boolean` | `false` | Hide the clear button |
 | `helperText` | Optional | `string` &#124; `ReactNode` | `-` | Help text |
 | `label` | Optional | `string` &#124; `ReactNode` | `-` | Label text (not displayed by default) |
 | `source` | Optional | `string` | `q` | Field name |
