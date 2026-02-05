@@ -9,6 +9,7 @@ title: Installation
 - [Install with Next.js](#install-with-nextjs)
 - [Install with Vite](#install-with-vitejs)
 - [Install with React-Router](#install-with-react-router)
+- [Install with Tanstack Start](#install-with-tanstack-start)
 
 ## Install with Next.js
 
@@ -327,4 +328,86 @@ Now go to `http://localhost:5173/admin` in your browser. You should see this:
 If you're getting a `ReferenceError: document is not defined`error at this stage, it's probably because the versions of `react-router` and `react-router-dom` are mismatched. Make sure to use the exact same version for both packages.
 :::
 
-Next step: Read the [Quick Start Guide](./Quick-Start-Guide.mdx) to learn how to use the components in your admin app. -
+Next step: Read the [Quick Start Guide](./Quick-Start-Guide.mdx) to learn how to use the components in your admin app.
+
+## Install with Tanstack Start
+
+You can setup a Shadcn Admin Kit application with Tanstack Start as follows. First, create a new Tanstack Start project with the following command:
+
+```shell
+npx @tanstack/cli create
+```
+
+The installer will prompt you for the name of your project. Select no toolchain, but choose to install Tailwind CSS. Your installation should look like this:
+
+```shell
+$ npx @tanstack/cli create
+┌  Let's configure your TanStack application
+│
+◇  What would you like to name your project?
+│  shadcn-admin-app
+│
+◇  Select toolchain
+│  None
+│
+◇  Would you like to use Tailwind CSS?
+│  Yes
+│
+◇  Initialized git repository
+│
+◇  Installed dependencies
+│
+▲  Warnings:
+│  TanStack Start is not yet at 1.0 and may change significantly or not be compatible with other add-ons.
+│  Migrating to Start might require deleting node_modules and re-installing.
+│
+└  Your TanStack app is ready in 'shadcn-admin-app'.
+
+Use the following commands to start your app:
+% cd shadcn-admin-app
+% npm run dev
+```
+
+You can now install shadcn by running the `shadcn` init command:
+
+```shell
+npx shadcn@latest init
+```
+
+You will be asked a few questions to configure `components.json`.
+
+Now that shadcn is set up, let's start with the `shadcn-admin-kit` components.
+
+```shell
+npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/admin.json
+```
+
+Last but not least, you need to add `ra-router-tanstack` to your project, so that your `shadcn-admin-kit` application can make use of the tanstack router:
+
+```shell
+npm install ra-router-tanstack
+```
+
+You're ready to bootstrap your app! Here's a minimal example to get you started:
+
+```tsx title="src/routes/index.tsx"
+import { createFileRoute } from "@tanstack/react-router";
+import { tanStackRouterProvider } from "ra-router-tanstack";
+import { Admin } from "@/components/admin";
+
+export const Route = createFileRoute("/")({ component: App });
+
+export function App() {
+  return <Admin routerProvider={tanStackRouterProvider}></Admin>;
+}
+```
+
+When you run `npm run dev` and visit [http://localhost:3000](http://localhost:3000/), you should see the Shadcn Admin Kit welcome screen:
+
+![Welcome to shadcn-admin-kit!](./images/welcome-tanstack-start.png)
+
+:::tip
+You'll notice that the welcome screen includes a header bar from Tanstack Start. If you want to remove it, you can edit the `RootDocument` component in `src/routes/__root.tsx` and remove the `<Header />` component.
+:::
+
+Next step: Read the [Quick Start Guide](./Quick-Start-Guide.mdx) to learn how to use the components in your admin app.
