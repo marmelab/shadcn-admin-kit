@@ -10,7 +10,7 @@ In this tutorial, you will learn to create a web application with `shadcn-admin-
 
 ## Setting Up
 
-Follow the [installation instructions](./Install.md) to install `shadcn-admin-kit` in your project with Next.js, Vite.js, Remix, or any other framework of your choice.
+Follow the [installation instructions](./Install.md) to install `shadcn-admin-kit` in your project with Next.js, Vite.js, Remix, Tanstack Start, or any other framework of your choice.
 
 You should end up with a welcome screen like this:
 
@@ -143,6 +143,40 @@ const App = () => <Admin basename="/admin" dataProvider={dataProvider}></Admin>;
 export default App;
 ```
     </TabItem>
+    <TabItem label="Tanstack Start">
+```tsx title="src/dataProvider.ts"
+import jsonServerProvider from 'ra-data-json-server';
+
+export const dataProvider = jsonServerProvider(
+    import.meta.env.VITE_JSON_SERVER_URL
+);
+```
+The `import.meta.env.VITE_JSON_SERVER_URL` expression is a [Vite environment variable](https://vitejs.dev/guide/env-and-mode.html) that must be set in the `.env` file located at the project root.
+
+```dotenv
+VITE_JSON_SERVER_URL="https://jsonplaceholder.typicode.com"
+```
+
+Now, you can use this data provider in your admin app.
+
+```tsx title="src/routes/index.tsx"
+import { tanStackRouterProvider } from "ra-router-tanstack";
+import { createFileRoute } from "@tanstack/react-router";
+import { Admin } from "@/components/admin";
+import { dataProvider } from "@/dataProvider.ts";
+
+export const Route = createFileRoute("/")({ component: App });
+
+export function App() {
+  return (
+    <Admin
+      routerProvider={tanStackRouterProvider}
+      dataProvider={dataProvider}
+    ></Admin>
+  );
+}
+```
+    </TabItem>
 </Tabs>
 
 ## Mapping API Endpoints with Resources
@@ -196,11 +230,31 @@ import { dataProvider } from "./dataProvider";
 
 const App = () => (
     <Admin basename="/admin" dataProvider={dataProvider}>
-+       <Resource name="users" list={ListGuesser} />   
++       <Resource name="users" list={ListGuesser} />
     </Admin>
 );
 
 export default App;
+```
+    </TabItem>
+    <TabItem label="Tanstack Start">
+```diff lang="tsx" title="src/routes/index.tsx"
++import { Resource } from "ra-core";
+import { tanStackRouterProvider } from "ra-router-tanstack";
+import { createFileRoute } from "@tanstack/react-router";
+-import { Admin } from "@/components/admin";
++import { Admin, ListGuesser } from "@/components/admin";
+import { dataProvider } from "@/dataProvider.ts";
+
+export const Route = createFileRoute("/")({ component: App });
+
+export function App() {
+  return (
+    <Admin routerProvider={tanStackRouterProvider} dataProvider={dataProvider}>
++      <Resource name={"users"} list={ListGuesser} />
+    </Admin>
+  );
+}
 ```
      </TabItem>
 </Tabs>
@@ -342,6 +396,49 @@ const App = () => (
 );
 
 export default App;
+```
+  </TabItem>
+  <TabItem label="Tanstack Start">
+```tsx title="src/components/app/users.tsx"
+import { DataTable, List } from "@/components/admin";
+
+export const UserList = () => (
+    <List>
+        <DataTable>
+            <DataTable.Col source="id" />
+            <DataTable.Col source="name" />
+            <DataTable.Col source="username" />
+            <DataTable.Col source="email" />
+            <DataTable.Col source="address.street" />
+            <DataTable.Col source="phone" />
+            <DataTable.Col source="website" />
+            <DataTable.Col source="company.name" />
+        </DataTable>
+    </List>
+);
+```
+
+Next, update `index.tsx` to use this new component instead of `ListGuesser`:
+
+```diff lang="tsx" title="src/routes/index.tsx"
+import { Resource } from "ra-core";
+import { tanStackRouterProvider } from "ra-router-tanstack";
+import { createFileRoute } from "@tanstack/react-router";
+-import { Admin, ListGuesser } from "@/components/admin";
++import { Admin } from "@/components/admin";
+import { dataProvider } from "@/dataProvider.ts";
++import { UserList } from "@/components/app/users.tsx";
+
+export const Route = createFileRoute("/")({ component: App });
+
+export function App() {
+  return (
+    <Admin routerProvider={tanStackRouterProvider} dataProvider={dataProvider}>
+-      <Resource name={"users"} list={ListGuesser} />
++      <Resource name={"users"} list={UserList} />
+    </Admin>
+  );
+}
 ```
   </TabItem>
 </Tabs>
@@ -642,7 +739,7 @@ const App = () => (
 );
 ```
 
-Users can display the edit page by clicking on the Edit button in the posts list. 
+Users can display the edit page by clicking on the Edit button in the posts list.
 
 <video controls autoplay playsinline muted loop>
   <source src="https://github.com/user-attachments/assets/3642747a-9155-4e5d-8cdc-9dbb3c936e8b" type="video/mp4" />
