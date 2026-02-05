@@ -4,12 +4,40 @@ title: Installation
 
 ---
 
+import nextLogo from './images/framework-logos/nextjs.svg';
+import viteLogo from './images/framework-logos/vite.svg';
+import reactRouterLogo from './images/framework-logos/react-router.svg';
+import tanstackLogo from './images/framework-logos/tanstack.svg';
+export const FrameworkCard = ({ href, logo, name, borderHover, bgHover, shadow }) => (
+  <a
+    href={href}
+    class="group flex flex-col items-center gap-4 p-6 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 hover:scale-[1.02] transition-all duration-200 no-underline"
+    style={`--border-hover: ${borderHover}; --bg-hover: ${bgHover}; --shadow-color: ${shadow}`}
+  >
+    <div class="w-16 h-16 flex items-center justify-center rounded-lg bg-gray-50 dark:bg-gray-800 transition-colors framework-card-icon">
+      <img src={logo} alt={name} class="w-10 h-10" />
+    </div>
+    <span class="font-semibold text-gray-900 dark:text-gray-100">{name}</span>
+  </a>
+);
+
+<style>{`
+  .framework-card-icon { transition: background-color 0.2s; }
+  a:has(.framework-card-icon):hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 10px 15px -3px var(--shadow-color), 0 4px 6px -4px var(--shadow-color);
+  }
+  a:has(.framework-card-icon):hover .framework-card-icon { background-color: var(--bg-hover); }
+`}</style>
+
 `shadcn-admin-kit` is a React library of components for admin apps. You can install it with any React framework:
 
-- [Install with Next.js](#install-with-nextjs)
-- [Install with Vite](#install-with-vitejs)
-- [Install with React-Router](#install-with-react-router)
-- [Install with Tanstack Start](#install-with-tanstack-start)
+<div class="not-content grid grid-cols-2 md:grid-cols-4 gap-4 my-8">
+  <FrameworkCard href="#install-with-nextjs" logo={nextLogo.src} name="Next.js" borderHover="#d1d5db" bgHover="#f3f4f6" shadow="rgba(156,163,175,0.2)" />
+  <FrameworkCard href="#install-with-vitejs" logo={viteLogo.src} name="Vite" borderHover="#c4b5fd" bgHover="#f5f3ff" shadow="rgba(139,92,246,0.15)" />
+  <FrameworkCard href="#install-with-react-router" logo={reactRouterLogo.src} name="React Router" borderHover="#fca5a5" bgHover="#fef2f2" shadow="rgba(239,68,68,0.15)" />
+  <FrameworkCard href="#install-with-tanstack-start" logo={tanstackLogo.src} name="TanStack Start" borderHover="#fcd34d" bgHover="#fffbeb" shadow="rgba(245,158,11,0.15)" />
+</div>
 
 ## Install with Next.js
 
