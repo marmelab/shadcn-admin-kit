@@ -37,44 +37,41 @@ Upon success, the button redirects to the list view, and notifies the user with 
 If your data provider supports soft delete (see [Soft Delete Features](./SoftDeleteFeatures.md)), you can use an alternative `SoftDeleteButton` that performs a soft delete instead of a permanent delete:
 
 ```tsx
+import { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
+import { useSoftDeleteWithUndoController } from "@react-admin/ra-core-ee";
 import {
   type RaRecord,
   useRecordContext,
-  useRedirect,
   useResourceContext,
+  useTranslate,
 } from "ra-core";
-import { useSoftDelete } from "@react-admin/ra-core-ee";
-import { Button } from "@/components/ui/button";
 
 export function SoftDeleteButton(props: SoftDeleteButtonProps) {
+  const { label: labelProp } = props;
+
   const resource = useResourceContext(props);
   const record = useRecordContext(props);
-  const redirect = useRedirect();
-  const [softDelete, { isPending }] = useSoftDelete();
 
-  const handleSoftDelete = () => {
-    softDelete(
-      resource,
-      { id: record?.id },
-      {
-        onError: (err) => {
-          console.error("An error occurred while soft deleting", err);
-        },
-        onSuccess: () => {
-          redirect("list", resource);
-        },
-      }
-    );
-  };
+  const { isPending, handleSoftDelete } = useSoftDeleteWithUndoController({
+    record,
+    resource,
+  });
 
- return (
+  const translate = useTranslate();
+  const label =
+    labelProp == undefined || typeof labelProp === "string"
+      ? translate(labelProp ?? "ra-soft-delete.action.soft_delete")
+      : labelProp;
+
+  return (
     <Button
       type="button"
       variant="destructive"
       onClick={handleSoftDelete}
       disabled={isPending}
     >
-      Delete
+      {label}
     </Button>
   );
 }
@@ -82,6 +79,7 @@ export function SoftDeleteButton(props: SoftDeleteButtonProps) {
 type SoftDeleteButtonProps = {
   resource?: string;
   record?: RaRecord;
+  label?: ReactNode;
 };
 ```
 
@@ -100,37 +98,104 @@ const PostEdit = () => (
 
 ## Restore Button
 
-For restoring soft-deleted records, you can create a `RestoreButton` component similar to the `SoftDeleteButton`, but using the `useRestore` hook from `ra-core-ee`.
+For restoring soft-deleted records, you can create a `RestoreButton` component similar to the `SoftDeleteButton`, but using the `useRestoreWithUndoController` hook from `ra-core-ee`.
 
 ```tsx
+import { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  type DeletedRecordType,
+  useRestoreWithUndoController,
+} from "@react-admin/ra-core-ee";
+import { useRecordContext, useTranslate } from "ra-core";
+
 export function RestoreButton(props: RestoreButtonProps) {
+  const { label: labelProp } = props;
+
   const record = useRecordContext(props);
-  const { refetch } = useShowContext();
-
-  const [restore, { isPending }] = useRestoreOne();
-
-  const handleRestore = () => {
-    restore(
-      { id: record?.id },
-      {
-        onError: (err) => {
-          console.error("An error occurred while restoring", err);
-        },
-        onSuccess: () => {
-          refetch();
-        },
-      }
+  if (!record) {
+    throw new Error(
+      "<RestoreButton> component should be used inside a <DeletedRecordsListBase> component or provided with a record prop.",
     );
-  };
+  }
+
+  const { isPending, handleRestore } = useRestoreWithUndoController({
+    record,
+  });
+
+  const translate = useTranslate();
+  const label =
+    labelProp == undefined || typeof labelProp === "string"
+      ? translate(labelProp ?? "ra-soft-delete.action.restore")
+      : labelProp;
 
   return (
-    <Button type="button" onClick={handleRestore} disabled={isPending}>
-      Restore
+    <Button
+      type="button"
+      onClick={handleRestore}
+      disabled={isPending}
+      size="sm"
+    >
+      {label}
     </Button>
   );
 }
 
 type RestoreButtonProps = {
-  record?: RaRecord;
+  record?: DeletedRecordType;
+  label?: ReactNode;
+};
+```
+
+## Delete Permanently Button
+
+For deleting archived records permanently, you can create a `DeletePermanentlyButton` component similar to the `RestoreButton`, but using the `useDeletePermanentlyWithUndoController` hook from `ra-core-ee`.
+
+```tsx
+import { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  type DeletedRecordType,
+  useDeletePermanentlyWithUndoController,
+} from "@react-admin/ra-core-ee";
+import { useRecordContext, useTranslate } from "ra-core";
+
+export function DeletePermanentlyButton(props: DeletePermanentlyButtonProps) {
+  const { label: labelProp } = props;
+
+  const record = useRecordContext(props);
+  if (!record) {
+    throw new Error(
+      "<DeletePermanentlyButton> component should be used inside a <DeletedRecordsListBase> component or provided with a record prop.",
+    );
+  }
+
+  const { isPending, handleDeletePermanently } =
+    useDeletePermanentlyWithUndoController({
+      record,
+    });
+
+  const translate = useTranslate();
+  const label =
+    labelProp == undefined || typeof labelProp === "string"
+      ? translate(labelProp ?? "ra-soft-delete.action.delete_permanently")
+      : labelProp;
+
+  return (
+    <Button
+      type="button"
+      variant="destructive"
+      onClick={handleDeletePermanently}
+      disabled={isPending}
+      size="sm"
+    >
+      {label}
+    </Button>
+  );
+}
+
+type DeletePermanentlyButtonProps = {
+  record?: DeletedRecordType;
+  label?: ReactNode;
 };
 ```

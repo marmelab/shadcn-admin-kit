@@ -45,43 +45,128 @@ Additional props are passed to the underlying shadcn/ui `<Button>` component.
 If your data provider supports soft delete (see [Soft Delete Features](./SoftDeleteFeatures.md)), you can use an alternative `BulkSoftDeleteButton` that performs a soft delete instead of a permanent delete:
 
 ```tsx
-import { type RaRecord, useResourceContext, useListContext } from "ra-core";
+import { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
-import { useSoftDeleteMany } from "@react-admin/ra-core-ee";
+import { useBulkSoftDeleteWithUndoController } from "@react-admin/ra-core-ee";
+import { useResourceContext, useTranslate } from "ra-core";
 
 export function BulkSoftDeleteButton(props: BulkSoftDeleteButtonProps) {
-  const resource = useResourceContext(props);
-  const { selectedIds, onUnselectItems } = useListContext();
-  const [softDeleteMany, { isPending }] = useSoftDeleteMany();
+  const { label: labelProp } = props;
 
-  const handleSoftDelete = () => {
-    softDeleteMany(
+  const resource = useResourceContext(props);
+
+  const { ids, isPending, handleSoftDeleteMany } =
+    useBulkSoftDeleteWithUndoController({
       resource,
-      { ids: selectedIds },
-      {
-        onError: (err) => {
-          console.error("An error occurred while soft deleting", err);
-        },
-        onSuccess: () => {
-          onUnselectItems();
-        },
-      }
-    );
-  };
+    });
+
+  const translate = useTranslate();
+  const label =
+    labelProp == undefined || typeof labelProp === "string"
+      ? translate(labelProp ?? "ra-soft-delete.action.soft_delete", {
+          smart_count: ids.length,
+        })
+      : labelProp;
 
   return (
     <Button
       type="button"
       variant="destructive"
-      onClick={handleSoftDelete}
+      onClick={handleSoftDeleteMany}
       disabled={isPending}
     >
-      Delete
+      {label}
     </Button>
   );
 }
 
 type BulkSoftDeleteButtonProps = {
   resource?: string;
+  label?: ReactNode;
 };
+```
+
+## Restore Button
+
+For restoring soft deleted records, you can create a `BulkRestoreButton` component similar to `BulkSoftDeleteButton`, but using `useBulkRestoreWithUndoController` hook from `ra-core-ee`:
+
+```tsx
+import { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
+import { useBulkRestoreWithUndoController } from "@react-admin/ra-core-ee";
+import { useTranslate } from "ra-core";
+
+export function BulkRestoreButton(props: BulkRestoreButtonProps) {
+  const { label: labelProp } = props;
+
+  const { ids, isPending, handleBulkRestore } =
+    useBulkRestoreWithUndoController({});
+
+  const translate = useTranslate();
+  const label =
+    labelProp == undefined || typeof labelProp === "string"
+      ? translate(labelProp ?? "ra-soft-delete.action.restore", {
+          smart_count: ids.length,
+        })
+      : labelProp;
+
+  return (
+    <Button
+      type="button"
+      onClick={handleBulkRestore}
+      disabled={isPending}
+      size="sm"
+    >
+      {label}
+    </Button>
+  );
+}
+
+export interface BulkRestoreButtonProps {
+  label?: ReactNode;
+}
+```
+
+## Delete Permanently Button
+
+For deleting archived records permanently, you can create a `BulkDeletePermanentlyButton` component similar to `BulkRestoreButton`, but using `useBulkDeletePermanentlyWithUndoController` hook from `ra-core-ee`:
+
+```tsx
+import { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
+import { useBulkDeletePermanentlyWithUndoController } from "@react-admin/ra-core-ee";
+import { useTranslate } from "ra-core";
+
+export function BulkDeletePermanentlyButton(
+  props: BulkDeletePermanentlyButtonProps,
+) {
+  const { label: labelProp } = props;
+
+  const { ids, isPending, handleDeleteManyPermanently } =
+    useBulkDeletePermanentlyWithUndoController({});
+
+  const translate = useTranslate();
+  const label =
+    labelProp == undefined || typeof labelProp === "string"
+      ? translate(labelProp ?? "ra-soft-delete.action.delete_permanently", {
+          smart_count: ids.length,
+        })
+      : labelProp;
+
+  return (
+    <Button
+      type="button"
+      variant="destructive"
+      onClick={handleDeleteManyPermanently}
+      disabled={isPending}
+      size="sm"
+    >
+      {label}
+    </Button>
+  );
+}
+
+export interface BulkDeletePermanentlyButtonProps {
+  label?: ReactNode;
+}
 ```
