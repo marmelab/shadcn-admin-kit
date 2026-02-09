@@ -32,7 +32,7 @@ At minimum, you will need to leverage [`useSoftDelete`](https://marmelab.com/ra-
 
 This will call `dataProvider.softDelete()` instead of `dataProvider.delete()` for the selected record.
 
-If you also want the users to be able to restore the soft deleted records, or to permanently delete them, you can implement the following components:
+If you also want the users to be able to restore the soft-deleted records, or to permanently delete them, you can implement the following components:
 
 - [`<RestoreButton>`](#restore-button): calls [`useRestoreOne`](https://marmelab.com/ra-core/userestoreone/) to restore a soft deleted record.
 - [`<DeletePermanentlyButton>`](#delete-permanently-button): calls [`useHardDelete`](https://marmelab.com/ra-core/useharddelete/) to permanently delete a soft deleted record.
@@ -638,7 +638,7 @@ type BulkSoftDeleteButtonProps = {
 
 ## Bulk Restore Button
 
-For restoring soft deleted records, you can create a `BulkRestoreButton` component similar to `BulkSoftDeleteButton`, but using [`useBulkRestoreWithUndoController`](https://marmelab.com/ra-core/usebulkrestorewithundocontroller/) hook from `ra-core-ee`:
+For restoring soft-deleted records, you can create a `BulkRestoreButton` component similar to `BulkSoftDeleteButton`, but using [`useBulkRestoreWithUndoController`](https://marmelab.com/ra-core/usebulkrestorewithundocontroller/) hook from `ra-core-ee`:
 
 ```tsx
 import { ReactNode } from "react";
