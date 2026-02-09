@@ -24,28 +24,28 @@ npm install --save @react-admin/ra-core-ee
 yarn add @react-admin/ra-core-ee
 ```
 
-## Features
+## Usage
 
-The Soft Delete packages let you build a complete soft delete experience in your admin, including:
+`ra-core-ee` contains base components and hooks to implement soft deletion in your application.
 
-- [`<SoftDeleteButton>`](./DeleteButton.md#soft-delete): A button that marks the current record as deleted instead of permanently deleting it.
-- [`<BulkSoftDeleteButton>`](./BulkDeleteButton.md#soft-delete): A button that marks the selected records as deleted instead of permanently deleting them.
-- [`<RestoreButton>`](./DeleteButton.md#restore-button): A button to restore a soft deleted record.
-- [`<DeletedRecordsListBase>`](https://marmelab.com/ra-core/deletedrecordslistbase/): A Deleted Records list view to browse and filter deleted records.
-- [`<ShowDeletedBase>`](https://marmelab.com/ra-core/showdeletedbase/): A Deleted Record show view to see the details of a deleted record.
-- [`<DeletedRecordRepresentation>`](https://marmelab.com/ra-core/deletedrecordrepresentation/): A component that renders the record representation of a deleted record.
+At minimum, you will need to leverage [`useSoftDelete`](https://marmelab.com/ra-core/usesoftdelete/) to implement your own [`<SoftDeleteButton>`](#soft-delete-button), and replace the standard `<DeleteButton>` in your list and show views with it.
 
-It leverages the following hooks to interact with the data provider:
+This will call `dataProvider.softDelete()` instead of `dataProvider.delete()` for the selected record.
 
-- [`useSoftDelete`](https://marmelab.com/ra-core/usesoftdelete/)
-- [`useSoftDeleteMany`](https://marmelab.com/ra-core/usesoftdeletemany/)
-- [`useGetListDeleted`](https://marmelab.com/ra-core/usegetlistdeleted/)
-- [`useGetOneDeleted`](https://marmelab.com/ra-core/usegetonedeleted/)
-- [`useRestoreOne`](https://marmelab.com/ra-core/userestoreone/)
-- [`useRestoreMany`](https://marmelab.com/ra-core/userestoremany/)
-- [`useHardDelete`](https://marmelab.com/ra-core/useharddelete/)
-- [`useHardDeleteMany`](https://marmelab.com/ra-core/useharddeletemany/)
-- [`useDeleteRecordsListController`](https://marmelab.com/ra-core/usedeletedrecordslistcontroller/)
+If you also want the users to be able to restore the soft deleted records, or to permanently delete them, you can implement the following components:
+
+- [`<RestoreButton>`](#restore-button): calls [`useRestoreOne`](https://marmelab.com/ra-core/userestoreone/) to restore a soft deleted record.
+- [`<DeletePermanentlyButton>`](#delete-permanently-button): calls [`useHardDelete`](https://marmelab.com/ra-core/useharddelete/) to permanently delete a soft deleted record.
+
+You can also implement bulk variants for all three actions:
+
+- [`<BulkSoftDeleteButton>`](#bulk-soft-delete-button): [`useSoftDeleteMany`](https://marmelab.com/ra-core/usesoftdeletemany/)
+- [`<BulkRestoreButton>`](#bulk-restore-button): [`useRestoreMany`](https://marmelab.com/ra-core/userestoremany/)
+- [`<BulkDeletePermanentlyButton>`](#bulk-delete-permanently-button): [`useHardDeleteMany`](https://marmelab.com/ra-core/useharddeletemany/)
+
+To build a trash view, use [`<DeletedRecordsListBase>`](https://marmelab.com/ra-core/deletedrecordslistbase/) to build your own [`<DeletedRecordsList>`](#deleted-records-list). This component fetches deleted records with `dataProvider.getListDeleted()` and allows to restore or permanently delete them with the buttons mentioned above.
+
+![Deleted Records List](./images/deleted-records-list.png)
 
 ## Data Provider Requirements
 
@@ -210,10 +210,23 @@ export const dataProvider = addSoftDeleteInPlace(baseDataProvider, {
 ```
 
 :::note
-When using `addSoftDeleteInPlace`, avoid calling `getListDeleted` without a `resource` filter, as it uses a naive implementation combining multiple `getList` calls, which can lead to bad performance. It is recommended to use one list per resource in this case (with `<DeletedRecordsListBase resource>` property).
+When using `addSoftDeleteInPlace`, avoid calling `getListDeleted` without a `resource` filter, as it uses a naive implementation combining multiple `getList` calls, which can lead to bad performance. It is recommended to use one list per resource in this case (see [`<DeletedRecordsListBase resource>` property](https://marmelab.com/ra-core/deletedrecordslistbase/#resource)).
 :::
 
 You can also write your own implementation. Feel free to look at these builders source code for inspiration. You can find it under your `node_modules` folder, e.g. at `node_modules/@react-admin/ra-core-ee/src/soft-delete/dataProvider/addSoftDeleteBasedOnResource.ts`.
+
+### Query and Mutation Hooks 
+
+Each data provider verb has its own hook so you can use them in custom components:
+
+- `softDelete`: [`useSoftDelete`](https://marmelab.com/ra-core/usesoftdelete/)
+- `softDeleteMany`: [`useSoftDeleteMany`](https://marmelab.com/ra-core/usesoftdeletemany/)
+- `getListDeleted`: [`useGetListDeleted`](https://marmelab.com/ra-core/usegetlistdeleted/)
+- `getOneDeleted`: [`useGetOneDeleted`](https://marmelab.com/ra-core/usegetonedeleted/)
+- `restoreOne`: [`useRestoreOne`](https://marmelab.com/ra-core/userestoreone/)
+- `restoreMany`: [`useRestoreMany`](https://marmelab.com/ra-core/userestoremany/)
+- `hardDelete`: [`useHardDelete`](https://marmelab.com/ra-core/useharddelete/)
+- `hardDeleteMany`: [`useHardDeleteMany`](https://marmelab.com/ra-core/useharddeletemany/)
 
 ### `createMany`
 
@@ -228,4 +241,482 @@ const dataProviderWithCreateMany = {
         return { data: createdRecords };
     },
 };
+```
+
+## Deleted Records List
+
+Here is an example implementation of a trash view using the [`<DeletedRecordsListBase>`](https://marmelab.com/ra-core/deletedrecordslistbase/) component.
+
+![Deleted Records List](./images/deleted-records-list.png)
+
+```tsx
+import { AutocompleteArrayInput } from "@/components/admin/autocomplete-array-input";
+import { DataTable } from "@/components/admin/data-table";
+import { DateField } from "@/components/admin/date-field";
+import { DateInput } from "@/components/admin/date-input";
+import { ExportButton } from "@/components/admin/export-button";
+import { FilterForm } from "@/components/admin/filter-form";
+import { type ListViewProps } from "@/components/admin/list";
+import { ListPagination } from "@/components/admin/list-pagination";
+import { cn } from "@/lib/utils";
+import {
+  DeletedRecordRepresentation,
+  DeletedRecordsListBase,
+  type DeletedRecordsListBaseProps,
+} from "@react-admin/ra-core-ee";
+import { humanize, inflect } from "inflection";
+import {
+  FilterContext,
+  type RaRecord,
+  useListContext,
+  useResourceDefinitions,
+  useTranslate,
+} from "ra-core";
+
+import {
+  BulkDeletePermanentlyButton,
+  BulkRestoreButton,
+  DeletePermanentlyButton,
+  RestoreButton,
+} from "@/components/soft-delete";
+
+export function DeletedRecordsList<RecordType extends RaRecord = RaRecord>({
+  children = <DeletedRecordsTable />,
+  filters,
+  ...props
+}: ListViewProps<RecordType> & DeletedRecordsListBaseProps<RecordType>) {
+  const resources = Object.keys(useResourceDefinitions()).map((resource) => ({
+    id: resource,
+    name: resource,
+  }));
+
+  return (
+    <DeletedRecordsListBase {...props}>
+      <DeletedRecordsListView<RecordType>
+        {...props}
+        filters={
+          filters ?? [
+            ...(props.resource === undefined
+              ? [
+                  <AutocompleteArrayInput
+                    key="resource"
+                    source="resource"
+                    label="Resource"
+                    choices={resources}
+                    alwaysOn
+                  />,
+                ]
+              : []),
+            <DateInput
+              key="deleted_at_gte"
+              source="deleted_at_gte"
+              label="Deleted after"
+              alwaysOn
+            />,
+            <DateInput
+              key="deleted_at_lte"
+              source="deleted_at_lte"
+              label="Deleted before"
+              alwaysOn
+            />,
+          ]
+        }
+      >
+        {children}
+      </DeletedRecordsListView>
+    </DeletedRecordsListBase>
+  );
+}
+
+function DeletedRecordsListView<RecordType extends RaRecord = RaRecord>(
+  props: ListViewProps<RecordType>,
+) {
+  const {
+    filters,
+    pagination = defaultPagination,
+    title,
+    children,
+    actions,
+  } = props;
+
+  const translate = useTranslate();
+
+  const { defaultTitle } = useListContext();
+
+  return (
+    <>
+      <FilterContext.Provider value={filters}>
+        <div className="flex justify-between items-start flex-wrap gap-2 my-2">
+          <h2 className="text-2xl font-bold tracking-tight mb-2">
+            {title ??
+              defaultTitle ??
+              translate("ra-soft-delete.deleted_records_list.title", {
+                _: "Deleted Records",
+              })}
+          </h2>
+          {actions ?? (
+            <div className="flex items-center gap-2">{<ExportButton />}</div>
+          )}
+        </div>
+        <FilterForm />
+
+        <div className={cn("my-2", props.className)}>{children}</div>
+
+        {pagination}
+      </FilterContext.Provider>
+    </>
+  );
+}
+
+const defaultPagination = <ListPagination />;
+
+export const DeletedRecordsTable = () => {
+  const translate = useTranslate();
+
+  return (
+    <DataTable
+      bulkActionButtons={
+        <>
+          <BulkRestoreButton />
+          <BulkDeletePermanentlyButton />
+        </>
+      }
+    >
+      <DataTable.Col
+        source="resource"
+        render={(record) => {
+          const { resource } = record;
+          return humanize(
+            translate(`resources.${resource}.name`, {
+              smart_count: 1,
+              _: resource ? inflect(resource, 1) : undefined,
+            }),
+          );
+        }}
+      />
+      <DataTable.Col
+        source="data"
+        label={translate("ra-soft-delete.list.record", {
+          _: "Record",
+        })}
+      >
+        <DeletedRecordRepresentation />
+      </DataTable.Col>
+      <DataTable.Col source="deleted_at">
+        <DateField source="deleted_at" showTime />
+      </DataTable.Col>
+      <DataTable.Col source="deleted_by" />
+
+      <DataTable.Col>
+        <div className="flex gap-2">
+          <RestoreButton />
+          <DeletePermanentlyButton />
+        </div>
+      </DataTable.Col>
+    </DataTable>
+  );
+};
+```
+
+:::tip
+This component also leverages the **Soft Delete buttons** implemented in the next sections. You can find their implementation below.
+:::
+
+## Soft Delete Button
+
+Here is an example implementation of a `SoftDeleteButton` component using the [`useSoftDeleteWithUndoController`](https://marmelab.com/ra-core/usesoftdeletewithundocontroller/) hook:
+
+```tsx
+import { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
+import { useSoftDeleteWithUndoController } from "@react-admin/ra-core-ee";
+import {
+  type RaRecord,
+  useRecordContext,
+  useResourceContext,
+  useTranslate,
+} from "ra-core";
+
+export function SoftDeleteButton(props: SoftDeleteButtonProps) {
+  const { label: labelProp } = props;
+
+  const resource = useResourceContext(props);
+  const record = useRecordContext(props);
+
+  const { isPending, handleSoftDelete } = useSoftDeleteWithUndoController({
+    record,
+    resource,
+  });
+
+  const translate = useTranslate();
+  const label =
+    labelProp == undefined || typeof labelProp === "string"
+      ? translate(labelProp ?? "ra-soft-delete.action.soft_delete")
+      : labelProp;
+
+  return (
+    <Button
+      type="button"
+      variant="destructive"
+      onClick={handleSoftDelete}
+      disabled={isPending}
+    >
+      {label}
+    </Button>
+  );
+}
+
+type SoftDeleteButtonProps = {
+  resource?: string;
+  record?: RaRecord;
+  label?: ReactNode;
+};
+```
+
+You can then replace `DeleteButton` with `SoftDeleteButton` in your edit views:
+
+```tsx
+import { Edit } from '@/components/admin';
+import { SoftDeleteButton } from './SoftDeleteButton';
+
+const PostEdit = () => (
+    <Edit actions={<SoftDeleteButton />}>
+        ...
+    </Edit>
+);
+```
+
+## Restore Button
+
+For restoring soft-deleted records, you can create a `RestoreButton` component similar to the `SoftDeleteButton`, but using the [`useRestoreWithUndoController`](https://marmelab.com/ra-core/userestorewithundocontroller/) hook from `ra-core-ee`.
+
+```tsx
+import { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  type DeletedRecordType,
+  useRestoreWithUndoController,
+} from "@react-admin/ra-core-ee";
+import { useRecordContext, useTranslate } from "ra-core";
+
+export function RestoreButton(props: RestoreButtonProps) {
+  const { label: labelProp } = props;
+
+  const record = useRecordContext(props);
+  if (!record) {
+    throw new Error(
+      "<RestoreButton> component should be used inside a <DeletedRecordsListBase> component or provided with a record prop.",
+    );
+  }
+
+  const { isPending, handleRestore } = useRestoreWithUndoController({
+    record,
+  });
+
+  const translate = useTranslate();
+  const label =
+    labelProp == undefined || typeof labelProp === "string"
+      ? translate(labelProp ?? "ra-soft-delete.action.restore")
+      : labelProp;
+
+  return (
+    <Button
+      type="button"
+      onClick={handleRestore}
+      disabled={isPending}
+      size="sm"
+    >
+      {label}
+    </Button>
+  );
+}
+
+type RestoreButtonProps = {
+  record?: DeletedRecordType;
+  label?: ReactNode;
+};
+```
+
+## Delete Permanently Button
+
+For permanently deleting archived records, you can create a `DeletePermanentlyButton` component similar to the `RestoreButton`, but using the [`useDeletePermanentlyWithUndoController`](https://marmelab.com/ra-core/usedeletepermanentlywithundocontroller/) hook from `ra-core-ee`.
+
+```tsx
+import { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  type DeletedRecordType,
+  useDeletePermanentlyWithUndoController,
+} from "@react-admin/ra-core-ee";
+import { useRecordContext, useTranslate } from "ra-core";
+
+export function DeletePermanentlyButton(props: DeletePermanentlyButtonProps) {
+  const { label: labelProp } = props;
+
+  const record = useRecordContext(props);
+  if (!record) {
+    throw new Error(
+      "<DeletePermanentlyButton> component should be used inside a <DeletedRecordsListBase> component or provided with a record prop.",
+    );
+  }
+
+  const { isPending, handleDeletePermanently } =
+    useDeletePermanentlyWithUndoController({
+      record,
+    });
+
+  const translate = useTranslate();
+  const label =
+    labelProp == undefined || typeof labelProp === "string"
+      ? translate(labelProp ?? "ra-soft-delete.action.delete_permanently")
+      : labelProp;
+
+  return (
+    <Button
+      type="button"
+      variant="destructive"
+      onClick={handleDeletePermanently}
+      disabled={isPending}
+      size="sm"
+    >
+      {label}
+    </Button>
+  );
+}
+
+type DeletePermanentlyButtonProps = {
+  record?: DeletedRecordType;
+  label?: ReactNode;
+};
+```
+
+## Bulk Soft Delete Button
+
+Here is an example implementation of a `BulkSoftDeleteButton` component using the [`useBulkSoftDeleteWithUndoController`](https://marmelab.com/ra-core/usebulksoftdeletewithundocontroller/) hook:
+
+```tsx
+import { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
+import { useBulkSoftDeleteWithUndoController } from "@react-admin/ra-core-ee";
+import { useResourceContext, useTranslate } from "ra-core";
+
+export function BulkSoftDeleteButton(props: BulkSoftDeleteButtonProps) {
+  const { label: labelProp } = props;
+
+  const resource = useResourceContext(props);
+
+  const { ids, isPending, handleSoftDeleteMany } =
+    useBulkSoftDeleteWithUndoController({
+      resource,
+    });
+
+  const translate = useTranslate();
+  const label =
+    labelProp == undefined || typeof labelProp === "string"
+      ? translate(labelProp ?? "ra-soft-delete.action.soft_delete", {
+          smart_count: ids.length,
+        })
+      : labelProp;
+
+  return (
+    <Button
+      type="button"
+      variant="destructive"
+      onClick={handleSoftDeleteMany}
+      disabled={isPending}
+    >
+      {label}
+    </Button>
+  );
+}
+
+type BulkSoftDeleteButtonProps = {
+  resource?: string;
+  label?: ReactNode;
+};
+```
+
+## Bulk Restore Button
+
+For restoring soft deleted records, you can create a `BulkRestoreButton` component similar to `BulkSoftDeleteButton`, but using [`useBulkRestoreWithUndoController`](https://marmelab.com/ra-core/usebulkrestorewithundocontroller/) hook from `ra-core-ee`:
+
+```tsx
+import { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
+import { useBulkRestoreWithUndoController } from "@react-admin/ra-core-ee";
+import { useTranslate } from "ra-core";
+
+export function BulkRestoreButton(props: BulkRestoreButtonProps) {
+  const { label: labelProp } = props;
+
+  const { ids, isPending, handleBulkRestore } =
+    useBulkRestoreWithUndoController({});
+
+  const translate = useTranslate();
+  const label =
+    labelProp == undefined || typeof labelProp === "string"
+      ? translate(labelProp ?? "ra-soft-delete.action.restore", {
+          smart_count: ids.length,
+        })
+      : labelProp;
+
+  return (
+    <Button
+      type="button"
+      onClick={handleBulkRestore}
+      disabled={isPending}
+      size="sm"
+    >
+      {label}
+    </Button>
+  );
+}
+
+export interface BulkRestoreButtonProps {
+  label?: ReactNode;
+}
+```
+
+## Bulk Delete Permanently Button
+
+For deleting archived records permanently, you can create a `BulkDeletePermanentlyButton` component similar to `BulkRestoreButton`, but using [`useBulkDeletePermanentlyWithUndoController`](https://marmelab.com/ra-core/usebulkdeletepermanentlywithundocontroller/) hook from `ra-core-ee`:
+
+```tsx
+import { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
+import { useBulkDeletePermanentlyWithUndoController } from "@react-admin/ra-core-ee";
+import { useTranslate } from "ra-core";
+
+export function BulkDeletePermanentlyButton(
+  props: BulkDeletePermanentlyButtonProps,
+) {
+  const { label: labelProp } = props;
+
+  const { ids, isPending, handleDeleteManyPermanently } =
+    useBulkDeletePermanentlyWithUndoController({});
+
+  const translate = useTranslate();
+  const label =
+    labelProp == undefined || typeof labelProp === "string"
+      ? translate(labelProp ?? "ra-soft-delete.action.delete_permanently", {
+          smart_count: ids.length,
+        })
+      : labelProp;
+
+  return (
+    <Button
+      type="button"
+      variant="destructive"
+      onClick={handleDeleteManyPermanently}
+      disabled={isPending}
+      size="sm"
+    >
+      {label}
+    </Button>
+  );
+}
+
+export interface BulkDeletePermanentlyButtonProps {
+  label?: ReactNode;
+}
 ```
