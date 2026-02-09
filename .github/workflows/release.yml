@@ -1,0 +1,43 @@
+name: Release Registry
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      test_tag:
+        description: "Test tag for manual testing (optional)"
+        required: false
+        default: "test-release"
+
+jobs:
+  build-and-upload-registry:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: Generate registry.json
+        run: make build-registry
+
+      - name: Upload registry.json to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && inputs.test_tag || github.ref_name }}
+          prerelease: ${{ github.event_name == 'workflow_dispatch' }}
+          files: |
+            ./public/r/registry.json
+            ./public/r/admin.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
