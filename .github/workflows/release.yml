@@ -2,8 +2,6 @@ name: Release Registry
 on:
   release:
     types: [created]
-  push:
-    branches: ["allow-versioning"]
 
 jobs:
   build-and-upload-registry:
@@ -30,8 +28,6 @@ jobs:
       - name: Upload registry.json to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: test-release
-          prerelease: true
           files: |
             ./public/r/registry.json
             ./public/r/admin.json
