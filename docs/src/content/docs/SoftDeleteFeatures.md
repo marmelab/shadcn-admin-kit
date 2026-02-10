@@ -575,7 +575,7 @@ import { useResourceContext } from "ra-core";
 export function BulkSoftDeleteButton(props: BulkSoftDeleteButtonProps) {
   const resource = useResourceContext(props);
 
-  const { ids, isPending, handleSoftDeleteMany } =
+  const { isPending, handleSoftDeleteMany } =
     useBulkSoftDeleteWithUndoController({
       resource,
     });
@@ -607,7 +607,7 @@ import { Button } from "@/components/ui/button";
 import { useBulkRestoreWithUndoController } from "@react-admin/ra-core-ee";
 
 export function BulkRestoreButton() {
-  const { ids, isPending, handleBulkRestore } =
+  const { isPending, handleBulkRestore } =
     useBulkRestoreWithUndoController({});
 
   return (
@@ -633,7 +633,7 @@ import { Button } from "@/components/ui/button";
 import { useBulkDeletePermanentlyWithUndoController } from "@react-admin/ra-core-ee";
 
 export function BulkDeletePermanentlyButton() {
-  const { ids, isPending, handleDeleteManyPermanently } =
+  const { isPending, handleDeleteManyPermanently } =
     useBulkDeletePermanentlyWithUndoController({});
 
   return (
