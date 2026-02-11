@@ -9,21 +9,10 @@ env:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  contents: write
 
 jobs:
   build-and-upload-registry:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -53,12 +42,17 @@ jobs:
           cp public/r/registry.json public/r/${{ env.RELEASE_TAG }}/
           cp public/r/admin.json public/r/${{ env.RELEASE_TAG }}/
 
-      - name: Install Wrangler
-        run: npm install -g wrangler
-
-      - name: Upload to Cloudflare R2
+      - name: Push to gh-page branch
         run: |
-          wrangler r2 object put "shadcn-admin-kit/r/${{ env.RELEASE_TAG }}/admin.json" --file public/r/admin.json
-          wrangler r2 object put "shadcn-admin-kit/r/${{ env.RELEASE_TAG }}/registry.json" --file public/r/registry.json
-        env:
-          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # Copy release files to temp
+          mkdir -p /tmp/release
+          cp -r public/r/${{ env.RELEASE_TAG }} /tmp/release/
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git fetch origin gh-page || git checkout --orphan gh-page
+          git checkout gh-page
+          mkdir -p public/r/
+          cp -r /tmp/release/${{ env.RELEASE_TAG }} public/r/
+          git add -f public/r/${{ env.RELEASE_TAG }}
+          git commit -m "Add release ${{ env.RELEASE_TAG }}" || echo "No changes to commit"
+          git push origin gh-page
