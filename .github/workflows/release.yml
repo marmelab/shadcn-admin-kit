@@ -1,10 +1,29 @@
 name: Release Registry
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - allow-versioning
+
+env:
+  RELEASE_TAG: test-release
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   build-and-upload-registry:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,14 +41,24 @@ jobs:
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
 
+      - name: Build components
+        run: make build
+
       - name: Generate registry.json
         run: make build-registry
 
-      - name: Upload registry.json to GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            ./public/r/registry.json
-            ./public/r/admin.json
+      - name: Prepare files for release
+        run: |
+          mkdir -p public/r/${{ env.RELEASE_TAG }}
+          cp public/r/registry.json public/r/${{ env.RELEASE_TAG }}/
+          cp public/r/admin.json public/r/${{ env.RELEASE_TAG }}/
+
+      - name: Install Wrangler
+        run: npm install -g wrangler
+
+      - name: Upload to Cloudflare R2
+        run: |
+          wrangler r2 object put "shadcn-admin-kit/r/${{ env.RELEASE_TAG }}/admin.json" --file public/r/admin.json
+          wrangler r2 object put "shadcn-admin-kit/r/${{ env.RELEASE_TAG }}/registry.json" --file public/r/registry.json
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
