@@ -103,6 +103,7 @@ export default defineConfig({
             "arrayinput",
             "autocompletearrayinput",
             "autocompleteinput",
+            enterpriseEntry("AutoPersistInStoreBase"),
             "booleaninput",
             "bulkdeletebutton",
             "bulkexportbutton",
