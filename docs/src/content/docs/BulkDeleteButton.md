@@ -42,46 +42,10 @@ Additional props are passed to the underlying shadcn/ui `<Button>` component.
 
 ## Soft Delete
 
-If your data provider supports soft delete (see [Soft Delete Features](./SoftDeleteFeatures.md)), you can use an alternative `BulkSoftDeleteButton` that performs a soft delete instead of a permanent delete:
+If your data provider supports soft delete (see [Soft Delete Features](./SoftDeleteFeatures.md)), you can use an alternative [`BulkSoftDeleteButton`](./SoftDeleteFeatures.md#bulk-soft-delete-button) that performs a soft delete instead of a permanent delete.
 
-```tsx
-import { type RaRecord, useResourceContext, useListContext } from "ra-core";
-import { Button } from "@/components/ui/button";
-import { useSoftDeleteMany } from "@react-admin/ra-core-ee";
+You can then choose to either restore the records with a [`BulkRestoreButton`](./SoftDeleteFeatures.md#bulk-restore-button), or delete them permanently with a [`BulkDeletePermanentlyButton`](./SoftDeleteFeatures.md#bulk-delete-permanently-button).
 
-export function BulkSoftDeleteButton(props: BulkSoftDeleteButtonProps) {
-  const resource = useResourceContext(props);
-  const { selectedIds, onUnselectItems } = useListContext();
-  const [softDeleteMany, { isPending }] = useSoftDeleteMany();
-
-  const handleSoftDelete = () => {
-    softDeleteMany(
-      resource,
-      { ids: selectedIds },
-      {
-        onError: (err) => {
-          console.error("An error occurred while soft deleting", err);
-        },
-        onSuccess: () => {
-          onUnselectItems();
-        },
-      }
-    );
-  };
-
-  return (
-    <Button
-      type="button"
-      variant="destructive"
-      onClick={handleSoftDelete}
-      disabled={isPending}
-    >
-      Delete
-    </Button>
-  );
-}
-
-type BulkSoftDeleteButtonProps = {
-  resource?: string;
-};
-```
+:::tip
+The soft delete features require an [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription. Head to the website to learn more.
+:::

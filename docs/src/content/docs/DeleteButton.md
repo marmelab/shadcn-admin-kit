@@ -34,103 +34,10 @@ Upon success, the button redirects to the list view, and notifies the user with 
 
 ## Soft Delete
 
-If your data provider supports soft delete (see [Soft Delete Features](./SoftDeleteFeatures.md)), you can use an alternative `SoftDeleteButton` that performs a soft delete instead of a permanent delete:
+If your data provider supports soft delete (see [Soft Delete Features](./SoftDeleteFeatures.md)), you can use an alternative [`SoftDeleteButton`](./SoftDeleteFeatures.md#soft-delete-button) that performs a soft delete instead of a permanent delete.
 
-```tsx
-import {
-  type RaRecord,
-  useRecordContext,
-  useRedirect,
-  useResourceContext,
-} from "ra-core";
-import { useSoftDelete } from "@react-admin/ra-core-ee";
-import { Button } from "@/components/ui/button";
+You can then choose to either restore the record with a [`RestoreButton`](./SoftDeleteFeatures.md#restore-button), or delete it permanently with a [`DeletePermanentlyButton`](./SoftDeleteFeatures.md#delete-permanently-button).
 
-export function SoftDeleteButton(props: SoftDeleteButtonProps) {
-  const resource = useResourceContext(props);
-  const record = useRecordContext(props);
-  const redirect = useRedirect();
-  const [softDelete, { isPending }] = useSoftDelete();
-
-  const handleSoftDelete = () => {
-    softDelete(
-      resource,
-      { id: record?.id },
-      {
-        onError: (err) => {
-          console.error("An error occurred while soft deleting", err);
-        },
-        onSuccess: () => {
-          redirect("list", resource);
-        },
-      }
-    );
-  };
-
- return (
-    <Button
-      type="button"
-      variant="destructive"
-      onClick={handleSoftDelete}
-      disabled={isPending}
-    >
-      Delete
-    </Button>
-  );
-}
-
-type SoftDeleteButtonProps = {
-  resource?: string;
-  record?: RaRecord;
-};
-```
-
-Then, replace `DeleteButton` with `SoftDeleteButton` in your edit view:
-
-```tsx
-import { Edit } from '@/components/admin';
-import { SoftDeleteButton } from './SoftDeleteButton';
-
-const PostEdit = () => (
-    <Edit actions={<SoftDeleteButton />}>
-        ...
-    </Edit>
-);
-```
-
-## Restore Button
-
-For restoring soft-deleted records, you can create a `RestoreButton` component similar to the `SoftDeleteButton`, but using the `useRestore` hook from `ra-core-ee`.
-
-```tsx
-export function RestoreButton(props: RestoreButtonProps) {
-  const record = useRecordContext(props);
-  const { refetch } = useShowContext();
-
-  const [restore, { isPending }] = useRestoreOne();
-
-  const handleRestore = () => {
-    restore(
-      { id: record?.id },
-      {
-        onError: (err) => {
-          console.error("An error occurred while restoring", err);
-        },
-        onSuccess: () => {
-          refetch();
-        },
-      }
-    );
-  };
-
-  return (
-    <Button type="button" onClick={handleRestore} disabled={isPending}>
-      Restore
-    </Button>
-  );
-}
-
-type RestoreButtonProps = {
-  record?: RaRecord;
-};
-```
+:::tip
+The soft delete features require an [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription. Head to the website to learn more.
+:::
