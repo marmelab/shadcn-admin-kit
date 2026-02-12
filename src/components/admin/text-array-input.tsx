@@ -82,7 +82,7 @@ export const TextArrayInput = (props: TextArrayInputProps) => {
 
   const handleAddValue = (text: string) => {
     const trimmed = text.trim();
-    if (trimmed && !values.includes(trimmed)) {
+    if (trimmed) {
       field.onChange([...values, trimmed]);
     }
     setInputValue("");
@@ -101,7 +101,8 @@ export const TextArrayInput = (props: TextArrayInputProps) => {
     } else if (
       e.key === "Backspace" &&
       inputValue === "" &&
-      values.length > 0
+      values.length > 0 &&
+      !readOnly
     ) {
       field.onChange(values.slice(0, -1));
     } else if (e.key === "Escape") {

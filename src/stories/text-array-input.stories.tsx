@@ -1,9 +1,5 @@
 import { CoreAdminContext, RecordContextProvider, required } from "ra-core";
-import {
-  TextArrayInput,
-  SimpleForm,
-  ThemeProvider,
-} from "@/components/admin";
+import { TextArrayInput, SimpleForm, ThemeProvider } from "@/components/admin";
 import { i18nProvider } from "@/lib/i18nProvider";
 import { ReactNode } from "react";
 
@@ -93,16 +89,19 @@ export const WithValidation = ({
 );
 Object.assign(WithValidation, storyArgs);
 
-export const Disabled = ({
-  theme,
-}: {
-  theme: "system" | "light" | "dark";
-}) => (
+export const Disabled = ({ theme }: { theme: "system" | "light" | "dark" }) => (
   <StoryWrapper theme={theme}>
     <TextArrayInput source="tags" disabled />
   </StoryWrapper>
 );
 Object.assign(Disabled, storyArgs);
+
+export const ReadOnly = ({ theme }: { theme: "system" | "light" | "dark" }) => (
+  <StoryWrapper theme={theme}>
+    <TextArrayInput source="tags" readOnly />
+  </StoryWrapper>
+);
+Object.assign(ReadOnly, storyArgs);
 
 export const WithFormat = ({
   theme,

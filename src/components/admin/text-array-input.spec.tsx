@@ -8,6 +8,7 @@ import {
   WithHelperText,
   WithValidation,
   Disabled,
+  ReadOnly,
   WithFormat,
   WithParse,
   WithFormatAndParse,
@@ -16,12 +17,8 @@ import {
 describe("<TextArrayInput />", () => {
   it("should render existing values as badges", async () => {
     const screen = render(<Basic theme="system" />);
-    await expect
-      .element(screen.getByText("react"))
-      .toBeInTheDocument();
-    await expect
-      .element(screen.getByText("typescript"))
-      .toBeInTheDocument();
+    await expect.element(screen.getByText("react")).toBeInTheDocument();
+    await expect.element(screen.getByText("typescript")).toBeInTheDocument();
   });
 
   it("should add a value when pressing Enter", async () => {
@@ -31,16 +28,8 @@ describe("<TextArrayInput />", () => {
     await input.fill("vue");
     await userEvent.keyboard("{Enter}");
     await expect.element(screen.getByText("vue")).toBeInTheDocument();
-  });
-
-  it("should not add duplicate values", async () => {
-    const screen = render(<Basic theme="system" />);
-    const input = screen.getByRole("textbox");
-    await input.click();
-    await input.fill("react");
-    await userEvent.keyboard("{Enter}");
-    const badges = screen.getByText("react");
-    expect(badges.all()).toHaveLength(1);
+    await expect.element(screen.getByText("react")).toBeInTheDocument();
+    await expect.element(screen.getByText("typescript")).toBeInTheDocument();
   });
 
   it("should not add empty values", async () => {
@@ -56,27 +45,23 @@ describe("<TextArrayInput />", () => {
 
   it("should remove the last value when pressing Backspace on empty input", async () => {
     const screen = render(<Basic theme="system" />);
-    await expect
-      .element(screen.getByText("typescript"))
-      .toBeInTheDocument();
+    await expect.element(screen.getByText("typescript")).toBeInTheDocument();
     const input = screen.getByRole("textbox");
     await input.click();
     await userEvent.keyboard("{Backspace}");
     await expect
       .element(screen.getByText("typescript"))
       .not.toBeInTheDocument();
+    await expect.element(screen.getByText("react")).toBeInTheDocument();
   });
 
   it("should remove a specific value when clicking its remove button", async () => {
     const screen = render(<Basic theme="system" />);
-    await expect
-      .element(screen.getByText("react"))
-      .toBeInTheDocument();
+    await expect.element(screen.getByText("react")).toBeInTheDocument();
     const removeButtons = screen.getByText("Remove");
     await removeButtons.first().click();
-    await expect
-      .element(screen.getByText("react"))
-      .not.toBeInTheDocument();
+    await expect.element(screen.getByText("react")).not.toBeInTheDocument();
+    await expect.element(screen.getByText("typescript")).toBeInTheDocument();
   });
 
   it("should add value on blur", async () => {
@@ -86,9 +71,7 @@ describe("<TextArrayInput />", () => {
     await input.fill("svelte");
     // Click outside to blur
     await screen.getByText("Tags").click();
-    await expect
-      .element(screen.getByText("svelte"))
-      .toBeInTheDocument();
+    await expect.element(screen.getByText("svelte")).toBeInTheDocument();
   });
 
   it("should show placeholder when no values exist", async () => {
@@ -108,9 +91,7 @@ describe("<TextArrayInput />", () => {
     const screen = render(<WithValidation theme="system" />);
     const submitButton = screen.getByRole("button", { name: /save/i });
     await submitButton.click();
-    await expect
-      .element(screen.getByText("Required"))
-      .toBeInTheDocument();
+    await expect.element(screen.getByText("Required")).toBeInTheDocument();
   });
 
   it("should render as disabled", async () => {
@@ -119,15 +100,22 @@ describe("<TextArrayInput />", () => {
     await expect.element(input).toBeDisabled();
   });
 
+  it("should not remove values when pressing Backspace in readOnly mode", async () => {
+    const screen = render(<ReadOnly theme="system" />);
+    await expect.element(screen.getByText("react")).toBeInTheDocument();
+    await expect.element(screen.getByText("typescript")).toBeInTheDocument();
+    const input = screen.getByRole("textbox");
+    await input.click();
+    await userEvent.keyboard("{Backspace}");
+    await expect.element(screen.getByText("react")).toBeInTheDocument();
+    await expect.element(screen.getByText("typescript")).toBeInTheDocument();
+  });
+
   it("should apply format to display values", async () => {
     const screen = render(<WithFormat theme="system" />);
     // Stored as REACT/TYPESCRIPT, displayed as lowercase via format
-    await expect
-      .element(screen.getByText("react"))
-      .toBeInTheDocument();
-    await expect
-      .element(screen.getByText("typescript"))
-      .toBeInTheDocument();
+    await expect.element(screen.getByText("react")).toBeInTheDocument();
+    await expect.element(screen.getByText("typescript")).toBeInTheDocument();
   });
 
   it("should apply parse when adding values", async () => {
@@ -137,19 +125,13 @@ describe("<TextArrayInput />", () => {
     await input.fill("  VUE  ");
     await userEvent.keyboard("{Enter}");
     // parse lowercases and trims
-    await expect
-      .element(screen.getByText("vue"))
-      .toBeInTheDocument();
+    await expect.element(screen.getByText("vue")).toBeInTheDocument();
   });
 
   it("should apply both format and parse", async () => {
     const screen = render(<WithFormatAndParse theme="system" />);
     // Stored as lowercase, displayed as uppercase via format
-    await expect
-      .element(screen.getByText("REACT"))
-      .toBeInTheDocument();
-    await expect
-      .element(screen.getByText("TYPESCRIPT"))
-      .toBeInTheDocument();
+    await expect.element(screen.getByText("REACT")).toBeInTheDocument();
+    await expect.element(screen.getByText("TYPESCRIPT")).toBeInTheDocument();
   });
 });
