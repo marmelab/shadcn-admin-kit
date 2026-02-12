@@ -4,6 +4,8 @@ title: "TextArrayInput"
 
 Lets users enter multiple free-text values (like tags or email addresses) displayed as removable badges.
 
+![TextArrayInput](./images/text-array-input.png)
+
 This input allows editing values that are arrays of strings, e.g. `["tag1", "tag2"]`.
 
 ## Usage
