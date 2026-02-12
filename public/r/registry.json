@@ -1,0 +1,403 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "Shadcn Admin Kit",
+  "homepage": "https://marmelab.com/shadcn-admin-kit/",
+  "items": [
+    {
+      "name": "admin",
+      "type": "registry:block",
+      "title": "Shadcn Admin Kit Main Block",
+      "description": "The Admin component, along with all the necessary components to create an admin (such as List, Edit, DataTable, TextField, TextInput, etc.)",
+      "registryDependencies": [
+        "accordion",
+        "alert",
+        "avatar",
+        "badge",
+        "breadcrumb",
+        "button",
+        "card",
+        "checkbox",
+        "command",
+        "drawer",
+        "dropdown-menu",
+        "input",
+        "label",
+        "navigation-menu",
+        "pagination",
+        "popover",
+        "radio-group",
+        "select",
+        "separator",
+        "sheet",
+        "sidebar",
+        "switch",
+        "skeleton",
+        "sonner",
+        "table",
+        "textarea",
+        "tooltip"
+      ],
+      "dependencies": [
+        "@tanstack/react-query",
+        "class-variance-authority",
+        "clsx",
+        "diacritic",
+        "inflection",
+        "lodash",
+        "lucide-react",
+        "query-string",
+        "ra-core",
+        "ra-i18n-polyglot",
+        "ra-language-english",
+        "react-dropzone",
+        "react-hook-form",
+        "react-router",
+        "tailwind-merge",
+        "tw-animate-css"
+      ],
+      "files": [
+        {
+          "path": "src/components/admin/admin.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/app-sidebar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/array-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/array-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/authentication.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/autocomplete-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/autocomplete-array-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/badge-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/boolean-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/breadcrumb.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/bulk-actions-toolbar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/bulk-delete-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/bulk-export-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/cancel-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/count.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/create.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/create-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/columns-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/data-table.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/date-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/date-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/date-time-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/delete-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/edit.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/edit-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/edit-guesser.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/email-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/export-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/field-toggle.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/file-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/file-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/filter-form.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/form.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/image-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/input-helper-text.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/layout.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/list.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/list-guesser.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/list-pagination.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/locales-menu-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/login-page.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/notification.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/number-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/number-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/radio-button-group-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/ready.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/record-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/reference-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/reference-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/reference-array-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/reference-array-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/reference-many-count.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/reference-many-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/refresh-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/saved-queries.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/search-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/select-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/select-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/show.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/show-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/show-guesser.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/simple-form.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/simple-form-iterator.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/simple-show-layout.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/single-field-list.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/sort-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/text-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/text-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/theme-mode-toggle.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/theme-context.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/theme-provider.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/use-theme.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/toggle-filter-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/url-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/user-menu.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/error.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/loading.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/lib/field.type.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/lib/i18nProvider.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "rules/AGENTS.md",
+          "type": "registry:file",
+          "target": "~/AGENTS.md"
+        }
+      ]
+    },
+    {
+      "name": "example-admin",
+      "type": "registry:block",
+      "title": "Example Admin built with Shadcn Admin Kit",
+      "registryDependencies": ["@shadcn-admin-kit/admin"],
+      "files": [
+        {
+          "path": "src/examples/example-admin.tsx",
+          "type": "registry:component"
+        }
+      ]
+    }
+  ]
+}
