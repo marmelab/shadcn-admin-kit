@@ -16,9 +16,6 @@ permissions:
 jobs:
   # Single deploy job since we're just deploying
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     env:
       VITE_CHATWOOT_URL: ${{ vars.VITE_CHATWOOT_URL }}
       VITE_CHATWOOT_WEBSITE_TOKEN: ${{ secrets.VITE_CHATWOOT_WEBSITE_TOKEN }}
@@ -38,18 +35,39 @@ jobs:
       - name: Build components
         run: make build
 
-      - name: Update gh-page branch with latest registry files
+      - name: Deploy to gh-page branch
         run: |
-          mkdir -p /tmp/latest
-          cp public/r/admin.json /tmp/latest/
-          cp public/r/registry.json /tmp/latest/
+          # Save the built public folder
+          mkdir -p /tmp/new_public
+          cp -r public/* /tmp/new_public/
+
+          # Switch to gh-page branch
           git stash
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git fetch origin gh-page
           git checkout gh-page
-          cp /tmp/latest/admin.json public/r/
-          cp /tmp/latest/registry.json public/r/
-          git add -f public/r/admin.json public/r/registry.json
-          git commit -m "Update latest registry files" || echo "No changes"
+
+          # Backup existing r/ subfolders (old releases)
+          mkdir -p /tmp/r_backup
+          if [ -d "public/r" ]; then
+            for dir in public/r/*/; do
+              if [ -d "$dir" ]; then
+                cp -r "$dir" /tmp/r_backup/
+              fi
+            done
+          fi
+
+          # Update public folder with new content
+          rm -rf public/*
+          cp -r /tmp/new_public/* public/
+
+          # Restore old release folders
+          if [ -d "/tmp/r_backup" ] && [ "$(ls -A /tmp/r_backup 2>/dev/null)" ]; then
+            cp -r /tmp/r_backup/* public/r/
+          fi
+
+          # Commit and push
+          git add -A
+          git commit -m "Deploy: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" || echo "No changes"
           git push origin gh-page
