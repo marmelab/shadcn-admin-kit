@@ -41,6 +41,7 @@ jobs:
           mkdir -p public/r/${{ env.RELEASE_TAG }}
           cp public/r/registry.json public/r/${{ env.RELEASE_TAG }}/
           cp public/r/admin.json public/r/${{ env.RELEASE_TAG }}/
+          cp public/r/admin-example.json public/r/${{ env.RELEASE_TAG }}
 
       - name: Push to gh-page branch
         run: |
