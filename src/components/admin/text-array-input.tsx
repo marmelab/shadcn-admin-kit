@@ -8,7 +8,12 @@ import {
   FormLabel,
 } from "@/components/admin/form";
 import type { InputProps } from "ra-core";
-import { useInput, useResourceContext, FieldTitle, useTranslate } from "ra-core";
+import {
+  useInput,
+  useResourceContext,
+  FieldTitle,
+  useTranslate,
+} from "ra-core";
 import { InputHelperText } from "./input-helper-text";
 
 export type TextArrayInputProps = InputProps & {
@@ -41,22 +46,32 @@ const emptyArray: string[] = [];
  */
 export const TextArrayInput = (props: TextArrayInputProps) => {
   const {
-    label,
-    source,
     className,
-    placeholder,
-    helperText,
+    defaultValue,
     disabled,
+    format,
+    helperText,
+    label,
+    name,
+    onBlur,
+    onChange,
+    parse,
+    placeholder,
     readOnly,
-    validate: _validate,
-    format: _format,
-    parse: _parse,
+    source,
+    validate,
     ...rest
   } = props;
   const resource = useResourceContext(props);
   const { id, field, isRequired } = useInput({
-    ...props,
-    format: props.format ?? ((v) => v ?? emptyArray),
+    defaultValue,
+    format: format ?? ((v) => v ?? emptyArray),
+    name,
+    onBlur,
+    onChange,
+    parse,
+    source,
+    validate,
   });
   const translate = useTranslate();
 
