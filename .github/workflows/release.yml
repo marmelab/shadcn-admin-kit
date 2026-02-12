@@ -1,11 +1,10 @@
 name: Release Registry
 on:
-  push:
-    branches:
-      - allow-versioning
+  release:
+    types: [published]
 
 env:
-  RELEASE_TAG: test-release
+  RELEASE_TAG: ${{ github.event.release.tag_name }}
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
