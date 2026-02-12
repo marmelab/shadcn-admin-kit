@@ -35,18 +35,18 @@ jobs:
       - name: Build components
         run: make build
 
-      - name: Deploy to gh-page branch
+      - name: Deploy to gh-pages branch
         run: |
           # Save the built public folder
           mkdir -p /tmp/new_public
           cp -r public/* /tmp/new_public/
 
-          # Switch to gh-page branch
+          # Switch to gh-pages branch
           git stash
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git fetch origin gh-page
-          git checkout gh-page
+          git fetch origin gh-pages
+          git checkout gh-pages
 
           # Backup existing r/ subfolders (old releases)
           mkdir -p /tmp/r_backup
@@ -70,4 +70,4 @@ jobs:
           # Commit and push
           git add -A
           git commit -m "Deploy: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" || echo "No changes"
-          git push origin gh-page
+          git push origin gh-pages

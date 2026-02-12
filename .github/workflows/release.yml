@@ -5,7 +5,7 @@ on:
       - allow-versioning
 
 env:
-  RELEASE_TAG: test-release-2
+  RELEASE_TAG: test-release
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -30,9 +30,6 @@ jobs:
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
 
-      - name: Build components
-        run: make build
-
       - name: Generate registry.json
         run: make build-registry
 
@@ -41,19 +38,19 @@ jobs:
           mkdir -p public/r/${{ env.RELEASE_TAG }}
           cp public/r/registry.json public/r/${{ env.RELEASE_TAG }}/
           cp public/r/admin.json public/r/${{ env.RELEASE_TAG }}/
-          cp public/r/admin-example.json public/r/${{ env.RELEASE_TAG }}
+          cp public/r/example-admin.json public/r/${{ env.RELEASE_TAG }}
 
-      - name: Push to gh-page branch
+      - name: Push to gh-pages branch
         run: |
           # Copy release files to temp
           mkdir -p /tmp/release
           cp -r public/r/${{ env.RELEASE_TAG }} /tmp/release/
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git fetch origin gh-page || git checkout --orphan gh-page
-          git checkout gh-page
+          git fetch origin gh-pages || git checkout --orphan gh-pages
+          git checkout gh-pages
           mkdir -p public/r/
           cp -r /tmp/release/${{ env.RELEASE_TAG }} public/r/
           git add -f public/r/${{ env.RELEASE_TAG }}
           git commit -m "Add release ${{ env.RELEASE_TAG }}" || echo "No changes to commit"
-          git push origin gh-page
+          git push origin gh-pages
