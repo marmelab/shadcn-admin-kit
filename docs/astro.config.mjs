@@ -126,6 +126,7 @@ export default defineConfig({
             "selectinput",
             "showbutton",
             "simpleform",
+            "textarrayinput",
             "textinput",
           ],
         },
