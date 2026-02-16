@@ -4,7 +4,7 @@ name: Deploy Shadcn Admin Kit
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
+    branches: ["main", "allow-versioning"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -48,24 +48,8 @@ jobs:
           git fetch origin gh-pages
           git checkout gh-pages
 
-          # Backup existing r/ subfolders (old releases)
-          mkdir -p /tmp/r_backup
-          if [ -d "r" ]; then
-            for dir in r/*/; do
-              if [ -d "$dir" ]; then
-                cp -r "$dir" /tmp/r_backup/
-              fi
-            done
-          fi
-
-          # Update gh-pages folder with new public folder content
-          git clean -fd
-          cp -r /tmp/new_public/* .
-
-          # Restore old release folders
-          if [ -d "/tmp/r_backup" ] && [ "$(ls -A /tmp/r_backup 2>/dev/null)" ]; then
-            cp -r /tmp/r_backup/* r/
-          fi
+          # Update gh-pages folder with new public folder content preserving releases
+          rsync -a --delete --exclude='.git/' --exclude='r/*/' /tmp/new_public/ ./
 
           # Commit and push
           git add -A
