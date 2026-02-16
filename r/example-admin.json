@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "example-admin",
+  "name": "example-admin that will get overwritten",
   "title": "Example Admin built with Shadcn Admin Kit",
   "dependencies": [
     "ra-core",

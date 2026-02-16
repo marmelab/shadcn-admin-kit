@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "Shadcn Admin Kit",
+  "name": "Shadcn Admin Kit that will get overwritten",
   "homepage": "https://marmelab.com/shadcn-admin-kit/",
   "items": [
     {
@@ -391,7 +391,9 @@
       "name": "example-admin",
       "type": "registry:block",
       "title": "Example Admin built with Shadcn Admin Kit",
-      "registryDependencies": ["@shadcn-admin-kit/admin"],
+      "registryDependencies": [
+        "@shadcn-admin-kit/admin"
+      ],
       "files": [
         {
           "path": "src/examples/example-admin.tsx",
