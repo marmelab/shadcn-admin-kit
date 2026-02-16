@@ -3,24 +3,17 @@ import {
   memoryStore,
   Resource,
   TestMemoryRouter,
-  useListContext,
 } from "ra-core";
 import { faker } from '@faker-js/faker';
 import fakeRestDataProvider from "ra-data-fakerest";
 import {
   Admin,
-  BulkDeleteButton,
-  CreateButton,
-  ExportButton,
   FilterButton,
   DataTable,
-  EditButton,
   InfiniteList,
   ShowGuesser,
 } from "@/components/admin";
 import { i18nProvider } from "@/lib/i18nProvider";
-import { BulkExportButton } from "@/components/admin/bulk-export-button";
-import { Button } from "@/components/ui/button";
 
 export default {
   title: "InifiniteList",
@@ -44,11 +37,9 @@ const dataProvider = fakeRestDataProvider(data);
 const Wrapper = ({
   children,
   defaultDataProvider = dataProvider,
-  actions = false,
 }: {
   children: React.ReactNode;
   defaultDataProvider?: DataProvider;
-  actions?: React.ReactElement | false;
 }) => (
   <TestMemoryRouter initialEntries={["/books"]}>
     <Admin

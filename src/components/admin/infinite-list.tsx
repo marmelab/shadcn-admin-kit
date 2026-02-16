@@ -1,26 +1,6 @@
-import { Link } from "react-router";
-import type { ReactElement, ReactNode } from "react";
-import type { InfiniteListBaseProps, InfiniteListControllerResult, RaRecord } from "ra-core";
-import {
-    FilterContext,
-    InfiniteListBase,
-    Translate,
-    useGetResourceLabel,
-    useHasDashboard,
-    useResourceContext,
-    useResourceDefinition,
-    useTranslate,
-} from "ra-core";
-import { cn } from "@/lib/utils";
+import type { InfiniteListBaseProps, RaRecord } from "ra-core";
+import { InfiniteListBase } from "ra-core";
 
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbPage,
-} from "@/components/admin/breadcrumb";
-import { CreateButton } from "@/components/admin/create-button";
-import { ExportButton } from "@/components/admin/export-button";
-import { FilterButton, FilterForm } from "@/components/admin/filter-form";
 import { InfinitePagination } from "@/components/admin/infinite-pagination";
 import { Loading } from '@/components/admin/loading';
 import { ListView } from '@/components/admin/list';

@@ -100,7 +100,7 @@ export const InfinitePagination = ({
             {showOffline ? (
                 offline
             ) : isFetchingNextPage && hasNextPage ? (
-                <ProgressAuto size="1.5em" />
+                <ProgressAuto />
             ) : null}
         </div>
     );

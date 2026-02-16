@@ -4,7 +4,6 @@ import {
     useResourceContext,
     useResourceTranslation,
 } from 'ra-core';
-import clsx from 'clsx';
 import * as Alert from '../ui/alert';
 
 export const Offline = (props: OfflineProps) => {
