@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "admin",
-  "title": "Shadcn Admin Kit Main Block that will get overwritten",
+  "title": "Shadcn Admin Kit Main Block",
   "description": "The Admin component, along with all the necessary components to create an admin (such as List, Edit, DataTable, TextField, TextInput, etc.)",
   "dependencies": [
     "@tanstack/react-query",
