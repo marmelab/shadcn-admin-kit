@@ -1,790 +1,230 @@
 ---
-
+layout: default
 title: "InfiniteList"
-
 ---
 
-The `<InfiniteList>` component is the root component for list pages. It fetches a list of records from the data provider (via `ra-core` hooks), puts them in a [`ListContext`](https://marmelab.com/ra-core/uselistcontext/.html), renders a default layout (breadcrumb, title, action buttons, inline filters, pagination), then renders its children (usually a [`<DataTable>`](./DataTable.md)).
+# `<InfiniteList>`
 
-![Simple users list](./images/users-list.png)
+The `<InfiniteList>` component is an alternative to [the `<List>` component](./List.md) that allows user to load more records when they scroll to the bottom of the list. It's useful when you have a large number of records, or when users are using a mobile device.
+
+<!-- video controls autoplay playsinline muted loop width="100%">
+  <source src="./images/infinite-book-list.webm" poster="./images/infinite-book-list.webp" type="video/webm">
+  Your browser does not support the video tag.
+</video -->
+
+`<InfiniteList>` fetches the list of records from the data provider, and renders the default list layout (title, buttons, filters). It delegates the rendering of the list of records to its child component. Usually, it's a [`<DataTable>`](./DataTable.md) or a [`<SimpleList>`](./SimpleList.md), responsible for displaying a table with one row for each record.
 
 ## Usage
 
-Here is a minimal example to display a list of users with a [`<DataTable>`](./DataTable.md):
+Here is the minimal code necessary to display a list of books with infinite scroll:
 
-```tsx
-// in src/users.jsx
-import { DataTable, InfiniteList } from "@/components/admin";
+```jsx
+// in src/books.js
+import { InfiniteList, DataTable, DateField } from '@/components/admin';
 
-export const UserList = () => (
+export const BookList = () => (
     <InfiniteList>
         <DataTable>
             <DataTable.Col source="id" />
-            <DataTable.Col source="name" />
-            <DataTable.Col source="username" />
-            <DataTable.Col source="email" />
-            <DataTable.Col source="address.street" />
-            <DataTable.Col source="phone" />
-            <DataTable.Col source="website" />
-            <DataTable.Col source="company.name" />
+            <DataTable.Col source="title" />
+            <DataTable.Col source="author" field={DateField} />
         </DataTable>
     </InfiniteList>
 );
 
-// in src/App.jsx
+// in src/App.js
+import { Resource } from 'react-admin';
 import { Admin } from '@/components/admin';
-import { Resource } from 'ra-core';
 import jsonServerProvider from 'ra-data-json-server';
 
-import { UserList } from './users';
+import { BookList } from './books';
 
 const App = () => (
     <Admin dataProvider={jsonServerProvider('https://jsonplaceholder.typicode.com')}>
-        <Resource name="users" list={UserList} />
+        <Resource name="books" list={BookList} />
     </Admin>
 );
 
 export default App;
 ```
 
-That's enough to display a basic list with sorting and pagination.
+That's enough to display a basic post list, that users can sort and filter, and load additional records when they reach the bottom of the list.
 
-You can find more advanced examples of `<InfiniteList>` usage in the [demo](https://marmelab.com/shadcn-admin-kit/demo/).
+**Tip**: `<DataTable>` has a sticky header by default, so the user can always see the column names when they scroll down.
 
 ## Props
 
-| Prop | Required | Type | Default | Description |
-|------|----------|------|---------|-------------|
-| `children` | Optional* | `ReactNode` | - | Component(s) that display the records (e.g. `<DataTable>`) |
-| `render` | Optional* | `(ctx) => ReactNode` | - | Alternate render function receiving the list context |
-| `actions` | Optional | `ReactNode` | default action bar | Custom actions area (right side of header) |
-| `debounce` | Optional | `number` | `500` | Debounce (ms) for filter & sort changes |
-| `disableAuthentication` | Optional | `boolean` | `false` | Skip auth check for this page |
-| `disableBreadcrumb`  | Optional | `boolean` | `false` | Set to `true` to define a custom breadcrumb for the page, instead of the default one |
-| `disableSyncWithLocation` | Optional | `boolean` | `false` | Keep list params local (not in the URL) |
-| `exporter` | Optional | `false | (records, fetchRelated, dataProvider) => void` | - | Custom export logic (set `false` to hide Export button) |
-| `filters` | Optional | `ReactElement[]` | - | Array of filter input elements (displayed inline) |
-| `filter` | Optional | `object` | - | Permanent filters always applied |
-| `filterDefaultValues` | Optional | `object` | - | Initial filter form values |
-| `pagination` | Optional | `ReactNode` | `<InfiniteListPagination />` | Custom pagination component |
-| `perPage` | Optional | `number` | `10` | Records per page |
-| `queryOptions` | Optional | `object` | - | Extra TanStack Query options |
-| `resource` | Optional | `string` | inferred | Resource name, defaults to the current `<ResourceContext>` |
-| `sort` | Optional | `{ field: string; order: 'ASC'|'DESC' }` | - | Initial sort |
-| `storeKey` | Optional | `string | false` | derived | Storage key for persisted params; `false` disables persistence |
-| `title` | Optional | `string | ReactNode | false` | resource plural label | Page title |
+The props are the same as [the `<List>` component](./List.md):
 
-`*` Provide either `children` or `render`.
+| Prop                       | Required                | Type                            | Default                 | Description                                                                                  |
+|----------------------------|-------------------------|---------------------------------|-------------------------|----------------------------------------------------------------------------------------------|
+| `children`                 | Required if no render   | `ReactNode`                     | -                       | The component to use to render the list of records.                                          |
+| `render`                   | Required if no children | `ReactNode`                     | -                       | A function that render the list of records, receives the list context as argument.           |
+| `actions`                  | Optional                | `ReactElement`                  | -                       | The actions to display in the toolbar.                                                       |
+| `aside`                    | Optional                | `(listContext) => ReactNode` | -                       | The component to display on the side of the list.                                            |
+| `authLoading`              | Optional                | `ReactNode`                     | -                       | The component to render while checking for authentication and permissions.                   |
+| `component`                | Optional                | `Component`                     | `Card`                  | The component to render as the root element.                                                 |
+| `debounce`                 | Optional                | `number`                        | `500`                   | The debounce delay in milliseconds to apply when users change the sort or filter parameters. |
+| `disable Authentication`   | Optional                | `boolean`                       | `false`                 | Set to `true` to disable the authentication check.                                           |
+| `disable SyncWithLocation` | Optional                | `boolean`                       | `false`                 | Set to `true` to disable the synchronization of the list parameters with the URL.            |
+| `empty`                    | Optional                | `ReactNode`                  | -                       | The component to display when the list is empty.                                             |
+| `empty WhileLoading`       | Optional                | `boolean`                       | `false`                 | Set to `true` to return `null` while the list is loading.                                    |
+| `error`                    | Optional                | `ReactNode`                     | -                       | The component to render when failing to load the list of records.                            |
+| `exporter`                 | Optional                | `function`                      | -                       | The function to call to export the list.                                                     |
+| `filters`                  | Optional                | `ReactElement`                  | -                       | The filters to display in the toolbar.                                                       |
+| `filter`                   | Optional                | `object`                        | -                       | The permanent filter values.                                                                 |
+| `filter DefaultValues`     | Optional                | `object`                        | -                       | The default filter values.                                                                   |
+| `loading`                  | Optional                | `ReactNode`                     | -                       | The component to render while loading the list of records.                                   |
+| `offline`                  | Optional                | `ReactNode`                     | `<Offline>`             | The component to render when there is no connectivity and there is no data in the cache      |
+| `pagination`               | Optional                | `ReactNode`                  | `<Infinite Pagination>` | The pagination component to use.                                                             |
+| `perPage`                  | Optional                | `number`                        | `10`                    | The number of records to fetch per page.                                                     |
+| `queryOptions`             | Optional                | `object`                        | -                       | The options to pass to the `useQuery` hook.                                                  |
+| `resource`                 | Optional                | `string`                        | -                       | The resource name, e.g. `posts`.                                                             |
+| `sort`                     | Optional                | `object`                        | -                       | The initial sort parameters.                                                                 |
+| `storeKey`                 | Optional                | `string`                        | -                       | The key to use to store the current filter & sort.                                           |
+| `title`                    | Optional                | `ReactNode` / `string` / `false` | -                       | The title to display in the App Bar.                                                         |
+| `sx`                       | Optional                | `object`                        | -                       | The CSS styles to apply to the component.                                                    |
 
-These props will soon be supported: `aside`, `empty`, `emptyWhileLoading`.
+Check the [`<List>` component](./List.md) for details about each prop.
 
-## Main Content Area
+Additional props are passed down to the root component (a MUI `<Card>` by default).
 
-`<InfiniteList>` itself doesn't render the list of records. It delegates this task to its children components. These children components grab the `data` from the [`ListContext`](https://marmelab.com/ra-core/uselistcontext/.html) and render them on screen.
+## `offline`
 
-![List children](./images/users-list-items.png)
+By default, `<InfiniteList>` renders the `<Offline>` component when there is no connectivity and there are no records in the cache yet for the current parameters (page, sort, etc.). You can provide your own component via the `offline` prop:
 
-shadcn-admin-kit provides several components that can read and display a list of records from a `ListContext`, each with a different layout:
+```jsx
+import { InfiniteList, InfinitePagination } from '@/components/admin';
+import { Alert } from '@mui/material';
 
-- [`<DataTable>`](./DataTable.md) displays records in a table
-- [`<SingleFieldList>`](./SingleFieldList.md) displays records inline, showing one field per record
-
-Alternatively to `children`, you can pass a `render` prop to `<InfiniteList>`. It will receive the [`ListContext`](https://marmelab.com/ra-core/uselistcontext/.html#return-value) as its argument, and should return a React node. This allows to inline the render logic for the list page.
-
-```tsx
-const PostList = () => (
-    <InfiniteList
-        render={({ isPending, error, data }) => {
-            if (isPending) {
-                return <div>Loading...</div>;
-            }
-            if (error) {
-                return <div>Error: {error.message}</div>;
-            }
-            return (
-                <ul>
-                    {data.map(post => (
-                        <li key={post.id}>
-                            <strong>{post.title}</strong> - {post.author}
-                        </li>
-                    ))}
-                </ul>
-            );
-        }}
-    />
-);
-```
-
-:::note
-When receiving a `render` prop, the `<InfiniteList>` component will ignore the `children` prop.
-:::
-
-## Actions toolbar
-
-By default the page header shows a toolbar with 2 buttons:
-
-- `<CreateButton>` (if the resource has a create view)
-- `<ExportButton>` (unless `exporter={false}`)
-
-Provide an `actions` prop to completely replace that area:
-
-```tsx
-import { List, CreateButton, ExportButton, ColumnsButton } from '@/components/admin';
-
-const MyActions = () => (
-    <div className="flex items-center gap-2">
-        <ColumnsButton />
-        <CreateButton />
-        <ExportButton />
-    </div>
-);
+const offline = <Alert severity="warning">No network. Could not load the posts.</Alert>;
+// The offline component may be displayed at the bottom of the page if the network connectivity is lost
+// when loading new pages. Make sure you pass your custom offline component here too
+const pagination = <InfinitePagination offline={offline} />;
 
 export const PostList = () => (
-    <InfiniteList actions={<MyActions />}> 
+    <InfiniteList offline={offline} pagination={pagination}>
         ...
     </InfiniteList>
 );
 ```
 
-You can also build contextual actions using anything from the list context (`isPending`, `total`, `selectedIds`, etc.).
+**Tip**: If the record is in the Tanstack Query cache but you want to warn the user that they may see an outdated version, you can use the `<IsOffline>` component:
 
-## Page Title
+```jsx
+import { InfiniteList, InfinitePagination } from '@/components/admin';
+import { IsOffline } from 'react-admin';
+import { Alert } from '@mui/material';
 
-The default title for a list view is the translation key `ra.page.list` that translates to [the plural name of the resource](https://marmelab.com/ra-core/translationtranslating/#translating-resource-and-field-names) (e.g. "Posts").
+const offline = <Alert severity="warning">No network. Could not load the posts.</Alert>;
+// The offline component may be displayed at the bottom of the page if the network connectivity is lost
+// when loading new pages. Make sure you pass your custom offline component here too
+const pagination = <InfinitePagination offline={offline} />;
 
-![List title](./images/users-list-title.png)
-
-You can customize this title by providing a resource specific translation with the key `resources.RESOURCE.page.list` (e.g. `resources.posts.page.list`):
-
-```js
-// in src/i18n/en.js
-import englishMessages from 'ra-language-english';
-
-export const en = {
-    ...englishMessages,
-    resources: {
-        posts: {
-            name: 'Post |||| Posts',
-            page: {
-                list: 'Post list'
-            }
-        },
-    },
-    ...
-};
-```
-
-You can also customize this title by specifying a custom `title` prop:
-
-```tsx
 export const PostList = () => (
-    <InfiniteList title="List of posts">
+    <InfiniteList offline={offline} pagination={pagination}>
+        <IsOffline>
+           <Alert severity="warning">
+                You are offline, the data may be outdated
+            </Alert>
+        </IsOffline>
         ...
     </InfiniteList>
 );
 ```
 
-The title can be a string, a React element, or `false` to disable the title.
+## `pagination`
 
-## Sort
+You can replace the default "load on scroll" pagination (triggered by a component named `<InfinitePagination>`) by a custom pagination component. To get the pagination state and callbacks, you'll need to read the `InfinitePaginationContext`.
 
-Pass an object literal as the `sort` prop to determine the default `field` and `order` used for sorting:
+![load more button](./images/infinite-pagination-load-more.webp)
 
-```tsx
-export const PostList = () => (
-    <InfiniteList sort={{ field: 'published_at', order: 'DESC' }}>
-        ...
-    </InfiniteList>
-);
-```
+For example, here is a custom infinite pagination component displaying a "Load More" button at the bottom of the list:
 
-`sort` defines the *default* sort order ; users can change the sort order, e.g. by clicking on column headers when using a `<DataTable>`, or by selecting another option in the `<SortButton>`.
+```jsx
+import { InfiniteList, DataTable, Button } from '@/components/admin';
+import { useInfinitePaginationContext } from 'react-admin';
+import { Box } from '@mui/material';
 
-## Permanent Filter
-
-You can choose to always filter the list, without letting the user disable this filter - for instance to display only published posts. Write the filter to be passed to the data provider in the `filter` props:
-
-```tsx
-// in src/posts.js
-export const PostList = () => (
-    <InfiniteList filter={{ is_published: true }}>
-        ...
-    </InfiniteList>
-);
-```
-
-The actual filter parameter sent to the data provider is the result of the combination of the *user* filters (the ones set through the `filters` component form), and the *permanent* filter. The user cannot override the permanent filters set by way of `filter`.
-
-## Filter Button / Form Combo
-
-<video controls autoplay playsinline muted loop>
-    <source src="https://marmelab.com/react-admin/img/list_filter.mp4" type="video/mp4"/>
-  Your browser does not support the video tag.
-</video>
-
-You can add an array of filter Inputs to the List using the `filters` prop:
-
-```tsx
-const postFilters = [
-    <SearchInput source="q" alwaysOn />,
-    <TextInput label="Title" source="title" defaultValue="Hello, World!" />,
-];
-
-export const PostList = () => (
-    <InfiniteList filters={postFilters}>
-        ...
-    </InfiniteList>
-);
-```
-
-:::tip
-Don't mix up this `filters` prop, expecting an array of `<Input>` elements, with the `filter` props, which expects an object to define permanent filters (see below).
-:::
-
-:::tip
-Filters will render as disabled inputs or menu items (depending on filter context) if passed the prop `disabled`.
-:::
-
-Filter Inputs are regular inputs. `<InfiniteList>` hides them all by default, except those that have the `alwaysOn` prop. Note that inputs with `alwaysOn` don't accept `defaultValue`. You have to use the `filterDefaultValues` for those.
-
-```tsx
-// in src/posts.js
-const postFilters = [
-    <TextInput label="Search" source="q" alwaysOn />,
-    <BooleanInput source="is_published" alwaysOn />,
-    <TextInput source="title" defaultValue="Hello, World!" />,
-];
-
-export const PostList = () => (
-    <InfiniteList filters={postFilters} filterDefaultValues={{ is_published: true }}>
-        ...
-    </InfiniteList>
-);
-```
-
-:::tip
-You can also display filters as a sidebar thanks to the [`<ToggleFilterButton>`](./ToggleFilterButton.md) component:
-
-![Filter sidebar](./images/filter-sidebar.png)
-:::
-
-For more details about customizing filters, see the [Filtering the List](https://marmelab.com/ra-core/filteringtutorial/) documentation.
-
-## Exported Data
-
-Among the default list actions, shadcn-admin-kit includes an `<ExportButton>`.
-
-By default, clicking this button will:
-
-1. Call the `dataProvider` with the current sort and filter (but without pagination),
-2. Transform the result into a CSV string,
-3. Download the CSV file.
-
-The columns of the CSV file match all the fields of the records in the `dataProvider` response. That means that the export doesn't take into account the selection and ordering of fields in your `<InfiniteList>` via `Field` components. If you want to customize the result, pass a custom `exporter` function to the `<List>`. This function will receive the data from the `dataProvider` (after step 1) and replace steps 2-3 (i.e. it's in charge of transforming, converting, and downloading the file).
-
-:::tip
-The `<ExportButton>` is disabled when there is no record in the current `<InfiniteList>`.
-:::
-
-:::tip
-For CSV conversion, you can import [jsonexport](https://github.com/kauegimenes/jsonexport#browser-import-examples), a JSON to CSV converter which is already a shadcn-admin-kit dependency. And for CSV download, take advantage of shadcn-admin-kit's `downloadCSV` function.
-
-Here is an example for a Posts exporter, omitting, adding, and reordering fields:
-
-```tsx
-// in PostList.js
-import { List } from '@/components/admin';
-import { downloadCSV } ffrom 'ra-core';
-import jsonExport from 'jsonexport/dist';
-
-const exporter = posts => {
-    const postsForExport = posts.map(post => {
-        const { backlinks, author, ...postForExport } = post; // omit backlinks and author
-        postForExport.author_name = post.author.name; // add a field
-        return postForExport;
-    });
-    jsonExport(postsForExport, {
-        headers: ['id', 'title', 'author_name', 'body'] // order fields in the export
-    }, (err, csv) => {
-        downloadCSV(csv, 'posts'); // download as 'posts.csv` file
-    });
-};
-
-const PostList = () => (
-    <InfiniteList exporter={exporter}>
-        ...
-    <InfiniteList>
-)
-```
-
-:::
-
-In many cases, you'll need more than simple object manipulation. You'll need to *augment* your objects based on relationships. For instance, the export for comments should include the title of the related post - but the export only exposes a `post_id` by default. For that purpose, the exporter receives a `fetchRelatedRecords` function as the second parameter. It fetches related records using your `dataProvider.getMany()` method and returns a promise.
-
-Here is an example for a Comments exporter, fetching related Posts:
-
-```tsx
-// in CommentList.js
-import { List } from '@/components/admin';
-import { downloadCSV, type FetchRelatedRecords } from 'ra-core';
-import jsonExport from 'jsonexport/dist';
-
-const exporter = async (comments: Comments[], fetchRelatedRecords: FetchRelatedRecords) => {
-    // will call dataProvider.getMany('posts', { ids: records.map(record => record.post_id) }),
-    // ignoring duplicate and empty post_id
-    const posts = await fetchRelatedRecords<Post>(comments, 'post_id', 'posts')
-    const commentsWithPostTitle = comments.map(comment => ({
-            ...comment,
-            post_title: posts[comment.post_id].title,
-    }));
-    return jsonExport(commentsWithPostTitle, {
-        headers: ['id', 'post_id', 'post_title', 'body'],
-    }, (err, csv) => {
-        downloadCSV(csv, 'comments');
-    });
-};
-
-const CommentList = () => (
-    <InfiniteList exporter={exporter}>
-        ...
-    <InfiniteList>
-);
-```
-
-:::tip
-If you need to call another verb in the exporter, take advantage of the third parameter passed to the function: it's the `dataProvider` function.
-:::
-
-:::tip
-The `<ExportButton>` limits the main request to the `dataProvider` to 1,000 records. If you want to increase or decrease this limit, pass a `maxResults` prop to the `<ExportButton>` in a custom `<InfiniteListActions>` component.
-:::
-
-:::tip
-shadcn-admin-kit also provides a `<BulkExportButton>` component that depends on the `exporter`, and that you can use in the `bulkActionButtons` prop of the `<DataTable>` component.
-:::
-
-:::tip
-For complex (or large) exports, fetching all the related records and assembling them client-side can be slow. In that case, create the CSV on the server side, and replace the `<ExportButton>` component by a custom one, fetching the CSV route.
-:::
-
-:::tip
-You may also remove the `<ExportButton>` by passing `false` to the `exporter` prop: `exporter={false}`.
-:::
-
-## Data Fetching Options
-
-`<InfiniteList>` accepts a `queryOptions` prop to pass [query options](https://marmelab.com/ra-core/actions/#query-options) to the react-query client. Check react-query's [`useQuery` documentation](https://tanstack.com/query/v5/docs/react/reference/useQuery) for the list of available options.
-
-This can be useful e.g. to pass [a custom `meta`](https://marmelab.com/ra-core/actions/#meta-parameter) to the `dataProvider.getList()` call.
-
-```tsx
-import { List } from '@/components/admin';
-
-const PostList = () => (
-    <InfiniteList queryOptions={{ meta: { foo: 'bar' } }}>
-        ...
-    <InfiniteList>
-);
-```
-
-With this option, shadcn-admin-kit will call `dataProvider.getList()` on mount with the `meta: { foo: 'bar' }` option.
-
-You can also use the `queryOptions` prop to override the default error side effect. By default, when the `dataProvider.getList()` call fails, shadcn-admin-kit shows an error notification. Here is how to show a custom notification instead:
-
-```tsx
-import { useNotify, useRedirect, List } from '@/components/admin';
-
-const PostList = () => {
-    const notify = useNotify();
-    const redirect = useRedirect();
-
-    const onError = (error) => {
-        notify(`Could not load list: ${error.message}`, { type: 'error' });
-        redirect('/dashboard');
-    };
-
-    return (
-        <InfiniteList queryOptions={{ onError }}>
-            ...
-        <InfiniteList>
-    );
-}
-```
-
-The `onError` function receives the error from the dataProvider call (`dataProvider.getList()`), which is a JavaScript Error object (see [the dataProvider documentation for details](https://marmelab.com/ra-core/dataproviderwriting/#error-format)).
-
-If `dataProvider.getList()` returns additional metadata in the response under the `meta` key, you can access it in the list view using the `meta` property of the `ListContext`.
-
-![List metadata](https://marmelab.com/react-admin/img/List-facets.png)
-
-This is often used by APIs to return facets, aggregations, statistics, or other metadata about the list of records.
-
-```tsx
-// dataProvider.getLists('books') returns response like
-// {
-//     data: [ ... ],
-//     total: 293,
-//     meta: {
-//         genres: [
-//             { value: 'Fictions', count: 134 },
-//             { value: 'Essays', count: 24 },
-//         ],
-//         centuries: [
-//             { value: '18th', count: 23 },
-//             { value: '19th', count: 78 },
-//             { value: '20th', count: 57 },
-//             { value: '21st', count: 34 },
-//         ],
-//     },
-// }
-const Facets = () => {
-    const { isPending, error, meta } = useListContext();
-    if (isPending || error) return null;
-    return (
-        <div className="space-y-4 rounded-md border p-4 bg-background">
-            <div>
-                <h4 className="text-sm font-semibold tracking-wide text-foreground/80 mb-2">Genres</h4>
-                <ul className="space-y-1 text-sm">
-                    {meta.genres.map(facet => (
-                        <li key={facet.value}>
-                            <Link href="#" className="hover:underline">
-                                {facet.value} <span className="text-muted-foreground">({facet.count})</span>
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div>
-                <h4 className="text-sm font-semibold tracking-wide text-foreground/80 mb-2">Century</h4>
-                <ul className="space-y-1 text-sm">
-                    {meta.centuries.map(facet => (
-                        <li key={facet.value}>
-                            <Link href="#" className="hover:underline">
-                                {facet.value} <span className="text-muted-foreground">({facet.count})</span>
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+const LoadMore = () => {
+    const {
+        hasNextPage,
+        fetchNextPage,
+        isFetchingNextPage,
+    } = useInfinitePaginationContext();
+    return hasNextPage ? (
+        <div className="mt-1 text-center" >
+            <Button
+                disabled={isFetchingNextPage}
+                onClick={() => fetchNextPage()}
+            >
+                Load more
+            </Button>
         </div>
-    );
+    ) : null;
 };
-```
 
-You might want to allow data to be fetched only when at least some filters have been set. You can leverage TanStack react-query `enabled` option for that. It accepts a function that receives the query as its only parameter. As shadcn-admin-kit always format the `queryKey` as `[ResourceName, DataProviderMethod, DataProviderParams]`, you can check that there is at least a filter in this function:
-
-```tsx
-export const PostList = () => (
-    <InfiniteList
-        filters={postFilter}
-        queryOptions={{
-            enabled: query => {
-                const listParams = query.queryKey[2] as GetListParams;
-                return listParams.filter.q?.length > 2;
-            }
-        }}
-        render={context =>
-            context.filterValues.q?.length > 2 ? (
-                <CardContentInner>
-                    Type a search term to fetch data
-                </CardContentInner>
-            ) : (
-                <Datagrid>
-                    {/* your fields */}
-                </Datagrid>
-            )
-        }
-    />)
-```
-
-:::note
-Notice we display some custom UI when there is no filter. This is because otherwise, users would see the loading UI as Tanstack Query will set the `isPending` property of the underlying query to `true` if the query isn't enabled.
-:::
-
-## Parameters Persistence
-
-By default, when users change the list parameters (sort, pagination, filters), shadcn-admin-kit stores them in localStorage so that users can come back to the list and find it in the same state as when they left it, using the internal [Store](https://marmelab.com/ra-core/store/).
-
-Shadcn-admin-kit uses the current resource as the identifier to store the list parameters (under the key `${resource}.listParams`).
-
-If you want to display multiple lists of the same resource and keep distinct store states for each of them (filters, sorting and pagination), you must give each list a unique `storeKey` property. You can also disable the persistence of list parameters and selection in the store by setting the `storeKey` prop to `false`.
-
-In the example below, both lists `NewerBooks` and `OlderBooks` use the same resource ('books'), but their list parameters are stored separately (under the store keys `'newerBooks'` and `'olderBooks'` respectively). This allows to use both components in the same app, each having its own state (filters, sorting and pagination).
-
-```tsx
-import {
-    Admin,
-    CustomRoutes,
-    Resource,
-    List,
-    DataTable,
-} from '@/components/admin';
-import { Route } from 'react-router';
-
-const NewerBooks = () => (
-    <InfiniteList
-        resource="books"
-        storeKey="newerBooks"
-        sort={{ field: 'year', order: 'DESC' }}
-    >
+export const BookList = () => (
+    <InfiniteList pagination={<LoadMore />}>
         <DataTable>
             <DataTable.Col source="id" />
             <DataTable.Col source="title" />
             <DataTable.Col source="author" />
-            <DataTable.Col source="year" />
         </DataTable>
-    <InfiniteList>
+    </InfiniteList>
 );
+```
 
-const OlderBooks = () => (
-    <InfiniteList
-        resource="books"
-        storeKey="olderBooks"
-        sort={{ field: 'year', order: 'ASC' }}
-    >
-        <DataTable>
-            <DataTable source="id" />
-            <DataTable source="title" />
-            <DataTable source="author" />
-            <DataTable source="year" />
-        </DataTable>
-    <InfiniteList>
-);
+## Showing The Record Count
 
-const Admin = () => {
+One drawback of the `<InfiniteList>` component is that it doesn't show the number of results. To fix this, you can use `useListContext` to access the `total` property of the list, and render the total number of results in a sticky footer:
+
+![Infinite list with total number of results](./images/infinite-pagination-count.webp)
+
+
+```jsx
+import { useListContext } from 'ra-core';
+import { InfinitePagination, InfiniteList } from '@/components/admin';
+import { Card } from '@mui/admin/card';
+
+const CustomPagination = () => {
+    const { total } = useListContext();
     return (
-        <Admin dataProvider={dataProvider}>
-            <CustomRoutes>
-                <Route path="/newerBooks" element={<NewerBooks />} />
-                <Route path="/olderBooks" element={<OlderBooks />} />
-            </CustomRoutes>
-            <Resource name="books" />
-        </Admin>
+        <>
+            <InfinitePagination />
+            {total > 0 && (
+                <div className="b-2 text-center" >
+                    <Card className="px-2 py-1 mb-1 inline-block" >
+                        {total} results
+                    </Card>
+                </div>
+            )}
+        </>
     );
 };
-```
 
-:::tip
-The `storeKey` is actually passed to the underlying `useListController` hook, which you can use directly for more complex scenarios. See the [`useListController` doc](https://marmelab.com/ra-core/uselistcontroller/#storekey) for more info.
-:::
-
-::note
-*Selection state* will remain linked to a resource-based key regardless of the specified `storeKey` string. This is a design choice because if row selection is not tied to a resource, then when a user deletes a record it may remain selected without any ability to unselect it. If you want to allow custom `storeKey`'s for managing selection state, you will have to implement your own `useListController` hook and pass a custom key to the `useRecordSelection` hook. You will then need to implement your own `DeleteButton` and `BulkDeleteButton` to manually unselect rows when deleting records. You can still opt out of all store interactions including selection if you set it to `false`.
-:::
-
-## Scaffolding a List page
-
-You can use `<InfiniteListGuesser>` to quickly bootstrap a List view on top of an existing API, without adding the fields one by one.
-
-```tsx
-// in src/App.js
-import { Admin, ListGuesser } from '@/components/admin';
-import { Resource } from 'ra-core';
-import { dataProvider } from './dataProvider';
-
-const App = () => (
-    <Admin dataProvider={dataProvider}>
-        {/* ... */}
-        <Resource name="posts" list={ListGuesser} />
-    </Admin>
+export const BookList = () => (
+    <InfiniteList pagination={<CustomPagination />}>
+        // ...
+    </InfiniteList>
 );
 ```
 
-Just like `<InfiniteList>`, `<ListGuesser>` fetches the data. It then analyzes the response, and guesses the fields it should use to display a basic `<DataTable>` with the data. It also dumps the components it has guessed in the console, so you can copy it into your own code.
+The previous example leverages [`<WithListContext>`](./WithListContext.md) to grab the data that `<ListBase>` stores in the `ListContext`.
 
-![Guessed List](./images/posts-list-guesser.png)
+If you don't need the `ListContext`, you can use the `useInfiniteListController` hook, which does the same data fetching as `<InfiniteListBase>` but lets you render the content.
 
-## Live Updates
-
-Shadcn Admin Kit offers [Realtime features](./RealtimeFeatures.md) to automatically refresh the data on screen when it has been changed by another user.
-
-If you want to subscribe to live updates on the list of records, add [the `<InfiniteListLiveUpdate>` component](https://marmelab.com/ra-core/listliveupdate/) in your `<List>` children.
-
-```tsx {2,7}
-import { List } from '@/components/admin';
-import { ListLiveUpdate } from '@react-admin/ra-core-ee';
-
-const PostList = () => (
-    <InfiniteList>
-        ...
-       <InfiniteListLiveUpdate />
-    <InfiniteList>
-);
-```
-
-The list will automatically update when a new record is created, or an existing record is updated or deleted (check out the [CRUD events format](./RealtimeFeatures.md#crud-events) for details)
-
-:::note
-This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enterprise/) subscription.
-:::
-
-## Rendering An Empty List
-
-When there is no data, shadcn-admin-kit displays a special page inviting the user to create the first record. This page can be customized using [the `empty` prop](#empty).
-
-You can set the `empty` props value to `false` to render an empty list instead.
-
-```tsx
-import { List } from '@/components/admin';
-
-const ProductList = () => (
-    <InfiniteList empty={false}>
-        ...
-    <InfiniteList>
-)
-```
-
-## Controlled Mode
-
-`<InfiniteList>` deduces the resource and the list parameters from the URL. This is fine for a page showing a single list of records, but if you need to display more than one list in a page, you probably want to define the list parameters yourself.
-
-In that case, use the [`resource`](#resource), [`sort`](#sort), [`filter`](#filter-permanent-filter), and [`perPage`](#perpage) props to set the list parameters.
-
-```tsx
-import { List, DataTable, DateField } from '@/components/admin';
-
-const Dashboard = () => (
-    <div className="space-y-10">
-        <section>
-            <h2 className="text-lg font-semibold mb-3">Latest posts</h2>
-            <InfiniteList 
-                resource="posts"
-                sort={{ field: 'published_at', order: 'DESC' }}
-                filter={{ is_published: true }}
-                perPage={10}
-            >
-                <DataTable bulkActionButtons={false} size="sm">
-                    <DataTable.Col source="title" />
-                    <DataTable.NumberCol source="views" />
-                    <DataTable.Col source="published_at" field={DateField} />
-                </DataTable>
-            <InfiniteList>
-        </section>
-        <section>
-            <h2 className="text-lg font-semibold mb-3">Latest comments</h2>
-            <InfiniteList
-                resource="comments"
-                sort={{ field: 'published_at', order: 'DESC' }}
-                perPage={10}
-            >
-                <DataTable bulkActionButtons={false} size="sm">
-                    <DataTable.Col source="author.name" />
-                    <DataTable.Col source="body" />
-                    <DataTable.Col source="published_at" field={DateField} />
-                </DataTable>
-            <InfiniteList>
-        </section>
-    </div>
-)
-```
-
-:::note
-If you need to set the list parameters to render a list of records *related to another record*, there are better components than `<InfiniteList>` for that. Check out the following components, specialized in fetching and displaying a list of related records:
-
-- [`<ReferenceArrayField>`](./ReferenceArrayField.md),
-- [`<ReferenceManyField>`](./ReferenceManyField.md),
-
-:::
-
-If the `<InfiniteList>` children allow to *modify* the list state (i.e. if they let users change the sort order, the filters, the selection, or the pagination), then you should also use the [`disableSyncWithLocation`](#disablesyncwithlocation) prop to prevent shadcn-admin-kit from changing the URL. This is the case e.g. if you use a `<DataTable>`, which lets users sort the list by clicking on column headers.
-
-```tsx
-import { List, DataTable, DateField } from '@/components/admin';
-
-const Dashboard = () => (
-    <div className="space-y-10">
-        <section>
-            <h2 className="text-lg font-semibold mb-3">Latest posts</h2>
-            <InfiniteList 
-                resource="posts"
-                sort={{ field: 'published_at', order: 'DESC' }}
-                filter={{ is_published: true }}
-                perPage={10}
-                disableSyncWithLocation
-            >
-                <DataTable bulkActionButtons={false} size="sm">
-                    <DataTable.Col source="title" />
-                    <DataTable.NumberCol source="views" />
-                </DataTable>
-            <InfiniteList>
-        </section>
-        <section>
-            <h2 className="text-lg font-semibold mb-3">Latest comments</h2>
-            <InfiniteList
-                resource="comments"
-                sort={{ field: 'published_at', order: 'DESC' }}
-                perPage={10}
-                disableSyncWithLocation
-            >
-                <DataTable bulkActionButtons={false} size="sm">
-                    <DataTable.Col source="author.name" />
-                    <DataTable.Col source="body" />
-                    <DataTable.Col source="published_at" field={DateField} />
-                </DataTable>
-            <InfiniteList>
-        </section>
-    </div>
-)
-```
-
-:::note
-If you render more than one `<DataTable>` for the same resource in the same page, they will share the selection state (i.e. the checked checkboxes). This is a design choice because if row selection is not tied to a resource, then when a user deletes a record it may remain selected without any ability to unselect it. You can get rid of the checkboxes by setting `<DataTable bulkActionButtons={false}>`.
-:::
-
-## Headless Version
-
-Besides fetching a list of records from the data provider, `<InfiniteList>` renders the default list page layout (title, buttons, filters, a `<Card>`, pagination) and its children. If you need a custom list layout, you may prefer [the `<ListBase>` component](https://marmelab.com/ra-core/listbase/), which only renders its children in a [`ListContext`](https://marmelab.com/ra-core/uselistcontext/.html).
-
-```tsx
-import { ListBase, WithListContext } from 'ra-core';
-
-const ProductList = () => (
-    <InfiniteListBase>
-        <div className="space-y-6">
-            <h2 className="text-xl font-semibold tracking-tight">All products</h2>
-            <WithListContext
-                render={({ isPending, data }) => (
-                    !isPending && (
-                        <ul className="space-y-2">
-                            {data.map(product => (
-                                <li
-                                    key={product.id}
-                                    className="rounded-md border p-3 bg-background"
-                                >
-                                    <span className="font-medium">{product.name}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    )
-                )}
-            />
-            <WithListContext
-                render={({ isPending, total }) => (
-                    !isPending && (
-                        <p className="text-sm text-muted-foreground">{total} results</p>
-                    )
-                )}
-            />
-        </div>
-    <InfiniteListBase>
-);
-```
-
-The previous example leverages [`<WithListContext>`](https://marmelab.com/ra-core/withlistcontext/) to grab the data that `<InfiniteListBase>` stores in the `ListContext`.
-
-If you don't need the `ListContext`, you can use [the `useListController` hook](https://marmelab.com/ra-core/uselistcontroller/), which does the same data fetching as `<InfiniteListBase>` but lets you render the content.
-
-```tsx
-import { useListController } from '@/components/admin';
-import { Card, CardContent, Container, Stack, Typography } from '@mui/material';
+```jsx
+import { useInfiniteListController } from 'ra-core';
+import { Card, CardContent } from '@/components/admin';
 
 const ProductList = () => {
-    const { isPending, data, total } = useListController();
+    const { isPending, data } = useInfiniteListController();
     return (
-        <Container>
-            <Typography variant="h4">All products</Typography>
+        <div className="container" >
+            <h4>All products</h4>
                 {!isPending && (
-                    <Stack spacing={1}>
+                    <div className="gap-1">
                         {data.map(product => (
                             <Card key={product.id}>
                                 <CardContent>
@@ -792,24 +232,25 @@ const ProductList = () => {
                                 </CardContent>
                             </Card>
                         ))}
-                    </Stack>
+                    </div>
                 )}
-            {!isPending && <Typography>{total} results</Typography>}
-        </Container>
+        </div>
     );
 };
 ```
 
-`useListController` returns callbacks to sort, filter, and paginate the list, so you can build a complete List page. Check [the `useListController`hook documentation](https://marmelab.com/ra-core/uselistcontroller/) for details.
+`useInfiniteListController` returns callbacks to sort, filter, and paginate the list, so you can build a complete List page.
 
-## Access Control
+## Security
 
-If your `authProvider` implements [Access Control](https://marmelab.com/ra-core/permissions/#access-control), `<InfiniteList>`  will only render if the user can access the resource with the "list" action.
+The `<InfiniteList>` component requires authentication and will redirect anonymous users to the login page. If you want to allow anonymous access, use the [`disableAuthentication`](./List.md#disableauthentication) prop.
 
-For instance, to render the `<PostList>` page below:
+If your `authProvider` implements [Access Control](./Permissions.md#access-control), `<InfiniteList>` will only render if the user has the "list" access to the related resource.
+
+For instance, for the `<PostList>` page below:
 
 ```tsx
-import { List, DataTable } from '@/components/admin';
+import { InfiniteList, DataTable } from '@/components/admin';
 
 // Resource name is "posts"
 const PostList = () => (
@@ -819,18 +260,16 @@ const PostList = () => (
             <DataTable.Col source="author" />
             <DataTable.Col source="published_at" />
         </DataTable>
-    <InfiniteList>
+    </InfiniteList>
 );
 ```
 
 `<InfiniteList>` will call `authProvider.canAccess()` using the following parameters:
 
-```tsx
+```js
 { action: "list", resource: "posts" }
 ```
 
-Users without access will be redirected to the [Access Denied page](https://marmelab.com/ra-core/coreadmin/#accessdenied).
+Users without access will be redirected to the [Access Denied page](./Admin.md#accessdenied).
 
-:::note
-Access control is disabled when you use [the `disableAuthentication` prop](#disableauthentication).
-:::
+**Note**: Access control is disabled when you use [the `disableAuthentication` prop](./List.md#disableauthentication).
