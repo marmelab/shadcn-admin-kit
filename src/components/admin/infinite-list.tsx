@@ -3,7 +3,7 @@ import { InfiniteListBase } from "ra-core";
 
 import { InfinitePagination } from "@/components/admin/infinite-pagination";
 import { Loading } from '@/components/admin/loading';
-import { ListView } from '@/components/admin/list';
+import { ListView, ListViewProps } from '@/components/admin/list';
 
 /**
  * A complete list page with breadcrumb, title, filters, and pagination.
@@ -78,5 +78,7 @@ const defaultPagination = <InfinitePagination />;
 const defaultAuthLoading = <Loading />;
 
 export interface InfiniteListProps<RecordType extends RaRecord = RaRecord>
-  extends InfiniteListBaseProps<RecordType>,
-    ListViewProps<RecordType> {}
+  extends Omit<
+            InfiniteListBaseProps<RecordType>,
+            'children' | 'render' | 'empty'
+        >, ListViewProps<RecordType> {}

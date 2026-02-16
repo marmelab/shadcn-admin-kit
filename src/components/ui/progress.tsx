@@ -27,12 +27,12 @@ function Progress({
 }
 
 function ProgressAuto(props: React.ComponentProps<typeof ProgressPrimitive.Root>) {
-  const [progress, setProgress] = React.useState(13)
+  const [progress, setProgress] = React.useState(20)
 
   React.useEffect(() => {
-    const timer = setTimeout(() => setProgress(prev => ((prev + 10) % 100)), 500)
+    const timer = setTimeout(() => setProgress(prev => ((prev + 20) % 100)), 1500)
     return () => clearTimeout(timer)
-  }, [])
+  }, [progress])
 
   return <Progress {...props} value={progress} />
 }

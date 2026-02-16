@@ -1,22 +1,35 @@
+import * as React from 'react';
 import {
   DataProvider,
+  useInfinitePaginationContext,
+  useListContext,
+  IsOffline,
   memoryStore,
   Resource,
   TestMemoryRouter,
 } from "ra-core";
 import { faker } from '@faker-js/faker';
+import { onlineManager } from '@tanstack/react-query';
 import fakeRestDataProvider from "ra-data-fakerest";
+
 import {
   Admin,
-  FilterButton,
   DataTable,
+  FilterButton,
+  ColumnsButton,
+  ExportButton,
   InfiniteList,
   ShowGuesser,
+  TextInput
 } from "@/components/admin";
+import { Button } from "@/components/ui/button";
+import { Alert } from "@/components/ui/alert";
+import { InfinitePagination } from '@/components/admin/infinite-pagination';
+import { Pagination as DefaultPagination } from '@/components/ui/pagination';
 import { i18nProvider } from "@/lib/i18nProvider";
 
 export default {
-  title: "InifiniteList",
+  title: "List/InfiniteList",
   parameters: {
     docs: {
       codePanel: true,
@@ -101,7 +114,6 @@ export const RowClickFalse = () => (
   </Wrapper>
 );
 
-
 const CustomActionButtons = () => (
   <>
     <FilterButton />
@@ -110,9 +122,16 @@ const CustomActionButtons = () => (
   </>
 );
 
+const filterActionButtons = [
+    <TextInput source="title" />
+];
+
 export const CustomActionButtonsList = () => (
   <Wrapper>
-    <InfiniteList actions={CustomActionButtons} >
+    <InfiniteList 
+        actions={<CustomActionButtons />} 
+        filters={filterActionButtons}
+    >
         <DataTable>
           <DataTable.Col source="id" />
           <DataTable.Col source="title" />
@@ -120,3 +139,120 @@ export const CustomActionButtonsList = () => (
     </InfiniteList>
   </Wrapper>
 );
+
+const LoadMore = () => {
+    const { hasNextPage, fetchNextPage, isFetchingNextPage } =
+        useInfinitePaginationContext();
+    return hasNextPage ? (
+        <div className="mt-1 text-center">
+            <Button
+                disabled={isFetchingNextPage}
+                onClick={() => fetchNextPage()}
+            >
+                Load more
+            </Button>
+        </div>
+    ) : null;
+};
+
+export const PaginationLoadMore = () => (
+  <Wrapper>
+    <InfiniteList pagination={<LoadMore />}>
+        <DataTable>
+            <DataTable.Col source="id" />
+            <DataTable.Col source="title" />
+            <DataTable.Col source="author" />
+        </DataTable>
+    </InfiniteList>
+  </Wrapper>
+);
+
+export const PaginationInfinite = () => (
+  <Wrapper>
+    <InfiniteList
+        pagination={<InfinitePagination sx={{ py: 5 }} />}
+    >
+        <DataTable>
+          <DataTable.Col source="id" />
+          <DataTable.Col source="title" />
+        </DataTable>
+    </InfiniteList>
+  </Wrapper>
+);
+
+const BookListOffline = () => {
+    const { error, isPending } = useListContext();
+    if (isPending) {
+        return <div>Loading...</div>;
+    }
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+    return (
+        <>
+            <IsOffline>
+                <Alert severity="warning">
+                    You are offline, the data may be outdated
+                </Alert>
+            </IsOffline>
+            <DataTable>
+              <DataTable.Col source="id" />
+              <DataTable.Col source="title" />
+            </DataTable>
+        </>
+    );
+};
+
+export const Offline = ({
+    isOnline = true,
+    offline,
+    pagination,
+}: {
+    isOnline?: boolean;
+    offline?: React.ReactNode;
+    pagination?: React.ReactNode;
+}) => {
+    React.useEffect(() => {
+        onlineManager.setOnline(isOnline);
+    }, [isOnline]);
+    return (
+        <Wrapper>
+            <InfiniteList offline={offline} pagination={pagination}>
+                <BookListOffline />
+            </InfiniteList>
+        </Wrapper>
+    );
+};
+
+const CustomOffline = () => {
+    return <Alert severity="warning">You are offline!</Alert>;
+};
+
+Offline.args = {
+    isOnline: true,
+    offline: 'default',
+    pagination: 'infinite',
+};
+
+Offline.argTypes = {
+    isOnline: {
+        control: { type: 'boolean' },
+    },
+    pagination: {
+        control: { type: 'radio' },
+        options: ['infinite', 'classic'],
+        mapping: {
+            infinite: <InfinitePagination />,
+            classic: <DefaultPagination />,
+        },
+    },
+    offline: {
+        name: 'Offline component',
+        control: { type: 'radio' },
+        options: ['default', 'custom'],
+        mapping: {
+            default: undefined,
+            custom: <CustomOffline />,
+        },
+    },
+};
