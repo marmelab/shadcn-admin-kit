@@ -5,7 +5,7 @@ import {
     useListContext,
     useEvent,
 } from 'ra-core';
-import { CircularProgress } from '@mui/material';
+import { ProgressAuto } from '../ui/progress';
 import { Offline } from './offline';
 
 /**
@@ -100,7 +100,7 @@ export const InfinitePagination = ({
             {showOffline ? (
                 offline
             ) : isFetchingNextPage && hasNextPage ? (
-                <CircularProgress size="1.5em" />
+                <ProgressAuto size="1.5em" />
             ) : null}
         </div>
     );

@@ -23,6 +23,7 @@ import { ExportButton } from "@/components/admin/export-button";
 import { FilterButton, FilterForm } from "@/components/admin/filter-form";
 import { InfinitePagination } from "@/components/admin/infinite-pagination";
 import { Loading } from '@/components/admin/loading';
+import { ListView } from '@/components/admin/list';
 
 /**
  * A complete list page with breadcrumb, title, filters, and pagination.
@@ -87,7 +88,7 @@ export const InfiniteList = <RecordType extends RaRecord = RaRecord>(
       sort={sort}
       storeKey={storeKey}
     >
-      <InfiniteListView<RecordType> {...rest} pagination={pagination} />
+      <ListView<RecordType> {...rest} pagination={pagination} />
     </InfiniteListBase>
   );
 };
@@ -98,86 +99,4 @@ const defaultAuthLoading = <Loading />;
 
 export interface InfiniteListProps<RecordType extends RaRecord = RaRecord>
   extends InfiniteListBaseProps<RecordType>,
-    InfiniteListViewProps<RecordType> {}
-
-/**
- * The view component for List pages with layout and UI.
- *
- * @internal
- */
-export const InfiniteListView = <RecordType extends RaRecord = RaRecord>(
-  props: InfiniteListViewProps<RecordType>,
-) => {
-  const {
-    disableBreadcrumb,
-    filters,
-    pagination = defaultPagination,
-    title,
-    children,
-    actions,
-  } = props;
-  const translate = useTranslate();
-  const resource = useResourceContext();
-  if (!resource) {
-    throw new Error(
-      "The ListView component must be used within a ResourceContextProvider",
-    );
-  }
-  const getResourceLabel = useGetResourceLabel();
-  const resourceLabel = getResourceLabel(resource, 2);
-  const finalTitle =
-    title !== undefined
-      ? title
-      : translate("ra.page.list", {
-          name: resourceLabel,
-        });
-  const { hasCreate } = useResourceDefinition({ resource });
-  const hasDashboard = useHasDashboard();
-
-  return (
-    <>
-      {!disableBreadcrumb && (
-        <Breadcrumb>
-          {hasDashboard && (
-            <BreadcrumbItem>
-              <Link to="/">
-                <Translate i18nKey="ra.page.dashboard">Home</Translate>
-              </Link>
-            </BreadcrumbItem>
-          )}
-          <BreadcrumbPage>{resourceLabel}</BreadcrumbPage>
-        </Breadcrumb>
-      )}
-
-      <FilterContext.Provider value={filters}>
-        <div className="flex justify-between items-start flex-wrap gap-2 my-2">
-          <h2 className="text-2xl font-bold tracking-tight mb-2">
-            {finalTitle}
-          </h2>
-          {actions ?? (
-            <div className="flex items-center gap-2">
-              {filters && filters.length > 0 ? <FilterButton /> : null}
-              {hasCreate ? <CreateButton /> : null}
-              {<ExportButton />}
-            </div>
-          )}
-        </div>
-        <FilterForm />
-
-        <div className={cn("my-2", props.className)}>{children}</div>
-        {pagination}
-      </FilterContext.Provider>
-    </>
-  );
-};
-
-export interface InfiniteListViewProps<RecordType extends RaRecord = RaRecord> {
-  children?: ReactNode;
-  disableBreadcrumb?: boolean;
-  render?: (props: InfiniteListControllerResult<RecordType, Error>) => ReactNode;
-  actions?: ReactElement | false;
-  filters?: ReactNode[];
-  pagination?: ReactNode;
-  title?: ReactNode | string | false;
-  className?: string;
-}
+    ListViewProps<RecordType> {}
