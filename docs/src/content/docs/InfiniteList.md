@@ -137,7 +137,7 @@ export const PostList = () => (
 
 You can replace the default "load on scroll" pagination (triggered by a component named `<InfinitePagination>`) by a custom pagination component. To get the pagination state and callbacks, you'll need to read the `InfinitePaginationContext`.
 
-![load more button](./images/infinite-pagination-load-more.webp)
+![load more button](./images/infinite-pagination-load-more.png)
 
 For example, here is a custom infinite pagination component displaying a "Load More" button at the bottom of the list:
 
@@ -179,7 +179,7 @@ export const BookList = () => (
 
 One drawback of the `<InfiniteList>` component is that it doesn't show the number of results. To fix this, you can use `useListContext` to access the `total` property of the list, and render the total number of results in a sticky footer:
 
-![Infinite list with total number of results](./images/infinite-pagination-count.webp)
+![Infinite list with total number of results](./images/infinite-pagination-count.png)
 
 
 ```jsx

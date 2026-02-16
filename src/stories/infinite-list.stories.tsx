@@ -24,6 +24,7 @@ import {
 } from "@/components/admin";
 import { Button } from "@/components/ui/button";
 import { Alert } from "@/components/ui/alert";
+import { Card } from "@/components/ui/card";
 import { InfinitePagination } from '@/components/admin/infinite-pagination';
 import { Pagination as DefaultPagination } from '@/components/ui/pagination';
 import { i18nProvider } from "@/lib/i18nProvider";
@@ -103,6 +104,39 @@ export const Empty = () => (
   </Wrapper>
 );
 
+const CustomPagination = () => {
+    const { total } = useListContext();
+    return (
+        <>
+            <InfinitePagination />
+            {total && total > 0 && (
+                <div className="bottom-0 text-center sticky">
+                    <Card className="px-2 py-1 mb-2 inline-block" >
+                        <h2>{total} results</h2>
+                    </Card>
+                </div>
+            )}
+        </>
+    );
+};
+
+export const PaginationCustom = () => (
+    <Admin dataProvider={dataProvider}>
+        <Resource
+            name="books"
+            list={() => (
+                <InfiniteList pagination={<CustomPagination />}>
+                    <DataTable>
+                        <DataTable.Col source="id" />
+                        <DataTable.Col source="title" />
+                    </DataTable>
+                </InfiniteList>
+            )}
+        />
+    </Admin>
+);
+
+
 export const RowClickFalse = () => (
   <Wrapper>
     <InfiniteList>
@@ -170,7 +204,7 @@ export const PaginationLoadMore = () => (
 export const PaginationInfinite = () => (
   <Wrapper>
     <InfiniteList
-        pagination={<InfinitePagination sx={{ py: 5 }} />}
+        pagination={<InfinitePagination className="py-5" />}
     >
         <DataTable>
           <DataTable.Col source="id" />
@@ -191,7 +225,7 @@ const BookListOffline = () => {
     return (
         <>
             <IsOffline>
-                <Alert severity="warning">
+                <Alert>
                     You are offline, the data may be outdated
                 </Alert>
             </IsOffline>
@@ -225,7 +259,7 @@ export const Offline = ({
 };
 
 const CustomOffline = () => {
-    return <Alert severity="warning">You are offline!</Alert>;
+    return <Alert>You are offline!</Alert>;
 };
 
 Offline.args = {
