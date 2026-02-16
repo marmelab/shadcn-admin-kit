@@ -7,7 +7,7 @@ on:
 
 env:
   # RELEASE_TAG: ${{ github.event.release.tag_name }}
-  RELEASE_TAG: test-release-1
+  RELEASE_TAG: test-release-2
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
