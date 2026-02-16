@@ -2,9 +2,12 @@ name: Release Registry
 on:
   release:
     types: [published]
+  push:
+    branches: ["allow-versioning"]
 
 env:
-  RELEASE_TAG: ${{ github.event.release.tag_name }}
+  # RELEASE_TAG: ${{ github.event.release.tag_name }}
+  RELEASE_TAG: test-release-1
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -48,8 +51,9 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git fetch origin gh-pages || git checkout --orphan gh-pages
           git checkout gh-pages
-          mkdir -p public/r/
-          cp -r /tmp/release/${{ env.RELEASE_TAG }} public/r/
-          git add -f public/r/${{ env.RELEASE_TAG }}
+          git clean -fd
+          mkdir -p r/
+          cp -r /tmp/release/${{ env.RELEASE_TAG }} r/
+          git add -f r/${{ env.RELEASE_TAG }}
           git commit -m "Add release ${{ env.RELEASE_TAG }}" || echo "No changes to commit"
           git push origin gh-pages
