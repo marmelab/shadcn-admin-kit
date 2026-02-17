@@ -23,7 +23,7 @@ import {
   TextInput
 } from "@/components/admin";
 import { Button } from "@/components/ui/button";
-import { Alert } from "@/components/ui/alert";
+import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Card } from "@/components/ui/card";
 import { InfinitePagination } from '@/components/admin/infinite-pagination';
 import { Pagination as DefaultPagination } from '@/components/ui/pagination';
@@ -226,7 +226,9 @@ const BookListOffline = () => {
         <>
             <IsOffline>
                 <Alert>
-                    You are offline, the data may be outdated
+                    <AlertTitle>
+                        You are offline, the data may be outdated
+                    </AlertTitle>
                 </Alert>
             </IsOffline>
             <DataTable>
@@ -264,7 +266,7 @@ const CustomOffline = () => {
 
 Offline.args = {
     isOnline: true,
-    offline: 'default',
+    offline: false,
     pagination: 'infinite',
 };
 

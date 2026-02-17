@@ -18,16 +18,15 @@ import { Offline } from './offline';
  * import {
  *      InfiniteList,
  *      InfinitePagination,
- *      Datagrid,
- *      TextField
- * } from 'react-admin';
+ * } from 'ra-core';
+ * import { TextField, DataTable } from "@/components/admin";
  *
  * const PostList = () => (
  *    <InfiniteList pagination={<InfinitePagination />}>
- *       <Datagrid>
- *          <TextField source="id" />
- *         <TextField source="title" />
- *      </Datagrid>
+ *       <DataTable>
+ *         <DataTable.Col source="id" />
+ *         <DataTable.Col source="title" />
+ *      </DataTable>
  *   </InfiniteList>
  * );
  */

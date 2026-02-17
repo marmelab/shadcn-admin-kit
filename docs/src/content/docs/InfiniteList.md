@@ -12,7 +12,7 @@ The `<InfiniteList>` component is an alternative to [the `<List>` component](./L
   Your browser does not support the video tag.
 </video -->
 
-`<InfiniteList>` fetches the list of records from the data provider, and renders the default list layout (title, buttons, filters). It delegates the rendering of the list of records to its child component. Usually, it's a [`<DataTable>`](./DataTable.md) or a [`<SimpleList>`](./SimpleList.md), responsible for displaying a table with one row for each record.
+`<InfiniteList>` fetches the list of records from the data provider, and renders the default list layout (title, buttons, filters). It delegates the rendering of the list of records to its child component. Usually, it's a [`<DataTable>`](./DataTable.md), responsible for displaying a table with one row for each record.
 
 ## Usage
 
@@ -33,7 +33,7 @@ export const BookList = () => (
 );
 
 // in src/App.js
-import { Resource } from 'react-admin';
+import { Resource } from 'ra-core';
 import { Admin } from '@/components/admin';
 import jsonServerProvider from 'ra-data-json-server';
 
@@ -95,7 +95,7 @@ By default, `<InfiniteList>` renders the `<Offline>` component when there is no 
 
 ```jsx
 import { InfiniteList, InfinitePagination } from '@/components/admin';
-import { Alert } from '@mui/material';
+import { Alert } from '@/components/ui/alert';
 
 const offline = <Alert severity="warning">No network. Could not load the posts.</Alert>;
 // The offline component may be displayed at the bottom of the page if the network connectivity is lost
@@ -113,8 +113,8 @@ export const PostList = () => (
 
 ```jsx
 import { InfiniteList, InfinitePagination } from '@/components/admin';
-import { IsOffline } from 'react-admin';
-import { Alert } from '@mui/material';
+import { IsOffline } from 'ra-core';
+import { Alert } from '@/components/ui/alert';
 
 const offline = <Alert severity="warning">No network. Could not load the posts.</Alert>;
 // The offline component may be displayed at the bottom of the page if the network connectivity is lost
@@ -143,8 +143,7 @@ For example, here is a custom infinite pagination component displaying a "Load M
 
 ```jsx
 import { InfiniteList, DataTable, Button } from '@/components/admin';
-import { useInfinitePaginationContext } from 'react-admin';
-import { Box } from '@mui/material';
+import { useInfinitePaginationContext } from 'ra-core';
 
 const LoadMore = () => {
     const {
@@ -185,7 +184,7 @@ One drawback of the `<InfiniteList>` component is that it doesn't show the numbe
 ```jsx
 import { useListContext } from 'ra-core';
 import { InfinitePagination, InfiniteList } from '@/components/admin';
-import { Card } from '@mui/admin/card';
+import { Card } from '@/components/ui/card';
 
 const CustomPagination = () => {
     const { total } = useListContext();
@@ -209,8 +208,6 @@ export const BookList = () => (
     </InfiniteList>
 );
 ```
-
-The previous example leverages [`<WithListContext>`](./WithListContext.md) to grab the data that `<ListBase>` stores in the `ListContext`.
 
 If you don't need the `ListContext`, you can use the `useInfiniteListController` hook, which does the same data fetching as `<InfiniteListBase>` but lets you render the content.
 
@@ -244,8 +241,6 @@ const ProductList = () => {
 ## Security
 
 The `<InfiniteList>` component requires authentication and will redirect anonymous users to the login page. If you want to allow anonymous access, use the [`disableAuthentication`](./List.md#disableauthentication) prop.
-
-If your `authProvider` implements [Access Control](./Permissions.md#access-control), `<InfiniteList>` will only render if the user has the "list" access to the related resource.
 
 For instance, for the `<PostList>` page below:
 

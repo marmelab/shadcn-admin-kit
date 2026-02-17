@@ -43,7 +43,8 @@ export const InfiniteList = <RecordType extends RaRecord = RaRecord>(
     exporter,
     filter = defaultFilter,
     filterDefaultValues,
-    loading = defaultAuthLoading,
+    authLoading = defaultAuthLoading,
+    loading,
     pagination = defaultPagination,
     perPage = 10,
     queryOptions,
@@ -53,6 +54,12 @@ export const InfiniteList = <RecordType extends RaRecord = RaRecord>(
     ...rest
   } = props;
 
+  if (!props.render && !props.children) {
+    throw new Error(
+        '<InfiniteList> requires either a `render` prop or `children` prop'
+    )
+  }
+
   return (
     <InfiniteListBase<RecordType>
       debounce={debounce}
@@ -61,20 +68,23 @@ export const InfiniteList = <RecordType extends RaRecord = RaRecord>(
       exporter={exporter}
       filter={filter}
       filterDefaultValues={filterDefaultValues}
+      authLoading={authLoading}
       loading={loading}
       perPage={perPage}
       queryOptions={queryOptions}
       resource={resource}
       sort={sort}
       storeKey={storeKey}
+      // Disable offline support from InfiniteListBase as it is handled by ListView to keep the ListView container
+      offline={false}
     >
       <ListView<RecordType> {...rest} pagination={pagination} />
     </InfiniteListBase>
   );
 };
 
-const defaultFilter = {};
 const defaultPagination = <InfinitePagination />;
+const defaultFilter = {};
 const defaultAuthLoading = <Loading />;
 
 export interface InfiniteListProps<RecordType extends RaRecord = RaRecord>

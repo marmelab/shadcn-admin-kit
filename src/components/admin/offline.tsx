@@ -31,7 +31,7 @@ export const Offline = (props: OfflineProps) => {
             className={className}
             {...rest}
         >
-            <h1>{message}</h1>
+            <Alert.AlertTitle>{message}</Alert.AlertTitle>
         </Alert.Alert>
     );
 };
