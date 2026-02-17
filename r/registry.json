@@ -325,6 +325,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/text-array-input.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/text-field.tsx",
           "type": "registry:component"
         },
