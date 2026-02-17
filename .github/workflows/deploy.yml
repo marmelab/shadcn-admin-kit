@@ -11,22 +11,11 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  contents: write
 
 jobs:
   # Single deploy job since we're just deploying
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     env:
       VITE_CHATWOOT_URL: ${{ vars.VITE_CHATWOOT_URL }}
       VITE_CHATWOOT_WEBSITE_TOKEN: ${{ secrets.VITE_CHATWOOT_WEBSITE_TOKEN }}
@@ -45,13 +34,24 @@ jobs:
         run: pnpm i --frozen-lockfile
       - name: Build components
         run: make build
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload public directory
-          path: './public'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+
+      - name: Deploy to gh-pages branch
+        run: |
+          # Save the built public folder
+          mkdir -p /tmp/new_public
+          cp -r public/* /tmp/new_public/
+
+          # Switch to gh-pages branch
+          git stash
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git fetch origin gh-pages
+          git checkout gh-pages
+
+          # Update gh-pages folder with new public folder content preserving releases
+          rsync -a --delete --exclude='.git/' --exclude='r/*/' /tmp/new_public/ ./
+
+          # Commit and push
+          git add -A
+          git commit -m "Deploy: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" || echo "No changes"
+          git push origin gh-pages

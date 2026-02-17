@@ -1,0 +1,56 @@
+name: Release Registry
+on:
+  release:
+    types: [published]
+
+env:
+  RELEASE_TAG: ${{ github.event.release.tag_name }}
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write
+
+jobs:
+  build-and-upload-registry:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: Generate registry.json
+        run: make build-registry
+
+      - name: Prepare files for release
+        run: |
+          mkdir -p public/r/${{ env.RELEASE_TAG }}
+          cp public/r/registry.json public/r/${{ env.RELEASE_TAG }}/
+          cp public/r/admin.json public/r/${{ env.RELEASE_TAG }}/
+          cp public/r/example-admin.json public/r/${{ env.RELEASE_TAG }}
+
+      - name: Push to gh-pages branch
+        run: |
+          # Copy release files to temp
+          mkdir -p /tmp/release
+          cp -r public/r/${{ env.RELEASE_TAG }} /tmp/release/
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git fetch origin gh-pages || git checkout --orphan gh-pages
+          git checkout gh-pages
+          git clean -fd
+          mkdir -p r/
+          cp -r /tmp/release/${{ env.RELEASE_TAG }} r/
+          git add -f r/${{ env.RELEASE_TAG }}
+          git commit -m "Add release ${{ env.RELEASE_TAG }}" || echo "No changes to commit"
+          git push origin gh-pages
