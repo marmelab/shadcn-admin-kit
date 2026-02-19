@@ -48,7 +48,12 @@ export default defineConfig({
       sidebar: [
         {
           label: "Getting Started",
-          items: ["install", "quick-start-guide", "guides-and-concepts"],
+          items: [
+            "install",
+            "quick-start-guide",
+            "guides-and-concepts",
+            "changelog",
+          ],
         },
         {
           label: "Application configuration",
