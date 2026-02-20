@@ -2,7 +2,7 @@
 title: "Notification"
 ---
 
-A notification compoonent based on Shadcn's `sonner` toasts, supporting undoable actions.
+A notification component based on Shadcn's `sonner` toasts, supporting undoable actions.
 
 ![Notification](./images/notification.jpg)
 
@@ -29,6 +29,38 @@ If you write a custom layout, make sure to include the `<Notification>` componen
 ```tsx
 <Notification />
 ```
+
+## Duration
+
+You can control how long each notification stays visible using the `autoHideDuration` option of [`useNotify`](https://marmelab.com/ra-core/usenotify/):
+
+```tsx
+import { useNotify } from 'ra-core';
+
+const NotifyButton = () => {
+    const notify = useNotify();
+
+    const handleClick = () => {
+        notify('Comment approved', {
+            type: 'success',
+            autoHideDuration: 6000, // ms
+        });
+    };
+
+    return <button onClick={handleClick}>Notify</button>;
+};
+```
+
+To create a persistent notification, set `autoHideDuration` to `null`:
+
+```tsx
+notify('Connection lost', {
+    type: 'warning',
+    autoHideDuration: null,
+});
+```
+
+This maps to Sonner's persistent toast behavior (equivalent to `duration: Infinity`).
 
 ## Undoable Mutations
 
