@@ -9,6 +9,23 @@ import expressiveCode from "astro-expressive-code";
 import { pluginFullscreen } from "expressive-code-fullscreen";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import rehypeAstroRelativeMarkdownLinks from "astro-rehype-relative-markdown-links";
+import { readFileSync } from "node:fs";
+import { resolve, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+/** @type {import('vite').Plugin} */
+const inlineChangelogPlugin = {
+  name: "inline-changelog",
+  enforce: "pre",
+  transform(code, id) {
+    if (!id.endsWith("changelog.mdx")) return;
+    const changelogPath = resolve(__dirname, "../CHANGELOG.md");
+    const changelogContent = readFileSync(changelogPath, "utf-8");
+    return [code, changelogContent].join("\n");
+  },
+};
 
 // https://astro.build/config
 export default defineConfig({
@@ -185,7 +202,9 @@ export default defineConfig({
     "/": "/shadcn-admin-kit/docs/install",
   },
   vite: {
-    plugins: [tailwindcss()],
+    // We are loading type for vite v7 but expecting type for vite v6
+    // @ts-ignore
+    plugins: [tailwindcss(), inlineChangelogPlugin],
   },
   base: "/shadcn-admin-kit/docs/",
   site: "https://marmelab.com",
