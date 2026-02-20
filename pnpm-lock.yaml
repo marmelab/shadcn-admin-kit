@@ -279,6 +279,9 @@ importers:
       expressive-code-fullscreen:
         specifier: ^1.0.0
         version: 1.0.0(@astrojs/starlight@0.35.2(astro@5.16.12(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.55.1)(typescript@5.7.3)))(@expressive-code/core@0.41.3)
+      marked:
+        specifier: ^17.0.3
+        version: 17.0.3
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -4012,6 +4015,11 @@ packages:
 
   markdown-table@3.0.4:
     resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
+
+  marked@17.0.3:
+    resolution: {integrity: sha512-jt1v2ObpyOKR8p4XaUJVk3YWRJ5n+i4+rjQopxvV32rSndTJXvIzuUdWWIy/1pFQMkQmvTXawzDNqOH/CUmx6A==}
+    engines: {node: '>= 20'}
+    hasBin: true
 
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
@@ -9756,6 +9764,8 @@ snapshots:
   markdown-extensions@2.0.0: {}
 
   markdown-table@3.0.4: {}
+
+  marked@17.0.3: {}
 
   math-intrinsics@1.1.0: {}
 
