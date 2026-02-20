@@ -52,3 +52,40 @@ export const Undoable = () => (
     </UndoableMutationsContextProvider>
   </NotificationContextProvider>
 );
+
+const NotifyWithDurationButton = ({
+  autoHideDuration,
+}: {
+  autoHideDuration: number | null;
+}) => {
+  const notify = useNotify();
+  return (
+    <button
+      onClick={() =>
+        notify(
+          autoHideDuration
+            ? `This notification will disappear after ${autoHideDuration}ms`
+            : "This notification will not disappear automatically",
+          {
+            autoHideDuration,
+          },
+        )
+      }
+      className="cursor-pointer mb-2"
+    >
+      Trigger notification with{" "}
+      {autoHideDuration ? `${autoHideDuration}ms` : "infinite"} duration
+    </button>
+  );
+};
+
+export const AutoHideDuration = () => (
+  <NotificationContextProvider>
+    <div className="flex flex-col gap-2">
+      <NotifyWithDurationButton autoHideDuration={1000} />
+      <NotifyWithDurationButton autoHideDuration={5000} />
+      <NotifyWithDurationButton autoHideDuration={null} />
+    </div>
+    <Notification />
+  </NotificationContextProvider>
+);
