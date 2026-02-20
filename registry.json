@@ -225,6 +225,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/not-found.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/notification.tsx",
           "type": "registry:component"
         },
