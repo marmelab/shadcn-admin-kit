@@ -37,6 +37,8 @@ export * from "./layout";
 export * from "./list-guesser";
 export * from "./list-pagination";
 export * from "./list";
+export * from "./infinite-list";
+export * from "./infinite-pagination";
 export * from "./loading";
 export * from "./locales-menu-button";
 export * from "./login-page";
