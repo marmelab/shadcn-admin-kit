@@ -21,6 +21,7 @@ import {
   useDataTableSortContext,
   useDataTableStoreContext,
   useGetPathForRecordCallback,
+  useListContext,
   useRecordContext,
   useResourceContext,
   useStore,
@@ -32,6 +33,9 @@ import { ArrowDownAZ, ArrowUpZA } from "lucide-react";
 import get from "lodash/get";
 import { cn } from "@/lib/utils";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -40,8 +44,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Tooltip,
   TooltipContent,
@@ -108,7 +110,7 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
   return (
     <DataTableBase<RecordType>
       hasBulkActions={hasBulkActions}
-      loading={null}
+      loading={<DataTableSkeleton columnsCount={Children.count(children)} />}
       empty={<DataTableEmpty />}
       {...rest}
     >
@@ -286,9 +288,12 @@ const isPromise = (value: any): value is Promise<any> =>
   value && typeof value.then === "function";
 
 const DataTableEmpty = () => {
+  const translate = useTranslate();
   return (
     <Alert>
-      <AlertDescription>No results found.</AlertDescription>
+      <AlertDescription>
+        {translate("ra.page.no_results", { _: "No results found." })}
+      </AlertDescription>
     </Alert>
   );
 };
@@ -520,3 +525,41 @@ export interface DataTableNumberColumnProps<
   locales?: string | string[];
   options?: Intl.NumberFormatOptions;
 }
+
+const DataTableSkeleton = ({
+  columnsCount = 5,
+  rowsCount,
+}: {
+  columnsCount?: number;
+  rowsCount?: number;
+}) => {
+  const { perPage } = useListContext();
+  const effectiveRowsCount = rowsCount ?? perPage ?? 5;
+
+  return (
+    <div className="rounded-md border animate-pulse">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            {Array.from({ length: columnsCount }).map((_, i) => (
+              <TableHead key={i}>
+                <Skeleton className="h-4 w-[100px]" />
+              </TableHead>
+            ))}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {Array.from({ length: effectiveRowsCount }).map((_, i) => (
+            <TableRow key={i} className="hover:bg-transparent">
+              {Array.from({ length: columnsCount }).map((_, j) => (
+                <TableCell key={j}>
+                  <Skeleton className="h-4 w-full" />
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  );
+};
