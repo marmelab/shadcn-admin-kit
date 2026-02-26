@@ -30,7 +30,9 @@ const CustomDurationNotifyButton = ({
   );
 };
 
-const renderNotificationWithAutoHideDuration = (autoHideDuration: number | null) =>
+const renderNotificationWithAutoHideDuration = (
+  autoHideDuration: number | null,
+) =>
   render(
     <NotificationContextProvider>
       <UndoableMutationsContextProvider>
@@ -50,9 +52,13 @@ describe("Notification", () => {
     const screen = render(<Undoable />);
     const button = screen.getByText("Trigger mutation");
     await button.click();
-    expect(screen.getByText("mutation 1 triggered"));
+    await expect
+      .element(screen.getByText("mutation 1 triggered"))
+      .toBeInTheDocument();
     await button.click();
-    expect(screen.getByText("mutation 2 triggered"));
+    await expect
+      .element(screen.getByText("mutation 2 triggered"))
+      .toBeInTheDocument();
     const undoButtons = screen.getByText("ra.action.undo");
     await undoButtons.first().click();
     expect(screen.getByText("mutation 1 undone"));
