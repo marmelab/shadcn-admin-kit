@@ -68,6 +68,7 @@ If you need to let users select more than one item in the list, check out the [`
 | `isPending` | Optional | `boolean` | `false` | If `true`, the component will display a loading indicator. |
 | `label` | Optional | `string` &#124; `ReactNode` | `-` | The label to display for the input |
 | `matchSuggestion` | Optional | `Function` | `-` | Required if `optionText` is a React element. Function returning a boolean indicating whether a choice matches the filter. `(filter, choice) => boolean` |
+| `modal` | Optional | `boolean` | `false` | If `true`, the popover will be displayed as a modal |
 | `offline` | Optional | `ReactNode` | - | What to render when there is no network connectivity when fetching the choices |
 | `onChange` | Optional | `Function` | `-` | A function called with the new value, along with the selected record, when the input value changes |
 | `onCreate` | Optional | `Function` | `-` | A function called with the current filter value when users choose to create a new choice. |
@@ -156,6 +157,36 @@ const filterToQuery = searchText => ({ name_ilike: `%${searchText}%` });
 <ReferenceInput label="Author" source="author_id" reference="authors">
     <AutocompleteInput filterToQuery={filterToQuery} />
 </ReferenceInput>
+```
+
+## Using Inside Another Modal
+
+When used inside another modal (e.g. a `<Dialog>`), the popover containing the suggestions may struggle with some pointer events like scrolling. To fix this, set the `modal` prop to `true` to render the popover as a modal.
+
+```tsx
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { AutocompleteInput, Form } from '@/components/admin';
+
+const MyDialog = () => (
+    <Dialog open>
+        <DialogContent>
+            <DialogHeader>
+                <DialogTitle>My dialog</DialogTitle>
+            </DialogHeader>
+            <Form>
+                <AutocompleteInput
+                    source="category"
+                    choices={[
+                        { id: 'tech', name: 'Tech' },
+                        { id: 'lifestyle', name: 'Lifestyle' },
+                        { id: 'people', name: 'People' },
+                    ]}
+                    modal
+                />
+            </Form>
+        </DialogContent>
+    </Dialog>
+);
 ```
 
 ## Using A Custom Element For Options

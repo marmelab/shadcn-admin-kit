@@ -261,6 +261,7 @@ export const InsideModal = () => {
                       choices={contacts}
                       optionText={<ContactOptionRender />}
                       label="Contact"
+                      modal
                     />
                   </Form>
                 </div>
