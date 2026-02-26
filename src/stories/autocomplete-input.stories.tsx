@@ -76,6 +76,60 @@ const contacts = [
     avatar:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face",
   },
+  {
+    id: 5,
+    first_name: "David",
+    last_name: "Brown",
+    title: "Software Engineer",
+    company_name: "StartupXYZ",
+    avatar:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&crop=face",
+  },
+  {
+    id: 6,
+    first_name: "Emily",
+    last_name: "Davis",
+    title: "UX Researcher",
+    company_name: "Design Labs",
+    avatar:
+      "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face",
+  },
+  {
+    id: 7,
+    first_name: "Alex",
+    last_name: "Garcia",
+    title: "Data Scientist",
+    company_name: "AI Solutions",
+    avatar:
+      "https://images.unsplash.com/photo-1539571696257-f0389e7e00f7?w=40&h=40&fit=crop&crop=face",
+  },
+  {
+    id: 8,
+    first_name: "Lisa",
+    last_name: "Rodriguez",
+    title: "Sales Manager",
+    company_name: "Global Enterprises",
+    avatar:
+      "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=40&h=40&fit=crop&crop=face",
+  },
+  {
+    id: 9,
+    first_name: "Tom",
+    last_name: "Anderson",
+    title: "DevOps Engineer",
+    company_name: null,
+    avatar:
+      "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=40&h=40&fit=crop&crop=face",
+  },
+  {
+    id: 10,
+    first_name: "Rachel",
+    last_name: "Martinez",
+    title: "Business Analyst",
+    company_name: "Consulting Plus",
+    avatar:
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=40&h=40&fit=crop&crop=face",
+  },
 ];
 
 const Wrapper = ({ children }: React.PropsWithChildren) => (
@@ -188,3 +242,34 @@ export const OptionText = () => (
     />
   </Wrapper>
 );
+
+export const InsideModal = () => {
+  return (
+    <ThemeProvider>
+      <CoreAdminContext i18nProvider={i18nProvider}>
+        <RecordContextProvider value={record}>
+          <div>
+            <Dialog open>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Select a Contact</DialogTitle>
+                </DialogHeader>
+                <div className="py-4">
+                  <Form>
+                    <AutocompleteInput
+                      source="contact_id"
+                      choices={contacts}
+                      optionText={<ContactOptionRender />}
+                      label="Contact"
+                      modal
+                    />
+                  </Form>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
+        </RecordContextProvider>
+      </CoreAdminContext>
+    </ThemeProvider>
+  );
+};
