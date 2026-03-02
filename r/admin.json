@@ -475,7 +475,7 @@
     },
     {
       "path": "src/lib/i18nProvider.ts",
-      "content": "import defaultMessages from \"ra-language-english\";\nimport polyglotI18nProvider from \"ra-i18n-polyglot\";\nimport type { TranslationMessages } from \"ra-core\";\n\n// TODO: Move these messages to ra-core when available in the next minor release.\n// Remove this override once ra-core ships built-in guesser translations.\nconst guesserMessages = {\n  guesser: {\n    empty: {\n      title: \"No data to display\",\n      message: \"Please check your data provider\",\n    },\n  },\n};\n\nexport const i18nProvider = polyglotI18nProvider(\n  () =>\n    ({\n      ...defaultMessages,\n      ra: {\n        ...defaultMessages.ra,\n        ...guesserMessages,\n      },\n    }) as TranslationMessages,\n  \"en\",\n  [{ name: \"en\", value: \"English\" }],\n  { allowMissing: true },\n);\n",
+      "content": "import defaultMessages from \"ra-language-english\";\nimport polyglotI18nProvider from \"ra-i18n-polyglot\";\n\nexport const i18nProvider = polyglotI18nProvider(\n  () => defaultMessages,\n  \"en\",\n  [{ name: \"en\", value: \"English\" }],\n  { allowMissing: true },\n);\n",
       "type": "registry:lib"
     },
     {
