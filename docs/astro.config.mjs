@@ -140,6 +140,7 @@ export default defineConfig({
             "radiobuttongroupinput",
             "referencearrayinput",
             "referenceinput",
+            "richtextinput",
             enterpriseEntry("ReferenceManyInputBase"),
             enterpriseEntry("ReferenceManyToManyInputBase"),
             enterpriseEntry("ReferenceOneInputBase"),
