@@ -39,6 +39,10 @@
       ],
       "dependencies": [
         "@tanstack/react-query",
+        "@tiptap/extensions",
+        "@tiptap/pm",
+        "@tiptap/react",
+        "@tiptap/starter-kit",
         "class-variance-authority",
         "clsx",
         "diacritic",
@@ -281,6 +285,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/rich-text-input.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/saved-queries.tsx",
           "type": "registry:component"
         },
@@ -374,6 +382,14 @@
         },
         {
           "path": "src/components/admin/loading.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/minimal-tiptap/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/minimal-tiptap/minimal-tiptap.tsx",
           "type": "registry:component"
         },
         {
