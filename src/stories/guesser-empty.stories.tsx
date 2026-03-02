@@ -1,9 +1,9 @@
 import { ReactNode } from "react";
 import polyglotI18nProvider from "ra-i18n-polyglot";
 import { I18nContextProvider } from "ra-core";
-import type { TranslationMessages } from "ra-core";
 import { GuesserEmpty } from "@/components/admin/guesser-empty";
 import { ThemeProvider } from "@/components/admin";
+import defaultMessages from "ra-language-english";
 
 export default {
   title: "Layout/GuesserEmpty",
@@ -22,20 +22,7 @@ const StoryWrapper = ({
   theme: "system" | "light" | "dark";
 }) => <ThemeProvider defaultTheme={theme}>{children}</ThemeProvider>;
 
-const englishProvider = polyglotI18nProvider(
-  () =>
-    ({
-      ra: {
-        guesser: {
-          empty: {
-            title: "No data to display",
-            message: "Please check your data provider",
-          },
-        },
-      },
-    }) as unknown as TranslationMessages,
-  "en",
-);
+const englishProvider = polyglotI18nProvider(() => defaultMessages, "en");
 
 export const Basic = ({ theme }: { theme: "system" | "light" | "dark" }) => (
   <StoryWrapper theme={theme}>
@@ -57,10 +44,7 @@ Basic.argTypes = {
 export const English = ({ theme }: { theme: "system" | "light" | "dark" }) => (
   <StoryWrapper theme={theme}>
     <I18nContextProvider value={englishProvider}>
-      <GuesserEmpty
-        title="ra.guesser.empty.title"
-        message="ra.guesser.empty.message"
-      />
+      <GuesserEmpty />
     </I18nContextProvider>
   </StoryWrapper>
 );
