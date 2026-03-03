@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import type { Editor } from "@tiptap/react";
 import { CoreAdminContext, RecordContextProvider, required } from "ra-core";
 import { useFormContext, useWatch } from "react-hook-form";
 
@@ -156,3 +157,43 @@ export const ExternalChanges = ({
   </StoryWrapper>
 );
 Object.assign(ExternalChanges, StoryArgs);
+
+export const WithoutToolbar = ({
+  theme,
+}: {
+  theme: "system" | "light" | "dark";
+}) => (
+  <StoryWrapper theme={theme}>
+    <RichTextInput source="body" toolbar={false} />
+    <FormValues />
+  </StoryWrapper>
+);
+Object.assign(WithoutToolbar, StoryArgs);
+
+export const CustomToolbar = ({
+  theme,
+}: {
+  theme: "system" | "light" | "dark";
+}) => (
+  <StoryWrapper theme={theme}>
+    <RichTextInput
+      source="body"
+      toolbar={(editor: Editor) => (
+        <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            variant={editor.isActive("bold") ? "secondary" : "ghost"}
+            onClick={() => {
+              editor.chain().focus().toggleBold().run();
+            }}
+          >
+            Bold
+          </Button>
+          <span className="text-muted-foreground text-sm">Custom toolbar</span>
+        </div>
+      )}
+    />
+    <FormValues />
+  </StoryWrapper>
+);
+Object.assign(CustomToolbar, StoryArgs);
