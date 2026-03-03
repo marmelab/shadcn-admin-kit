@@ -27,7 +27,13 @@ export interface MinimalTiptapProps
   className?: string;
   editorContentClassName?: string;
   throttleDelay?: number;
+  toolbar?: MinimalTiptapToolbar;
 }
+
+export type MinimalTiptapToolbar =
+  | ReactNode
+  | false
+  | ((editor: Editor) => ReactNode | false);
 
 const getOutput = (editor: Editor, format: MinimalTiptapProps["output"]) => {
   switch (format) {
@@ -64,6 +70,72 @@ const ToolbarButton = ({
   </Button>
 );
 
+const DefaultToolbar = ({ editor }: { editor: Editor }) => (
+  <div className="flex flex-wrap items-center gap-1">
+    <ToolbarButton
+      label="Undo"
+      onClick={() => {
+        editor.chain().focus().undo().run();
+      }}
+    >
+      <Undo2 className="size-4" />
+    </ToolbarButton>
+    <ToolbarButton
+      label="Redo"
+      onClick={() => {
+        editor.chain().focus().redo().run();
+      }}
+    >
+      <Redo2 className="size-4" />
+    </ToolbarButton>
+    <ToolbarButton
+      label="Bold"
+      active={editor.isActive("bold")}
+      onClick={() => {
+        editor.chain().focus().toggleBold().run();
+      }}
+    >
+      <Bold className="size-4" />
+    </ToolbarButton>
+    <ToolbarButton
+      label="Italic"
+      active={editor.isActive("italic")}
+      onClick={() => {
+        editor.chain().focus().toggleItalic().run();
+      }}
+    >
+      <Italic className="size-4" />
+    </ToolbarButton>
+    <ToolbarButton
+      label="Strikethrough"
+      active={editor.isActive("strike")}
+      onClick={() => {
+        editor.chain().focus().toggleStrike().run();
+      }}
+    >
+      <Strikethrough className="size-4" />
+    </ToolbarButton>
+    <ToolbarButton
+      label="Bulleted List"
+      active={editor.isActive("bulletList")}
+      onClick={() => {
+        editor.chain().focus().toggleBulletList().run();
+      }}
+    >
+      <List className="size-4" />
+    </ToolbarButton>
+    <ToolbarButton
+      label="Numbered List"
+      active={editor.isActive("orderedList")}
+      onClick={() => {
+        editor.chain().focus().toggleOrderedList().run();
+      }}
+    >
+      <ListOrdered className="size-4" />
+    </ToolbarButton>
+  </div>
+);
+
 export const MinimalTiptapEditor = ({
   value,
   onChange,
@@ -74,6 +146,7 @@ export const MinimalTiptapEditor = ({
   className,
   editorContentClassName,
   throttleDelay = 0,
+  toolbar,
   ...editorOptions
 }: MinimalTiptapProps) => {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -205,78 +278,26 @@ export const MinimalTiptapEditor = ({
     return null;
   }
 
+  const resolvedToolbar =
+    toolbar === undefined
+      ? <DefaultToolbar editor={editor} />
+      : typeof toolbar === "function"
+        ? toolbar(editor)
+        : toolbar;
+
   return (
     <div
+      data-slot="minimal-tiptap-root"
       className={cn(
         "border-input focus-within:border-ring focus-within:ring-ring/50 flex w-full flex-col rounded-md border shadow-xs focus-within:ring-[3px]",
         className,
       )}
     >
-      <div className="border-b p-2">
-        <div className="flex flex-wrap items-center gap-1">
-          <ToolbarButton
-            label="Undo"
-            onClick={() => {
-              editor.chain().focus().undo().run();
-            }}
-          >
-            <Undo2 className="size-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            label="Redo"
-            onClick={() => {
-              editor.chain().focus().redo().run();
-            }}
-          >
-            <Redo2 className="size-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            label="Bold"
-            active={editor.isActive("bold")}
-            onClick={() => {
-              editor.chain().focus().toggleBold().run();
-            }}
-          >
-            <Bold className="size-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            label="Italic"
-            active={editor.isActive("italic")}
-            onClick={() => {
-              editor.chain().focus().toggleItalic().run();
-            }}
-          >
-            <Italic className="size-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            label="Strikethrough"
-            active={editor.isActive("strike")}
-            onClick={() => {
-              editor.chain().focus().toggleStrike().run();
-            }}
-          >
-            <Strikethrough className="size-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            label="Bulleted List"
-            active={editor.isActive("bulletList")}
-            onClick={() => {
-              editor.chain().focus().toggleBulletList().run();
-            }}
-          >
-            <List className="size-4" />
-          </ToolbarButton>
-          <ToolbarButton
-            label="Numbered List"
-            active={editor.isActive("orderedList")}
-            onClick={() => {
-              editor.chain().focus().toggleOrderedList().run();
-            }}
-          >
-            <ListOrdered className="size-4" />
-          </ToolbarButton>
+      {resolvedToolbar !== false && (
+        <div className="border-b p-2" data-slot="minimal-tiptap-toolbar">
+          {resolvedToolbar}
         </div>
-      </div>
+      )}
       <EditorContent
         editor={editor}
         className={cn("minimal-tiptap-editor p-3", editorContentClassName)}

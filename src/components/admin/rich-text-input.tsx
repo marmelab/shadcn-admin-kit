@@ -11,11 +11,13 @@ import { InputHelperText } from "@/components/admin/input-helper-text";
 import {
   MinimalTiptapEditor,
   type MinimalTiptapProps,
+  type MinimalTiptapToolbar,
 } from "@/components/ui/minimal-tiptap";
+import { cn } from "@/lib/utils";
 
 export type RichTextInputEditorOptions = Omit<
   MinimalTiptapProps,
-  "value" | "onChange" | "onBlur" | "editable" | "output"
+  "value" | "onChange" | "onBlur" | "editable" | "output" | "toolbar"
 >;
 
 export type RichTextInputProps = InputProps & {
@@ -25,6 +27,7 @@ export type RichTextInputProps = InputProps & {
   output?: MinimalTiptapProps["output"];
   placeholder?: string;
   throttleDelay?: number;
+  toolbar?: MinimalTiptapToolbar;
   editorOptions?: RichTextInputEditorOptions;
 };
 
@@ -39,6 +42,7 @@ export type RichTextInputProps = InputProps & {
 export const RichTextInput = (props: RichTextInputProps) => {
   const {
     className,
+    defaultValue = "",
     disabled,
     editorClassName,
     editorContentClassName,
@@ -50,14 +54,16 @@ export const RichTextInput = (props: RichTextInputProps) => {
     readOnly,
     source,
     throttleDelay,
+    toolbar,
     validate: _validateProp,
     format: _formatProp,
   } = props;
   const resource = useResourceContext(props);
-  const { id, field, isRequired } = useInput(props);
+  const { id, field, isRequired } = useInput({ ...props, source, defaultValue });
 
   const resolvedPlaceholder = placeholder ?? editorOptions?.placeholder;
   const resolvedThrottleDelay = throttleDelay ?? editorOptions?.throttleDelay;
+  const resolvedToolbar = toolbar;
 
   return (
     <FormField id={id} className={className} name={field.name}>
@@ -87,7 +93,8 @@ export const RichTextInput = (props: RichTextInputProps) => {
             editable={!disabled && !readOnly}
             placeholder={resolvedPlaceholder}
             throttleDelay={resolvedThrottleDelay}
-            className={editorClassName ?? editorOptions?.className}
+            toolbar={resolvedToolbar}
+            className={cn(editorOptions?.className, editorClassName)}
             editorContentClassName={
               editorContentClassName ?? editorOptions?.editorContentClassName
             }
