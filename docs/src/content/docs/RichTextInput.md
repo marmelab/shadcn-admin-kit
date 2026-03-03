@@ -32,6 +32,7 @@ import { RichTextInput } from "@/components/admin";
 | `parse` | Optional | `function` | - | Convert input value before storing |
 | `placeholder` | Optional | `string` | - | Placeholder shown when empty |
 | `readOnly` | Optional | `boolean` | `false` | Read-only mode |
+| `toolbar` | Optional | `ReactNode \| false \| (editor) => ReactNode \| false` | default toolbar | Custom toolbar content or `false` to hide it |
 | `throttleDelay` | Optional | `number` | `0` | Delay (ms) before propagating updates |
 | `validate` | Optional | `Validator \| Validator[]` | - | Validation rules |
 
@@ -45,6 +46,32 @@ Use `editorOptions` to pass additional TipTap editor options (extensions, callba
   editorOptions={{
     autofocus: true,
   }}
+/>
+```
+
+## Toolbar
+
+Hide the toolbar:
+
+```tsx
+<RichTextInput source="body" toolbar={false} />
+```
+
+Provide a custom toolbar:
+
+```tsx
+<RichTextInput
+  source="body"
+  toolbar={(editor) => (
+    <button
+      type="button"
+      onClick={() => {
+        editor.chain().focus().toggleBold().run();
+      }}
+    >
+      Bold
+    </button>
+  )}
 />
 ```
 
