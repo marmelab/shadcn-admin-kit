@@ -3,9 +3,11 @@ import { render } from "vitest-browser-react";
 
 import {
   Basic,
+  CustomToolbar,
   Disabled,
   ExternalChanges,
   ReadOnly,
+  WithoutToolbar,
   WithValidation,
 } from "@/stories/rich-text-input.stories";
 
@@ -65,4 +67,22 @@ describe("<RichTextInput />", () => {
       .element(editor as HTMLElement)
       .toHaveTextContent("Value changed externally.");
   });
+
+  it("should hide toolbar when toolbar is false", async () => {
+    const screen = render(<WithoutToolbar theme="system" />);
+
+    expect(
+      screen.container.querySelector('[data-slot="minimal-tiptap-toolbar"]'),
+    ).toBeNull();
+  });
+
+  it("should render custom toolbar when provided", async () => {
+    const screen = render(<CustomToolbar theme="system" />);
+
+    await expect.element(screen.getByText("Custom toolbar")).toBeInTheDocument();
+    await expect
+      .element(screen.getByRole("button", { name: /bold/i }))
+      .toBeInTheDocument();
+  });
+
 });
