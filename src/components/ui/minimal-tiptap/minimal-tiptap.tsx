@@ -32,8 +32,7 @@ export interface MinimalTiptapProps
 
 export type MinimalTiptapToolbar =
   | ReactNode
-  | false
-  | ((editor: Editor) => ReactNode | false);
+  | ((editor: Editor) => ReactNode);
 
 const getOutput = (editor: Editor, format: MinimalTiptapProps["output"]) => {
   switch (format) {
@@ -278,12 +277,8 @@ export const MinimalTiptapEditor = ({
     return null;
   }
 
-  const resolvedToolbar =
-    toolbar === undefined
-      ? <DefaultToolbar editor={editor} />
-      : typeof toolbar === "function"
-        ? toolbar(editor)
-        : toolbar;
+  const customToolbar = typeof toolbar === "function" ? toolbar(editor) : toolbar;
+  const resolvedToolbar = customToolbar || <DefaultToolbar editor={editor} />;
 
   return (
     <div
@@ -293,11 +288,9 @@ export const MinimalTiptapEditor = ({
         className,
       )}
     >
-      {resolvedToolbar !== false && (
-        <div className="border-b p-2" data-slot="minimal-tiptap-toolbar">
-          {resolvedToolbar}
-        </div>
-      )}
+      <div className="border-b p-2" data-slot="minimal-tiptap-toolbar">
+        {resolvedToolbar}
+      </div>
       <EditorContent
         editor={editor}
         className={cn("minimal-tiptap-editor p-3", editorContentClassName)}

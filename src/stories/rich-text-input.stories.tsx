@@ -158,18 +158,6 @@ export const ExternalChanges = ({
 );
 Object.assign(ExternalChanges, StoryArgs);
 
-export const WithoutToolbar = ({
-  theme,
-}: {
-  theme: "system" | "light" | "dark";
-}) => (
-  <StoryWrapper theme={theme}>
-    <RichTextInput source="body" toolbar={false} />
-    <FormValues />
-  </StoryWrapper>
-);
-Object.assign(WithoutToolbar, StoryArgs);
-
 export const CustomToolbar = ({
   theme,
 }: {

@@ -7,7 +7,6 @@ import {
   Disabled,
   ExternalChanges,
   ReadOnly,
-  WithoutToolbar,
   WithValidation,
 } from "@/stories/rich-text-input.stories";
 
@@ -66,14 +65,6 @@ describe("<RichTextInput />", () => {
     await expect
       .element(editor as HTMLElement)
       .toHaveTextContent("Value changed externally.");
-  });
-
-  it("should hide toolbar when toolbar is false", async () => {
-    const screen = render(<WithoutToolbar theme="system" />);
-
-    expect(
-      screen.container.querySelector('[data-slot="minimal-tiptap-toolbar"]'),
-    ).toBeNull();
   });
 
   it("should render custom toolbar when provided", async () => {
