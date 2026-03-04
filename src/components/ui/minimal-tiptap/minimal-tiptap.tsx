@@ -313,7 +313,10 @@ export const MinimalTiptapEditor = ({
         </div>
         <EditorContent
           editor={editor}
-          className={cn("minimal-tiptap-editor p-3", editorContentClassName)}
+          className={cn(
+            "minimal-tiptap-editor p-3 [&_ol]:list-decimal [&_ol]:pl-6 [&_ul]:list-disc [&_ul]:pl-6",
+            editorContentClassName,
+          )}
         />
       </div>
     </MinimalTiptapEditorContext.Provider>
