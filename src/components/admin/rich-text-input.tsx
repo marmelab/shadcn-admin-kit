@@ -14,6 +14,7 @@ import {
   MinimalTiptapEditor,
   type MinimalTiptapToolbar,
 } from "@/components/ui/minimal-tiptap";
+import { RichTextInputToolbar } from "@/components/admin/rich-text-input-toolbar";
 
 export const DefaultEditorOptions: Partial<UseEditorOptions> = {
   extensions: [StarterKit],
@@ -50,7 +51,7 @@ export const RichTextInput = (props: RichTextInputProps) => {
   const resource = useResourceContext(props);
   const { id, field, isRequired } = useInput({ ...props, source, defaultValue });
 
-  const resolvedToolbar = toolbar;
+  const resolvedToolbar = toolbar ?? <RichTextInputToolbar />;
 
   return (
     <FormField id={id} className={className} name={field.name}>
