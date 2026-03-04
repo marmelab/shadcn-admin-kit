@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "demo:build": "tsc -b && vite build",
-    "registry:build": "shadcn registry:build",
+    "registry:build": "node ./scripts/build_registry.mjs",
     "website:dev": "vite --config website/vite.config.ts --port 5174",
     "website:build": "tsc -b website && vite build --config website/vite.config.ts",
     "lint": "eslint .",
