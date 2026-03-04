@@ -1,5 +1,7 @@
 import type { InputProps } from "ra-core";
 import { FieldTitle, useInput, useResourceContext } from "ra-core";
+import type { UseEditorOptions } from "@tiptap/react";
+import { StarterKit } from "@tiptap/starter-kit";
 
 import {
   FormControl,
@@ -10,25 +12,17 @@ import {
 import { InputHelperText } from "@/components/admin/input-helper-text";
 import {
   MinimalTiptapEditor,
-  type MinimalTiptapProps,
   type MinimalTiptapToolbar,
 } from "@/components/ui/minimal-tiptap";
-import { cn } from "@/lib/utils";
 
-export type RichTextInputEditorOptions = Omit<
-  MinimalTiptapProps,
-  "value" | "onChange" | "onBlur" | "editable" | "output" | "toolbar"
->;
+export const DefaultEditorOptions: Partial<UseEditorOptions> = {
+  extensions: [StarterKit],
+};
 
 export type RichTextInputProps = InputProps & {
   className?: string;
-  editorClassName?: string;
-  editorContentClassName?: string;
-  output?: MinimalTiptapProps["output"];
-  placeholder?: string;
-  throttleDelay?: number;
   toolbar?: MinimalTiptapToolbar;
-  editorOptions?: RichTextInputEditorOptions;
+  editorOptions?: Partial<UseEditorOptions>;
 };
 
 /**
@@ -44,16 +38,11 @@ export const RichTextInput = (props: RichTextInputProps) => {
     className,
     defaultValue = "",
     disabled,
-    editorClassName,
-    editorContentClassName,
-    editorOptions,
+    editorOptions = DefaultEditorOptions,
     helperText,
     label,
-    output = "html",
-    placeholder,
     readOnly,
     source,
-    throttleDelay,
     toolbar,
     validate: _validateProp,
     format: _formatProp,
@@ -61,8 +50,6 @@ export const RichTextInput = (props: RichTextInputProps) => {
   const resource = useResourceContext(props);
   const { id, field, isRequired } = useInput({ ...props, source, defaultValue });
 
-  const resolvedPlaceholder = placeholder ?? editorOptions?.placeholder;
-  const resolvedThrottleDelay = throttleDelay ?? editorOptions?.throttleDelay;
   const resolvedToolbar = toolbar;
 
   return (
@@ -89,15 +76,9 @@ export const RichTextInput = (props: RichTextInputProps) => {
             onBlur={() => {
               field.onBlur?.();
             }}
-            output={output}
+            output="html"
             editable={!disabled && !readOnly}
-            placeholder={resolvedPlaceholder}
-            throttleDelay={resolvedThrottleDelay}
             toolbar={resolvedToolbar}
-            className={cn(editorOptions?.className, editorClassName)}
-            editorContentClassName={
-              editorContentClassName ?? editorOptions?.editorContentClassName
-            }
           />
         </div>
       </FormControl>
