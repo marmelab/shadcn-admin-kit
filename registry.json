@@ -289,6 +289,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/rich-text-input-toolbar.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/saved-queries.tsx",
           "type": "registry:component"
         },

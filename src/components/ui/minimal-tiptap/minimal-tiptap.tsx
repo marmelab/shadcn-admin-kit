@@ -1,4 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, type ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  type ReactNode,
+} from "react";
 import { Bold, Italic, List, ListOrdered, Redo2, Strikethrough, Undo2 } from "lucide-react";
 import { Placeholder } from "@tiptap/extensions";
 import { StarterKit } from "@tiptap/starter-kit";
@@ -31,8 +39,12 @@ export interface MinimalTiptapProps
 }
 
 export type MinimalTiptapToolbar =
-  | ReactNode
-  | ((editor: Editor) => ReactNode);
+  ReactNode;
+
+const MinimalTiptapEditorContext = createContext<Editor | null>(null);
+
+export const useMinimalTiptapEditor = () =>
+  useContext(MinimalTiptapEditorContext);
 
 const getOutput = (editor: Editor, format: MinimalTiptapProps["output"]) => {
   switch (format) {
@@ -50,17 +62,20 @@ const ToolbarButton = ({
   label,
   active,
   onClick,
+  disabled,
   children,
 }: {
   label: string;
   active?: boolean;
   onClick: () => void;
+  disabled?: boolean;
   children: ReactNode;
 }) => (
   <Button
     type="button"
     size="icon"
     variant={active ? "secondary" : "ghost"}
+    disabled={disabled}
     onClick={onClick}
     aria-label={label}
     title={label}
@@ -73,6 +88,7 @@ const DefaultToolbar = ({ editor }: { editor: Editor }) => (
   <div className="flex flex-wrap items-center gap-1">
     <ToolbarButton
       label="Undo"
+      disabled={!editor.isEditable}
       onClick={() => {
         editor.chain().focus().undo().run();
       }}
@@ -81,6 +97,7 @@ const DefaultToolbar = ({ editor }: { editor: Editor }) => (
     </ToolbarButton>
     <ToolbarButton
       label="Redo"
+      disabled={!editor.isEditable}
       onClick={() => {
         editor.chain().focus().redo().run();
       }}
@@ -90,6 +107,7 @@ const DefaultToolbar = ({ editor }: { editor: Editor }) => (
     <ToolbarButton
       label="Bold"
       active={editor.isActive("bold")}
+      disabled={!editor.isEditable}
       onClick={() => {
         editor.chain().focus().toggleBold().run();
       }}
@@ -99,6 +117,7 @@ const DefaultToolbar = ({ editor }: { editor: Editor }) => (
     <ToolbarButton
       label="Italic"
       active={editor.isActive("italic")}
+      disabled={!editor.isEditable}
       onClick={() => {
         editor.chain().focus().toggleItalic().run();
       }}
@@ -108,6 +127,7 @@ const DefaultToolbar = ({ editor }: { editor: Editor }) => (
     <ToolbarButton
       label="Strikethrough"
       active={editor.isActive("strike")}
+      disabled={!editor.isEditable}
       onClick={() => {
         editor.chain().focus().toggleStrike().run();
       }}
@@ -117,6 +137,7 @@ const DefaultToolbar = ({ editor }: { editor: Editor }) => (
     <ToolbarButton
       label="Bulleted List"
       active={editor.isActive("bulletList")}
+      disabled={!editor.isEditable}
       onClick={() => {
         editor.chain().focus().toggleBulletList().run();
       }}
@@ -126,6 +147,7 @@ const DefaultToolbar = ({ editor }: { editor: Editor }) => (
     <ToolbarButton
       label="Numbered List"
       active={editor.isActive("orderedList")}
+      disabled={!editor.isEditable}
       onClick={() => {
         editor.chain().focus().toggleOrderedList().run();
       }}
@@ -277,25 +299,24 @@ export const MinimalTiptapEditor = ({
     return null;
   }
 
-  const customToolbar = typeof toolbar === "function" ? toolbar(editor) : toolbar;
-  const resolvedToolbar = customToolbar || <DefaultToolbar editor={editor} />;
-
   return (
-    <div
-      data-slot="minimal-tiptap-root"
-      className={cn(
-        "border-input focus-within:border-ring focus-within:ring-ring/50 flex w-full flex-col rounded-md border shadow-xs focus-within:ring-[3px]",
-        className,
-      )}
-    >
-      <div className="border-b p-2" data-slot="minimal-tiptap-toolbar">
-        {resolvedToolbar}
+    <MinimalTiptapEditorContext.Provider value={editor}>
+      <div
+        data-slot="minimal-tiptap-root"
+        className={cn(
+          "border-input focus-within:border-ring focus-within:ring-ring/50 flex w-full flex-col rounded-md border shadow-xs focus-within:ring-[3px]",
+          className,
+        )}
+      >
+        <div className="border-b p-2" data-slot="minimal-tiptap-toolbar">
+          {toolbar ?? <DefaultToolbar editor={editor} />}
+        </div>
+        <EditorContent
+          editor={editor}
+          className={cn("minimal-tiptap-editor p-3", editorContentClassName)}
+        />
       </div>
-      <EditorContent
-        editor={editor}
-        className={cn("minimal-tiptap-editor p-3", editorContentClassName)}
-      />
-    </div>
+    </MinimalTiptapEditorContext.Provider>
   );
 };
 
