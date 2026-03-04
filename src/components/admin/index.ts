@@ -54,8 +54,6 @@ export * from "./reference-input";
 export * from "./reference-many-count";
 export * from "./reference-many-field";
 export * from "./refresh-button";
-export * from "./rich-text-input";
-export * from "./rich-text-input-toolbar";
 export * from "./saved-queries";
 export * from "./search-input";
 export * from "./select-all-button";

@@ -3,12 +3,19 @@ title: "RichTextInput"
 ---
 
 Use `<RichTextInput>` to edit rich text content in a WYSIWYG editor (TipTap) and store it as HTML.
+This is an optional component and is not included in the `admin` registry block by default.
+
+Install it with:
+
+```bash
+npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/rich-text-input.json
+```
 
 ## Usage
 
 ```tsx
 import { Edit, SimpleForm } from '@/components/admin';
-import { RichTextInput } from '@/components/admin';
+import { RichTextInput } from '@/components/rich-text-input';
 
 const PostEdit = () => (
     <Edit>
@@ -33,7 +40,7 @@ const PostEdit = () => (
 Use `editorOptions` to pass TipTap configuration.
 
 ```tsx
-import { DefaultEditorOptions, RichTextInput } from '@/components/admin';
+import { DefaultEditorOptions, RichTextInput } from '@/components/rich-text-input';
 import type { Editor } from '@tiptap/react';
 
 <RichTextInput
@@ -55,10 +62,12 @@ Default toolbar includes:
 - Undo / Redo
 - Bold / Italic / Underline / Strikethrough / Code
 - Heading 1 / Heading 2
+- Text color
 - Bulleted / Numbered lists
 - Blockquote
 - Add link / Remove link
 - Clear formatting
+- Image actions
 
 You can also provide custom toolbar children:
 
@@ -67,7 +76,7 @@ import {
     RichTextInput,
     RichTextInputToolbar,
     useRichTextInputEditor,
-} from '@/components/admin';
+} from '@/components/rich-text-input';
 import { Button } from '@/components/ui/button';
 
 const BoldOnlyButton = () => {
@@ -104,12 +113,11 @@ To call editor commands outside the toolbar, keep a ref in `editorOptions.onCrea
 import React from 'react';
 import type { Editor } from '@tiptap/react';
 import {
-    DefaultEditorOptions,
     FormToolbar,
-    RichTextInput,
     SaveButton,
     SimpleForm,
 } from '@/components/admin';
+import { DefaultEditorOptions, RichTextInput } from '@/components/rich-text-input';
 import { Button } from '@/components/ui/button';
 
 const PostForm = () => {
@@ -152,7 +160,7 @@ If you don't need it on every screen, lazy-load it:
 
 ```tsx
 const RichTextInput = React.lazy(() =>
-    import('@/components/admin').then((module) => ({
+    import('@/components/rich-text-input').then((module) => ({
         default: module.RichTextInput,
     })),
 );

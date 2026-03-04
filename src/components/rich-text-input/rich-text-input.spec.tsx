@@ -8,7 +8,7 @@ import {
   ReadOnly,
   Toolbar,
   Validation,
-} from "@/stories/rich-text-input.stories";
+} from "@/components/rich-text-input/rich-text-input.stories";
 
 const getEditorElement = (container: HTMLElement) =>
   container.querySelector(".ProseMirror");

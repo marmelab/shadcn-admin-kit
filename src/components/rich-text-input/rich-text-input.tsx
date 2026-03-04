@@ -1,7 +1,6 @@
 import type { InputProps } from "ra-core";
 import { FieldTitle, useInput, useResourceContext } from "ra-core";
 import type { UseEditorOptions } from "@tiptap/react";
-import { StarterKit } from "@tiptap/starter-kit";
 
 import {
   FormControl,
@@ -13,12 +12,10 @@ import { InputHelperText } from "@/components/admin/input-helper-text";
 import {
   MinimalTiptapEditor,
   type MinimalTiptapToolbar,
-} from "@/components/ui/minimal-tiptap";
-import { RichTextInputToolbar } from "@/components/admin/rich-text-input-toolbar";
+} from "@/components/rich-text-input/minimal-tiptap";
+import { RichTextInputToolbar } from "@/components/rich-text-input/rich-text-input-toolbar";
 
-export const DefaultEditorOptions: Partial<UseEditorOptions> = {
-  extensions: [StarterKit],
-};
+export const DefaultEditorOptions: Partial<UseEditorOptions> = {};
 
 export type RichTextInputProps = InputProps & {
   className?: string;

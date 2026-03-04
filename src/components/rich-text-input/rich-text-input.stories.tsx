@@ -4,15 +4,17 @@ import { CoreAdminContext, RecordContextProvider, required } from "ra-core";
 import { useFormContext, useWatch } from "react-hook-form";
 
 import {
-  DefaultEditorOptions,
   FormToolbar,
-  RichTextInput,
-  RichTextInputToolbar,
   SaveButton,
   SimpleForm,
   ThemeProvider,
-  useRichTextInputEditor,
 } from "@/components/admin";
+import {
+  DefaultEditorOptions,
+  RichTextInput,
+  RichTextInputToolbar,
+  useRichTextInputEditor,
+} from "@/components/rich-text-input";
 import { Button } from "@/components/ui/button";
 import { i18nProvider } from "@/lib/i18nProvider";
 
