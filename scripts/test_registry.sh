@@ -2,18 +2,6 @@
 
 set -e
 
-ROOT_DIR="$(pwd)"
-SERVER_PID=""
-
-cleanup() {
-  if [ -n "$SERVER_PID" ] && kill -0 "$SERVER_PID" 2>/dev/null; then
-    kill "$SERVER_PID"
-  fi
-  rm -rf "$ROOT_DIR/temp" "$ROOT_DIR/temp-rich-text-input"
-}
-
-trap cleanup EXIT
-
 setup_temp_app() {
   local target_dir=$1
 
@@ -45,7 +33,7 @@ setup_temp_app ./temp
 
 echo "Installing dependencies"
 cd ./temp
-pnpm install --ignore-workspace --lockfile=false
+pnpm install
 
 echo "Adding registry components"
 pnpm dlx shadcn@latest add http://localhost:8080/r/admin.json
@@ -60,7 +48,7 @@ setup_temp_app ./temp-rich-text-input
 
 echo "Installing dependencies"
 cd ./temp-rich-text-input
-pnpm install --ignore-workspace --lockfile=false
+pnpm install
 
 echo "Configuring custom registry alias for namespaced dependencies"
 node -e "const fs = require('fs'); const path = './components.json'; const json = JSON.parse(fs.readFileSync(path, 'utf8')); json.registries = { ...(json.registries || {}), '@shadcn-admin-kit': 'http://localhost:8080/r/{name}.json' }; fs.writeFileSync(path, JSON.stringify(json, null, 2));"
@@ -70,5 +58,8 @@ pnpm dlx shadcn@latest add http://localhost:8080/r/rich-text-input.json
 
 echo "Building generated rich-text-input app"
 pnpm run build
+
+echo "Stopping registry server"
+kill $SERVER_PID
 
 echo "All done!"
