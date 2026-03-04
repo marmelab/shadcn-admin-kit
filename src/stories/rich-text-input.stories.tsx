@@ -1,12 +1,17 @@
-import { ReactNode } from "react";
+import { ReactNode, useRef } from "react";
 import type { Editor } from "@tiptap/react";
 import { CoreAdminContext, RecordContextProvider, required } from "ra-core";
 import { useFormContext, useWatch } from "react-hook-form";
 
 import {
+  DefaultEditorOptions,
+  FormToolbar,
   RichTextInput,
+  RichTextInputToolbar,
+  SaveButton,
   SimpleForm,
   ThemeProvider,
+  useRichTextInputEditor,
 } from "@/components/admin";
 import { Button } from "@/components/ui/button";
 import { i18nProvider } from "@/lib/i18nProvider";
@@ -29,15 +34,17 @@ const StoryWrapper = ({
   children,
   theme,
   defaultValues,
+  toolbar,
 }: {
   children: ReactNode;
   theme: "system" | "light" | "dark";
   defaultValues?: Record<string, unknown>;
+  toolbar?: ReactNode;
 }) => (
   <ThemeProvider defaultTheme={theme}>
     <CoreAdminContext i18nProvider={i18nProvider}>
       <RecordContextProvider value={defaultValues ?? record}>
-        <SimpleForm>{children}</SimpleForm>
+        <SimpleForm toolbar={toolbar}>{children}</SimpleForm>
       </RecordContextProvider>
     </CoreAdminContext>
   </ThemeProvider>
@@ -122,19 +129,7 @@ export const ReadOnly = ({
 );
 Object.assign(ReadOnly, StoryArgs);
 
-export const WithHelperText = ({
-  theme,
-}: {
-  theme: "system" | "light" | "dark";
-}) => (
-  <StoryWrapper theme={theme}>
-    <RichTextInput source="body" helperText="Use the toolbar to format text" />
-    <FormValues />
-  </StoryWrapper>
-);
-Object.assign(WithHelperText, StoryArgs);
-
-export const WithValidation = ({
+export const Validation = ({
   theme,
 }: {
   theme: "system" | "light" | "dark";
@@ -144,7 +139,83 @@ export const WithValidation = ({
     <FormValues />
   </StoryWrapper>
 );
-Object.assign(WithValidation, StoryArgs);
+Object.assign(Validation, StoryArgs);
+
+const BoldButton = () => {
+  const editor = useRichTextInputEditor();
+  if (!editor) {
+    return null;
+  }
+
+  return (
+    <Button
+      type="button"
+      variant={editor.isActive("bold") ? "secondary" : "ghost"}
+      onClick={() => {
+        editor.chain().focus().toggleBold().run();
+      }}
+    >
+      Bold
+    </Button>
+  );
+};
+
+const MyRichTextInputToolbar = () => (
+  <RichTextInputToolbar>
+    <BoldButton />
+  </RichTextInputToolbar>
+);
+
+export const Toolbar = ({
+  theme,
+}: {
+  theme: "system" | "light" | "dark";
+}) => (
+  <StoryWrapper theme={theme}>
+    <RichTextInput source="body" toolbar={<MyRichTextInputToolbar />} />
+    <FormValues />
+  </StoryWrapper>
+);
+Object.assign(Toolbar, StoryArgs);
+
+export const EditorReference = ({
+  theme,
+}: {
+  theme: "system" | "light" | "dark";
+}) => {
+  const editorRef = useRef<Editor | null>(null);
+
+  return (
+    <StoryWrapper
+      theme={theme}
+      toolbar={
+        <FormToolbar>
+          <SaveButton />
+          <Button
+            type="button"
+            onClick={() => {
+              editorRef.current?.commands.setContent("<h3>Here is my template</h3>");
+            }}
+          >
+            Use template
+          </Button>
+        </FormToolbar>
+      }
+    >
+      <RichTextInput
+        source="body"
+        editorOptions={{
+          ...DefaultEditorOptions,
+          onCreate: ({ editor: nextEditor }) => {
+            editorRef.current = nextEditor;
+          },
+        }}
+      />
+      <FormValues />
+    </StoryWrapper>
+  );
+};
+Object.assign(EditorReference, StoryArgs);
 
 export const ExternalChanges = ({
   theme,
@@ -154,34 +225,7 @@ export const ExternalChanges = ({
   <StoryWrapper theme={theme}>
     <RichTextInput source="body" />
     <BodyHelper />
-  </StoryWrapper>
-);
-Object.assign(ExternalChanges, StoryArgs);
-
-export const CustomToolbar = ({
-  theme,
-}: {
-  theme: "system" | "light" | "dark";
-}) => (
-  <StoryWrapper theme={theme}>
-    <RichTextInput
-      source="body"
-      toolbar={(editor: Editor) => (
-        <div className="flex items-center gap-2">
-          <Button
-            type="button"
-            variant={editor.isActive("bold") ? "secondary" : "ghost"}
-            onClick={() => {
-              editor.chain().focus().toggleBold().run();
-            }}
-          >
-            Bold
-          </Button>
-          <span className="text-muted-foreground text-sm">Custom toolbar</span>
-        </div>
-      )}
-    />
     <FormValues />
   </StoryWrapper>
 );
-Object.assign(CustomToolbar, StoryArgs);
+Object.assign(ExternalChanges, StoryArgs);

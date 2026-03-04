@@ -3,11 +3,11 @@ import { render } from "vitest-browser-react";
 
 import {
   Basic,
-  CustomToolbar,
   Disabled,
   ExternalChanges,
   ReadOnly,
-  WithValidation,
+  Toolbar,
+  Validation,
 } from "@/stories/rich-text-input.stories";
 
 const getEditorElement = (container: HTMLElement) =>
@@ -33,6 +33,9 @@ describe("<RichTextInput />", () => {
       "contenteditable",
       "false",
     );
+    await expect
+      .element(screen.getByRole("button", { name: /bold/i }))
+      .toBeDisabled();
   });
 
   it("should render as readOnly", async () => {
@@ -44,10 +47,13 @@ describe("<RichTextInput />", () => {
       "contenteditable",
       "false",
     );
+    await expect
+      .element(screen.getByRole("button", { name: /bold/i }))
+      .toBeDisabled();
   });
 
   it("should display validation error when required and empty", async () => {
-    const screen = render(<WithValidation theme="system" />);
+    const screen = render(<Validation theme="system" />);
     const submitButton = screen.getByRole("button", { name: /save/i });
 
     await submitButton.click();
@@ -68,9 +74,8 @@ describe("<RichTextInput />", () => {
   });
 
   it("should render custom toolbar when provided", async () => {
-    const screen = render(<CustomToolbar theme="system" />);
+    const screen = render(<Toolbar theme="system" />);
 
-    await expect.element(screen.getByText("Custom toolbar")).toBeInTheDocument();
     await expect
       .element(screen.getByRole("button", { name: /bold/i }))
       .toBeInTheDocument();
