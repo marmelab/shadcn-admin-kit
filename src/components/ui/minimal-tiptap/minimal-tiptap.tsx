@@ -314,7 +314,7 @@ export const MinimalTiptapEditor = ({
         <EditorContent
           editor={editor}
           className={cn(
-            "minimal-tiptap-editor p-3 [&_ol]:list-decimal [&_ol]:pl-6 [&_ul]:list-disc [&_ul]:pl-6",
+            "minimal-tiptap-editor p-3 [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_a]:decoration-primary/70 [&_a]:cursor-pointer [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:leading-tight [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:leading-tight [&_ol]:list-decimal [&_ol]:pl-6 [&_ul]:list-disc [&_ul]:pl-6 [&_blockquote]:border-l-4 [&_blockquote]:border-border [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-muted-foreground",
             editorContentClassName,
           )}
         />
