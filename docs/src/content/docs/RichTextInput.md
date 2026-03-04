@@ -50,6 +50,15 @@ import type { Editor } from '@tiptap/react';
 ## `toolbar`
 
 By default, `<RichTextInput>` renders the kit toolbar.
+Default toolbar includes:
+
+- Undo / Redo
+- Bold / Italic / Underline / Strikethrough / Code
+- Heading 1 / Heading 2
+- Bulleted / Numbered lists
+- Blockquote
+- Add link / Remove link
+- Clear formatting
 
 You can also provide custom toolbar children:
 

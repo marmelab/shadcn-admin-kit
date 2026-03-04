@@ -22,6 +22,15 @@ describe("<RichTextInput />", () => {
     await expect
       .element(editor as HTMLElement)
       .toHaveTextContent("This is an initial rich text value.");
+    await expect
+      .element(screen.getByRole("button", { name: /underline/i }))
+      .toBeInTheDocument();
+    await expect
+      .element(screen.getByRole("button", { name: /heading 1/i }))
+      .toBeInTheDocument();
+    await expect
+      .element(screen.getByRole("button", { name: /add link/i }))
+      .toBeInTheDocument();
   });
 
   it("should render as disabled", async () => {
@@ -36,6 +45,9 @@ describe("<RichTextInput />", () => {
     await expect
       .element(screen.getByRole("button", { name: /bold/i }))
       .toBeDisabled();
+    await expect
+      .element(screen.getByRole("button", { name: /underline/i }))
+      .toBeDisabled();
   });
 
   it("should render as readOnly", async () => {
@@ -49,6 +61,9 @@ describe("<RichTextInput />", () => {
     );
     await expect
       .element(screen.getByRole("button", { name: /bold/i }))
+      .toBeDisabled();
+    await expect
+      .element(screen.getByRole("button", { name: /underline/i }))
       .toBeDisabled();
   });
 
