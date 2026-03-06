@@ -106,25 +106,6 @@ export const SectionOne: React.FC<SectionOneProps> = ({
     [editor]
   )
 
-  const renderMenuItem = React.useCallback(
-    ({ label, element: Element, level, className, shortcuts }: TextStyle) => (
-      <DropdownMenuItem
-        key={label}
-        onClick={() => handleStyleChange(level)}
-        className={cn("flex flex-row items-center justify-between gap-4", {
-          "bg-accent": level
-            ? editor.isActive("heading", { level })
-            : editor.isActive("paragraph"),
-        })}
-        aria-label={label}
-      >
-        <Element className={className}>{label}</Element>
-        <ShortcutKey keys={shortcuts} />
-      </DropdownMenuItem>
-    ),
-    [editor, handleStyleChange]
-  )
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -133,7 +114,7 @@ export const SectionOne: React.FC<SectionOneProps> = ({
           tooltip="Text styles"
           aria-label="Text styles"
           pressed={editor.isActive("heading")}
-          disabled={editor.isActive("codeBlock")}
+          disabled={!editor.isEditable || editor.isActive("codeBlock")}
           size={size}
           variant={variant}
           className="gap-0"
@@ -143,7 +124,24 @@ export const SectionOne: React.FC<SectionOneProps> = ({
         </ToolbarButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-full">
-        {filteredActions.map(renderMenuItem)}
+        {filteredActions.map((action) => (
+          <DropdownMenuItem
+            key={action.label}
+            onClick={() => handleStyleChange(action.level)}
+            disabled={!editor.isEditable}
+            className={cn("flex flex-row items-center justify-between gap-4", {
+              "bg-accent": action.level
+                ? editor.isActive("heading", { level: action.level })
+                : editor.isActive("paragraph"),
+            })}
+            aria-label={action.label}
+          >
+            <action.element className={action.className}>
+              {action.label}
+            </action.element>
+            <ShortcutKey keys={action.shortcuts} />
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   )

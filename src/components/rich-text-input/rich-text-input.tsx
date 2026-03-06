@@ -26,10 +26,8 @@ export type RichTextInputProps = InputProps & {
 /**
  * Rich text editor input powered by TipTap.
  *
- * Stores HTML by default and supports the usual react-admin input props.
+ * Stores HTML by default and supports the usual input props used by the kit.
  * Pass additional TipTap options via `editorOptions`.
- *
- * @see {@link https://marmelab.com/react-admin/RichTextInput.html React-admin RichTextInput}
  */
 export const RichTextInput = (props: RichTextInputProps) => {
   const {
