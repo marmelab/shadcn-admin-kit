@@ -64,7 +64,7 @@ const StoryArgs = {
 
 const FormValues = () => {
   const values = useWatch();
-  return <pre>{JSON.stringify(values, null, 2)}</pre>;
+  return <pre className="whitespace-pre-wrap break-words">{JSON.stringify(values, null, 2)}</pre>;
 };
 
 const BodyHelper = () => {

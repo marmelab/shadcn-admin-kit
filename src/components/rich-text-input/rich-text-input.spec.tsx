@@ -8,7 +8,7 @@ import {
   ReadOnly,
   Toolbar,
   Validation,
-} from "@/components/rich-text-input/rich-text-input.stories";
+} from "@/stories/rich-text-input.stories";
 
 const getEditorElement = (container: HTMLElement) =>
   container.querySelector(".ProseMirror");
@@ -36,6 +36,9 @@ describe("<RichTextInput />", () => {
       "contenteditable",
       "false",
     );
+    await expect
+      .element(screen.getByRole("button", { name: /bold/i }))
+      .toBeDisabled();
   });
 
   it("should render as readOnly", async () => {
@@ -47,6 +50,9 @@ describe("<RichTextInput />", () => {
       "contenteditable",
       "false",
     );
+    await expect
+      .element(screen.getByRole("button", { name: /bold/i }))
+      .toBeDisabled();
   });
 
   it("should display validation error when required and empty", async () => {
