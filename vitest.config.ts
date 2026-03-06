@@ -12,6 +12,7 @@ export default defineConfig({
     testTimeout: 2500,
     include: [
       "src/components/admin/**/*.spec.{ts,tsx}",
+      "src/components/rich-text-input/**/*.spec.{ts,tsx}",
       "src/{hooks,lib,stories}/**/*.spec.{ts,tsx}",
     ],
     browser: {
