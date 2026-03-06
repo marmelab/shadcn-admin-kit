@@ -5,6 +5,8 @@ title: "RichTextInput"
 Use `<RichTextInput>` to edit rich text content in a WYSIWYG editor (TipTap) and store it as HTML.
 This is an optional component and is not included in the `admin` registry block by default.
 
+![RichTextInput](./images/rich-text-input.png)
+
 Install it with:
 
 ```bash
@@ -30,10 +32,18 @@ const PostEdit = () => (
 
 | Prop | Required | Type | Default | Description |
 |------|----------|------|---------|-------------|
+| `source` | Required | `string` | - | Field name |
+| `className` | Optional | `string` | - | CSS classes applied to the field wrapper |
+| `defaultValue` | Optional | `string` | - | Default editor value |
+| `disabled` | Optional | `boolean` | - | Disable the editor |
 | `editorOptions` | Optional | `Object` | - | Options object passed to the underlying TipTap editor |
+| `format` | Optional | `function` | - | Callback taking the value from the form state and returning the input value |
+| `helperText` | Optional | `ReactNode` | - | Help text displayed below the input |
+| `label` | Optional | `string \| false` | Inferred from `source` | Custom label, or `false` to hide it |
+| `parse` | Optional | `function` | - | Callback taking the editor value and returning the stored form value |
+| `readOnly` | Optional | `boolean` | - | Make the editor read-only |
 | `toolbar` | Optional | `ReactNode` | default toolbar | Toolbar to render above the editor |
-
-`<RichTextInput>` also accepts the common react-admin input props.
+| `validate` | Optional | `Validator \| Validator[]` | - | Validation rules |
 
 ## `editorOptions`
 
@@ -56,8 +66,7 @@ import type { Editor } from '@tiptap/react';
 
 ## `toolbar`
 
-By default, `<RichTextInput>` renders the kit toolbar.
-Default toolbar includes:
+By default, `<RichTextInput>` renders the kit toolbar. The default toolbar includes:
 
 - Undo / Redo
 - Bold / Italic / Underline / Strikethrough / Code
