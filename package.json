@@ -22,6 +22,8 @@
     "doc:build": "cd docs && pnpm run build"
   },
   "dependencies": {
+    "@base-ui/react": "^1.2.0",
+    "@fontsource-variable/inter": "^5.2.8",
     "@hookform/resolvers": "^5.0.1",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-avatar": "^1.1.7",
@@ -93,7 +95,7 @@
     "prettier": "^3.8.1",
     "ra-data-json-server": "^5.13.6",
     "react-error-boundary": "^6.1.0",
-    "shadcn": "3.8.5",
+    "shadcn": "4.0.3",
     "storybook": "^10.2.12",
     "tw-animate-css": "^1.4.0",
     "typescript": "~5.7.2",
