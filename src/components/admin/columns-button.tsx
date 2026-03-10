@@ -26,7 +26,6 @@ import {
   type ExtractRecordPaths,
 } from "ra-core";
 import { Columns, Search } from "lucide-react";
-import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,7 +35,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Popover, PopoverTrigger } from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
 /**
@@ -78,40 +77,37 @@ export const ColumnsButton = (props: ColumnsButtonProps) => {
   return (
     <span className={cn("inline-flex", className)}>
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          {isMobile ? (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  aria-label={title}
-                  {...rest}
-                >
-                  <Columns className="size-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>{title}</TooltipContent>
-            </Tooltip>
-          ) : (
-            <Button variant="outline" className="cursor-pointer" {...rest}>
-              <Columns />
-              {title}
-            </Button>
-          )}
-        </PopoverTrigger>
-        <PopoverPrimitive.Portal forceMount>
-          <div className={open ? "block" : "hidden"}>
-            <PopoverPrimitive.Content
-              data-slot="popover-content"
-              sideOffset={4}
-              align="start"
-              className="bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-72 origin-(--radix-popover-content-transform-origin) rounded-md border shadow-md outline-hidden p-0 min-w-[200px]"
+        {isMobile ? (
+          <Tooltip>
+            <PopoverTrigger
+              render={
+                <TooltipTrigger
+                  render={
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      aria-label={title}
+                      {...rest}
+                    />
+                  }
+                />
+              }
             >
-              <div id={`${storeKey}-columnsSelector`} className="p-2" />
-            </PopoverPrimitive.Content>
-          </div>
-        </PopoverPrimitive.Portal>
+              <Columns className="size-4" />
+            </PopoverTrigger>
+            <TooltipContent>{title}</TooltipContent>
+          </Tooltip>
+        ) : (
+          <PopoverTrigger
+            render={<Button variant="outline" className="cursor-pointer" {...rest} />}
+          >
+            <Columns />
+            {title}
+          </PopoverTrigger>
+        )}
+        <PopoverContent align="start" className="w-72 min-w-[200px] p-0">
+          <div id={`${storeKey}-columnsSelector`} className="p-2" />
+        </PopoverContent>
       </Popover>
     </span>
   );
