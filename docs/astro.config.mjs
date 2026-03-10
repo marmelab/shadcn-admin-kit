@@ -143,6 +143,7 @@ export default defineConfig({
             enterpriseEntry("ReferenceManyInputBase"),
             enterpriseEntry("ReferenceManyToManyInputBase"),
             enterpriseEntry("ReferenceOneInputBase"),
+            "richtextinput",
             "savebutton",
             "searchinput",
             "selectinput",
