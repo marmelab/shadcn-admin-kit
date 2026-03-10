@@ -19,22 +19,30 @@ export function Hero() {
                 admin panels, B2B apps, and dashboards with React.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                <Button asChild size="lg">
-                  <a
-                    href="https://marmelab.com/shadcn-admin-kit/docs/install/"
-                    target="_blank"
-                  >
-                    Get started
-                  </a>
+                <Button
+                  size="lg"
+                  render={
+                    <a
+                      href="https://marmelab.com/shadcn-admin-kit/docs/install/"
+                      target="_blank"
+                    />
+                  }
+                  nativeButton={false}
+                >
+                  Get started
                 </Button>
-                <Button asChild variant="ghost" size="lg">
-                  <a
-                    href="https://marmelab.com/shadcn-admin-kit/demo"
-                    // className="text-sm font-semibold leading-6 text-gray-900"
-                    target="_blank"
-                  >
-                    Test it online <span aria-hidden="true">→</span>
-                  </a>
+                <Button
+                  variant="ghost"
+                  size="lg"
+                  render={
+                    <a
+                      href="https://marmelab.com/shadcn-admin-kit/demo"
+                      target="_blank"
+                    />
+                  }
+                  nativeButton={false}
+                >
+                  Test it online <span aria-hidden="true">→</span>
                 </Button>
               </div>
             </div>

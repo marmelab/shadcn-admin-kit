@@ -69,13 +69,17 @@ export function Backends() {
                     + 40 more
                   </div>
                 </div>
-                <Button asChild className="mt-6 lg:my-6">
-                  <a
-                    href="https://marmelab.com/shadcn-admin-kit/docs/dataproviders/"
-                    target="_blank"
-                  >
-                    Learn More
-                  </a>
+                <Button
+                  className="mt-6 lg:my-6"
+                  render={
+                    <a
+                      href="https://marmelab.com/shadcn-admin-kit/docs/dataproviders/"
+                      target="_blank"
+                    />
+                  }
+                  nativeButton={false}
+                >
+                  Learn More
                 </Button>
               </div>
             </div>

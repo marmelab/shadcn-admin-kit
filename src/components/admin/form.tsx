@@ -15,8 +15,6 @@ import {
   warning,
 } from "ra-core";
 import { Loader2, Save } from "lucide-react";
-import * as LabelPrimitive from "@radix-ui/react-label";
-import { Slot } from "@radix-ui/react-slot";
 import { FormProvider, useFormContext, useFormState } from "react-hook-form";
 import type { UseMutationOptions } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
@@ -80,7 +78,7 @@ type FormItemProps = Omit<React.ComponentProps<"div">, "id"> & {
 function FormLabel({
   className,
   ...props
-}: React.ComponentProps<typeof LabelPrimitive.Root>) {
+}: React.ComponentProps<typeof Label>) {
   const { error, formItemId } = useFormField();
 
   return (
@@ -94,23 +92,30 @@ function FormLabel({
   );
 }
 
-function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
+function FormControl({
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLElement> & { children: React.ReactElement }) {
   const { error, formItemId, formDescriptionId, formMessageId } =
     useFormField();
+  const describedBy = !error
+    ? formDescriptionId
+    : `${formDescriptionId} ${formMessageId}`;
 
-  return (
-    <Slot
-      data-slot="form-control"
-      id={formItemId}
-      aria-describedby={
-        !error
-          ? `${formDescriptionId}`
-          : `${formDescriptionId} ${formMessageId}`
-      }
-      aria-invalid={!!error}
-      {...props}
-    />
-  );
+  if (!React.isValidElement(children)) {
+    return children;
+  }
+
+  const child = children as React.ReactElement<Record<string, unknown>>;
+
+  return React.createElement(child.type as React.ElementType, {
+    ...child.props,
+    ...(props as Record<string, unknown>),
+    "data-slot": "form-control",
+    id: formItemId,
+    "aria-describedby": describedBy,
+    "aria-invalid": !!error,
+  });
 }
 
 function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
