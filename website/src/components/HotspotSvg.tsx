@@ -224,42 +224,44 @@ const HotspotSvg = () => {
           </svg>
           {Object.entries(HOTSPOTS).map(([key, hotspot]) => (
             <Tooltip key={key}>
-              <TooltipTrigger asChild>
-                <div
-                  className="absolute group/highlight pointer-events-none hover:z-[5]"
-                  style={{
-                    left: hotspot.x,
-                    top: hotspot.y,
-                    width: hotspot.width,
-                    height: hotspot.height,
-                  }}
-                >
-                  <div className="z-[2] group-hover/highlight:drop-shadow-xl/25 pointer-events-auto transition-[filter] ease-in-out duration-200">
-                    <div
-                      style={{
-                        position: "absolute",
-                        width: IMG_WIDTH,
-                        height: IMG_HEIGHT,
-                        left: -hotspot.x,
-                        top: -hotspot.y,
-                        backgroundImage: `url(${HeroScreenshot})`,
-                        clipPath: `url(#clip-${key})`,
-                      }}
-                    />
-                  </div>
+              <TooltipTrigger
+                render={
                   <div
-                    className="z-[2] duration-200 ease-in-out transition-opacity opacity-100 group-hover/all:opacity-0 group-hover/highlight:opacity-0"
+                    className="absolute group/highlight pointer-events-none hover:z-[5]"
+                    style={{
+                      left: hotspot.x,
+                      top: hotspot.y,
+                      width: hotspot.width,
+                      height: hotspot.height,
+                    }}
+                  />
+                }
+              >
+                <div className="z-[2] group-hover/highlight:drop-shadow-xl/25 pointer-events-auto transition-[filter] ease-in-out duration-200">
+                  <div
                     style={{
                       position: "absolute",
-                      left: -3,
-                      top: -3,
+                      width: IMG_WIDTH,
+                      height: IMG_HEIGHT,
+                      left: -hotspot.x,
+                      top: -hotspot.y,
+                      backgroundImage: `url(${HeroScreenshot})`,
+                      clipPath: `url(#clip-${key})`,
                     }}
-                  >
-                    <span className="relative flex size-4">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
-                      <span className="relative inline-flex size-4 rounded-full bg-sky-500"></span>
-                    </span>
-                  </div>
+                  />
+                </div>
+                <div
+                  className="z-[2] duration-200 ease-in-out transition-opacity opacity-100 group-hover/all:opacity-0 group-hover/highlight:opacity-0"
+                  style={{
+                    position: "absolute",
+                    left: -3,
+                    top: -3,
+                  }}
+                >
+                  <span className="relative flex size-4">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
+                    <span className="relative inline-flex size-4 rounded-full bg-sky-500"></span>
+                  </span>
                 </div>
               </TooltipTrigger>
               <TooltipContent side={hotspot.side} className="p-0">

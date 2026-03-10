@@ -73,10 +73,13 @@ export function Pricing() {
                   </li>
                 ))}
               </ul>
-              <Button asChild className="mt-10 w-full" size="lg">
-                <a href={tier.href} aria-describedby={tier.id}>
-                  Get started
-                </a>
+              <Button
+                className="mt-10 w-full"
+                size="lg"
+                render={<a href={tier.href} aria-describedby={tier.id} />}
+                nativeButton={false}
+              >
+                Get started
               </Button>
             </div>
           ))}
