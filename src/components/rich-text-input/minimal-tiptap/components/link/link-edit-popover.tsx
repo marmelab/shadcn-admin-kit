@@ -55,7 +55,7 @@ const LinkEditPopover = ({ editor, size, variant }: LinkEditPopoverProps) => {
           isActive={editor.isActive("link")}
           tooltip="Link"
           aria-label="Insert link"
-          disabled={editor.isActive("codeBlock")}
+          disabled={!editor.isEditable || editor.isActive("codeBlock")}
           size={size}
           variant={variant}
         >

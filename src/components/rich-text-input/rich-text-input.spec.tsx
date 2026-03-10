@@ -39,6 +39,15 @@ describe("<RichTextInput />", () => {
     await expect
       .element(screen.getByRole("button", { name: /bold/i }))
       .toBeDisabled();
+    await expect
+      .element(screen.getByRole("button", { name: /text color/i }))
+      .toBeDisabled();
+    await expect
+      .element(screen.getByRole("button", { name: /insert link/i }))
+      .toBeDisabled();
+    await expect
+      .element(screen.getByRole("button", { name: /image/i }))
+      .toBeDisabled();
   });
 
   it("should render as readOnly", async () => {
@@ -52,6 +61,15 @@ describe("<RichTextInput />", () => {
     );
     await expect
       .element(screen.getByRole("button", { name: /bold/i }))
+      .toBeDisabled();
+    await expect
+      .element(screen.getByRole("button", { name: /text color/i }))
+      .toBeDisabled();
+    await expect
+      .element(screen.getByRole("button", { name: /insert link/i }))
+      .toBeDisabled();
+    await expect
+      .element(screen.getByRole("button", { name: /image/i }))
       .toBeDisabled();
   });
 

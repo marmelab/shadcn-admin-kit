@@ -31,16 +31,8 @@ export interface UseMinimalTiptapEditorProps extends UseEditorOptions {
   uploader?: (file: File) => Promise<string>
 }
 
-async function fakeuploader(file: File): Promise<string> {
-  // NOTE: This is a fake upload function. Replace this with your own upload logic.
-  // This function should return the uploaded image URL.
-
-  // wait 3s to simulate upload
-  await new Promise((resolve) => setTimeout(resolve, 3000))
-
-  const src = await fileToBase64(file)
-
-  return src
+async function defaultUploader(file: File): Promise<string> {
+  return fileToBase64(file)
 }
 
 const createExtensions = ({
@@ -85,7 +77,7 @@ const createExtensions = ({
     maxFileSize: 5 * 1024 * 1024,
     allowBase64: true,
     uploadFn: async (file) => {
-      return uploader ? await uploader(file) : await fakeuploader(file)
+      return uploader ? await uploader(file) : await defaultUploader(file)
     },
     onToggle(editor, files, pos) {
       editor.commands.insertContentAt(

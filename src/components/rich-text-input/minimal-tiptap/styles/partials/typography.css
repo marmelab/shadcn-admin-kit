@@ -26,10 +26,6 @@
   @apply mt-4 mb-2 text-sm;
 }
 
-.minimal-tiptap-editor .ProseMirror h5 {
-  @apply mt-4 mb-2 text-sm;
-}
-
 .minimal-tiptap-editor .ProseMirror a.link {
   @apply text-primary underline;
 }

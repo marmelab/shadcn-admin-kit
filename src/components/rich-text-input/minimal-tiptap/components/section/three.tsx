@@ -154,6 +154,10 @@ export const SectionThree: React.FC<SectionThreeProps> = ({
 
   const handleColorChange = React.useCallback(
     (value: string) => {
+      if (!editor.isEditable) {
+        return
+      }
+
       setSelectedColor(value)
       if (editor.state.storedMarks) {
         const textStyleMarkType = editor.schema.marks.textStyle
@@ -181,6 +185,7 @@ export const SectionThree: React.FC<SectionThreeProps> = ({
         <ToolbarButton
           tooltip="Text color"
           aria-label="Text color"
+          disabled={!editor.isEditable}
           className="gap-0"
           size={size}
           variant={variant}

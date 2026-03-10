@@ -28,6 +28,7 @@ const ImageEditDialog = ({ editor, size, variant }: ImageEditDialogProps) => {
           isActive={editor.isActive("image")}
           tooltip="Image"
           aria-label="Image"
+          disabled={!editor.isEditable}
           size={size}
           variant={variant}
         >
