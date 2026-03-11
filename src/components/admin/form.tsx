@@ -98,7 +98,7 @@ function FormControl({
 }: React.HTMLAttributes<HTMLElement> & { children: React.ReactElement }) {
   const { error, formItemId, formDescriptionId, formMessageId } =
     useFormField();
-  const describedBy = !error
+  const fieldDescribedBy = !error
     ? formDescriptionId
     : `${formDescriptionId} ${formMessageId}`;
 
@@ -107,9 +107,15 @@ function FormControl({
   }
 
   const child = children as React.ReactElement<Record<string, unknown>>;
+  const childDescribedBy =
+    typeof child.props["aria-describedby"] === "string"
+      ? child.props["aria-describedby"]
+      : undefined;
+  const describedBy = [childDescribedBy, fieldDescribedBy]
+    .filter(Boolean)
+    .join(" ");
 
-  return React.createElement(child.type as React.ElementType, {
-    ...child.props,
+  return React.cloneElement(child, {
     ...(props as Record<string, unknown>),
     "data-slot": "form-control",
     id: formItemId,
