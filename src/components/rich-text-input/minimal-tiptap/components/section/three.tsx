@@ -2,7 +2,7 @@ import * as React from "react"
 import type { Editor } from "@tiptap/react"
 import type { toggleVariants } from "@/components/ui/toggle"
 import type { VariantProps } from "class-variance-authority"
-import { CaretDownIcon, CheckIcon } from "@radix-ui/react-icons"
+import { Check, ChevronDown } from "lucide-react"
 import { ToolbarButton } from "../toolbar-button"
 import {
   Popover,
@@ -96,7 +96,7 @@ const MemoizedColorButton = React.memo<{
             }}
           >
             {isSelected && (
-              <CheckIcon
+              <Check
                 className="absolute inset-0 m-auto size-6"
                 style={{ color: inverse }}
               />
@@ -120,10 +120,10 @@ const MemoizedColorPicker = React.memo<{
   onColorChange: (value: string) => void
 }>(({ palette, selectedColor, inverse, onColorChange }) => (
   <ToggleGroup
-    type="single"
-    value={selectedColor}
-    onValueChange={(value: string) => {
-      if (value) onColorChange(value)
+    value={[selectedColor]}
+    onValueChange={(value) => {
+      const nextColor = value[0]
+      if (nextColor) onColorChange(nextColor)
     }}
     className="gap-1.5"
   >
@@ -210,7 +210,7 @@ export const SectionThree: React.FC<SectionThreeProps> = ({
               <path d="m6 16 6-12 6 12" />
               <path d="M8 12h8" />
             </svg>
-            <CaretDownIcon className="size-5" />
+            <ChevronDown className="size-5" />
           </ToolbarButton>
         }
       />

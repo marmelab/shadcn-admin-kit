@@ -13,12 +13,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
-  ClipboardCopyIcon,
-  DotsHorizontalIcon,
-  DownloadIcon,
-  Link2Icon,
-  SizeIcon,
-} from "@radix-ui/react-icons"
+  Copy,
+  Download,
+  Ellipsis,
+  Expand,
+  Link2,
+} from "lucide-react"
 
 interface ImageActionsProps {
   shouldMerge?: boolean
@@ -91,22 +91,22 @@ const ActionItems: Array<{
 }> = [
   {
     key: "onView",
-    icon: <SizeIcon />,
+    icon: <Expand />,
     tooltip: "View image",
   },
   {
     key: "onDownload",
-    icon: <DownloadIcon />,
+    icon: <Download />,
     tooltip: "Download image",
   },
   {
     key: "onCopy",
-    icon: <ClipboardCopyIcon />,
+    icon: <Copy />,
     tooltip: "Copy image to clipboard",
   },
   {
     key: "onCopyLink",
-    icon: <Link2Icon />,
+    icon: <Link2 />,
     tooltip: "Copy image link",
     isLink: true,
   },
@@ -140,7 +140,7 @@ export const ImageActions: React.FC<ImageActionsProps> = ({
           <DropdownMenuTrigger
             render={
               <ActionButton
-                icon={<DotsHorizontalIcon />}
+                icon={<Ellipsis />}
                 tooltip="Open menu"
                 onClick={(e) => e.preventDefault()}
               />

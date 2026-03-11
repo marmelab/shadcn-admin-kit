@@ -4,7 +4,7 @@ import type { FormatAction } from "../../types"
 import type { VariantProps } from "class-variance-authority"
 import type { toggleVariants } from "@/components/ui/toggle"
 import { cn } from "@/lib/utils"
-import { CaretDownIcon, LetterCaseCapitalizeIcon } from "@radix-ui/react-icons"
+import { ChevronDown, Pilcrow } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -120,8 +120,8 @@ export const SectionOne: React.FC<SectionOneProps> = ({
             variant={variant}
             className="gap-0"
           >
-            <LetterCaseCapitalizeIcon className="size-5" />
-            <CaretDownIcon className="size-5" />
+            <Pilcrow className="size-5" />
+            <ChevronDown className="size-5" />
           </ToolbarButton>
         }
       />
