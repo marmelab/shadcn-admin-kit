@@ -302,6 +302,172 @@ importers:
         specifier: ^0.14.1
         version: 0.14.1
 
+  temp-rich-text-input:
+    dependencies:
+      '@base-ui/react':
+        specifier: ^1.2.0
+        version: 1.2.0(@types/react@19.2.14)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@tailwindcss/vite':
+        specifier: ^4.1.18
+        version: 4.2.1(vite@6.4.1(@types/node@22.19.12)(jiti@2.6.1)(lightningcss@1.31.1))
+      '@tanstack/react-query':
+        specifier: ^5.83.0
+        version: 5.83.0(react@19.1.0)
+      '@tiptap/extension-code-block-lowlight':
+        specifier: ^3.20.0
+        version: 3.20.0(@tiptap/core@3.20.0(@tiptap/pm@3.20.0))(@tiptap/extension-code-block@3.20.0(@tiptap/core@3.20.0(@tiptap/pm@3.20.0))(@tiptap/pm@3.20.0))(@tiptap/pm@3.20.0)(highlight.js@11.11.1)(lowlight@3.3.0)
+      '@tiptap/extension-color':
+        specifier: ^3.20.0
+        version: 3.20.0(@tiptap/extension-text-style@3.20.0(@tiptap/core@3.20.0(@tiptap/pm@3.20.0)))
+      '@tiptap/extension-horizontal-rule':
+        specifier: ^3.20.0
+        version: 3.20.0(@tiptap/core@3.20.0(@tiptap/pm@3.20.0))(@tiptap/pm@3.20.0)
+      '@tiptap/extension-image':
+        specifier: ^3.20.0
+        version: 3.20.0(@tiptap/core@3.20.0(@tiptap/pm@3.20.0))
+      '@tiptap/extension-text-style':
+        specifier: ^3.20.0
+        version: 3.20.0(@tiptap/core@3.20.0(@tiptap/pm@3.20.0))
+      '@tiptap/extension-typography':
+        specifier: ^3.20.0
+        version: 3.20.0(@tiptap/core@3.20.0(@tiptap/pm@3.20.0))
+      '@tiptap/extensions':
+        specifier: ^3.20.0
+        version: 3.20.0(@tiptap/core@3.20.0(@tiptap/pm@3.20.0))(@tiptap/pm@3.20.0)
+      '@tiptap/pm':
+        specifier: ^3.20.0
+        version: 3.20.0
+      '@tiptap/react':
+        specifier: ^3.20.0
+        version: 3.20.0(@floating-ui/dom@1.7.6)(@tiptap/core@3.20.0(@tiptap/pm@3.20.0))(@tiptap/pm@3.20.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@tiptap/starter-kit':
+        specifier: ^3.20.0
+        version: 3.20.0
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
+      cmdk:
+        specifier: ^1.1.1
+        version: 1.1.1(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      data-generator-retail:
+        specifier: ^5.8.0
+        version: 5.13.3(ra-core@5.14.3(@tanstack/react-query@5.83.0(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-hook-form@7.71.1(react@19.1.0))(react-router-dom@7.12.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-router@7.12.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0))
+      diacritic:
+        specifier: ^0.0.2
+        version: 0.0.2
+      inflection:
+        specifier: ^3.0.2
+        version: 3.0.2
+      lodash:
+        specifier: ^4.17.23
+        version: 4.17.23
+      lowlight:
+        specifier: ^3.3.0
+        version: 3.3.0
+      lucide-react:
+        specifier: ^0.506.0
+        version: 0.506.0(react@19.1.0)
+      next-themes:
+        specifier: ^0.4.6
+        version: 0.4.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      query-string:
+        specifier: ^9.2.2
+        version: 9.2.2
+      ra-core:
+        specifier: ^5.14.3
+        version: 5.14.3(@tanstack/react-query@5.83.0(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-hook-form@7.71.1(react@19.1.0))(react-router-dom@7.12.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-router@7.12.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
+      ra-data-fakerest:
+        specifier: ^5.8.0
+        version: 5.14.3(ra-core@5.14.3(@tanstack/react-query@5.83.0(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-hook-form@7.71.1(react@19.1.0))(react-router-dom@7.12.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-router@7.12.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0))
+      ra-i18n-polyglot:
+        specifier: ^5.14.3
+        version: 5.14.3(@tanstack/react-query@5.83.0(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-hook-form@7.71.1(react@19.1.0))(react-router-dom@7.12.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-router@7.12.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
+      ra-language-english:
+        specifier: ^5.14.3
+        version: 5.14.3(@tanstack/react-query@5.83.0(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-hook-form@7.71.1(react@19.1.0))(react-router-dom@7.12.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-router@7.12.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
+      react:
+        specifier: ^19.0.0
+        version: 19.1.0
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.1.0(react@19.1.0)
+      react-dropzone:
+        specifier: ^14.3.8
+        version: 14.3.8(react@19.1.0)
+      react-error-boundary:
+        specifier: ^6.1.0
+        version: 6.1.0(react@19.1.0)
+      react-hook-form:
+        specifier: ^7.71.1
+        version: 7.71.1(react@19.1.0)
+      react-medium-image-zoom:
+        specifier: ^5.4.1
+        version: 5.4.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react-router:
+        specifier: ^7.12.0
+        version: 7.12.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      sonner:
+        specifier: ^2.0.3
+        version: 2.0.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      tailwind-merge:
+        specifier: ^3.5.0
+        version: 3.5.0
+      tailwindcss:
+        specifier: ^4.1.18
+        version: 4.2.1
+      vaul:
+        specifier: ^1.1.2
+        version: 1.1.2(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+    devDependencies:
+      '@eslint/js':
+        specifier: ^9.22.0
+        version: 9.39.3
+      '@types/lodash':
+        specifier: ^4.17.16
+        version: 4.17.24
+      '@types/node':
+        specifier: ^22.15.3
+        version: 22.19.12
+      '@types/react':
+        specifier: ^19.0.10
+        version: 19.2.14
+      '@types/react-dom':
+        specifier: ^19.0.4
+        version: 19.2.3(@types/react@19.2.14)
+      '@vitejs/plugin-react':
+        specifier: ^4.3.4
+        version: 4.7.0(vite@6.4.1(@types/node@22.19.12)(jiti@2.6.1)(lightningcss@1.31.1))
+      eslint:
+        specifier: ^9.22.0
+        version: 9.39.3(jiti@2.6.1)
+      eslint-plugin-react-hooks:
+        specifier: ^5.2.0
+        version: 5.2.0(eslint@9.39.3(jiti@2.6.1))
+      eslint-plugin-react-refresh:
+        specifier: ^0.4.19
+        version: 0.4.26(eslint@9.39.3(jiti@2.6.1))
+      globals:
+        specifier: ^16.0.0
+        version: 16.5.0
+      shadcn:
+        specifier: 4.0.3
+        version: 4.0.3(@types/node@22.19.12)(typescript@5.7.3)
+      tw-animate-css:
+        specifier: ^1.4.0
+        version: 1.4.0
+      typescript:
+        specifier: ~5.7.2
+        version: 5.7.3
+      typescript-eslint:
+        specifier: ^8.26.1
+        version: 8.56.1(eslint@9.39.3(jiti@2.6.1))(typescript@5.7.3)
+      vite:
+        specifier: ^6.3.1
+        version: 6.4.1(@types/node@22.19.12)(jiti@2.6.1)(lightningcss@1.31.1)
+
 packages:
 
   '@adobe/css-tools@4.4.4':
@@ -6979,6 +7145,13 @@ snapshots:
       postcss: 8.5.6
       tailwindcss: 4.2.1
 
+  '@tailwindcss/vite@4.2.1(vite@6.4.1(@types/node@22.19.12)(jiti@2.6.1)(lightningcss@1.31.1))':
+    dependencies:
+      '@tailwindcss/node': 4.2.1
+      '@tailwindcss/oxide': 4.2.1
+      tailwindcss: 4.2.1
+      vite: 6.4.1(@types/node@22.19.12)(jiti@2.6.1)(lightningcss@1.31.1)
+
   '@tailwindcss/vite@4.2.1(vite@6.4.1(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.31.1))':
     dependencies:
       '@tailwindcss/node': 4.2.1
@@ -7431,6 +7604,18 @@ snapshots:
       eslint-visitor-keys: 5.0.1
 
   '@ungap/structured-clone@1.3.0': {}
+
+  '@vitejs/plugin-react@4.7.0(vite@6.4.1(@types/node@22.19.12)(jiti@2.6.1)(lightningcss@1.31.1))':
+    dependencies:
+      '@babel/core': 7.28.5
+      '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.28.5)
+      '@babel/plugin-transform-react-jsx-source': 7.27.1(@babel/core@7.28.5)
+      '@rolldown/pluginutils': 1.0.0-beta.27
+      '@types/babel__core': 7.20.5
+      react-refresh: 0.17.0
+      vite: 6.4.1(@types/node@22.19.12)(jiti@2.6.1)(lightningcss@1.31.1)
+    transitivePeerDependencies:
+      - supports-color
 
   '@vitejs/plugin-react@4.7.0(vite@6.4.1(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.31.1))':
     dependencies:
@@ -11258,6 +11443,20 @@ snapshots:
       - terser
       - tsx
       - yaml
+
+  vite@6.4.1(@types/node@22.19.12)(jiti@2.6.1)(lightningcss@1.31.1):
+    dependencies:
+      esbuild: 0.25.12
+      fdir: 6.5.0(picomatch@4.0.3)
+      picomatch: 4.0.3
+      postcss: 8.5.6
+      rollup: 4.59.0
+      tinyglobby: 0.2.15
+    optionalDependencies:
+      '@types/node': 22.19.12
+      fsevents: 2.3.3
+      jiti: 2.6.1
+      lightningcss: 1.31.1
 
   vite@6.4.1(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.31.1):
     dependencies:

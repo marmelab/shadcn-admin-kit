@@ -9,7 +9,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Drawer,
   DrawerClose,
@@ -95,10 +95,10 @@ export const Breadcrumb = ({ children, ref }: BreadcrumbProps) => {
                         .map((item) => item)}
                     </ol>
                     <DrawerFooter className="pt-4">
-                      <DrawerClose asChild>
-                        <Button variant="outline">
-                          <Translate i18nKey="ra.action.close">Close</Translate>
-                        </Button>
+                      <DrawerClose
+                        className={buttonVariants({ variant: "outline" })}
+                      >
+                        <Translate i18nKey="ra.action.close">Close</Translate>
                       </DrawerClose>
                     </DrawerFooter>
                   </DrawerContent>

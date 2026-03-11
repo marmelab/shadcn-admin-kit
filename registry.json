@@ -8,52 +8,30 @@
       "type": "registry:block",
       "title": "Shadcn Admin Kit Main Block",
       "description": "The Admin component, along with all the necessary components to create an admin (such as List, Edit, DataTable, TextField, TextInput, etc.)",
-      "registryDependencies": [
-        "accordion",
-        "alert",
-        "avatar",
-        "badge",
-        "breadcrumb",
-        "button",
-        "card",
-        "checkbox",
-        "command",
-        "drawer",
-        "dropdown-menu",
-        "input",
-        "label",
-        "navigation-menu",
-        "pagination",
-        "popover",
-        "radio-group",
-        "select",
-        "separator",
-        "sheet",
-        "sidebar",
-        "switch",
-        "skeleton",
-        "sonner",
-        "table",
-        "textarea",
-        "tooltip"
-      ],
+      "registryDependencies": [],
       "dependencies": [
+        "@base-ui/react",
         "@tanstack/react-query",
         "class-variance-authority",
         "clsx",
+        "cmdk",
         "diacritic",
         "inflection",
         "lodash",
         "lucide-react",
+        "next-themes",
         "query-string",
         "ra-core",
         "ra-i18n-polyglot",
         "ra-language-english",
         "react-dropzone",
+        "react-error-boundary",
         "react-hook-form",
         "react-router",
+        "sonner",
         "tailwind-merge",
-        "tw-animate-css"
+        "tw-animate-css",
+        "vaul"
       ],
       "files": [
         {
@@ -392,6 +370,146 @@
           "path": "rules/AGENTS.md",
           "type": "registry:file",
           "target": "~/AGENTS.md"
+        },
+        {
+          "path": "src/components/admin/confirm.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/guesser-empty.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/icon-button-with-tooltip.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/select-all-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/spinner.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/accordion.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/alert.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/avatar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/badge.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/breadcrumb.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/card.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/checkbox.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/command.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/dialog.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/drawer.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/dropdown-menu.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/input-group.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/label.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/navigation-menu.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/pagination.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/popover.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/radio-group.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/select.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/separator.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/sheet.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/sidebar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/skeleton.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/sonner.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/switch.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/table.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/textarea.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/tooltip.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/hooks/use-mobile.ts",
+          "type": "registry:component"
         }
       ]
     },
@@ -401,19 +519,7 @@
       "title": "RichTextInput",
       "description": "Optional rich text input for Shadcn Admin Kit. Includes the full Minimal TipTap block.",
       "registryDependencies": [
-        "@shadcn-admin-kit/admin",
-        "button",
-        "dialog",
-        "dropdown-menu",
-        "input",
-        "label",
-        "popover",
-        "separator",
-        "sonner",
-        "switch",
-        "toggle",
-        "toggle-group",
-        "tooltip"
+        "@shadcn-admin-kit/admin"
       ],
       "files": [
         {
@@ -630,6 +736,14 @@
         },
         {
           "path": "src/components/rich-text-input/minimal-tiptap/utils.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/toggle.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/ui/toggle-group.tsx",
           "type": "registry:component"
         }
       ],
