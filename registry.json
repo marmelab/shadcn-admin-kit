@@ -396,10 +396,266 @@
       ]
     },
     {
+      "name": "rich-text-input",
+      "type": "registry:block",
+      "title": "RichTextInput",
+      "description": "Optional rich text input for Shadcn Admin Kit. Includes the full Minimal TipTap block.",
+      "registryDependencies": [
+        "@shadcn-admin-kit/admin",
+        "button",
+        "dialog",
+        "dropdown-menu",
+        "input",
+        "label",
+        "popover",
+        "separator",
+        "sonner",
+        "switch",
+        "toggle",
+        "toggle-group",
+        "tooltip"
+      ],
+      "files": [
+        {
+          "path": "src/components/rich-text-input/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/rich-text-input.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/rich-text-input-toolbar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/components/bubble-menu/link-bubble-menu.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/components/image/image-edit-block.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/components/image/image-edit-dialog.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/components/link/link-edit-block.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/components/link/link-edit-popover.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/components/link/link-popover-block.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/components/measured-container.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/components/section/five.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/components/section/four.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/components/section/one.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/components/section/three.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/components/section/two.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/components/shortcut-key.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/components/spinner.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/components/toolbar-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/components/toolbar-section.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/code-block-lowlight/code-block-lowlight.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/code-block-lowlight/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/color/color.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/color/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/file-handler/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/horizontal-rule/horizontal-rule.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/horizontal-rule/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/image/components/image-actions.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/image/components/image-overlay.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/image/components/image-view-block.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/image/components/resize-handle.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/image/hooks/use-drag-resize.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/image/hooks/use-image-actions.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/image/image.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/image/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/reset-marks-on-enter/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/reset-marks-on-enter/reset-marks-on-enter.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/unset-all-marks/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/extensions/unset-all-marks/unset-all-marks.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/hooks/use-container-size.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/hooks/use-minimal-tiptap.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/hooks/use-theme.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/hooks/use-throttle.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/hooks/use-tiptap-editor.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/minimal-tiptap.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/styles/index.css",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/styles/partials/code.css",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/styles/partials/lists.css",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/styles/partials/placeholder.css",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/styles/partials/typography.css",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/styles/partials/zoom.css",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/types.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/minimal-tiptap/utils.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": [
+        "@radix-ui/react-icons",
+        "@tiptap/extension-code-block-lowlight",
+        "@tiptap/extension-color",
+        "@tiptap/extension-horizontal-rule",
+        "@tiptap/extension-image",
+        "@tiptap/extension-text-style",
+        "@tiptap/extension-typography",
+        "@tiptap/extensions",
+        "@tiptap/pm",
+        "@tiptap/react",
+        "@tiptap/starter-kit",
+        "lowlight",
+        "react-medium-image-zoom"
+      ]
+    },
+    {
       "name": "example-admin",
       "type": "registry:block",
       "title": "Example Admin built with Shadcn Admin Kit",
-      "registryDependencies": ["@shadcn-admin-kit/admin"],
+      "registryDependencies": [
+        "@shadcn-admin-kit/admin"
+      ],
       "files": [
         {
           "path": "src/examples/example-admin.tsx",
