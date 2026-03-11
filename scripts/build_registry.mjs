@@ -70,7 +70,7 @@ const run = async () => {
 
     execFileSync(
       "pnpm",
-      ["exec", "shadcn", "registry:build", tempRegistryPath, "-o", outputDir],
+      ["exec", "shadcn", "build", tempRegistryPath, "-o", outputDir],
       { cwd, stdio: "inherit" },
     );
 
