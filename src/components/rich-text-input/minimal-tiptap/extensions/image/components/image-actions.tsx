@@ -13,12 +13,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
-  ClipboardCopyIcon,
-  DotsHorizontalIcon,
-  DownloadIcon,
-  Link2Icon,
-  SizeIcon,
-} from "@radix-ui/react-icons"
+  Copy,
+  Download,
+  Ellipsis,
+  Expand,
+  Link2,
+} from "lucide-react"
 
 interface ImageActionsProps {
   shouldMerge?: boolean
@@ -60,19 +60,21 @@ export const ActionButton = ({
   ...props
 }: ActionButtonProps) => (
   <Tooltip>
-    <TooltipTrigger asChild>
-      <Button
-        variant="ghost"
-        className={cn(
-          "text-muted-foreground hover:text-foreground relative flex h-7 w-7 flex-row rounded-none p-0",
-          "bg-transparent hover:bg-transparent",
-          className
-        )}
-        {...props}
-      >
-        {icon}
-      </Button>
-    </TooltipTrigger>
+    <TooltipTrigger
+      render={
+        <Button
+          variant="ghost"
+          className={cn(
+            "text-muted-foreground hover:text-foreground relative flex h-7 w-7 flex-row rounded-none p-0",
+            "bg-transparent hover:bg-transparent",
+            className
+          )}
+          {...props}
+        >
+          {icon}
+        </Button>
+      }
+    />
     <TooltipContent side="bottom">{tooltip}</TooltipContent>
   </Tooltip>
 )
@@ -89,22 +91,22 @@ const ActionItems: Array<{
 }> = [
   {
     key: "onView",
-    icon: <SizeIcon />,
+    icon: <Expand />,
     tooltip: "View image",
   },
   {
     key: "onDownload",
-    icon: <DownloadIcon />,
+    icon: <Download />,
     tooltip: "Download image",
   },
   {
     key: "onCopy",
-    icon: <ClipboardCopyIcon />,
+    icon: <Copy />,
     tooltip: "Copy image to clipboard",
   },
   {
     key: "onCopyLink",
-    icon: <Link2Icon />,
+    icon: <Link2 />,
     tooltip: "Copy image link",
     isLink: true,
   },
@@ -135,13 +137,15 @@ export const ImageActions: React.FC<ImageActionsProps> = ({
     <ActionWrapper className={cn({ "opacity-100": isOpen })}>
       {shouldMerge ? (
         <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-          <DropdownMenuTrigger asChild>
-            <ActionButton
-              icon={<DotsHorizontalIcon />}
-              tooltip="Open menu"
-              onClick={(e) => e.preventDefault()}
-            />
-          </DropdownMenuTrigger>
+          <DropdownMenuTrigger
+            render={
+              <ActionButton
+                icon={<Ellipsis />}
+                tooltip="Open menu"
+                onClick={(e) => e.preventDefault()}
+              />
+            }
+          />
           <DropdownMenuContent className="w-56" align="end">
             {filteredActions.map(({ key, icon, tooltip }) => (
               <DropdownMenuItem

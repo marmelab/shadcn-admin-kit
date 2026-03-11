@@ -638,7 +638,7 @@
         }
       ],
       "dependencies": [
-        "@radix-ui/react-icons",
+        "lucide-react",
         "@tiptap/extension-code-block-lowlight",
         "@tiptap/extension-color",
         "@tiptap/extension-horizontal-rule",
