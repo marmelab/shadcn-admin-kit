@@ -36,23 +36,27 @@ export function Header() {
               <DropdownMenuContent
                 className="w-64"
               >
-                <DropdownMenuItem className="m-1">
-                  <a
-                    href="https://marmelab.com/shadcn-admin-kit/demo"
-                    target="_blank"
-                    className="flex-1"
-                  >
-                    E-Commerce
-                  </a>
+                <DropdownMenuItem
+                  className="m-1"
+                  render={
+                    <a
+                      href="https://marmelab.com/shadcn-admin-kit/demo"
+                      target="_blank"
+                    />
+                  }
+                >
+                  E-Commerce
                 </DropdownMenuItem>
-                <DropdownMenuItem className="m-1">
-                  <a
-                    href="https://marmelab.com/atomic-crm-demo/"
-                    target="_blank"
-                    className="flex-1"
-                  >
-                    CRM
-                  </a>
+                <DropdownMenuItem
+                  className="m-1"
+                  render={
+                    <a
+                      href="https://marmelab.com/atomic-crm-demo/"
+                      target="_blank"
+                    />
+                  }
+                >
+                  CRM
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -82,41 +86,39 @@ export function Header() {
               <DropdownMenuContent
                 className="w-64"
               >
-                <DropdownMenuItem className="m-1">
-                  <a href="#features" className="flex-1">
-                    Features
-                  </a>
+                <DropdownMenuItem className="m-1" render={<a href="#features" />}>
+                  Features
                 </DropdownMenuItem>
-                <DropdownMenuItem className="m-1">
-                  <a
-                    href="https://marmelab.com/shadcn-admin-kit/docs/install/"
-                    className="flex-1"
-                  >
-                    Doc
-                  </a>
+                <DropdownMenuItem
+                  className="m-1"
+                  render={<a href="https://marmelab.com/shadcn-admin-kit/docs/install/" />}
+                >
+                  Doc
                 </DropdownMenuItem>
-                <DropdownMenuItem className="m-1">
-                  <a
-                    href="https://marmelab.com/shadcn-admin-kit/demo"
-                    target="_blank"
-                    className="flex-1"
-                  >
-                    Demo E-Commerce
-                  </a>
+                <DropdownMenuItem
+                  className="m-1"
+                  render={
+                    <a
+                      href="https://marmelab.com/shadcn-admin-kit/demo"
+                      target="_blank"
+                    />
+                  }
+                >
+                  Demo E-Commerce
                 </DropdownMenuItem>
-                <DropdownMenuItem className="m-1">
-                  <a
-                    href="https://marmelab.com/atomic-crm-demo/"
-                    target="_blank"
-                    className="flex-1"
-                  >
-                    Demo CRM
-                  </a>
+                <DropdownMenuItem
+                  className="m-1"
+                  render={
+                    <a
+                      href="https://marmelab.com/atomic-crm-demo/"
+                      target="_blank"
+                    />
+                  }
+                >
+                  Demo CRM
                 </DropdownMenuItem>
-                <DropdownMenuItem className="m-1">
-                  <a href="#pricing" className="flex-1">
-                    Pricing
-                  </a>
+                <DropdownMenuItem className="m-1" render={<a href="#pricing" />}>
+                  Pricing
                 </DropdownMenuItem>
                 <div className="w-full p-1">
                   <Button
