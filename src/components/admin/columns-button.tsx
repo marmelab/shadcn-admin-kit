@@ -105,7 +105,7 @@ export const ColumnsButton = (props: ColumnsButtonProps) => {
             {title}
           </PopoverTrigger>
         )}
-        <PopoverContent align="start" className="w-72 min-w-[200px] p-0">
+        <PopoverContent keepMounted align="start" className="w-72 min-w-[200px] p-0">
           <div id={`${storeKey}-columnsSelector`} className="p-2" />
         </PopoverContent>
       </Popover>
@@ -147,16 +147,30 @@ export const ColumnsSelector = ({ children }: ColumnsSelectorProps) => {
       document.body.contains(container)
     )
       return;
+
+    const resolveContainer = () => {
+      const target = document.getElementById(elementId);
+      if (target) {
+        setContainer(target);
+        return true;
+      }
+
+      return false;
+    };
+
+    if (typeof document === "undefined" || resolveContainer()) {
+      return;
+    }
+
     // look for the container in the DOM every 100ms
     const interval = setInterval(() => {
-      const target = document.getElementById(elementId);
-      if (target) setContainer(target);
+      if (resolveContainer()) {
+        clearInterval(interval);
+      }
     }, 100);
-    // stop looking after 500ms
-    const timeout = setTimeout(() => clearInterval(interval), 500);
+
     return () => {
       clearInterval(interval);
-      clearTimeout(timeout);
     };
   }, [elementId, container]);
 
