@@ -4,9 +4,10 @@ import React from "react";
 
 import { cn } from "@/lib/utils";
 import type { FieldProps } from "@/lib/field.type.ts";
+import { UnknownRecord } from "@/lib/unknown-record";
 
 const EmailFieldImpl = <
-  RecordType extends Record<string, unknown> = Record<string, unknown>,
+  RecordType extends UnknownRecord = UnknownRecord,
 >(
   inProps: EmailFieldProps<RecordType>,
 ) => {
@@ -62,7 +63,7 @@ EmailFieldImpl.displayName = "EmailFieldImpl";
 export const EmailField = genericMemo(EmailFieldImpl);
 
 export interface EmailFieldProps<
-  RecordType extends Record<string, unknown> = Record<string, unknown>,
+  RecordType extends UnknownRecord = UnknownRecord,
 >
   extends FieldProps<RecordType>, AnchorHTMLAttributes<HTMLAnchorElement> {}
 

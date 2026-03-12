@@ -27,7 +27,7 @@ export const ReviewEdit = ({ id }: any) => (
           <ReferenceField source="product_id" reference="products" />
         </RecordField>
 
-        <RecordField
+        <RecordField<{ date: string | number }>
           source="date"
           render={(record) => new Date(record.date).toLocaleDateString()}
         />

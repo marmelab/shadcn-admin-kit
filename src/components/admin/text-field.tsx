@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { HTMLAttributes } from "react";
 import { useFieldValue, useTranslate } from "ra-core";
 import type { FieldProps } from "@/lib/field.type.ts";
+import { UnknownRecord } from "@/lib/unknown-record";
 
 /**
  * Displays a text value from a record field inside a span element.
@@ -25,7 +25,7 @@ import type { FieldProps } from "@/lib/field.type.ts";
  * );
  */
 export const TextField = <
-  RecordType extends Record<string, any> = Record<string, any>,
+  RecordType extends UnknownRecord = UnknownRecord,
 >({
   defaultValue,
   source,
@@ -56,6 +56,6 @@ export const TextField = <
 };
 
 export interface TextFieldProps<
-  RecordType extends Record<string, any> = Record<string, any>,
+  RecordType extends UnknownRecord = UnknownRecord,
 >
   extends FieldProps<RecordType>, HTMLAttributes<HTMLSpanElement> {}

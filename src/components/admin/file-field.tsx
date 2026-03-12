@@ -4,6 +4,7 @@ import type { ExtractRecordPaths, HintedString } from "ra-core";
 import { useFieldValue, useTranslate } from "ra-core";
 import { cn } from "@/lib/utils";
 import type { FieldProps } from "@/lib/field.type.ts";
+import { UnknownRecord } from "@/lib/unknown-record";
 
 /**
  * Displays a downloadable file link with customizable title and target.
@@ -25,7 +26,7 @@ import type { FieldProps } from "@/lib/field.type.ts";
  * </div>
  */
 export const FileField = <
-  RecordType extends Record<string, unknown> = Record<string, unknown>,
+  RecordType extends UnknownRecord = UnknownRecord,
 >(
   props: FileFieldProps<RecordType>,
 ) => {
@@ -108,7 +109,7 @@ export const FileField = <
 };
 
 export interface FileFieldProps<
-  RecordType extends Record<string, unknown> = Record<string, unknown>,
+  RecordType extends UnknownRecord = UnknownRecord,
 >
   extends FieldProps<RecordType>, HTMLAttributes<HTMLElement> {
   /**

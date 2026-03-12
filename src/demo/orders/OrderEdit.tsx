@@ -17,7 +17,7 @@ export const OrderEdit = () => (
       <div className="flex flex-col md:flex-row gap-8">
         <div className="flex-2">
           <div className="flex flex-col md:flex-row gap-4 mb-4">
-            <RecordField
+            <RecordField<{ date: string | number | Date }>
               source="date"
               render={(record) => new Date(record.date).toLocaleString()}
               className="flex-1 md:text-sm"

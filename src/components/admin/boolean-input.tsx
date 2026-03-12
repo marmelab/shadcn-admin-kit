@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback } from "react";
 import { Switch } from "@/components/ui/switch";
 import { FormError, FormField, FormLabel } from "@/components/admin/form";
+import type { Validator } from "ra-core";
 import { useInput, FieldTitle } from "ra-core";
 import { InputHelperText } from "./input-helper-text";
 
@@ -103,16 +103,16 @@ export const BooleanInput = (props: BooleanInputProps) => {
 export interface BooleanInputProps {
   className?: string;
   defaultValue?: boolean;
-  format?: (value: any) => any;
+  format?: (value: unknown) => boolean;
   helperText?: React.ReactNode;
   label?: React.ReactNode;
   onBlur?: (event: React.FocusEvent<HTMLButtonElement>) => void;
-  onChange?: (value: any) => void;
+  onChange?: (value: boolean) => void;
   onFocus?: (event: React.FocusEvent<HTMLButtonElement>) => void;
   readOnly?: boolean;
   disabled?: boolean;
-  parse?: (value: any) => any;
+  parse?: (value: unknown) => unknown;
   resource?: string;
   source: string;
-  validate?: any;
+  validate?: Validator | Validator[];
 }

@@ -1,8 +1,9 @@
 import type { BaseFieldProps } from "ra-core";
 import type { ReactNode } from "react";
+import { UnknownRecord } from "./unknown-record";
 
 export interface FieldProps<
-  RecordType extends Record<string, unknown> = Record<string, unknown>,
+  RecordType extends UnknownRecord = UnknownRecord,
 > extends Omit<BaseFieldProps<RecordType>, "resource"> {
   /**
    * The component to display when the field value is empty. Defaults to empty string.

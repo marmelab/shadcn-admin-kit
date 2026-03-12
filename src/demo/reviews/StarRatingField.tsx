@@ -4,7 +4,7 @@ import { useRecordContext } from "ra-core";
 interface OwnProps {
   size?: "large" | "small";
 
-  record?: Record<string, unknown>;
+  record?: { rating: number };
 }
 
 export const StarRatingField = (props: OwnProps) => {

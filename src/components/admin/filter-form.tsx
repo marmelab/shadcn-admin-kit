@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import type { HtmlHTMLAttributes, ReactNode } from "react";
 import { useCallback, useEffect, useState, isValidElement } from "react";
@@ -40,6 +39,15 @@ import {
   RemoveSavedQueryDialog,
 } from "@/components/admin/saved-queries";
 
+interface FilterElementProps {
+  source: string
+  alwaysOn?: boolean
+  defaultValue?: unknown
+  size?: string
+  label?: React.ReactNode
+  disabled?: boolean
+}
+
 /**
  * A form for filter inputs with live updates. Included by default in List.
  *
@@ -75,8 +83,8 @@ export const FilterFormBase = (props: FilterFormBaseProps) => {
       .filter((filterElement) => isValidElement(filterElement))
       .forEach((filter) => {
         if (
-          (filter.props as any).alwaysOn &&
-          (filter.props as any).defaultValue
+          (filter.props as FilterElementProps).alwaysOn &&
+          (filter.props as FilterElementProps).defaultValue
         ) {
           throw new Error(
             "Cannot use alwaysOn and defaultValue on a filter input. Please set the filterDefaultValues props on the <List> element instead.",
@@ -89,12 +97,12 @@ export const FilterFormBase = (props: FilterFormBaseProps) => {
     if (!filters) return [];
     const values = filterValues;
     return filters
-      .filter((filterElement) => isValidElement(filterElement))
+      .filter((filterElement): filterElement is React.ReactElement<FilterElementProps> => isValidElement(filterElement))
       .filter((filterElement) => {
-        const filterValue = get(values, (filterElement.props as any).source);
+        const filterValue = get(values, (filterElement.props).source);
         return (
-          (filterElement.props as any).alwaysOn ||
-          displayedFilters[(filterElement.props as any).source] ||
+          (filterElement.props).alwaysOn ||
+          displayedFilters[(filterElement.props).source] ||
           !isEmptyValue(filterValue)
         );
       });
@@ -110,7 +118,7 @@ export const FilterFormBase = (props: FilterFormBaseProps) => {
     <>
       {getShownFilters().map((filterElement) => (
         <FilterFormInput
-          key={filterElement.key || (filterElement.props as any).source}
+          key={filterElement.key || (filterElement.props).source}
           filterElement={filterElement}
           handleHide={handleHide}
           resource={resource}
@@ -148,14 +156,14 @@ const StyledForm = (props: React.FormHTMLAttributes<HTMLFormElement>) => {
   );
 };
 
-const isEmptyValue = (filterValue: any): boolean => {
+const isEmptyValue = (filterValue: unknown): boolean => {
   if (filterValue === "" || filterValue == null) return true;
 
   // If one of the value leaf is not empty
   // the value is considered not empty
   if (typeof filterValue === "object") {
     return Object.keys(filterValue).every((key) =>
-      isEmptyValue(filterValue[key]),
+      isEmptyValue(filterValue[key as keyof typeof filterValue]),
     );
   }
 
@@ -205,7 +213,7 @@ export const FilterFormInput = (inProps: FilterFormInputProps) => {
 };
 
 export interface FilterFormInputProps {
-  filterElement: React.ReactElement<any>;
+  filterElement: React.ReactElement<FilterElementProps>;
   handleHide: (event: React.MouseEvent<HTMLElement>) => void;
   className?: string;
   resource?: string;
@@ -269,11 +277,11 @@ export const FilterButton = (props: FilterButtonProps) => {
 
   const allTogglableFilters = filters.filter(
     (filterElement) =>
-      isValidElement(filterElement) && !(filterElement.props as any).alwaysOn,
+      isValidElement(filterElement) && !(filterElement.props as FilterElementProps).alwaysOn,
   );
 
   const handleShow = useCallback(
-    ({ source, defaultValue }: { source: string; defaultValue: any }) => {
+    ({ source, defaultValue }: { source: string; defaultValue: unknown }) => {
       showFilter(source, defaultValue === "" ? undefined : defaultValue);
       // We have to fallback to imperative code because the new FilterFormInput
       // has no way of knowing it has just been displayed (and thus that it should focus its input)
@@ -343,13 +351,13 @@ export const FilterButton = (props: FilterButtonProps) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" className="w-56">
           {allTogglableFilters
-            .filter((filterElement) => isValidElement(filterElement))
+            .filter((filterElement): filterElement is React.ReactElement<FilterElementProps> => isValidElement(filterElement))
             .map((filterElement, index: number) => (
               <FilterButtonMenuItem
-                key={(filterElement.props as any).source}
+                key={(filterElement.props).source}
                 filter={filterElement}
                 displayed={
-                  !!displayedFilters[(filterElement.props as any).source]
+                  !!displayedFilters[(filterElement.props).source]
                 }
                 resource={resource}
                 onShow={handleShow}
@@ -503,10 +511,10 @@ export const FilterButtonMenuItem = React.forwardRef<
 });
 
 export interface FilterButtonMenuItemProps {
-  filter: React.ReactElement<any>;
+  filter: React.ReactElement<FilterElementProps>;
   displayed: boolean;
 
-  onShow: (params: { source: string; defaultValue: any }) => void;
+  onShow: (params: { source: string; defaultValue: unknown }) => void;
   onHide: (params: { source: string }) => void;
   resource?: string;
   autoFocus?: boolean;

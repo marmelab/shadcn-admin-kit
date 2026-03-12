@@ -10,6 +10,7 @@ import {
   Translate,
 } from "ra-core";
 import { Button } from "@/components/ui/button";
+import { UnknownRecord } from "@/lib/unknown-record";
 
 /**
  * A button that exports list data to a file.
@@ -118,5 +119,5 @@ export interface ExportButtonProps {
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   resource?: string;
 
-  meta?: Record<string, unknown>;
+  meta?: UnknownRecord;
 }

@@ -24,6 +24,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button.tsx";
 import { FormItemContext, FormItemContextValue } from "./form-item-context";
 import { useFormField } from "./use-form-field";
+import { UnknownRecord } from "@/lib/unknown-record";
 
 const Form = FormProvider;
 
@@ -171,7 +172,7 @@ const SaveButton = <RecordType extends RaRecord = RaRecord>(
   );
 
   const handleSubmit = useCallback(
-    async (values: Record<string, unknown>) => {
+    async (values: UnknownRecord) => {
       let errors;
       if (saveContext?.save) {
         errors = await saveContext.save(values, {

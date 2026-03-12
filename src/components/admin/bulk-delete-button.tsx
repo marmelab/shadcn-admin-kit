@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import type { RaRecord, UseBulkDeleteControllerParams } from "ra-core";
@@ -33,7 +32,7 @@ import type { ReactNode } from "react";
  * );
  */
 export const BulkDeleteButton = <
-  RecordType extends RaRecord = any,
+  RecordType extends RaRecord = RaRecord,
   MutationOptionsError = unknown,
 >({
   icon = defaultIcon,
@@ -60,7 +59,7 @@ export const BulkDeleteButton = <
 };
 
 export type BulkDeleteButtonProps<
-  RecordType extends RaRecord = any,
+  RecordType extends RaRecord = RaRecord,
   MutationOptionsError = unknown,
 > = {
   label?: string;

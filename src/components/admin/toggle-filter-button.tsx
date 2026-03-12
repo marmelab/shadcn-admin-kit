@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -6,6 +5,7 @@ import { useListContext, useTranslate } from "ra-core";
 import matches from "lodash/matches";
 import pickBy from "lodash/pickBy";
 import { CircleX } from "lucide-react";
+import { UnknownRecord } from "@/lib/unknown-record";
 
 /**
  * A button that toggles a specific filter value on/off.
@@ -32,7 +32,7 @@ export const ToggleFilterButton = ({
   className,
 }: {
   label: React.ReactElement | string;
-  value: any;
+  value: UnknownRecord;
   className?: string;
   size?: "default" | "sm" | "lg" | "icon" | null | undefined;
 }) => {
@@ -57,7 +57,7 @@ export const ToggleFilterButton = ({
   );
 };
 
-const toggleFilter = (value: any, filters: any) => {
+const toggleFilter = (value: UnknownRecord, filters: UnknownRecord) => {
   const isSelected = matches(
     pickBy(value, (val) => typeof val !== "undefined"),
   )(filters);
@@ -74,5 +74,5 @@ const toggleFilter = (value: any, filters: any) => {
   return { ...filters, ...value };
 };
 
-const getIsSelected = (value: any, filters: any) =>
+const getIsSelected = (value: UnknownRecord, filters: UnknownRecord) =>
   matches(pickBy(value, (val) => typeof val !== "undefined"))(filters);

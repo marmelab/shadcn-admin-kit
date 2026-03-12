@@ -10,7 +10,7 @@ const lastDay = new Date();
 const lastMonthDays = Array.from({ length: 30 }, (_, i) => subDays(lastDay, i));
 const aMonthAgo = subDays(new Date(), 30);
 
-const dateFormatter = (date: number): string =>
+const dateFormatter = (date: string | Date | number): string =>
   new Date(date).toLocaleDateString();
 
 const aggregateOrdersByDay = (orders: Order[]): { [key: string]: number } =>

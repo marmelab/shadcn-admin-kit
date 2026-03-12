@@ -1,3 +1,4 @@
+import { UnknownRecord } from "@/lib/unknown-record";
 import type { RaRecord, SortPayload } from "ra-core";
 import {
   useCreatePath,
@@ -86,7 +87,7 @@ export interface ReferenceManyCountProps<
   source?: string;
   sort?: SortPayload;
 
-  filter?: Record<string, unknown>;
+  filter?: UnknownRecord;
   link?: boolean;
   timeout?: number;
 }

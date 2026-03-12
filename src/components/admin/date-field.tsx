@@ -2,9 +2,10 @@ import type { HTMLAttributes } from "react";
 import { genericMemo, useFieldValue, useTranslate } from "ra-core";
 
 import type { FieldProps } from "@/lib/field.type.ts";
+import { UnknownRecord } from "@/lib/unknown-record";
 
 const DateFieldImpl = <
-  RecordType extends Record<string, unknown> = Record<string, unknown>,
+  RecordType extends UnknownRecord = UnknownRecord,
 >(
   inProps: DateFieldProps<RecordType>,
 ) => {
@@ -105,7 +106,7 @@ DateFieldImpl.displayName = "DateFieldImpl";
 export const DateField = genericMemo(DateFieldImpl);
 
 export interface DateFieldProps<
-  RecordType extends Record<string, unknown> = Record<string, unknown>,
+  RecordType extends UnknownRecord = UnknownRecord,
 >
   extends FieldProps<RecordType>, HTMLAttributes<HTMLSpanElement> {
   locales?: Intl.LocalesArgument;
