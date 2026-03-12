@@ -171,8 +171,7 @@ const SaveButton = <RecordType extends RaRecord = RaRecord>(
   );
 
   const handleSubmit = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async (values: any) => {
+    async (values: Record<string, unknown>) => {
       let errors;
       if (saveContext?.save) {
         errors = await saveContext.save(values, {

@@ -36,8 +36,8 @@ const StoryWrapper = ({
 }: {
   children: ReactNode;
   theme: "system" | "light" | "dark";
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  record?: any;
+
+  record?: Record<string, unknown>;
 }) => (
   <ThemeProvider defaultTheme={theme}>
     <CoreAdminContext i18nProvider={i18nProvider}>

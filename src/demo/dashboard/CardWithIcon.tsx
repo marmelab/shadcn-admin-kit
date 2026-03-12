@@ -3,8 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Link, type To } from "react-router";
 
 interface Props {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  icon: FC<any>;
+  icon: FC<{ size?: number; className?: string }>;
   to: To;
   title?: string;
   subtitle?: ReactNode;

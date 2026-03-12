@@ -77,8 +77,8 @@ const OrderChart = (props: { orders?: Order[] }) => {
         },
         tooltip: {
           trigger: "axis",
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          formatter: (params: any) => {
+
+          formatter: (params: { value: [string | Date, number] }[]) => {
             const param = params[0];
             return `${dateFormatter(param.value[0])}: ${new Intl.NumberFormat(
               undefined,
