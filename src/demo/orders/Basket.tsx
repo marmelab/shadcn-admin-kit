@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Table,
   TableBody,
@@ -28,7 +27,7 @@ export const Basket = () => {
     ? products.reduce((acc, product) => {
         acc[product.id] = product;
         return acc;
-      }, {} as any)
+      }, {} as Record<number, Product>)
     : {};
 
   if (isPending || !record || !products) return null;
@@ -56,7 +55,7 @@ export const Basket = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {record.basket.map((item: any) => (
+          {record.basket.map((item) => (
             <TableRow key={item.product_id}>
               <TableCell>
                 <Link to={`/products/${item.product_id}`}>
