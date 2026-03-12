@@ -12,6 +12,7 @@ import { RefreshButton } from "@/components/admin/refresh-button";
 import { LocalesMenuButton } from "@/components/admin/locales-menu-button";
 import { Error } from "@/components/admin/error";
 import { Loading } from "@/components/admin/loading";
+import { UnknownValue } from "@/lib/unkown-types";
 
 /**
  * The main application layout with sidebar, header, and content area.
@@ -23,7 +24,7 @@ import { Loading } from "@/components/admin/loading";
  */
 export const Layout = (props: CoreLayoutProps) => {
   const [errorInfo, setErrorInfo] = useState<ErrorInfo | undefined>(undefined);
-  const handleError = (_: unknown, info: ErrorInfo) => {
+  const handleError = (_: UnknownValue, info: ErrorInfo) => {
     setErrorInfo(info);
   };
   return (

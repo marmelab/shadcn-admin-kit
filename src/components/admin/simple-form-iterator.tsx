@@ -39,6 +39,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Confirm } from "@/components/admin/confirm";
 import { IconButtonWithTooltip } from "@/components/admin/icon-button-with-tooltip.tsx";
+import { UnknownValue } from "@/lib/unkown-types";
 
 type GetItemLabelFunc = (index: number) => string | ReactElement;
 
@@ -92,7 +93,7 @@ export const SimpleFormIterator = (props: SimpleFormIteratorProps) => {
   const records = get(record, finalSource);
   const getArrayInputNewItemDefaults = useGetArrayInputNewItemDefaults(fields);
 
-  const getItemDefaults = useEvent((item: unknown = undefined) => {
+  const getItemDefaults = useEvent((item: UnknownValue = undefined) => {
     if (item != null) return item;
     return getArrayInputNewItemDefaults(children);
   });
@@ -151,7 +152,7 @@ export interface SimpleFormIteratorProps extends Partial<UseFieldArrayReturn> {
   inline?: boolean;
   meta?: {
     // the type defined in FieldArrayRenderProps says error is boolean, which is wrong.
-    error?: unknown;
+    error?: UnknownValue;
     submitFailed?: boolean;
   };
   record?: RaRecord;

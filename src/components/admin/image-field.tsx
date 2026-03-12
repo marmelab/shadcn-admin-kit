@@ -9,7 +9,7 @@ import {
 import { cn } from "@/lib/utils";
 
 import type { FieldProps } from "@/lib/field.type.ts";
-import { UnknownRecord } from "@/lib/unknown-record";
+import { UnknownRecord, UnknownValue } from "@/lib/unkown-types";
 
 /**
  * Displays an image or a list of images from a record field inside an img element or a ul of img elements.
@@ -95,7 +95,7 @@ export interface ImageFieldProps<
   RecordType extends UnknownRecord = UnknownRecord,
 > extends FieldProps<RecordType>,
     Omit<HTMLAttributes<HTMLSpanElement>, 'defaultValue'> {
-  defaultValue?: unknown
+  defaultValue?: UnknownValue
   src?: string
   title?: HintedString<ExtractRecordPaths<RecordType>>
 }

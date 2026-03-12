@@ -4,6 +4,7 @@ import { FormError, FormField, FormLabel } from "@/components/admin/form";
 import type { Validator } from "ra-core";
 import { useInput, FieldTitle } from "ra-core";
 import { InputHelperText } from "./input-helper-text";
+import { UnknownValue } from "@/lib/unkown-types";
 
 /**
  * Toggle switch for boolean (true/false) values.
@@ -103,7 +104,7 @@ export const BooleanInput = (props: BooleanInputProps) => {
 export interface BooleanInputProps {
   className?: string;
   defaultValue?: boolean;
-  format?: (value: unknown) => boolean;
+  format?: (value: UnknownValue) => boolean;
   helperText?: React.ReactNode;
   label?: React.ReactNode;
   onBlur?: (event: React.FocusEvent<HTMLButtonElement>) => void;
@@ -111,7 +112,7 @@ export interface BooleanInputProps {
   onFocus?: (event: React.FocusEvent<HTMLButtonElement>) => void;
   readOnly?: boolean;
   disabled?: boolean;
-  parse?: (value: unknown) => unknown;
+  parse?: (value: UnknownValue) => UnknownValue;
   resource?: string;
   source: string;
   validate?: Validator | Validator[];

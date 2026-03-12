@@ -2,7 +2,7 @@ import type { HTMLAttributes } from "react";
 import { genericMemo, useFieldValue, useTranslate } from "ra-core";
 
 import type { FieldProps } from "@/lib/field.type.ts";
-import { UnknownRecord } from "@/lib/unknown-record";
+import { UnknownRecord, UnknownValue } from "@/lib/unkown-types";
 
 const DateFieldImpl = <
   RecordType extends UnknownRecord = UnknownRecord,
@@ -113,10 +113,10 @@ export interface DateFieldProps<
   options?: Intl.DateTimeFormatOptions;
   showTime?: boolean;
   showDate?: boolean;
-  transform?: (value: unknown) => Date;
+  transform?: (value: UnknownValue) => Date;
 }
 
-const defaultTransform = (value: unknown) =>
+const defaultTransform = (value: UnknownValue) =>
   value instanceof Date
     ? value
     : typeof value === "string" || typeof value === "number"

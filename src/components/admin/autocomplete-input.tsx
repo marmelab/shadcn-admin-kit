@@ -39,7 +39,7 @@ import {
 } from "ra-core";
 import { InputHelperText } from "./input-helper-text";
 import { PopoverProps } from "@radix-ui/react-popover";
-import { UnknownRecord } from "@/lib/unknown-record";
+import { UnknownRecord, UnknownValue } from "@/lib/unkown-types";
 
 /**
  * Form control that lets users choose a value from a list using a dropdown with autocompletion.
@@ -87,7 +87,7 @@ export const AutocompleteInput = (
       placeholder?: string;
       inputText?:
         | React.ReactNode
-        | ((option: unknown) => React.ReactNode);
+        | ((option: UnknownValue) => React.ReactNode);
     } & Pick<PopoverProps, "modal">,
 ) => {
   const {
@@ -131,7 +131,7 @@ export const AutocompleteInput = (
   );
 
   const getInputText = useCallback(
-    (selectedChoice: unknown) => {
+    (selectedChoice: UnknownValue) => {
       if (typeof inputText === "function") {
         return inputText(selectedChoice);
       }
@@ -152,7 +152,7 @@ export const AutocompleteInput = (
   });
 
   const handleChange = useCallback(
-    (choice: unknown) => {
+    (choice: UnknownValue) => {
       if (field.value === getChoiceValue(choice) && !isRequired) {
         field.onChange("");
         setFilterValue("");

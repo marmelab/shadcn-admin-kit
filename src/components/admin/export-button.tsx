@@ -10,7 +10,7 @@ import {
   Translate,
 } from "ra-core";
 import { Button } from "@/components/ui/button";
-import { UnknownRecord } from "@/lib/unknown-record";
+import { UnknownRecord } from "@/lib/unkown-types";
 
 /**
  * A button that exports list data to a file.

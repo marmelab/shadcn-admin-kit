@@ -4,7 +4,7 @@ import type { ExtractRecordPaths, HintedString } from "ra-core";
 import { useFieldValue, useTranslate } from "ra-core";
 import { cn } from "@/lib/utils";
 import type { FieldProps } from "@/lib/field.type.ts";
-import { UnknownRecord } from "@/lib/unknown-record";
+import { UnknownRecord } from "@/lib/unkown-types";
 
 /**
  * Displays a downloadable file link with customizable title and target.

@@ -14,7 +14,7 @@ import {
 import type { MouseEvent, ReactNode } from "react";
 import { Link } from "react-router";
 import type { UseQueryOptions } from "@tanstack/react-query";
-import { UnknownRecord } from "@/lib/unknown-record";
+import { UnknownRecord } from "@/lib/unkown-types";
 
 /**
  * Displays a field from a related record by following a foreign key relationship.

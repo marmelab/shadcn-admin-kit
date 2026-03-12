@@ -24,7 +24,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button.tsx";
 import { FormItemContext, FormItemContextValue } from "./form-item-context";
 import { useFormField } from "./use-form-field";
-import { UnknownRecord } from "@/lib/unknown-record";
+import { UnknownRecord, UnknownValue } from "@/lib/unkown-types";
 
 const Form = FormProvider;
 
@@ -229,7 +229,7 @@ const defaultIcon = <Save className="h-4 w-4" />;
 
 interface Props<
   RecordType extends RaRecord = RaRecord,
-  MutationOptionsError = unknown,
+  MutationOptionsError = UnknownValue,
 > {
   className?: string;
   disabled?: boolean;

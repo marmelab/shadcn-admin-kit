@@ -27,6 +27,7 @@ import { cn } from "@/lib/utils";
 import { FormError, FormField, FormLabel } from "@/components/admin/form";
 import { InputHelperText } from "@/components/admin/input-helper-text";
 import { Button } from "@/components/ui/button.tsx";
+import { UnknownValue } from "@/lib/unkown-types";
 
 /**
  * File upload input with drag-and-drop support and preview capabilities.
@@ -98,7 +99,7 @@ export const FileInput = (props: FileInputProps) => {
   const translate = useTranslate();
 
   // turn a browser dropped file structure into expected structure
-  const transformFile = (file: unknown) => {
+  const transformFile = (file: UnknownValue) => {
     if (!(file instanceof File)) {
       return file;
     }
@@ -113,7 +114,7 @@ export const FileInput = (props: FileInputProps) => {
     return transformedFile;
   };
 
-  const transformFiles = (files: unknown[]) => {
+  const transformFiles = (files: UnknownValue[]) => {
     if (!files) {
       return multiple ? [] : null;
     }

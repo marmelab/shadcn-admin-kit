@@ -1,4 +1,4 @@
-import { UnknownRecord } from "@/lib/unknown-record";
+import { UnknownRecord } from "@/lib/unkown-types";
 import type { RaRecord, SortPayload } from "ra-core";
 import {
   useCreatePath,

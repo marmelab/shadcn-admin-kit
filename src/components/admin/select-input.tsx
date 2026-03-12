@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import { UnknownValue } from "@/lib/unkown-types";
 
 /**
  * Dropdown select input for choosing a single value from a list of options.
@@ -170,7 +171,7 @@ export const SelectInput = (props: SelectInputProps) => {
   }, [emptyText, translate]);
 
   const renderMenuItemOption = useCallback(
-    (choice: unknown) => getChoiceText(choice),
+    (choice: UnknownValue) => getChoiceText(choice),
     [getChoiceText],
   );
 

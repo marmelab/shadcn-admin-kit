@@ -13,6 +13,7 @@ import { TextInput } from "@/components/admin/text-input";
 import { SimpleForm } from "@/components/admin/simple-form";
 import { SimpleFormIterator } from "@/components/admin/simple-form-iterator";
 import { i18nProvider } from "@/lib/i18nProvider";
+import { UnknownRecord } from "@/lib/unkown-types";
 
 const defaultRecord = {
   id: 1,
@@ -37,7 +38,7 @@ const StoryWrapper = ({
   children: ReactNode;
   theme: "system" | "light" | "dark";
 
-  record?: Record<string, unknown>;
+  record?: UnknownRecord;
 }) => (
   <ThemeProvider defaultTheme={theme}>
     <CoreAdminContext i18nProvider={i18nProvider}>

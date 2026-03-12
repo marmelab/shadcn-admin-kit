@@ -57,6 +57,7 @@ import {
   BulkActionsToolbar,
   BulkActionsToolbarChildren,
 } from "@/components/admin/bulk-actions-toolbar";
+import { UnknownValue } from "@/lib/unkown-types";
 
 const defaultBulkActionButtons = <BulkActionsToolbarChildren />;
 
@@ -281,8 +282,9 @@ const DataTableRow = ({
   );
 };
 
-const isPromise = (value: unknown): value is Promise<unknown> =>
-  value != null && typeof (value as Promise<unknown>).then === 'function';
+function isPromise<T>(value: UnknownValue): value is Promise<T> {
+  return value != null && typeof (value as Promise<UnknownValue>).then === 'function';
+}
 
 const DataTableEmpty = () => {
   return (

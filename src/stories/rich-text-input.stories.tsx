@@ -17,6 +17,7 @@ import {
 } from "@/components/rich-text-input";
 import { Button } from "@/components/ui/button";
 import { i18nProvider } from "@/lib/i18nProvider";
+import { UnknownRecord } from "@/lib/unkown-types";
 
 const record = {
   id: 1,
@@ -40,7 +41,7 @@ const StoryWrapper = ({
 }: {
   children: ReactNode;
   theme: "system" | "light" | "dark";
-  defaultValues?: Record<string, unknown>;
+  defaultValues?: UnknownRecord;
   toolbar?: ReactNode;
 }) => (
   <ThemeProvider defaultTheme={theme}>

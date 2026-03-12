@@ -5,7 +5,7 @@ import { useListContext, useTranslate } from "ra-core";
 import matches from "lodash/matches";
 import pickBy from "lodash/pickBy";
 import { CircleX } from "lucide-react";
-import { UnknownRecord } from "@/lib/unknown-record";
+import { UnknownRecord } from "@/lib/unkown-types";
 
 /**
  * A button that toggles a specific filter value on/off.

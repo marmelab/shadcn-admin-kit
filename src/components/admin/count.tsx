@@ -8,7 +8,7 @@ import {
 import { CircleX, LoaderCircle } from "lucide-react";
 
 import { Link } from "react-router";
-import { UnknownRecord } from "@/lib/unknown-record";
+import { UnknownRecord } from "@/lib/unkown-types";
 
 /**
  * Fetches and displays the item count for a resource.

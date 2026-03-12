@@ -4,6 +4,7 @@ import type { RaRecord, UseBulkDeleteControllerParams } from "ra-core";
 import { Translate, useBulkDeleteController } from "ra-core";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
+import { UnknownValue } from "@/lib/unkown-types";
 
 /**
  * A button that deletes multiple selected records at once.
@@ -33,7 +34,7 @@ import type { ReactNode } from "react";
  */
 export const BulkDeleteButton = <
   RecordType extends RaRecord = RaRecord,
-  MutationOptionsError = unknown,
+  MutationOptionsError = UnknownValue,
 >({
   icon = defaultIcon,
   label,
@@ -60,7 +61,7 @@ export const BulkDeleteButton = <
 
 export type BulkDeleteButtonProps<
   RecordType extends RaRecord = RaRecord,
-  MutationOptionsError = unknown,
+  MutationOptionsError = UnknownValue,
 > = {
   label?: string;
   icon?: ReactNode;

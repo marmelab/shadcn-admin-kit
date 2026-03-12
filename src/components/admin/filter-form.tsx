@@ -38,11 +38,12 @@ import {
   AddSavedQueryDialog,
   RemoveSavedQueryDialog,
 } from "@/components/admin/saved-queries";
+import { UnknownValue } from "@/lib/unkown-types";
 
 interface FilterElementProps {
   source: string
   alwaysOn?: boolean
-  defaultValue?: unknown
+  defaultValue?: UnknownValue
   size?: string
   label?: React.ReactNode
   disabled?: boolean
@@ -156,7 +157,7 @@ const StyledForm = (props: React.FormHTMLAttributes<HTMLFormElement>) => {
   );
 };
 
-const isEmptyValue = (filterValue: unknown): boolean => {
+const isEmptyValue = (filterValue: UnknownValue): boolean => {
   if (filterValue === "" || filterValue == null) return true;
 
   // If one of the value leaf is not empty
@@ -281,7 +282,7 @@ export const FilterButton = (props: FilterButtonProps) => {
   );
 
   const handleShow = useCallback(
-    ({ source, defaultValue }: { source: string; defaultValue: unknown }) => {
+    ({ source, defaultValue }: { source: string; defaultValue: UnknownValue }) => {
       showFilter(source, defaultValue === "" ? undefined : defaultValue);
       // We have to fallback to imperative code because the new FilterFormInput
       // has no way of knowing it has just been displayed (and thus that it should focus its input)
@@ -514,7 +515,7 @@ export interface FilterButtonMenuItemProps {
   filter: React.ReactElement<FilterElementProps>;
   displayed: boolean;
 
-  onShow: (params: { source: string; defaultValue: unknown }) => void;
+  onShow: (params: { source: string; defaultValue: UnknownValue }) => void;
   onHide: (params: { source: string }) => void;
   resource?: string;
   autoFocus?: boolean;
