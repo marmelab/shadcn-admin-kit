@@ -262,10 +262,8 @@ export const SelectInput = (props: SelectInputProps) => {
         )}
         <div className="relative">
           <Select
-            //FIXME https://github.com/radix-ui/primitives/issues/3135
-            // Setting a key based on the value fixes an issue where onValueChange
-            // was called with an empty string when the controlled value was changed.
-            // See: https://github.com/radix-ui/primitives/issues/3135#issuecomment-2916908248
+            // Re-mounting the select when the controlled value changes avoids a stale
+            // internal state edge case where onValueChange can briefly receive "".
             key={`select:${field.value?.toString() ?? emptyValue}`}
             value={field.value?.toString() || emptyValue}
             onValueChange={handleChangeWithCreateSupport}

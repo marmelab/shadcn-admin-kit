@@ -214,7 +214,7 @@ importers:
         specifier: ^6.1.0
         version: 6.1.0(react@19.1.0)
       shadcn:
-        specifier: 4.0.3
+        specifier: ^4.0.3
         version: 4.0.3(@types/node@22.19.12)(typescript@5.7.3)
       storybook:
         specifier: ^10.2.12
@@ -453,7 +453,7 @@ importers:
         specifier: ^16.0.0
         version: 16.5.0
       shadcn:
-        specifier: 4.0.3
+        specifier: ^4.0.3
         version: 4.0.3(@types/node@22.19.12)(typescript@5.7.3)
       tw-animate-css:
         specifier: ^1.4.0

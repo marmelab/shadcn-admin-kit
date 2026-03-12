@@ -32,7 +32,7 @@ A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/)
 
 ## Tech Stack
 
-- UI: [shadcn/ui](https://ui.shadcn.com/) & [Radix UI](https://www.radix-ui.com/)
+- UI: [shadcn/ui](https://ui.shadcn.com/) & [Base UI](https://base-ui.com/)
 - Styling: [Tailwind CSS](https://tailwindcss.com/)
 - Icons: [Lucide](https://lucide.dev/)
 - Routing: [React Router](https://reactrouter.com/)

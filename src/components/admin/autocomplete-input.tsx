@@ -228,11 +228,13 @@ export const AutocompleteInput = (
                 />
               }
             >
-              {selectedChoice ? (
-                getInputText(selectedChoice)
-              ) : (
-                <span className="text-muted-foreground">{placeholder}</span>
-              )}
+              <div className="min-w-0 flex flex-1 items-center gap-2 overflow-hidden text-left">
+                {selectedChoice ? (
+                  getInputText(selectedChoice)
+                ) : (
+                  <span className="text-muted-foreground">{placeholder}</span>
+                )}
+              </div>
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </PopoverTrigger>
             <PopoverContent className="w-full max-w-(--anchor-width) p-0">

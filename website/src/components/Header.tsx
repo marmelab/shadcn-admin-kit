@@ -37,22 +37,24 @@ export function Header() {
                 className="w-64"
               >
                 <DropdownMenuItem
-                  className="m-1"
+                  className="m-1 cursor-pointer"
                   render={
                     <a
                       href="https://marmelab.com/shadcn-admin-kit/demo"
                       target="_blank"
+                      rel="noopener noreferrer"
                     />
                   }
                 >
                   E-Commerce
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className="m-1"
+                  className="m-1 cursor-pointer"
                   render={
                     <a
                       href="https://marmelab.com/atomic-crm-demo/"
                       target="_blank"
+                      rel="noopener noreferrer"
                     />
                   }
                 >
@@ -66,16 +68,17 @@ export function Header() {
                 <a
                   href="https://github.com/marmelab/shadcn-admin-kit"
                   target="_blank"
+                  rel="noopener noreferrer"
                 />
               }
               nativeButton={false}
             >
               <img
                 src={GithubLogo}
-                alt="Github"
+                alt="GitHub"
                 className="inline h-4 w-auto"
               />{" "}
-              Star us on Github!
+              Star us on GitHub!
             </Button>
           </div>
           <div className="md:hidden">
@@ -86,38 +89,46 @@ export function Header() {
               <DropdownMenuContent
                 className="w-64"
               >
-                <DropdownMenuItem className="m-1" render={<a href="#features" />}>
+                <DropdownMenuItem
+                  className="m-1 cursor-pointer"
+                  render={<a href="#features" />}
+                >
                   Features
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className="m-1"
+                  className="m-1 cursor-pointer"
                   render={<a href="https://marmelab.com/shadcn-admin-kit/docs/install/" />}
                 >
                   Doc
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className="m-1"
+                  className="m-1 cursor-pointer"
                   render={
                     <a
                       href="https://marmelab.com/shadcn-admin-kit/demo"
                       target="_blank"
+                      rel="noopener noreferrer"
                     />
                   }
                 >
                   Demo E-Commerce
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  className="m-1"
+                  className="m-1 cursor-pointer"
                   render={
                     <a
                       href="https://marmelab.com/atomic-crm-demo/"
                       target="_blank"
+                      rel="noopener noreferrer"
                     />
                   }
                 >
                   Demo CRM
                 </DropdownMenuItem>
-                <DropdownMenuItem className="m-1" render={<a href="#pricing" />}>
+                <DropdownMenuItem
+                  className="m-1 cursor-pointer"
+                  render={<a href="#pricing" />}
+                >
                   Pricing
                 </DropdownMenuItem>
                 <div className="w-full p-1">
@@ -127,6 +138,7 @@ export function Header() {
                       <a
                         href="https://github.com/marmelab/shadcn-admin-kit"
                         target="_blank"
+                        rel="noopener noreferrer"
                         className="flex-1"
                       />
                     }
@@ -134,10 +146,10 @@ export function Header() {
                   >
                     <img
                       src={GithubLogo}
-                      alt="Github"
+                      alt="GitHub"
                       className="inline h-4"
                     />{" "}
-                    Star us on Github!
+                    Star us on GitHub!
                   </Button>
                 </div>
               </DropdownMenuContent>
