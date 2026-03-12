@@ -27,7 +27,7 @@ import { cn } from "@/lib/utils";
 import { FormError, FormField, FormLabel } from "@/components/admin/form";
 import { InputHelperText } from "@/components/admin/input-helper-text";
 import { Button } from "@/components/ui/button.tsx";
-import { UnknownValue } from "@/lib/unkown-types";
+import { UnknownValue } from "@/lib/unknown-types";
 
 /**
  * File upload input with drag-and-drop support and preview capabilities.

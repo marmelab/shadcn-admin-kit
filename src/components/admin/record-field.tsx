@@ -10,7 +10,7 @@ import {
 import { cn } from "@/lib/utils";
 
 import { TextField } from "@/components/admin/text-field";
-import { UnknownRecord } from "@/lib/unkown-types";
+import { UnknownRecord } from "@/lib/unknown-types";
 
 /**
  * Displays a labeled field-value pair with flexible rendering options.

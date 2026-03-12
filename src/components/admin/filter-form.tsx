@@ -38,7 +38,7 @@ import {
   AddSavedQueryDialog,
   RemoveSavedQueryDialog,
 } from "@/components/admin/saved-queries";
-import { UnknownValue } from "@/lib/unkown-types";
+import { UnknownValue } from "@/lib/unknown-types";
 
 interface FilterElementProps {
   source: string
@@ -81,11 +81,11 @@ export const FilterFormBase = (props: FilterFormBaseProps) => {
   useEffect(() => {
     if (!filters) return;
     filters
-      .filter((filterElement) => isValidElement(filterElement))
+      .filter((filterElement): filterElement is React.ReactElement<FilterElementProps> => isValidElement(filterElement))
       .forEach((filter) => {
         if (
-          (filter.props as FilterElementProps).alwaysOn &&
-          (filter.props as FilterElementProps).defaultValue
+          filter.props.alwaysOn &&
+          filter.props.defaultValue
         ) {
           throw new Error(
             "Cannot use alwaysOn and defaultValue on a filter input. Please set the filterDefaultValues props on the <List> element instead.",

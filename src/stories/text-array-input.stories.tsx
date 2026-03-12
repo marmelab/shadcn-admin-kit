@@ -2,7 +2,7 @@ import { CoreAdminContext, RecordContextProvider, required } from "ra-core";
 import { TextArrayInput, SimpleForm, ThemeProvider } from "@/components/admin";
 import { i18nProvider } from "@/lib/i18nProvider";
 import { ReactNode } from "react";
-import { UnknownRecord } from "@/lib/unkown-types";
+import { UnknownRecord } from "@/lib/unknown-types";
 
 const record = {
   id: 1,

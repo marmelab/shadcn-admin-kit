@@ -8,7 +8,7 @@ import {
 import { CircleX, LoaderCircle } from "lucide-react";
 
 import { Link } from "react-router";
-import { UnknownRecord } from "@/lib/unkown-types";
+import { UnknownValue } from "@/lib/unknown-types";
 
 /**
  * Fetches and displays the item count for a resource.
@@ -85,7 +85,7 @@ export const Count = (props: CountProps) => {
 };
 
 export interface CountProps {
-  filter?: UnknownRecord;
+  filter?: UnknownValue;
   sort?: SortPayload;
   link?: boolean;
   resource?: string;

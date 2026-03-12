@@ -9,7 +9,7 @@ import {
 import { cn } from "@/lib/utils";
 
 import type { FieldProps } from "@/lib/field.type.ts";
-import { UnknownRecord, UnknownValue } from "@/lib/unkown-types";
+import { UnknownRecord, UnknownValue } from "@/lib/unknown-types";
 
 /**
  * Displays an image or a list of images from a record field inside an img element or a ul of img elements.

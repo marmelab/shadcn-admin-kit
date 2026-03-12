@@ -1,6 +1,6 @@
 import type { BaseFieldProps } from "ra-core";
 import type { ReactNode } from "react";
-import { UnknownRecord } from "./unkown-types";
+import { UnknownRecord } from "./unknown-types";
 
 export interface FieldProps<
   RecordType extends UnknownRecord = UnknownRecord,

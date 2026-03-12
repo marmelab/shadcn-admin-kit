@@ -2,7 +2,7 @@ import type { HTMLAttributes } from "react";
 import { genericMemo, useFieldValue, useTranslate } from "ra-core";
 
 import type { FieldProps } from "@/lib/field.type.ts";
-import { UnknownRecord, UnknownValue } from "@/lib/unkown-types";
+import { UnknownRecord, UnknownValue } from "@/lib/unknown-types";
 
 const DateFieldImpl = <
   RecordType extends UnknownRecord = UnknownRecord,

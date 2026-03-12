@@ -39,7 +39,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Confirm } from "@/components/admin/confirm";
 import { IconButtonWithTooltip } from "@/components/admin/icon-button-with-tooltip.tsx";
-import { UnknownValue } from "@/lib/unkown-types";
+import { UnknownValue } from "@/lib/unknown-types";
 
 type GetItemLabelFunc = (index: number) => string | ReactElement;
 

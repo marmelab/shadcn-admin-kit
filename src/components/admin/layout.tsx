@@ -12,7 +12,7 @@ import { RefreshButton } from "@/components/admin/refresh-button";
 import { LocalesMenuButton } from "@/components/admin/locales-menu-button";
 import { Error } from "@/components/admin/error";
 import { Loading } from "@/components/admin/loading";
-import { UnknownValue } from "@/lib/unkown-types";
+import { UnknownValue } from "@/lib/unknown-types";
 
 /**
  * The main application layout with sidebar, header, and content area.

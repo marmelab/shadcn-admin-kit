@@ -26,7 +26,7 @@ import {
 } from "ra-core";
 import { InputHelperText } from "./input-helper-text";
 import { useCallback } from "react";
-import { UnknownRecord, UnknownValue } from "@/lib/unkown-types";
+import { UnknownValue } from "@/lib/unknown-types";
 
 /**
  * Form control that lets users choose multiple values from a list using a dropdown with autocompletion.
@@ -68,7 +68,7 @@ export const AutocompleteArrayInput = (
     ChoicesProps & {
       className?: string;
       disableValue?: string;
-      filterToQuery?: (searchText: string) => UnknownRecord;
+      filterToQuery?: (searchText: string) => UnknownValue;
       translateChoice?: boolean;
       placeholder?: string;
       inputText?:

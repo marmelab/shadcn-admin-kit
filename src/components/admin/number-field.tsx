@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from "react";
 import { useFieldValue, useTranslate } from "ra-core";
 import type { FieldProps } from "@/lib/field.type.ts";
-import { UnknownRecord, UnknownValue } from "@/lib/unkown-types";
+import { UnknownRecord, UnknownValue } from "@/lib/unknown-types";
 
 /**
  * Displays a numeric value with locale-specific formatting.
@@ -72,13 +72,15 @@ export interface NumberFieldProps<
   extends FieldProps<RecordType>, HTMLAttributes<HTMLSpanElement> {
   locales?: string | string[];
   options?: object;
-  transform?: (value: UnknownValue) => UnknownValue;
+  transform?: (value: UnknownValue) => number;
 }
 
 const defaultTransform = (value: UnknownValue) =>
   value && typeof value === "string" && !Number.isNaN(Number(value))
     ? +value
-    : value;
+    : typeof value === 'number' 
+      ? value 
+      : 0;
 
 const hasNumberFormat = !!(
   typeof Intl === "object" &&

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import type { RaRecord, UseListOptions, UseFieldValueOptions } from "ra-core";
 import { ListContextProvider, useList, useFieldValue } from "ra-core";
-import { UnknownValue } from "@/lib/unkown-types";
+import { UnknownValue } from "@/lib/unknown-types";
 
 /**
  * Reads an array field value, puts it in a ListContext and renders its children.

@@ -3,7 +3,7 @@ import type { ChoicesProps } from "ra-core";
 import { genericMemo, useChoices, useFieldValue, useTranslate } from "ra-core";
 
 import type { FieldProps } from "@/lib/field.type.ts";
-import { UnknownRecord } from "@/lib/unkown-types";
+import { UnknownRecord } from "@/lib/unknown-types";
 
 /**
  * Displays a value from an enumeration by mapping it to a human-readable label.

@@ -4,7 +4,7 @@ import type { RaRecord, UseBulkDeleteControllerParams } from "ra-core";
 import { Translate, useBulkDeleteController } from "ra-core";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
-import { UnknownValue } from "@/lib/unkown-types";
+import { UnknownValue } from "@/lib/unknown-types";
 
 /**
  * A button that deletes multiple selected records at once.

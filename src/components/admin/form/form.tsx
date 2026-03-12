@@ -24,7 +24,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button.tsx";
 import { FormItemContext, FormItemContextValue } from "./form-item-context";
 import { useFormField } from "./use-form-field";
-import { UnknownRecord, UnknownValue } from "@/lib/unkown-types";
+import { UnknownRecord, UnknownValue } from "@/lib/unknown-types";
 
 const Form = FormProvider;
 

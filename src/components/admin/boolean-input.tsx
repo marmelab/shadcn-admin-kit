@@ -4,7 +4,7 @@ import { FormError, FormField, FormLabel } from "@/components/admin/form";
 import type { Validator } from "ra-core";
 import { useInput, FieldTitle } from "ra-core";
 import { InputHelperText } from "./input-helper-text";
-import { UnknownValue } from "@/lib/unkown-types";
+import { UnknownValue } from "@/lib/unknown-types";
 
 /**
  * Toggle switch for boolean (true/false) values.

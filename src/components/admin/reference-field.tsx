@@ -14,7 +14,7 @@ import {
 import type { MouseEvent, ReactNode } from "react";
 import { Link } from "react-router";
 import type { UseQueryOptions } from "@tanstack/react-query";
-import { UnknownRecord } from "@/lib/unkown-types";
+import { UnknownValue } from "@/lib/unknown-types";
 
 /**
  * Displays a field from a related record by following a foreign key relationship.
@@ -73,7 +73,7 @@ export interface ReferenceFieldProps<
 > extends Partial<ReferenceFieldViewProps<ReferenceRecordType>> {
   children?: ReactNode;
   queryOptions?: UseQueryOptions<RaRecord[], Error> & {
-    meta?: UnknownRecord;
+    meta?: UnknownValue;
   };
   record?: RecordType;
   reference: string;

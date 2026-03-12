@@ -57,7 +57,7 @@ import {
   BulkActionsToolbar,
   BulkActionsToolbarChildren,
 } from "@/components/admin/bulk-actions-toolbar";
-import { UnknownValue } from "@/lib/unkown-types";
+import { UnknownValue } from "@/lib/unknown-types";
 
 const defaultBulkActionButtons = <BulkActionsToolbarChildren />;
 

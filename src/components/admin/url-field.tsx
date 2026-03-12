@@ -4,7 +4,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import type { FieldProps } from "@/lib/field.type.ts";
-import { UnknownRecord } from "@/lib/unkown-types";
+import { UnknownRecord } from "@/lib/unknown-types";
 
 /**
  * Displays a URL as a clickable hyperlink.
