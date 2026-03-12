@@ -65,9 +65,13 @@ const toggleFilter = (value: UnknownRecord, filters: UnknownRecord) => {
   if (isSelected) {
     const keysToRemove = Object.keys(value);
     return Object.keys(filters).reduce(
-      (acc, key) =>
-        keysToRemove.includes(key) ? acc : { ...acc, [key]: filters[key] },
-      {},
+      (acc, key) => {
+        if (!keysToRemove.includes(key)) {
+            acc[key] = filters[key]
+        }
+        return acc
+      },
+      {} as UnknownRecord
     );
   }
 
