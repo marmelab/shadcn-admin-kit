@@ -6,7 +6,6 @@ import ShadcnUILogo from "/img/shadcn-ui-logo.svg";
 import ReactRouterLogo from "/img/react-router-logo.svg";
 import ReactQueryLogo from "/img/react-query-logo.svg";
 import TailwindLogo from "/img/tailwind-logo.svg";
-import RadixUILogo from "/img/radix-ui-logo.svg";
 import ReactHookFormLogo from "/img/react-hook-form-logo.svg";
 
 const technos = [
@@ -21,10 +20,6 @@ const technos = [
   {
     name: "Tailwind CSS",
     logo: TailwindLogo,
-  },
-  {
-    name: "Radix UI",
-    logo: RadixUILogo,
   },
   {
     name: "React Router",
