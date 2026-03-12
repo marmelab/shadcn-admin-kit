@@ -36,8 +36,7 @@ export const Count = (props: CountProps) => {
     filter,
     sort,
     link,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    resource: resourceFromProps,
+    resource: _resourceFromProps,
     timeout = 1000,
     ...rest
   } = props;
