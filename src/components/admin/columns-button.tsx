@@ -162,9 +162,15 @@ export const ColumnsSelector = ({ children }: ColumnsSelectorProps) => {
       return;
     }
 
-    // look for the container in the DOM every 100ms
+    let attempts = 0;
+    const maxAttempts = 50;
+
+    // look for the container in the DOM every 100ms for up to 5s
     const interval = setInterval(() => {
+      attempts += 1;
       if (resolveContainer()) {
+        clearInterval(interval);
+      } else if (attempts >= maxAttempts) {
         clearInterval(interval);
       }
     }, 100);

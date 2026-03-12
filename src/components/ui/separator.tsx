@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 function Separator({
   className,
   orientation = "horizontal",
-  decorative = false,
+  decorative = true,
   ...props
 }: SeparatorPrimitive.Props & { decorative?: boolean }) {
   if (decorative) {
