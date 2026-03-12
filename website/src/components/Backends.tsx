@@ -75,6 +75,7 @@ export function Backends() {
                     <a
                       href="https://marmelab.com/shadcn-admin-kit/docs/dataproviders/"
                       target="_blank"
+                      rel="noopener noreferrer"
                     />
                   }
                   nativeButton={false}

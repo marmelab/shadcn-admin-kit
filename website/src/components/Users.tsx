@@ -242,16 +242,17 @@ export function Users() {
               <a
                 href="https://github.com/marmelab/shadcn-admin-kit"
                 target="_blank"
+                rel="noopener noreferrer"
               />
             }
             nativeButton={false}
           >
             <img
               src={GithubLogo}
-              alt="Github"
+              alt="GitHub"
               className="inline h-4 w-auto"
             />{" "}
-            Star us on Github!
+            Star us on GitHub!
           </Button>
         </div>
       </div>

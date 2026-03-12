@@ -25,6 +25,7 @@ export function Hero() {
                     <a
                       href="https://marmelab.com/shadcn-admin-kit/docs/install/"
                       target="_blank"
+                      rel="noopener noreferrer"
                     />
                   }
                   nativeButton={false}
@@ -38,6 +39,7 @@ export function Hero() {
                     <a
                       href="https://marmelab.com/shadcn-admin-kit/demo"
                       target="_blank"
+                      rel="noopener noreferrer"
                     />
                   }
                   nativeButton={false}

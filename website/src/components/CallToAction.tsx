@@ -14,7 +14,13 @@ export function CallToAction() {
           className="mt-10"
           size="lg"
           variant="outline"
-          render={<a href="https://marmelab.com/shadcn-admin-kit/docs" target="_blank" />}
+          render={
+            <a
+              href="https://marmelab.com/shadcn-admin-kit/docs"
+              target="_blank"
+              rel="noopener noreferrer"
+            />
+          }
           nativeButton={false}
         >
           Get started
