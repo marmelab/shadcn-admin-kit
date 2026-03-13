@@ -27,6 +27,7 @@ import { cn } from "@/lib/utils";
 import { FormError, FormField, FormLabel } from "@/components/admin/form";
 import { InputHelperText } from "@/components/admin/input-helper-text";
 import { Button } from "@/components/ui/button.tsx";
+import { UnknownValue } from "@/lib/unknown-types";
 
 /**
  * File upload input with drag-and-drop support and preview capabilities.
@@ -98,7 +99,7 @@ export const FileInput = (props: FileInputProps) => {
   const translate = useTranslate();
 
   // turn a browser dropped file structure into expected structure
-  const transformFile = (file: unknown) => {
+  const transformFile = (file: UnknownValue) => {
     if (!(file instanceof File)) {
       return file;
     }
@@ -113,7 +114,7 @@ export const FileInput = (props: FileInputProps) => {
     return transformedFile;
   };
 
-  const transformFiles = (files: unknown[]) => {
+  const transformFiles = (files: UnknownValue[]) => {
     if (!files) {
       return multiple ? [] : null;
     }
@@ -148,8 +149,7 @@ export const FileInput = (props: FileInputProps) => {
   const files = value ? (Array.isArray(value) ? value : [value]) : [];
 
   const onDrop = (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    newFiles: any[],
+    newFiles: File[],
     rejectedFiles: FileRejection[],
     event: DropEvent,
   ) => {
@@ -168,8 +168,7 @@ export const FileInput = (props: FileInputProps) => {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onRemove = (file: any) => async () => {
+  const onRemove = (file: File | TransformedFile) => async () => {
     if (validateFileRemoval) {
       try {
         await validateFileRemoval(file);
@@ -261,21 +260,18 @@ export const FileInput = (props: FileInputProps) => {
 
       {children && (
         <div className="previews flex flex-col gap-1">
-          {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            files.map((file: any, index: number) => (
-              <FileInputPreview
-                key={index}
-                file={file}
-                onRemove={onRemove(file)}
-                removeIcon={removeIcon}
-              >
-                <RecordContextProvider value={file}>
-                  {childrenElement}
-                </RecordContextProvider>
-              </FileInputPreview>
-            ))
-          }
+          {files.map((file, index: number) => (
+            <FileInputPreview
+              key={index}
+              file={file}
+              onRemove={onRemove(file)}
+              removeIcon={removeIcon}
+            >
+              <RecordContextProvider value={file}>
+                {childrenElement}
+              </RecordContextProvider>
+            </FileInputPreview>
+          ))}
         </div>
       )}
     </FormField>
@@ -292,17 +288,22 @@ export type FileInputProps = Omit<InputProps, "type"> & {
   minSize?: DropzoneOptions["minSize"];
   multiple?: DropzoneOptions["multiple"];
   options?: DropzoneOptions;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onRemove?: (file: any) => void;
+
+  onRemove?: (file: File | TransformedFile) => void;
   placeholder?: ReactNode;
   removeIcon?: ComponentType<{ className?: string }>;
   inputProps?: DropzoneInputProps & React.ComponentProps<"input">;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  validateFileRemoval?(file: any): boolean | Promise<boolean>;
+
+  validateFileRemoval?(file: File | TransformedFile): boolean | Promise<boolean>;
 };
 
+interface FileWithPreview extends File {
+  preview?: string
+}
+
+
 export interface TransformedFile {
-  rawFile: File;
+  rawFile: FileWithPreview;
   src: string;
   title: string;
 }
@@ -328,7 +329,7 @@ export const FileInputPreview = (props: FileInputPreviewProps) => {
 
   useEffect(() => {
     return () => {
-      const preview = file.rawFile ? file.rawFile.preview : file.preview;
+      const preview = 'rawFile' in file ? file.rawFile.preview : file.preview
 
       if (preview) {
         window.URL.revokeObjectURL(preview);
@@ -355,8 +356,7 @@ export const FileInputPreview = (props: FileInputPreviewProps) => {
 };
 
 export interface FileInputPreviewProps extends HTMLAttributes<HTMLDivElement> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  file: any;
+  file: FileWithPreview | TransformedFile;
   onRemove: () => void;
   removeIcon?: React.ComponentType<{ className?: string }>;
 }

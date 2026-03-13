@@ -42,7 +42,7 @@ export const ActionWrapper = ({
   <div
     className={cn(
       "absolute top-3 right-3 flex flex-row rounded px-0.5 opacity-0 group-hover/node-image:opacity-100",
-      "border-[0.5px] bg-[var(--mt-bg-secondary)] [backdrop-filter:saturate(1.8)_blur(20px)]",
+      "border-[0.5px] bg-(--mt-bg-secondary) [backdrop-filter:saturate(1.8)_blur(20px)]",
       className
     )}
     {...props}

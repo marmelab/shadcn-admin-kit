@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { MouseEventHandler } from "react";
-import { createContext, useCallback, useContext, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import type {
   CreateParams,
   RaRecord,
@@ -22,34 +22,11 @@ import type { UseMutationOptions } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button.tsx";
+import { FormItemContext, FormItemContextValue } from "./form-item-context";
+import { useFormField } from "./use-form-field";
+import { UnknownRecord, UnknownValue } from "@/lib/unknown-types";
 
 const Form = FormProvider;
-
-type FormItemContextValue = {
-  id: string;
-  name: string;
-};
-
-const FormItemContext = createContext<FormItemContextValue>(
-  {} as FormItemContextValue,
-);
-
-const useFormField = () => {
-  const { getFieldState, formState } = useFormContext();
-  const { id, name } = useContext(FormItemContext);
-
-  const fieldState = getFieldState(name, formState);
-
-  return useMemo(
-    () => ({
-      formItemId: id,
-      formDescriptionId: `${id}-description`,
-      formMessageId: `${id}-message`,
-      ...fieldState,
-    }),
-    [id, fieldState],
-  );
-};
 
 function FormField({ className, id, name, ...props }: FormItemProps) {
   const contextValue: FormItemContextValue = useMemo(
@@ -195,8 +172,7 @@ const SaveButton = <RecordType extends RaRecord = RaRecord>(
   );
 
   const handleSubmit = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async (values: any) => {
+    async (values: UnknownRecord) => {
       let errors;
       if (saveContext?.save) {
         errors = await saveContext.save(values, {
@@ -253,7 +229,7 @@ const defaultIcon = <Save className="h-4 w-4" />;
 
 interface Props<
   RecordType extends RaRecord = RaRecord,
-  MutationOptionsError = unknown,
+  MutationOptionsError = UnknownValue,
 > {
   className?: string;
   disabled?: boolean;
@@ -278,8 +254,6 @@ export type SaveButtonProps<RecordType extends RaRecord = RaRecord> =
   Props<RecordType> & React.ComponentProps<"button">;
 
 export {
-  // eslint-disable-next-line react-refresh/only-export-components
-  useFormField,
   Form,
   FormField,
   FormLabel,

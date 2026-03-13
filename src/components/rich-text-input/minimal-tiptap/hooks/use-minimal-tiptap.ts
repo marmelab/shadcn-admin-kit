@@ -204,8 +204,8 @@ export const useMinimalTiptapEditor = ({
       : String(normalizedValue)
   }, [normalizedValue, output])
 
-  const throttledSetValue = useThrottle(
-    (value: Content) => onUpdate?.(value),
+  const throttledSetValue = useThrottle<Content>(
+    (value) => onUpdate?.(value),
     throttleDelay
   )
 

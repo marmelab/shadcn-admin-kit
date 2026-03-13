@@ -15,8 +15,7 @@ export const authProvider: AuthProvider = {
     // simulate login delay
     await new Promise((resolve) => setTimeout(resolve, 300));
     if (user) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password, ...userToPersist } = user;
+      const { password: _, ...userToPersist } = user;
       localStorage.setItem("user", JSON.stringify(userToPersist));
       localStorage.removeItem("not_authenticated");
       return Promise.resolve();

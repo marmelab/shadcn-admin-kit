@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import type { RaRecord, UseBulkDeleteControllerParams } from "ra-core";
 import { Translate, useBulkDeleteController } from "ra-core";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
+import { UnknownValue } from "@/lib/unknown-types";
 
 /**
  * A button that deletes multiple selected records at once.
@@ -33,8 +33,8 @@ import type { ReactNode } from "react";
  * );
  */
 export const BulkDeleteButton = <
-  RecordType extends RaRecord = any,
-  MutationOptionsError = unknown,
+  RecordType extends RaRecord = RaRecord,
+  MutationOptionsError = UnknownValue,
 >({
   icon = defaultIcon,
   label,
@@ -60,8 +60,8 @@ export const BulkDeleteButton = <
 };
 
 export type BulkDeleteButtonProps<
-  RecordType extends RaRecord = any,
-  MutationOptionsError = unknown,
+  RecordType extends RaRecord = RaRecord,
+  MutationOptionsError = UnknownValue,
 > = {
   label?: string;
   icon?: ReactNode;

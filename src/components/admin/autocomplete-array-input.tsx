@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import { X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -27,6 +26,7 @@ import {
 } from "ra-core";
 import { InputHelperText } from "./input-helper-text";
 import { useCallback } from "react";
+import { UnknownValue } from "@/lib/unknown-types";
 
 /**
  * Form control that lets users choose multiple values from a list using a dropdown with autocompletion.
@@ -68,12 +68,12 @@ export const AutocompleteArrayInput = (
     ChoicesProps & {
       className?: string;
       disableValue?: string;
-      filterToQuery?: (searchText: string) => any;
+      filterToQuery?: (searchText: string) => UnknownValue;
       translateChoice?: boolean;
       placeholder?: string;
       inputText?:
         | React.ReactNode
-        | ((option: any | undefined) => React.ReactNode);
+        | ((option: UnknownValue) => React.ReactNode);
     },
 ) => {
   const { filterToQuery = DefaultFilterToQuery, inputText } = props;
@@ -101,9 +101,9 @@ export const AutocompleteArrayInput = (
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
 
-  const handleUnselect = useEvent((choice: any) => {
+  const handleUnselect = useEvent((choice: UnknownValue) => {
     field.onChange(
-      field.value.filter((v: any) => v !== getChoiceValue(choice)),
+      field.value.filter((v: UnknownValue) => v !== getChoiceValue(choice)),
     );
   });
 
@@ -131,7 +131,7 @@ export const AutocompleteArrayInput = (
   const [filterValue, setFilterValue] = React.useState("");
 
   const getInputText = useCallback(
-    (selectedChoice: any) => {
+    (selectedChoice: UnknownValue) => {
       if (typeof inputText === "function") {
         return inputText(selectedChoice);
       }
