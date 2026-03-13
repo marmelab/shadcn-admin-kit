@@ -26,6 +26,7 @@
         "pagination",
         "radio-group",
         "select",
+        "separator",
         "sheet",
         "sidebar",
         "switch",
@@ -419,10 +420,6 @@
         },
         {
           "path": "src/components/ui/popover.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "src/components/ui/separator.tsx",
           "type": "registry:component"
         }
       ]
