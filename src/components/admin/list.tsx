@@ -16,7 +16,7 @@ import {
 } from "ra-core";
 import type { ReactElement, ReactNode } from "react";
 import { Link } from "react-router";
-import { cn } from "@/lib/utils.ts";
+import { cn } from "@/lib/utils";
 import { CreateButton } from "@/components/admin/create-button";
 import { ExportButton } from "@/components/admin/export-button";
 import { ListPagination } from "@/components/admin/list-pagination";
@@ -173,17 +173,26 @@ export const Empty = () => {
   if (!resource) {
     return null;
   }
-  const resourceLabel = getResourceLabel(resource, 2);
+  const resourceName = translate(`resources.${resource}.forcedCaseName`, {
+    smart_count: 0,
+    _: resource ? getResourceLabel(resource, 0) : undefined,
+  });
+  const emptyMessage = translate("ra.page.empty", { name: resourceName });
+  const inviteMessage = translate("ra.page.invite");
 
   return (
     <div className="flex min-h-[50vh] flex-col items-center justify-center gap-2 text-center">
       <h2 className="text-2xl font-semibold">
-        {translate("ra.page.empty", { name: resourceLabel })}
+        {translate(`resources.${resource}.empty`, {
+          _: emptyMessage,
+        })}
       </h2>
       {hasCreate ? (
         <>
           <p className="text-muted-foreground">
-            {translate("ra.page.invite")}
+            {translate(`resources.${resource}.invite`, {
+              _: inviteMessage,
+            })}
           </p>
           <CreateButton />
         </>
