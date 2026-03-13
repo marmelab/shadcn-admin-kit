@@ -62,7 +62,6 @@ export const Breadcrumb = ({ children, ref }: BreadcrumbProps) => {
   return createPortal(
     <>
       <Separator
-        decorative
         orientation="vertical"
         className="data-[orientation=vertical]:h-4 mr-4"
       />
