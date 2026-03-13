@@ -24,6 +24,7 @@
         "label",
         "navigation-menu",
         "pagination",
+        "popover",
         "radio-group",
         "select",
         "separator",
@@ -416,10 +417,6 @@
         },
         {
           "path": "src/components/admin/spinner.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "src/components/ui/popover.tsx",
           "type": "registry:component"
         }
       ]

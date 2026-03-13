@@ -105,7 +105,7 @@ export const ColumnsButton = (props: ColumnsButtonProps) => {
             {title}
           </PopoverTrigger>
         )}
-        <PopoverContent keepMounted align="start" className="w-72 min-w-[200px] p-0">
+        <PopoverContent align="start" className="w-72 min-w-[200px] p-0">
           <div id={`${storeKey}-columnsSelector`} className="p-2" />
         </PopoverContent>
       </Popover>
@@ -135,50 +135,47 @@ export const ColumnsSelector = ({ children }: ColumnsSelectorProps) => {
   );
   const elementId = `${storeKey}-columnsSelector`;
 
-  const [container, setContainer] = useState<HTMLElement | null>(() =>
-    typeof document !== "undefined" ? document.getElementById(elementId) : null,
-  );
+  const [container, setContainer] = useState<HTMLElement | null>(null);
 
-  // on first mount, we don't have the container yet, so we wait for it
+  // Track the portal container across popover mount/unmount cycles.
   useEffect(() => {
-    if (
-      container &&
-      typeof document !== "undefined" &&
-      document.body.contains(container)
-    )
-      return;
+    if (typeof document === "undefined") return;
 
     const resolveContainer = () => {
       const target = document.getElementById(elementId);
+      setContainer((current) => {
+        if (target === current) return current;
+        if (target) {
+          return target;
+        }
+        if (current && !document.body.contains(current)) {
+          return null;
+        }
+        return current;
+      });
+
       if (target) {
-        setContainer(target);
         return true;
       }
 
       return false;
     };
 
-    if (typeof document === "undefined" || resolveContainer()) {
-      return;
-    }
+    resolveContainer();
 
-    let attempts = 0;
-    const maxAttempts = 50;
+    const observer = new MutationObserver(() => {
+      resolveContainer();
+    });
 
-    // look for the container in the DOM every 100ms for up to 5s
-    const interval = setInterval(() => {
-      attempts += 1;
-      if (resolveContainer()) {
-        clearInterval(interval);
-      } else if (attempts >= maxAttempts) {
-        clearInterval(interval);
-      }
-    }, 100);
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
 
     return () => {
-      clearInterval(interval);
+      observer.disconnect();
     };
-  }, [elementId, container]);
+  }, [elementId]);
 
   const [columnFilter, setColumnFilter] = useState<string>("");
 
