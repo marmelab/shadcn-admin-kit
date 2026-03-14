@@ -74,13 +74,18 @@ export function AdvancedCapabilities() {
                     </div>
                   ))}
                 </dl>
-                <Button variant="outline" asChild>
-                  <a
-                    href="https://marmelab.com/shadcn-admin-kit/docs/install/"
-                    target="_blank"
-                  >
-                    Learn More
-                  </a>
+                <Button
+                  variant="outline"
+                  render={
+                    <a
+                      href="https://marmelab.com/shadcn-admin-kit/docs/install/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    />
+                  }
+                  nativeButton={false}
+                >
+                  Learn More
                 </Button>
               </div>
             </div>

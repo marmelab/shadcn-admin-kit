@@ -45,7 +45,7 @@ export const Error = (props: InternalErrorProps & {}) => {
       {process.env.NODE_ENV !== "production" && (
         <>
           <Accordion
-            type="multiple"
+            multiple
             className="mt-1 p-2 bg-secondary w-full lg:w-150"
           >
             <AccordionItem value="error">

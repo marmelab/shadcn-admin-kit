@@ -32,6 +32,26 @@ import { BulkRejectButton } from "./BulkRejectButton";
 import { useIsMobile } from "../../hooks/use-mobile";
 import type { Review } from "../types";
 
+const renderReviewStatusOption = (choice?: { id: string; name: string }) => {
+  if (!choice) return null;
+
+  return (
+    <span className="inline-flex items-center gap-2 whitespace-nowrap">
+      <span
+        className={cn(
+          "inline-block h-2 w-2 shrink-0 rounded-full",
+          choice.id === "accepted"
+            ? "bg-green-400 dark:bg-green-800"
+            : choice.id === "rejected"
+              ? "bg-red-400 dark:bg-red-800"
+              : "bg-yellow-400 dark:bg-yellow-800",
+        )}
+      />
+      <span>{choice.name}</span>
+    </span>
+  );
+};
+
 const filters = [
   <TextInput source="q" placeholder="Search" label={false} alwaysOn />,
   <ReferenceInput
@@ -53,26 +73,14 @@ const filters = [
   <AutocompleteInput
     source="status"
     placeholder="Filter by status"
+    className="min-w-36"
     choices={[
       { id: "accepted", name: "Approved" },
       { id: "rejected", name: "Rejected" },
       { id: "pending", name: "Pending" },
     ]}
-    optionText={(choice) => (
-      <>
-        <span
-          className={cn(
-            "h-2 w-2 rounded-full",
-            choice.id === "accepted"
-              ? "bg-green-400 dark:bg-green-800"
-              : choice.id === "rejected"
-                ? "bg-red-400 dark:bg-red-800"
-                : "bg-yellow-400 dark:bg-yellow-800",
-          )}
-        />
-        {choice.name}
-      </>
-    )}
+    optionText={renderReviewStatusOption}
+    inputText={renderReviewStatusOption}
     label={false}
     alwaysOn
   />,

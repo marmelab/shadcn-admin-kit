@@ -35,104 +35,121 @@ export function Header() {
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="w-64"
-                onCloseAutoFocus={(e) => e.preventDefault()}
               >
-                <DropdownMenuItem className="m-1">
-                  <a
-                    href="https://marmelab.com/shadcn-admin-kit/demo"
-                    target="_blank"
-                    className="flex-1"
-                  >
-                    E-Commerce
-                  </a>
+                <DropdownMenuItem
+                  className="m-1 cursor-pointer"
+                  render={
+                    <a
+                      href="https://marmelab.com/shadcn-admin-kit/demo"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    />
+                  }
+                >
+                  E-Commerce
                 </DropdownMenuItem>
-                <DropdownMenuItem className="m-1">
-                  <a
-                    href="https://marmelab.com/atomic-crm-demo/"
-                    target="_blank"
-                    className="flex-1"
-                  >
-                    CRM
-                  </a>
+                <DropdownMenuItem
+                  className="m-1 cursor-pointer"
+                  render={
+                    <a
+                      href="https://marmelab.com/atomic-crm-demo/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    />
+                  }
+                >
+                  CRM
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
             <NavLink href="#pricing">Pricing</NavLink>
-            <Button asChild>
-              <a
-                href="https://github.com/marmelab/shadcn-admin-kit"
-                target="_blank"
-              >
-                <img
-                  src={GithubLogo}
-                  alt="Github"
-                  className="inline h-4 w-auto"
-                />{" "}
-                Star us on Github!
-              </a>
+            <Button
+              render={
+                <a
+                  href="https://github.com/marmelab/shadcn-admin-kit"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+              }
+              nativeButton={false}
+            >
+              <img
+                src={GithubLogo}
+                alt="GitHub"
+                className="inline h-4 w-auto"
+              />{" "}
+              Star us on GitHub!
             </Button>
           </div>
           <div className="md:hidden">
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" color="black">
-                  <Menu className="size-6" />
-                </Button>
+              <DropdownMenuTrigger render={<Button variant="ghost" size="icon" />}>
+                <Menu className="size-6" />
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="w-64"
-                onCloseAutoFocus={(e) => e.preventDefault()}
               >
-                <DropdownMenuItem className="m-1">
-                  <a href="#features" className="flex-1">
-                    Features
-                  </a>
+                <DropdownMenuItem
+                  className="m-1 cursor-pointer"
+                  render={<a href="#features" />}
+                >
+                  Features
                 </DropdownMenuItem>
-                <DropdownMenuItem className="m-1">
-                  <a
-                    href="https://marmelab.com/shadcn-admin-kit/docs/install/"
-                    className="flex-1"
-                  >
-                    Doc
-                  </a>
+                <DropdownMenuItem
+                  className="m-1 cursor-pointer"
+                  render={<a href="https://marmelab.com/shadcn-admin-kit/docs/install/" />}
+                >
+                  Doc
                 </DropdownMenuItem>
-                <DropdownMenuItem className="m-1">
-                  <a
-                    href="https://marmelab.com/shadcn-admin-kit/demo"
-                    target="_blank"
-                    className="flex-1"
-                  >
-                    Demo E-Commerce
-                  </a>
+                <DropdownMenuItem
+                  className="m-1 cursor-pointer"
+                  render={
+                    <a
+                      href="https://marmelab.com/shadcn-admin-kit/demo"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    />
+                  }
+                >
+                  Demo E-Commerce
                 </DropdownMenuItem>
-                <DropdownMenuItem className="m-1">
-                  <a
-                    href="https://marmelab.com/atomic-crm-demo/"
-                    target="_blank"
-                    className="flex-1"
-                  >
-                    Demo CRM
-                  </a>
+                <DropdownMenuItem
+                  className="m-1 cursor-pointer"
+                  render={
+                    <a
+                      href="https://marmelab.com/atomic-crm-demo/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    />
+                  }
+                >
+                  Demo CRM
                 </DropdownMenuItem>
-                <DropdownMenuItem className="m-1">
-                  <a href="#pricing" className="flex-1">
-                    Pricing
-                  </a>
+                <DropdownMenuItem
+                  className="m-1 cursor-pointer"
+                  render={<a href="#pricing" />}
+                >
+                  Pricing
                 </DropdownMenuItem>
                 <div className="w-full p-1">
-                  <Button asChild className="w-full">
-                    <a
-                      href="https://github.com/marmelab/shadcn-admin-kit"
-                      target="_blank"
-                      className="flex-1"
-                    >
-                      <img
-                        src={GithubLogo}
-                        alt="Github"
-                        className="inline h-4"
-                      />{" "}
-                      Star us on Github!
-                    </a>
+                  <Button
+                    className="w-full"
+                    render={
+                      <a
+                        href="https://github.com/marmelab/shadcn-admin-kit"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1"
+                      />
+                    }
+                    nativeButton={false}
+                  >
+                    <img
+                      src={GithubLogo}
+                      alt="GitHub"
+                      className="inline h-4"
+                    />{" "}
+                    Star us on GitHub!
                   </Button>
                 </div>
               </DropdownMenuContent>

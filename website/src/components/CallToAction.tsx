@@ -10,10 +10,20 @@ export function CallToAction() {
         <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-300">
           Then customize every detail to fit your unique requirements.
         </p>
-        <Button asChild className="mt-10" size="lg" variant="outline">
-          <a href="https://marmelab.com/shadcn-admin-kit/docs" target="_blank">
-            Get started
-          </a>
+        <Button
+          className="mt-10"
+          size="lg"
+          variant="outline"
+          render={
+            <a
+              href="https://marmelab.com/shadcn-admin-kit/docs"
+              target="_blank"
+              rel="noopener noreferrer"
+            />
+          }
+          nativeButton={false}
+        >
+          Get started
         </Button>
       </div>
     </div>

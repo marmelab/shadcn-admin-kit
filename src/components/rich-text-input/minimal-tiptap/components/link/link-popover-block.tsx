@@ -1,11 +1,7 @@
 import * as React from "react"
 import { Separator } from "@/components/ui/separator"
 import { ToolbarButton } from "../toolbar-button"
-import {
-  CopyIcon,
-  ExternalLinkIcon,
-  LinkBreak2Icon,
-} from "@radix-ui/react-icons"
+import { Copy, ExternalLink, Unlink } from "lucide-react"
 
 interface LinkPopoverBlockProps {
   url: string
@@ -49,23 +45,18 @@ export const LinkPopoverBlock: React.FC<LinkPopoverBlockProps> = ({
           tooltip="Open link in a new tab"
           onClick={handleOpenLink}
         >
-          <ExternalLinkIcon />
+          <ExternalLink />
         </ToolbarButton>
         <Separator orientation="vertical" />
         <ToolbarButton tooltip="Clear link" onClick={onClear}>
-          <LinkBreak2Icon />
+          <Unlink />
         </ToolbarButton>
         <Separator orientation="vertical" />
         <ToolbarButton
           tooltip={copyTitle}
           onClick={handleCopy}
-          tooltipOptions={{
-            onPointerDownOutside: (e) => {
-              if (e.target === e.currentTarget) e.preventDefault()
-            },
-          }}
         >
-          <CopyIcon />
+          <Copy />
         </ToolbarButton>
       </div>
     </div>

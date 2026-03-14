@@ -23,6 +23,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
 import type {
   ChoicesProps,
   InputProps,
@@ -39,7 +40,6 @@ import {
   useSupportCreateSuggestion,
 } from "ra-core";
 import { InputHelperText } from "./input-helper-text";
-import { PopoverProps } from "@radix-ui/react-popover";
 
 /**
  * Form control that lets users choose a value from a list using a dropdown with autocompletion.
@@ -88,7 +88,7 @@ export const AutocompleteInput = (
       inputText?:
         | React.ReactNode
         | ((option: any | undefined) => React.ReactNode);
-    } & Pick<PopoverProps, "modal">,
+    } & Pick<PopoverPrimitive.Root.Props, "modal">,
 ) => {
   const {
     filterToQuery = DefaultFilterToQuery,
@@ -218,22 +218,26 @@ export const AutocompleteInput = (
         )}
         <FormControl>
           <Popover open={open} onOpenChange={handleOpenChange} modal={modal}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={open}
-                className="w-full justify-between h-auto py-1.75 font-normal"
-              >
+            <PopoverTrigger
+              render={
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={open}
+                  className="w-full justify-between h-auto py-1.75 font-normal"
+                />
+              }
+            >
+              <div className="min-w-0 flex flex-1 items-center gap-2 overflow-hidden text-left">
                 {selectedChoice ? (
                   getInputText(selectedChoice)
                 ) : (
                   <span className="text-muted-foreground">{placeholder}</span>
                 )}
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
+              </div>
+              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </PopoverTrigger>
-            <PopoverContent className="w-full max-w-(--radix-popover-trigger-width) p-0">
+            <PopoverContent className="w-full max-w-(--anchor-width) p-0">
               {/* We handle the filtering ourselves */}
               <Command shouldFilter={!isFromReference}>
                 <CommandInput
