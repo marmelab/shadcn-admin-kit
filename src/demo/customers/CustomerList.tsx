@@ -6,6 +6,7 @@ import {
   FilterLiveForm,
 } from "ra-core";
 import {
+  BooleanField,
   ColumnsButton,
   DataTable,
   ExportButton,
@@ -87,6 +88,17 @@ export const CustomerList = () => {
                   : dateTimeFormatter.format(new Date(record.last_seen))
               }
             />
+            <DataTable.Col
+              source="has_newsletter"
+              label="resources.customers.fields.has_newsletter"
+              className="hidden md:table-cell"
+            >
+              <BooleanField
+                source="has_newsletter"
+                valueLabelTrue="Subscribed"
+                valueLabelFalse="Unsubscribed"
+              />
+            </DataTable.Col>
             <DataTable.Col
               label="resources.customers.fields.groups"
               className="hidden md:table-cell"

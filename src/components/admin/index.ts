@@ -6,6 +6,7 @@ export * from "./authentication";
 export * from "./autocomplete-input";
 export * from "./autocomplete-array-input";
 export * from "./badge-field";
+export * from "./boolean-field";
 export * from "./boolean-input";
 export * from "./breadcrumb";
 export * from "./bulk-actions-toolbar";
