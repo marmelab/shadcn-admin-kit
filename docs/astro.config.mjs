@@ -93,6 +93,7 @@ export default defineConfig({
             "datadisplay",
             "arrayfield",
             "badgefield",
+            "booleanfield",
             "bulkactionstoolbar",
             "columnsbutton",
             "count",

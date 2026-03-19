@@ -89,6 +89,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/boolean-field.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/boolean-input.tsx",
           "type": "registry:component"
         },

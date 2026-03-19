@@ -1,5 +1,5 @@
 import { Check, type LucideIcon, X } from "lucide-react";
-import { useFieldValue, useTranslate } from "ra-core";
+import { RaRecord, useFieldValue, useTranslate } from "ra-core";
 
 import type { FieldProps } from "@/lib/field.type";
 import { cn } from "@/lib/utils";
@@ -8,19 +8,15 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../ui/tooltip";
-
-/** TODO: replace with whatever is decided by PR #144 */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type AnyRecord = Record<string, any>;
+} from "@/components/ui/tooltip";
 
 /**
  * Displays a boolean value as a colored check or close icon.
  *
- * @see {@link https://marmelab.com/react-admin/BooleanField.html BooleanField documentation}
+ * @see {@link https://marmelab.com/shadcn-admin-kit/docs/booleanfield/ BooleanField documentation}
  *
  * @example
- * import { Show, SimpleShowLayout, BooleanField } from '@/components/admin-ui';
+ * import { Show, SimpleShowLayout, BooleanField } from '@/components/admin';
  *
  * const PostShow = () => (
  *   <Show>
@@ -31,15 +27,16 @@ type AnyRecord = Record<string, any>;
  *   </Show>
  * );
  */
-export const BooleanField = <RecordType extends AnyRecord = AnyRecord>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const BooleanField = <RecordType extends RaRecord = any>({
   source,
   record,
   defaultValue,
   className,
   TrueIcon = Check,
   FalseIcon = X,
-  valueLabelFalse = "false",
-  valueLabelTrue = "true",
+  valueLabelFalse,
+  valueLabelTrue,
   looseValue = false,
   empty = null,
 }: BooleanFieldProps<RecordType>) => {
@@ -89,18 +86,19 @@ function RenderLabel({
   const translate = useTranslate();
 
   let label = value ? valueLabelTrue : valueLabelFalse;
-  if (typeof label === "string") {
-    label = translate(label, { _: label });
-  }
   if (!label) {
     label = value ? "ra.boolean.true" : "ra.boolean.false";
+  }
+  if (typeof label === "string") {
+    label = translate(label, { _: label });
   }
 
   return <p>{label}</p>;
 }
 
 export interface BooleanFieldProps<
-  RecordType extends AnyRecord = AnyRecord,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  RecordType extends RaRecord = any,
 > extends FieldProps<RecordType> {
   className?: string;
   defaultValue?: unknown;

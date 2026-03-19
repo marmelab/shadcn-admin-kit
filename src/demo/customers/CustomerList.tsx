@@ -90,14 +90,9 @@ export const CustomerList = () => {
             />
             <DataTable.Col
               source="has_newsletter"
-              label="resources.customers.fields.has_newsletter"
               className="hidden md:table-cell"
             >
-              <BooleanField
-                source="has_newsletter"
-                valueLabelTrue="Subscribed"
-                valueLabelFalse="Unsubscribed"
-              />
+              <BooleanField source="has_newsletter" />
             </DataTable.Col>
             <DataTable.Col
               label="resources.customers.fields.groups"

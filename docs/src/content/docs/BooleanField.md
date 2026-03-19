@@ -2,7 +2,7 @@
 title: "BooleanField"
 ---
 
-Displays a boolean value as a colored check or close icon with a tooltip label.
+Displays a boolean value as a check or close icon with a tooltip label.
 
 ## Usage
 
