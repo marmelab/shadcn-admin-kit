@@ -60,7 +60,7 @@ const customFrenchMessages: TranslationMessages = {
         first_seen: "Première visite",
         full_name: "Nom",
         groups: "Segments",
-        has_newsletter: "Abonné à la newsletter",
+        has_newsletter: "Newsletter",
         has_ordered: "A commandé",
         last_name: "Nom",
         last_seen: "Vu le",

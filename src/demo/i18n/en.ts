@@ -62,6 +62,7 @@ const customEnglishMessages: TranslationMessages = {
         password: "Password",
         confirm_password: "Confirm password",
         stateAbbr: "State",
+        has_newsletter: "Newsletter",
       },
       filters: {
         last_visited: "Last visited",
