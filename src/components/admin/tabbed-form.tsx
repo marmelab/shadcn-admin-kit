@@ -1,3 +1,5 @@
+'use client'
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 import type { FormProps } from "ra-core";
