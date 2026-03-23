@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ReactNode, ElementType, HTMLAttributes } from "react";
 import { createElement } from "react";
 import type { ExtractRecordPaths, HintedString } from "ra-core";
@@ -11,6 +10,7 @@ import {
 import { cn } from "@/lib/utils";
 
 import { TextField } from "@/components/admin/text-field";
+import { UnknownRecord } from "@/lib/unknown-types";
 
 /**
  * Displays a labeled field-value pair with flexible rendering options.
@@ -43,7 +43,7 @@ import { TextField } from "@/components/admin/text-field";
  * );
  */
 export const RecordField = <
-  RecordType extends Record<string, any> = Record<string, any>,
+  RecordType extends UnknownRecord = UnknownRecord,
 >(
   props: RecordFieldProps<RecordType>,
 ) => {
@@ -118,7 +118,7 @@ export const RecordField = <
 type NoInfer<T> = T extends infer U ? U : never;
 
 export interface RecordFieldProps<
-  RecordType extends Record<string, any> = Record<string, any>,
+  RecordType extends UnknownRecord = UnknownRecord,
 > extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
   className?: string;

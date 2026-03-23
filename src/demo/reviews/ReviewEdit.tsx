@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   AutocompleteInput,
   RecordField,
@@ -13,7 +12,7 @@ import { cn } from "@/lib/utils";
 import { FullNameField } from "../customers/FullNameField";
 import { StarRatingField } from "./StarRatingField";
 
-export const ReviewEdit = ({ id }: any) => (
+export const ReviewEdit = ({ id }: { id: string | number; onCancel?: () => void }) => (
   <EditBase id={id}>
     <SimpleForm>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -27,7 +26,7 @@ export const ReviewEdit = ({ id }: any) => (
           <ReferenceField source="product_id" reference="products" />
         </RecordField>
 
-        <RecordField
+        <RecordField<{ date: string | number }>
           source="date"
           render={(record) => new Date(record.date).toLocaleDateString()}
         />

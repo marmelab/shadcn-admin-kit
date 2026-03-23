@@ -13,6 +13,7 @@ import { TextInput } from "@/components/admin/text-input";
 import { SimpleForm } from "@/components/admin/simple-form";
 import { SimpleFormIterator } from "@/components/admin/simple-form-iterator";
 import { i18nProvider } from "@/lib/i18nProvider";
+import { UnknownRecord } from "@/lib/unknown-types";
 
 const defaultRecord = {
   id: 1,
@@ -36,8 +37,8 @@ const StoryWrapper = ({
 }: {
   children: ReactNode;
   theme: "system" | "light" | "dark";
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  record?: any;
+
+  record?: UnknownRecord;
 }) => (
   <ThemeProvider defaultTheme={theme}>
     <CoreAdminContext i18nProvider={i18nProvider}>

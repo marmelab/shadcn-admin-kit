@@ -1,4 +1,5 @@
 import {
+  type RaRecord,
   RecordContextProvider,
   RecordRepresentation,
   useListContext,
@@ -38,8 +39,8 @@ import { cn } from "@/lib/utils";
  *     </Show>
  * );
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const SingleFieldList = <RecordType = any,>({
+
+export const SingleFieldList = <RecordType extends RaRecord = RaRecord>({
   children,
   render,
   className,

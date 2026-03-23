@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import { UnknownValue } from "@/lib/unknown-types";
 
 /**
  * Dropdown select input for choosing a single value from a list of options.
@@ -170,8 +171,7 @@ export const SelectInput = (props: SelectInputProps) => {
   }, [emptyText, translate]);
 
   const renderMenuItemOption = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (choice: any) => getChoiceText(choice),
+    (choice: UnknownValue) => getChoiceText(choice),
     [getChoiceText],
   );
 
@@ -321,7 +321,7 @@ export type SelectInputProps = ChoicesProps &
   Partial<InputProps> &
   Omit<SupportCreateSuggestionOptions, "handleChange"> & {
     emptyText?: string | ReactElement;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    emptyValue?: any;
+
+    emptyValue?: string | number | boolean | null;
     onChange?: (value: string) => void;
   } & Omit<ComponentProps<typeof FormField>, "id" | "name" | "children">;

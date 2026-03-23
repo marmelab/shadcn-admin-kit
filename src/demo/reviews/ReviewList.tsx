@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useCallback } from "react";
 import { useCreatePath, useTranslate } from "ra-core";
@@ -101,9 +100,7 @@ export const ReviewList = () => {
           <ReviewListMobile />
         ) : (
           <ReviewListDesktop
-            selectedRow={
-              match ? parseInt((match as any).params.id, 10) : undefined
-            }
+            selectedRow={match ? parseInt(match.params.id || "0", 10) : undefined}
           />
         )}
       </List>
@@ -134,7 +131,7 @@ export const ReviewList = () => {
               </SidebarHeader>
               <SidebarContent className="px-4 pt-1 pb-4">
                 <ReviewEdit
-                  id={(match as any).params.id}
+                  id={match.params.id || 0}
                   onCancel={handleClose}
                 />
               </SidebarContent>
@@ -186,7 +183,7 @@ const ReviewListMobile = () => {
       />
     );
   }
-  return <ReviewEdit id={(match as any).params.id} />;
+  return <ReviewEdit id={match.params.id || 0} />;
 };
 
 const ReviewListDesktop = ({ selectedRow }: { selectedRow?: number }) => {

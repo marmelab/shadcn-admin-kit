@@ -4,6 +4,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import type { FieldProps } from "@/lib/field.type.ts";
+import { UnknownRecord } from "@/lib/unknown-types";
 
 /**
  * Displays a URL as a clickable hyperlink.
@@ -27,8 +28,7 @@ import type { FieldProps } from "@/lib/field.type.ts";
  * );
  */
 const UrlFieldImpl = <
-  //eslint-disable-next-line @typescript-eslint/no-explicit-any
-  RecordType extends Record<string, any> = Record<string, any>,
+  RecordType extends UnknownRecord = UnknownRecord,
 >(
   inProps: UrlFieldProps<RecordType>,
 ) => {
@@ -72,8 +72,7 @@ UrlFieldImpl.displayName = "UrlFieldImpl";
 export const UrlField = genericMemo(UrlFieldImpl);
 
 export interface UrlFieldProps<
-  //eslint-disable-next-line @typescript-eslint/no-explicit-any
-  RecordType extends Record<string, any> = Record<string, any>,
+  RecordType extends UnknownRecord = UnknownRecord,
 >
   extends FieldProps<RecordType>, AnchorHTMLAttributes<HTMLAnchorElement> {}
 

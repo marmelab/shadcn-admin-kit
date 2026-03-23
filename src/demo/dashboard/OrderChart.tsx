@@ -10,7 +10,7 @@ const lastDay = new Date();
 const lastMonthDays = Array.from({ length: 30 }, (_, i) => subDays(lastDay, i));
 const aMonthAgo = subDays(new Date(), 30);
 
-const dateFormatter = (date: number): string =>
+const dateFormatter = (date: string | Date | number): string =>
   new Date(date).toLocaleDateString();
 
 const aggregateOrdersByDay = (orders: Order[]): { [key: string]: number } =>
@@ -77,8 +77,8 @@ const OrderChart = (props: { orders?: Order[] }) => {
         },
         tooltip: {
           trigger: "axis",
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          formatter: (params: any) => {
+
+          formatter: (params: { value: [string | Date, number] }[]) => {
             const param = params[0];
             return `${dateFormatter(param.value[0])}: ${new Intl.NumberFormat(
               undefined,

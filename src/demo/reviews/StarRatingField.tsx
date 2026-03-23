@@ -3,8 +3,8 @@ import { useRecordContext } from "ra-core";
 
 interface OwnProps {
   size?: "large" | "small";
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  record?: any;
+
+  record?: { rating: number };
 }
 
 export const StarRatingField = (props: OwnProps) => {

@@ -8,6 +8,7 @@ import {
 import { CircleX, LoaderCircle } from "lucide-react";
 
 import { Link } from "react-router";
+import { UnknownValue } from "@/lib/unknown-types";
 
 /**
  * Fetches and displays the item count for a resource.
@@ -36,8 +37,7 @@ export const Count = (props: CountProps) => {
     filter,
     sort,
     link,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    resource: resourceFromProps,
+    resource: _resourceFromProps,
     timeout = 1000,
     ...rest
   } = props;
@@ -85,8 +85,7 @@ export const Count = (props: CountProps) => {
 };
 
 export interface CountProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  filter?: any;
+  filter?: UnknownValue;
   sort?: SortPayload;
   link?: boolean;
   resource?: string;

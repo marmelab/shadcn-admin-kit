@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import polyglotI18nProvider from "ra-i18n-polyglot";
 import englishMessages from "ra-language-english";
@@ -46,7 +45,7 @@ export const WithRecord = () => (
           getOne: async () => ({
             data: { id: 1, publishedAt: new Date().toISOString() },
           }),
-        } as any
+        } as never
       }
     >
       <Resource

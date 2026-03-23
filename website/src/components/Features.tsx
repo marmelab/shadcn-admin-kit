@@ -75,7 +75,7 @@ export function Features() {
           more on what makes your app unique: your business logic.
         </p>
         <div className="mt-20">
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-4 max-w-256 mx-auto">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-4 max-w-5xl mx-auto">
             {features.map((feature) => (
               <div
                 key={feature.name}

@@ -1,3 +1,4 @@
+import { UnknownRecord } from "@/lib/unknown-types";
 import type { RaRecord, SortPayload } from "ra-core";
 import {
   useCreatePath,
@@ -85,8 +86,8 @@ export interface ReferenceManyCountProps<
   target: string;
   source?: string;
   sort?: SortPayload;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  filter?: any;
+
+  filter?: UnknownRecord;
   link?: boolean;
   timeout?: number;
 }

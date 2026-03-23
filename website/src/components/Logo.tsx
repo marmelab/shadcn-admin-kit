@@ -1,6 +1,5 @@
-import { LayoutDashboard } from "lucide-react";
+import { LayoutDashboard, type LucideProps } from "lucide-react";
 
-// @ts-expect-error just forwarding props
-export function Logo(props) {
+export function Logo(props: LucideProps) {
   return <LayoutDashboard {...props} />;
 }

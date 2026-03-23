@@ -71,7 +71,7 @@ const PendingReviews = () => {
           ))}
         </div>
       )}
-      <div className="flex-grow">&nbsp;</div>
+      <div className="grow">&nbsp;</div>
       <Link
         className={buttonVariants({
           variant: "outline",

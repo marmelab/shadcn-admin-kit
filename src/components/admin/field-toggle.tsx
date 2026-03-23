@@ -127,7 +127,7 @@ export const FieldToggle = (props: FieldToggleProps) => {
       data-index={index}
       className={cn(
         "flex justify-between items-center py-1",
-        "data-[drag-active=true]:bg-transparent data-[drag-active=true]:text-transparent data-[drag-active=true]:outline data-[drag-active=true]:outline-1 data-[drag-active=true]:outline-border",
+        "data-[drag-active=true]:bg-transparent data-[drag-active=true]:text-transparent data-[drag-active=true]:outline data-[drag-active=true]:outline-border",
       )}
     >
       <label
