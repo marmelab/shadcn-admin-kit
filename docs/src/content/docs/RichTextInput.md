@@ -3,11 +3,12 @@ title: "RichTextInput"
 ---
 
 Use `<RichTextInput>` to edit rich text content in a WYSIWYG editor (TipTap) and store it as HTML.
-This is an optional component and is not included in the `admin` registry block by default.
 
 ![RichTextInput](./images/rich-text-input.png)
 
-Install it with:
+## Installation
+
+This is an optional component and is not included in the `admin` registry block by default. Install it with:
 
 ```bash
 npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/rich-text-input.json
