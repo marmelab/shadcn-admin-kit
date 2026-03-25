@@ -4,7 +4,7 @@ import type { FormatAction } from "../types"
 import type { VariantProps } from "class-variance-authority"
 import type { toggleVariants } from "@/components/ui/toggle"
 import { cn } from "@/lib/utils"
-import { CaretDownIcon } from "@radix-ui/react-icons"
+import { ChevronDown } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -95,19 +95,21 @@ export const ToolbarSection: React.FC<ToolbarSectionProps> = ({
       {mainActions.map(renderToolbarButton)}
       {dropdownActions.length > 0 && (
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <ToolbarButton
-              isActive={isDropdownActive}
-              tooltip={dropdownTooltip}
-              aria-label={dropdownTooltip}
-              disabled={!editor.isEditable}
-              className={cn("gap-0", dropdownClassName)}
-              size={size}
-              variant={variant}
-            >
-              {dropdownIcon || <CaretDownIcon className="size-5" />}
-            </ToolbarButton>
-          </DropdownMenuTrigger>
+          <DropdownMenuTrigger
+            render={
+              <ToolbarButton
+                isActive={isDropdownActive}
+                tooltip={dropdownTooltip}
+                aria-label={dropdownTooltip}
+                disabled={!editor.isEditable}
+                className={cn("gap-0", dropdownClassName)}
+                size={size}
+                variant={variant}
+              >
+                {dropdownIcon || <ChevronDown className="size-5" />}
+              </ToolbarButton>
+            }
+          />
           <DropdownMenuContent align="start" className="w-full">
             {dropdownActions.map(renderDropdownMenuItem)}
           </DropdownMenuContent>

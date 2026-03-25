@@ -38,22 +38,28 @@
         "tooltip"
       ],
       "dependencies": [
+        "@base-ui/react",
         "@tanstack/react-query",
         "class-variance-authority",
         "clsx",
+        "cmdk",
         "diacritic",
         "inflection",
         "lodash",
         "lucide-react",
+        "next-themes",
         "query-string",
         "ra-core",
         "ra-i18n-polyglot",
         "ra-language-english",
         "react-dropzone",
+        "react-error-boundary",
         "react-hook-form",
         "react-router",
+        "sonner",
         "tailwind-merge",
-        "tw-animate-css"
+        "tw-animate-css",
+        "vaul"
       ],
       "files": [
         {
@@ -396,6 +402,26 @@
           "path": "rules/AGENTS.md",
           "type": "registry:file",
           "target": "~/AGENTS.md"
+        },
+        {
+          "path": "src/components/admin/confirm.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/guesser-empty.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/icon-button-with-tooltip.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/select-all-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/spinner.tsx",
+          "type": "registry:component"
         }
       ]
     },
@@ -638,7 +664,7 @@
         }
       ],
       "dependencies": [
-        "@radix-ui/react-icons",
+        "lucide-react",
         "@tiptap/extension-code-block-lowlight",
         "@tiptap/extension-color",
         "@tiptap/extension-horizontal-rule",

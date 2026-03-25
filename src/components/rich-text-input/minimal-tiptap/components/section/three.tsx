@@ -2,7 +2,7 @@ import * as React from "react"
 import type { Editor } from "@tiptap/react"
 import type { toggleVariants } from "@/components/ui/toggle"
 import type { VariantProps } from "class-variance-authority"
-import { CaretDownIcon, CheckIcon } from "@radix-ui/react-icons"
+import { Check, ChevronDown } from "lucide-react"
 import { ToolbarButton } from "../toolbar-button"
 import {
   Popover,
@@ -82,26 +82,28 @@ const MemoizedColorButton = React.memo<{
 
   return (
     <Tooltip>
-      <TooltipTrigger asChild>
-        <ToggleGroupItem
-          tabIndex={0}
-          className="relative size-7 rounded-md p-0"
-          value={color.cssVar}
-          aria-label={label}
-          style={{ backgroundColor: color.cssVar }}
-          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-            e.preventDefault()
-            onClick(color.cssVar)
-          }}
-        >
-          {isSelected && (
-            <CheckIcon
-              className="absolute inset-0 m-auto size-6"
-              style={{ color: inverse }}
-            />
-          )}
-        </ToggleGroupItem>
-      </TooltipTrigger>
+      <TooltipTrigger
+        render={
+          <ToggleGroupItem
+            tabIndex={0}
+            className="relative size-7 rounded-md p-0"
+            value={color.cssVar}
+            aria-label={label}
+            style={{ backgroundColor: color.cssVar }}
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              e.preventDefault()
+              onClick(color.cssVar)
+            }}
+          >
+            {isSelected && (
+              <Check
+                className="absolute inset-0 m-auto size-6"
+                style={{ color: inverse }}
+              />
+            )}
+          </ToggleGroupItem>
+        }
+      />
       <TooltipContent side="bottom">
         <p>{label}</p>
       </TooltipContent>
@@ -118,10 +120,10 @@ const MemoizedColorPicker = React.memo<{
   onColorChange: (value: string) => void
 }>(({ palette, selectedColor, inverse, onColorChange }) => (
   <ToggleGroup
-    type="single"
-    value={selectedColor}
-    onValueChange={(value: string) => {
-      if (value) onColorChange(value)
+    value={[selectedColor]}
+    onValueChange={(value) => {
+      const nextColor = value[0]
+      if (nextColor) onColorChange(nextColor)
     }}
     className="gap-1.5"
   >
@@ -181,35 +183,37 @@ export const SectionThree: React.FC<SectionThreeProps> = ({
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <ToolbarButton
-          tooltip="Text color"
-          aria-label="Text color"
-          disabled={!editor.isEditable}
-          className="gap-0"
-          size={size}
-          variant={variant}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="size-5"
-            style={{ color: selectedColor }}
+      <PopoverTrigger
+        render={
+          <ToolbarButton
+            tooltip="Text color"
+            aria-label="Text color"
+            disabled={!editor.isEditable}
+            className="gap-0"
+            size={size}
+            variant={variant}
           >
-            <path d="M4 20h16" />
-            <path d="m6 16 6-12 6 12" />
-            <path d="M8 12h8" />
-          </svg>
-          <CaretDownIcon className="size-5" />
-        </ToolbarButton>
-      </PopoverTrigger>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="size-5"
+              style={{ color: selectedColor }}
+            >
+              <path d="M4 20h16" />
+              <path d="m6 16 6-12 6 12" />
+              <path d="M8 12h8" />
+            </svg>
+            <ChevronDown className="size-5" />
+          </ToolbarButton>
+        }
+      />
       <PopoverContent align="start" className="w-full">
         <div className="space-y-1.5">
           {COLORS.map((palette, index) => (

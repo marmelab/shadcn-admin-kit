@@ -235,18 +235,24 @@ export function Users() {
           </li>
         </ul>
         <div className="w-full text-center">
-          <Button asChild size="lg" className="mt-16 md:mt-12">
-            <a
-              href="https://github.com/marmelab/shadcn-admin-kit"
-              target="_blank"
-            >
-              <img
-                src={GithubLogo}
-                alt="Github"
-                className="inline h-4 w-auto"
-              />{" "}
-              Star us on Github!
-            </a>
+          <Button
+            size="lg"
+            className="mt-16 md:mt-12"
+            render={
+              <a
+                href="https://github.com/marmelab/shadcn-admin-kit"
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            }
+            nativeButton={false}
+          >
+            <img
+              src={GithubLogo}
+              alt="GitHub"
+              className="inline h-4 w-auto"
+            />{" "}
+            Star us on GitHub!
           </Button>
         </div>
       </div>
