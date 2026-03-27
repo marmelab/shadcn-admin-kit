@@ -35,3 +35,5 @@ storybook-static
 # Vitest
 
 **/__screenshots__/*
+
+.claude/settings.local.json
