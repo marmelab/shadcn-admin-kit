@@ -36,4 +36,29 @@ const BulkActions = () => (
 
 Additional props are passed to the underlying shadcn/ui `<Button>` component.
 
+## `label`
+
+By default, the label is the translation of the `ra.action.export` key, which reads "Export".
+
+You can customize the label for a specific resource by adding a `resources.{resource}.action.export` key to your translation messages. It receives `%{name}` (the singular resource name):
+
+```js
+const messages = {
+    resources: {
+        posts: {
+            action: {
+                export: 'Download %{name}',
+            },
+        },
+    },
+};
+```
+
+You can also pass a custom string or translation key directly via the `label` prop:
+
+```tsx
+<BulkExportButton label="Export selected" />
+<BulkExportButton label="resources.posts.action.export" />
+```
+
 See the [`<List exporter>`](./List.md#exported-data) documentation for details on the `exporter` function.

@@ -32,6 +32,31 @@ Upon success, the button redirects to the list view, and notifies the user with 
 | `successMessage` | Optional | `string` | - | Custom success i18n key |
 | `variant` | Optional | `"default" \| "destructive" \| "outline" \| "secondary" \| "ghost" \| "link"` | `outline` | Button style |
 
+## `label`
+
+By default, the label is computed from the `ra.action.delete` translation key, which reads "Delete".
+
+You can customize the label for a specific resource by adding a `resources.{resource}.action.delete` key to your translation messages. It receives `%{name}` (singular resource name) and `%{recordRepresentation}` (string representation of the current record):
+
+```js
+const messages = {
+    resources: {
+        posts: {
+            action: {
+                delete: 'Remove %{recordRepresentation}',
+            },
+        },
+    },
+};
+```
+
+You can also pass a custom string or translation key directly via the `label` prop:
+
+```tsx
+<DeleteButton label="Remove" />
+<DeleteButton label="resources.posts.action.delete" />
+```
+
 ## Soft Delete
 
 If your data provider supports soft delete (see [Soft Delete Features](./SoftDeleteFeatures.md)), you can use an alternative [`SoftDeleteButton`](./SoftDeleteFeatures.md#soft-delete-button) that performs a soft delete instead of a permanent delete.
