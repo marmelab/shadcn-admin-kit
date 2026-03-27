@@ -274,22 +274,27 @@ export const InsideModal = () => {
   );
 };
 
+const getCurrencyChoices = () => {
+  const displayNames = new Intl.DisplayNames(
+    typeof navigator !== "undefined"
+      ? (navigator.languages as string[])
+      : ["en"],
+    { type: "currency" },
+  );
+  // @ts-expect-error supportedValuesOf is not yet in ts type, but it is supported in all modern browsers
+  return Intl.supportedValuesOf("currency").map((code: string) => ({
+    id: code,
+    name: `${code} - ${displayNames.of(code)}`,
+  }));
+};
+
+const currencyChoices = getCurrencyChoices();
+
 export const WithMismatchedOptionTextAndValue = () => (
   <Wrapper>
     <AutocompleteInput
-      source="contact_id"
-      choices={[
-        { id: 1, name: "John Doe" },
-        { id: 2, name: "Jane Smith" },
-        { id: 3, name: "Mike Johnson" },
-        { id: 4, name: "Sarah Wilson" },
-        { id: 5, name: "David Brown" },
-        { id: 6, name: "Emily Davis" },
-        { id: 7, name: "Alex Garcia" },
-        { id: 8, name: "Lisa Rodriguez" },
-        { id: 9, name: "Tom Anderson" },
-        { id: 10, name: "Rachel Martinez" },
-      ]}
+      source="currencies"
+      choices={currencyChoices}
       optionValue="id"
     />
   </Wrapper>

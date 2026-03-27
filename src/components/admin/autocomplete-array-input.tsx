@@ -224,6 +224,7 @@ export const AutocompleteArrayInput = (
                       return (
                         <CommandItem
                           key={getChoiceValue(choice)}
+                          value={getChoiceValue(choice)}
                           keywords={
                             React.isValidElement(choiceText)
                               ? undefined

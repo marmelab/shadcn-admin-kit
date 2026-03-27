@@ -57,25 +57,29 @@ export const Basic = ({ theme }: { theme: "system" | "light" | "dark" }) => (
   </StoryWrapper>
 );
 
+const getCurrencyChoices = () => {
+  const displayNames = new Intl.DisplayNames(
+    typeof navigator !== "undefined"
+      ? (navigator.languages as string[])
+      : ["en"],
+    { type: "currency" },
+  );
+  // @ts-expect-error supportedValuesOf is not yet in ts type, but it is supported in all modern browsers
+  return Intl.supportedValuesOf("currency").map((code: string) => ({
+    id: code,
+    name: `${code} - ${displayNames.of(code)}`,
+  }));
+};
+
+const currencyChoices = getCurrencyChoices();
+
 export const WithMismatchedOptionTextAndValue = () => (
   <StoryWrapper theme="system">
     <SimpleForm>
       <AutocompleteArrayInput
         source="contact_id"
         optionValue="id"
-        optionText={(choice) => `${choice.firstName} ${choice.lastName}`}
-        choices={[
-          { id: 1, firstName: "John", lastName: "Doe" },
-          { id: 2, firstName: "Jane", lastName: "Smith" },
-          { id: 3, firstName: "Sarah", lastName: "Wilson" },
-          { id: 4, firstName: "Michael", lastName: "Johnson" },
-          { id: 5, firstName: "Emily", lastName: "Davis" },
-          { id: 6, firstName: "David", lastName: "Brown" },
-          { id: 7, firstName: "Lisa", lastName: "Rodriguez" },
-          { id: 8, firstName: "James", lastName: "Miller" },
-          { id: 9, firstName: "Tom", lastName: "Anderson" },
-          { id: 10, firstName: "Karen", lastName: "Lee" },
-        ]}
+        choices={currencyChoices}
       />
     </SimpleForm>
   </StoryWrapper>

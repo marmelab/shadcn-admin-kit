@@ -41,24 +41,27 @@ describe("<AutocompleteInput />", () => {
 
     // All 10 options should be visible
     const allOptions = screen.getByRole("option");
-    expect(allOptions.all()).toHaveLength(10);
+    expect(allOptions.all()).toHaveLength(159);
 
     // Type a filter that matches only 3 choice
     const searchInput = screen.getByPlaceholder("Search...");
-    await userEvent.type(searchInput, "Sar");
+    await userEvent.type(searchInput, "aus");
 
     // Only "Sarah Wilson", "Lisa Rodriguez" and Tom Anderson should remain
-    await expect.poll(() => screen.getByRole("option").all()).toHaveLength(3);
+    await expect.poll(() => screen.getByRole("option").all()).toHaveLength(4);
     const filteredOptions = screen.getByRole("option");
 
     await expect
       .element(filteredOptions.nth(0))
-      .toHaveTextContent("Sarah Wilson");
+      .toHaveTextContent("AUD - Australian Dollar");
     await expect
       .element(filteredOptions.nth(1))
-      .toHaveTextContent("Lisa Rodriguez");
+      .toHaveTextContent("AED - United Arab Emirates Dirham");
     await expect
       .element(filteredOptions.nth(2))
-      .toHaveTextContent("Tom Anderson");
+      .toHaveTextContent("BYN - Belarusian Ruble");
+    await expect
+      .element(filteredOptions.nth(3))
+      .toHaveTextContent("UYU - Uruguayan Peso");
   });
 });
