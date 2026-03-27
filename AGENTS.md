@@ -43,10 +43,17 @@ The library re-implements react-admin's UI layer using shadcn/ui components whil
 - **Guessers** (`*-guesser.tsx`): Auto-generate CRUD views by introspecting API responses.
 - **Reference components** (`reference-*.tsx`): Handle foreign key relationships (one-to-many, many-to-one).
 - Tests are co-located as `*.spec.tsx` files next to their components.
+- **Tests should import and render stories**: Spec files import story exports (e.g., `import { Basic, CustomLabel } from "@/stories/foo.stories"`) and render them directly, rather than setting up test wrappers from scratch. See `date-time-input.spec.tsx` or `edit-button.spec.tsx` for examples.
 
 ### Entry Point
 
 `Admin` component (`src/components/admin/admin.tsx`) wraps ra-core's `CoreAdminContext` + `CoreAdminUI` with the ThemeProvider and default layout. Apps configure it with a `dataProvider`, optional `authProvider`, and `<Resource>` children.
+
+## Documentation
+
+Every new feature must be documented. Documentation is written in Markdown files in the `docs/src/content/docs/` directory, which are then rendered in the Astro documentation site.
+
+Component doc pages use the same structure: Usage → Props → specific prop sections** (e.g., `## \`label\``).
 
 ## Tech Stack
 
