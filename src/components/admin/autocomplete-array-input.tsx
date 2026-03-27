@@ -216,9 +216,15 @@ export const AutocompleteArrayInput = (
                 <div className="absolute top-2 z-10 w-full rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
                   <CommandGroup className="h-full overflow-auto">
                     {availableChoices.map((choice) => {
+                      const choiceText = getChoiceText(choice);
                       return (
                         <CommandItem
                           key={getChoiceValue(choice)}
+                          keywords={
+                            React.isValidElement(choiceText)
+                              ? undefined
+                              : [choiceText]
+                          }
                           onMouseDown={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
@@ -235,7 +241,7 @@ export const AutocompleteArrayInput = (
                           }}
                           className="cursor-pointer"
                         >
-                          {getChoiceText(choice)}
+                          {choiceText}
                         </CommandItem>
                       );
                     })}
