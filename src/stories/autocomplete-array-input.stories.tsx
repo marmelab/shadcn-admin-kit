@@ -57,6 +57,34 @@ export const Basic = ({ theme }: { theme: "system" | "light" | "dark" }) => (
   </StoryWrapper>
 );
 
+const getCurrencyChoices = () => {
+  const displayNames = new Intl.DisplayNames(
+    typeof navigator !== "undefined"
+      ? (navigator.languages as string[])
+      : ["en"],
+    { type: "currency" },
+  );
+  // @ts-expect-error supportedValuesOf is not yet in ts type, but it is supported in all modern browsers
+  return Intl.supportedValuesOf("currency").map((code: string) => ({
+    id: code,
+    name: `${code} - ${displayNames.of(code)}`,
+  }));
+};
+
+const currencyChoices = getCurrencyChoices();
+
+export const WithMismatchedOptionTextAndValue = () => (
+  <StoryWrapper theme="system">
+    <SimpleForm>
+      <AutocompleteArrayInput
+        source="contact_id"
+        optionValue="id"
+        choices={currencyChoices}
+      />
+    </SimpleForm>
+  </StoryWrapper>
+);
+
 Basic.args = {
   theme: "system",
 };
