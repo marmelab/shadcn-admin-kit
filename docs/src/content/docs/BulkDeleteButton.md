@@ -40,6 +40,31 @@ On error, it notifies with an error message or `ra.notification.http_error`, the
 
 Additional props are passed to the underlying shadcn/ui `<Button>` component.
 
+## `label`
+
+By default, the label is the translation of the `ra.action.delete` key, which reads "Delete".
+
+You can customize the label for a specific resource by adding a `resources.{resource}.action.delete` key to your translation messages. It receives `%{name}` (the singular resource name):
+
+```js
+const messages = {
+    resources: {
+        posts: {
+            action: {
+                delete: 'Remove %{name}',
+            },
+        },
+    },
+};
+```
+
+You can also pass a custom string or translation key directly via the `label` prop:
+
+```tsx
+<BulkDeleteButton label="Remove selected" />
+<BulkDeleteButton label="resources.posts.action.delete" />
+```
+
 ## Soft Delete
 
 If your data provider supports soft delete (see [Soft Delete Features](./SoftDeleteFeatures.md)), you can use an alternative [`BulkSoftDeleteButton`](./SoftDeleteFeatures.md#bulk-soft-delete-button) that performs a soft delete instead of a permanent delete.

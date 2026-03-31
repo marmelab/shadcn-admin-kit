@@ -1,5 +1,7 @@
 import React from "react";
 import { DataProvider, memoryStore, Resource, TestMemoryRouter } from "ra-core";
+import defaultMessages from "ra-language-english";
+import polyglotI18nProvider from "ra-i18n-polyglot";
 import { i18nProvider } from "@/lib/i18nProvider.ts";
 import {
   Admin,
@@ -65,15 +67,17 @@ const dataProvider = fakeRestDataProvider(data);
 
 const Wrapper = ({
   defaultDataProvider = dataProvider,
+  defaultI18nProvider = i18nProvider,
   actions = false,
 }: {
   defaultDataProvider?: DataProvider;
+  defaultI18nProvider?: ReturnType<typeof polyglotI18nProvider>;
   actions?: React.ReactElement | false;
 }) => (
   <TestMemoryRouter initialEntries={["/books"]}>
     <Admin
       dataProvider={defaultDataProvider}
-      i18nProvider={i18nProvider}
+      i18nProvider={defaultI18nProvider}
       store={memoryStore()}
     >
       <Resource
@@ -100,4 +104,49 @@ const Wrapper = ({
 
 export const Basic = () => (
   <Wrapper actions={<SortButton fields={["id", "title", "year"]} />} />
+);
+
+export const CustomLabel = () => (
+  <Wrapper
+    actions={
+      <SortButton
+        fields={["id", "title", "year"]}
+        label="myapp.action.sort_by"
+      />
+    }
+    defaultI18nProvider={polyglotI18nProvider(
+      () => ({
+        ...defaultMessages,
+        myapp: {
+          action: {
+            sort_by: "Ordered by %{field_lower_first} (%{order})",
+          },
+        },
+      }),
+      "en",
+      undefined,
+      { allowMissing: true },
+    )}
+  />
+);
+
+export const ResourceSpecificLabel = () => (
+  <Wrapper
+    actions={<SortButton fields={["id", "title", "year"]} />}
+    defaultI18nProvider={polyglotI18nProvider(
+      () => ({
+        ...defaultMessages,
+        resources: {
+          books: {
+            action: {
+              sort_by: "Sorted by %{field_lower_first} (%{order})",
+            },
+          },
+        },
+      }),
+      "en",
+      undefined,
+      { allowMissing: true },
+    )}
+  />
 );

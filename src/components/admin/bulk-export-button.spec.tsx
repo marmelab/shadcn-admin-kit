@@ -14,6 +14,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";
 import { useEffect } from "react";
 
+import {
+  Basic,
+  CustomLabel,
+  ResourceSpecificLabel,
+} from "@/stories/bulk-export-button.stories";
+
 type TestRecord = {
   id: number;
   title: string;
@@ -73,7 +79,7 @@ const TestWrapper = ({
   );
 };
 
-describe("BulkExportButton", () => {
+describe("<BulkExportButton />", () => {
   it("should render export button", async () => {
     const screen = render(
       <TestWrapper>
@@ -111,5 +117,26 @@ describe("BulkExportButton", () => {
       expect.any(Object),
       "records",
     );
+  });
+
+  it("should render with the default label", async () => {
+    const screen = render(<Basic />);
+    await expect
+      .element(screen.getByRole("button", { name: "Export" }))
+      .toBeInTheDocument();
+  });
+
+  it("should render with a custom label", async () => {
+    const screen = render(<CustomLabel />);
+    await expect
+      .element(screen.getByRole("button", { name: "Download selected" }))
+      .toBeInTheDocument();
+  });
+
+  it("should render with a resource-specific label", async () => {
+    const screen = render(<ResourceSpecificLabel />);
+    await expect
+      .element(screen.getByRole("button", { name: "Download posts" }))
+      .toBeInTheDocument();
   });
 });

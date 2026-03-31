@@ -43,3 +43,28 @@ It calls `dataProvider.getList()` with `perPage=maxResults` then invokes `export
 | `maxResults` | Optional | `number` | `1000` | Max records to fetch |
 | `meta` | Optional | `any` | - | Provider meta parameter |
 | `onClick` | Optional | `(e)=>void` | - | Extra click handler |
+
+## `label`
+
+By default, the label is the translation of the `ra.action.export` key, which reads "Export".
+
+You can customize the label for a specific resource by adding a `resources.{resource}.action.export` key to your translation messages. It receives `%{name}` (the singular resource name):
+
+```js
+const messages = {
+    resources: {
+        posts: {
+            action: {
+                export: 'Download %{name}',
+            },
+        },
+    },
+};
+```
+
+You can also pass a custom string or translation key directly via the `label` prop:
+
+```tsx
+<ExportButton label="Download CSV" />
+<ExportButton label="resources.posts.action.export" />
+```
