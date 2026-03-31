@@ -1,5 +1,11 @@
 import { Link } from "react-router";
-import { Translate, useHandleAuthCallback, useTranslate } from "ra-core";
+import {
+  removeDoubleSlashes,
+  Translate,
+  useBasename,
+  useHandleAuthCallback,
+  useTranslate,
+} from "ra-core";
 import { CircleAlert, LockIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -63,6 +69,10 @@ export const AuthError = (props: AuthErrorProps) => {
   } = props;
 
   const translate = useTranslate();
+  const basename = useBasename();
+  const normalizedBasename =
+    basename && basename !== "/" ? removeDoubleSlashes(basename) : "";
+  const loginPath = `${normalizedBasename}/login`;
   return (
     <div
       className={cn(
@@ -77,7 +87,7 @@ export const AuthError = (props: AuthErrorProps) => {
       </h1>
       <p className="my-5">{translate(message, { _: message })}</p>
       <Button asChild>
-        <Link to="/login">
+        <Link to={loginPath}>
           <LockIcon /> {translate("ra.auth.sign_in", { _: "Sign in" })}
         </Link>
       </Button>
