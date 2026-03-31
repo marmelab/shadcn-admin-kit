@@ -206,7 +206,7 @@ export const AutocompleteInput = (
 
   return (
     <>
-      <FormField className={props.className} id={id} name={source}>
+      <FormField className={props.className} id={id} name={field.name}>
         {props.label !== false && (
           <FormLabel>
             <FieldTitle

@@ -3,6 +3,9 @@ import {
   CoreAdminContext,
   Form,
   RecordContextProvider,
+  required,
+  ResourceContextProvider,
+  TestMemoryRouter,
   useCreateSuggestionContext,
   useRecordContext,
   useTranslate,
@@ -18,7 +21,16 @@ import {
 import { Label } from "@/components/ui/label.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { AutocompleteInput, ThemeProvider } from "@/components/admin";
+import {
+  ArrayInput,
+  AutocompleteInput,
+  Create as AdminCreate,
+  Notification,
+  SimpleForm,
+  SimpleFormIterator,
+  TextInput,
+  ThemeProvider,
+} from "@/components/admin";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 export default {
@@ -298,4 +310,30 @@ export const WithMismatchedOptionTextAndValue = () => (
       optionValue="id"
     />
   </Wrapper>
+);
+
+export const InsideArrayInputWithValidation = () => (
+  <TestMemoryRouter initialEntries={["/posts/create"]}>
+    <CoreAdminContext i18nProvider={i18nProvider}>
+      <ResourceContextProvider value="posts">
+        <AdminCreate resource="posts" record={{ test: [{ name: "test" }] }}>
+          {/* eslint-disable-next-line no-console */}
+          <SimpleForm onSubmit={console.log}>
+            <ArrayInput source="test">
+              <SimpleFormIterator>
+                <TextInput source="name" />
+                <AutocompleteInput
+                  source="tag_id"
+                  choices={tags}
+                  optionText="label"
+                  validate={required()}
+                />
+              </SimpleFormIterator>
+            </ArrayInput>
+          </SimpleForm>
+        </AdminCreate>
+      </ResourceContextProvider>
+      <Notification />
+    </CoreAdminContext>
+  </TestMemoryRouter>
 );

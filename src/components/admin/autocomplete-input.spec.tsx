@@ -4,6 +4,7 @@ import { userEvent } from "@vitest/browser/context";
 
 import {
   Create,
+  InsideArrayInputWithValidation,
   WithMismatchedOptionTextAndValue,
 } from "@/stories/autocomplete-input.stories";
 
@@ -63,5 +64,12 @@ describe("<AutocompleteInput />", () => {
     await expect
       .element(filteredOptions.nth(3))
       .toHaveTextContent("UYU - Uruguayan Peso");
+  });
+
+  it("should display validation error when required and empty inside ArrayInput", async () => {
+    const screen = render(<InsideArrayInputWithValidation />);
+    const submitButton = screen.getByRole("button", { name: /save/i });
+    await submitButton.click();
+    await expect.element(screen.getByText("Required")).toBeInTheDocument();
   });
 });
