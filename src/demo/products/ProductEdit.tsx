@@ -5,7 +5,7 @@ import {
   ReferenceField,
   ReferenceInput,
   ReferenceManyField,
-  SimpleForm,
+  TabbedForm,
   TextInput,
 } from "@/components/admin";
 import {
@@ -23,12 +23,14 @@ import { StarRatingField, StarArray } from "../reviews/StarRatingField";
 export const ProductEdit = () => {
   return (
     <Edit>
-      <div className="flex items-start justify-between gap-2 mb-4">
-        <SimpleForm
+      <TabbedForm
+        toolbar={
+          <FormToolbar className="md:pl-36 pt-4 pb-4 sticky bottom-0 bg-linear-to-b from-transparent to-background to-10%" />
+        }
+      >
+        <TabbedForm.Tab
+          label="resources.products.tabs.details"
           className="max-w-2xl"
-          toolbar={
-            <FormToolbar className="md:pl-36 pt-4 pb-4 sticky bottom-0 bg-linear-to-b from-transparent to-background to-10%" />
-          }
         >
           <div className="flex flex-col md:flex-row gap-4 mb-2">
             <h3 className="min-w-32 text-sm font-semibold">
@@ -107,9 +109,11 @@ export const ProductEdit = () => {
               />
             </div>
           </div>
-        </SimpleForm>
-        <ProductReviews />
-      </div>
+        </TabbedForm.Tab>
+        <TabbedForm.Tab label="resources.products.tabs.reviews">
+          <ProductReviews />
+        </TabbedForm.Tab>
+      </TabbedForm>
     </Edit>
   );
 };
