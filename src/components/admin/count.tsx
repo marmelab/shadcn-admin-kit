@@ -1,3 +1,4 @@
+import React from "react";
 import type { SortPayload } from "ra-core";
 import {
   useResourceContext,
@@ -7,7 +8,7 @@ import {
 } from "ra-core";
 import { CircleX, LoaderCircle } from "lucide-react";
 
-import { Link } from "react-router";
+import { Link } from "@/components/admin/link";
 
 /**
  * Fetches and displays the item count for a resource.
@@ -74,7 +75,7 @@ export const Count = (props: CountProps) => {
         pathname: createPath({ resource, type: "list" }),
         search: filter ? `filter=${JSON.stringify(filter)}` : undefined,
       }}
-      onClick={(e) => e.stopPropagation()}
+      onClick={(e: React.MouseEvent) => e.stopPropagation()}
       {...rest}
     >
       {body}
