@@ -7,6 +7,7 @@ import type { CreateBaseProps } from "ra-core";
 import {
   CreateBase,
   Translate,
+  useBasename,
   useCreateContext,
   useCreatePath,
   useGetResourceLabel,
@@ -89,12 +90,14 @@ export const CreateView = ({
   }
   const getResourceLabel = useGetResourceLabel();
   const listLabel = getResourceLabel(resource, 2);
+  const basename = useBasename();
   const createPath = useCreatePath();
   const listLink = createPath({
     resource,
     type: "list",
   });
   const hasDashboard = useHasDashboard();
+  const dashboardPath = basename || "/";
 
   return (
     <>
@@ -102,7 +105,7 @@ export const CreateView = ({
         <Breadcrumb>
           {hasDashboard && (
             <BreadcrumbItem>
-              <Link to="/">
+              <Link to={dashboardPath}>
                 <Translate i18nKey="ra.page.dashboard">Home</Translate>
               </Link>
             </BreadcrumbItem>
