@@ -15,7 +15,7 @@ import {
   useTranslate,
 } from "ra-core";
 import type { ReactElement, ReactNode } from "react";
-import { Link } from "react-router";
+import { Link } from "@/components/admin/link";
 import { cn } from "@/lib/utils";
 import { CreateButton } from "@/components/admin/create-button";
 import { ExportButton } from "@/components/admin/export-button";

@@ -13,7 +13,7 @@ import {
   Breadcrumb,
 } from "@/components/admin";
 import { i18nProvider } from "@/lib/i18nProvider";
-import { Link } from "react-router";
+import { Link } from "@/components/admin/link";
 
 export default {
   title: "Layout/Breadcrumb",

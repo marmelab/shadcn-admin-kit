@@ -11,7 +11,7 @@ import {
   useResourceDefinition,
 } from "ra-core";
 import type { ReactNode } from "react";
-import { Link } from "react-router";
+import { Link } from "@/components/admin/link";
 import {
   Breadcrumb,
   BreadcrumbItem,

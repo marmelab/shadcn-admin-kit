@@ -1,10 +1,11 @@
+import React from "react";
 import type { RaRecord, SortPayload } from "ra-core";
 import {
   useCreatePath,
   useRecordContext,
   useReferenceManyFieldController,
 } from "ra-core";
-import { Link } from "react-router";
+import { Link } from "@/components/admin/link";
 
 /**
  * Displays the count of related records that reference the current record.
@@ -67,7 +68,7 @@ export const ReferenceManyCount = <RecordType extends RaRecord = RaRecord>(
           [target]: record[source],
         })}`,
       }}
-      onClick={(e) => e.stopPropagation()}
+      onClick={(e: React.MouseEvent) => e.stopPropagation()}
     >
       {body}
     </Link>
