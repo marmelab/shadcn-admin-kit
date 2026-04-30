@@ -68,6 +68,7 @@ export * from "./simple-form-iterator";
 export * from "./simple-show-layout";
 export * from "./single-field-list";
 export * from "./sort-button";
+export * from "./tabbed-form";
 export * from "./text-array-input";
 export * from "./text-field";
 export * from "./text-input";

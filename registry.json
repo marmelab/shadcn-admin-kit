@@ -34,6 +34,7 @@
         "skeleton",
         "sonner",
         "table",
+        "tabs",
         "textarea",
         "tooltip"
       ],
@@ -330,6 +331,10 @@
         },
         {
           "path": "src/components/admin/sort-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/tabbed-form.tsx",
           "type": "registry:component"
         },
         {
