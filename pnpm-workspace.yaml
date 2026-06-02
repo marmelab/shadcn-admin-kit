@@ -1,2 +1,6 @@
 packages:
   - "docs"
+allowBuilds:
+  esbuild: true
+  msw: true
+  sharp: true
