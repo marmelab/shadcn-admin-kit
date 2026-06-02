@@ -104,7 +104,7 @@
     "eslint-plugin-storybook": "^10.2.12",
     "globals": "^16.5.0",
     "playwright": "^1.57.0",
-    "postcss": "^8.4.40",
+    "postcss": "^8.5.10",
     "prettier": "^3.8.1",
     "ra-data-json-server": "^5.13.6",
     "react-error-boundary": "^6.1.0",
@@ -114,7 +114,7 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.56.1",
     "vite": "^8.0.6",
-    "vitest": "^3.2.4",
+    "vitest": "^4.1.0",
     "vitest-browser-react": "^1.0.1"
   },
   "packageManager": "pnpm@10.14.0-0+sha512.2cd47a0cbf5f1d1de7693a88307a0ede5be94e0d3b34853d800ee775efbea0650cb562b77605ec80bc8d925f5cd27c4dfe8bb04d3a0b76090784c664450d32d6"
