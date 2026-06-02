@@ -37,3 +37,4 @@ storybook-static
 **/__screenshots__/*
 
 .claude/settings.local.json
+.vitest-attachments

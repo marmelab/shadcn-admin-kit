@@ -119,7 +119,7 @@ describe("ArrayInput", () => {
       </TestWrapper>,
     );
 
-    const arrayInput = screen.container.querySelector(".ra-input");
+    const arrayInput = screen.container.querySelector<HTMLElement>(".ra-input");
     await expect.element(arrayInput).toHaveClass("custom-class");
   });
 
@@ -198,7 +198,7 @@ describe("ArrayInput", () => {
 
     // Vérifier qu'aucun texte d'aide n'est affiché
     const helperTextElement =
-      screen.container.querySelector(".text-destructive");
+      screen.container.querySelector<HTMLElement>(".text-destructive");
     await expect.element(helperTextElement).not.toBeInTheDocument();
   });
 

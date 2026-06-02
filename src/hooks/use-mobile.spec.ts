@@ -1,7 +1,7 @@
 import { renderHook } from "vitest-browser-react";
 import { describe, expect, test } from "vitest";
 import { useIsMobile } from "./use-mobile";
-import { page } from "@vitest/browser/context";
+import { page } from "vitest/browser";
 
 describe("useIsMobile", () => {
   test("should return false if browser is not mobile", async () => {
