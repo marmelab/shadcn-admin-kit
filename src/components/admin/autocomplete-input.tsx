@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
-import { useCallback } from "react";
+import { useCallback, useId } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -110,6 +110,7 @@ export const AutocompleteInput = (
     setFilters,
   } = useChoicesContext(props);
   const { id, field, isRequired } = useInput({ ...props, source });
+  const uniqueId = useId();
   const translate = useTranslate();
   const { placeholder = translate("ra.action.search", { _: "Search..." }) } =
     props;
@@ -208,7 +209,7 @@ export const AutocompleteInput = (
     <>
       <FormField className={props.className} id={id} name={field.name}>
         {props.label !== false && (
-          <FormLabel>
+          <FormLabel id={uniqueId}>
             <FieldTitle
               label={props.label}
               source={props.source ?? source}
@@ -224,6 +225,7 @@ export const AutocompleteInput = (
                 variant="outline"
                 role="combobox"
                 aria-expanded={open}
+                aria-labelledby={uniqueId}
                 className="w-full justify-between h-auto py-1.75 font-normal"
               >
                 {selectedChoice ? (
