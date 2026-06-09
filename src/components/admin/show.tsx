@@ -7,6 +7,7 @@ import type { ShowBaseProps } from "ra-core";
 import {
   ShowBase,
   Translate,
+  useBasename,
   useCreatePath,
   useHasDashboard,
   useShowContext,
@@ -126,11 +127,13 @@ export const ShowView = ({
   }
   const getResourceLabel = useGetResourceLabel();
   const listLabel = getResourceLabel(resource, 2);
+  const basename = useBasename();
   const createPath = useCreatePath();
   const listLink = createPath({
     resource,
     type: "list",
   });
+  const dashboardPath = basename || "/";
 
   const getRecordRepresentation = useGetRecordRepresentation(resource);
   const recordRepresentation = getRecordRepresentation(context.record);
@@ -151,7 +154,7 @@ export const ShowView = ({
         <Breadcrumb>
           {hasDashboard && (
             <BreadcrumbItem>
-              <Link to="/">
+              <Link to={dashboardPath}>
                 <Translate i18nKey="ra.page.dashboard">Home</Translate>
               </Link>
             </BreadcrumbItem>

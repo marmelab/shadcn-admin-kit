@@ -1,5 +1,6 @@
 import { createElement } from "react";
 import {
+  useBasename,
   useCanAccess,
   useCreatePath,
   useGetResourceLabel,
@@ -37,8 +38,10 @@ import { House, List, Shell } from "lucide-react";
  */
 export function AppSidebar() {
   const hasDashboard = useHasDashboard();
+  const basename = useBasename();
   const resources = useResourceDefinitions();
   const { openMobile, setOpenMobile } = useSidebar();
+  const dashboardPath = basename || "/";
   const handleClick = () => {
     if (openMobile) {
       setOpenMobile(false);
@@ -53,7 +56,7 @@ export function AppSidebar() {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <Link to="/">
+              <Link to={dashboardPath}>
                 <Shell className="!size-5" />
                 <span className="text-base font-semibold">Acme Inc.</span>
               </Link>
@@ -97,14 +100,16 @@ export function AppSidebar() {
  */
 export const DashboardMenuItem = ({ onClick }: { onClick?: () => void }) => {
   const translate = useTranslate();
+  const basename = useBasename();
   const label = translate("ra.page.dashboard", {
     _: "Dashboard",
   });
-  const match = useMatch({ path: "/", end: true });
+  const dashboardPath = basename || "/";
+  const match = useMatch({ path: dashboardPath, end: true });
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild isActive={!!match}>
-        <Link to="/" onClick={onClick}>
+        <Link to={dashboardPath} onClick={onClick}>
           <House />
           {label}
         </Link>

@@ -8,6 +8,7 @@ import {
   FilterContext,
   ListBase,
   Translate,
+  useBasename,
   useGetResourceLabel,
   useHasDashboard,
   useResourceContext,
@@ -117,6 +118,7 @@ export const ListView = <RecordType extends RaRecord = RaRecord>(
   }
   const getResourceLabel = useGetResourceLabel();
   const resourceLabel = getResourceLabel(resource, 2);
+  const basename = useBasename();
   const finalTitle =
     title !== undefined
       ? title
@@ -125,6 +127,7 @@ export const ListView = <RecordType extends RaRecord = RaRecord>(
         });
   const { hasCreate } = useResourceDefinition({ resource });
   const hasDashboard = useHasDashboard();
+  const dashboardPath = basename || "/";
 
   return (
     <>
@@ -132,7 +135,7 @@ export const ListView = <RecordType extends RaRecord = RaRecord>(
         <Breadcrumb>
           {hasDashboard && (
             <BreadcrumbItem>
-              <Link to="/">
+              <Link to={dashboardPath}>
                 <Translate i18nKey="ra.page.dashboard">Home</Translate>
               </Link>
             </BreadcrumbItem>

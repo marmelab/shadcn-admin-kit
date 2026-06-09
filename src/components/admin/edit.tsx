@@ -2,6 +2,7 @@ import type { EditBaseProps } from "ra-core";
 import {
   EditBase,
   Translate,
+  useBasename,
   useCreatePath,
   useEditContext,
   useGetRecordRepresentation,
@@ -97,11 +98,13 @@ export const EditView = ({
   }
   const getResourceLabel = useGetResourceLabel();
   const listLabel = getResourceLabel(resource, 2);
+  const basename = useBasename();
   const createPath = useCreatePath();
   const listLink = createPath({
     resource,
     type: "list",
   });
+  const dashboardPath = basename || "/";
 
   const getRecordRepresentation = useGetRecordRepresentation(resource);
   const recordRepresentation = getRecordRepresentation(context.record);
@@ -119,7 +122,7 @@ export const EditView = ({
         <Breadcrumb>
           {hasDashboard && (
             <BreadcrumbItem>
-              <Link to="/">
+              <Link to={dashboardPath}>
                 <Translate i18nKey="ra.page.dashboard">Home</Translate>
               </Link>
             </BreadcrumbItem>
