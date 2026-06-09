@@ -95,11 +95,12 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
     rowClassName,
     bulkActionButtons = defaultBulkActionButtons,
     bulkActionsToolbar,
+    storeKey: storeKeyProp,
     ...rest
   } = props;
   const hasBulkActions = !!bulkActionsToolbar || bulkActionButtons !== false;
   const resourceFromContext = useResourceContext(props);
-  const storeKey = props.storeKey || `${resourceFromContext}.datatable`;
+  const storeKey = storeKeyProp || `${resourceFromContext}.datatable`;
   const [columnRanks] = useStore<number[]>(`${storeKey}_columnRanks`);
   const columns = columnRanks
     ? reorderChildren(children, columnRanks)
@@ -110,6 +111,7 @@ export function DataTable<RecordType extends RaRecord = RaRecord>(
       hasBulkActions={hasBulkActions}
       loading={null}
       empty={<DataTableEmpty />}
+      storeKey={storeKey}
       {...rest}
     >
       <div className={cn("rounded-md border", className)}>
