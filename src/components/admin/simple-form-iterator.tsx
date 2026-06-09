@@ -39,7 +39,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Confirm } from "@/components/admin/confirm";
-import { IconButtonWithTooltip } from "@/components/admin/icon-button-with-tooltip.tsx";
+import { IconButtonWithTooltip } from "@/components/admin/icon-button-with-tooltip";
 
 type GetItemLabelFunc = (index: number) => string | ReactElement;
 
@@ -288,6 +288,7 @@ export const AddItemButton = (props: React.ComponentProps<"button">) => {
             variant="ghost"
             size="icon"
             onClick={() => add()}
+            aria-label={translate("ra.action.add")}
             className={cn("button-add", `button-add-${source}`, className)}
             {...rest}
           >
