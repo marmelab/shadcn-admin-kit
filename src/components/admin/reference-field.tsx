@@ -12,7 +12,7 @@ import {
   useTranslate,
 } from "ra-core";
 import type { MouseEvent, ReactNode } from "react";
-import { Link } from "react-router";
+import { Link } from "@/components/admin/link";
 import type { UseQueryOptions } from "@tanstack/react-query";
 
 /**

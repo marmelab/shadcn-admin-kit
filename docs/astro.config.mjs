@@ -162,6 +162,7 @@ export default defineConfig({
             "confirm",
             "error",
             "layout",
+            "link",
             "loading",
             "localesmenubutton",
             "loginpage",

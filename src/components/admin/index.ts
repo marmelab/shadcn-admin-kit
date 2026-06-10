@@ -35,6 +35,7 @@ export * from "./file-input";
 export * from "./filter-form";
 export * from "./form";
 export * from "./layout";
+export * from "./link";
 export * from "./list-guesser";
 export * from "./list-pagination";
 export * from "./list";

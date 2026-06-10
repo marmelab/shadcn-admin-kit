@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link } from "@/components/admin/link";
 import { buttonVariants } from "@/components/ui/button";
 import { Eye } from "lucide-react";
 import type { RaRecord } from "ra-core";

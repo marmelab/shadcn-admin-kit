@@ -38,7 +38,7 @@ import { Translate } from "ra-core";
  * @example
  * import { Edit, Breadcrumb, SimpleForm } from "@/components/admin";
  * import { RecordRepresentation } from 'ra-core';
- * import { Link } from "react-router";
+ * import { Link } from "@/components/admin";
  *
  * const PostEdit = () => (
  *   <Edit disableBreadcrumb>

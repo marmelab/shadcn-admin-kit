@@ -10,7 +10,7 @@ import {
   useResourceContext,
   useResourceTranslation,
 } from "ra-core";
-import { Link } from "react-router";
+import { Link } from "@/components/admin/link";
 
 export type EditButtonProps = {
   record?: RaRecord;

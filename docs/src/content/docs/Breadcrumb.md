@@ -22,9 +22,8 @@ So for the CRUD pages of a `posts` resource with `recordRepresentation="title"`,
 To customize the breadcrumb for these pages, disable the default breadcrumb by using the `disableBreadcrumb` prop on the page component, then use the `<Breadcrumb>` component as a descendent. For example, to customize the breadcrumb for the Edit page of the `posts` resource:
 
 ```tsx
-import { Edit, Breadcrumb, SimpleForm } from "@/components/admin";
+import { Edit, Breadcrumb, Link, SimpleForm } from "@/components/admin";
 import { RecordRepresentation } from 'ra-core';
-import { Link } from "react-router";
 
 const PostEdit = () => (
     <Edit disableBreadcrumb>
@@ -49,7 +48,7 @@ This example shows that you can use `<Breacrumb.Item>` for intermediate links an
 To add a breadcrumb to a custom page component, simply use the `<Breadcrumb>` component as a descendent of your page component. For example:
 
 ```tsx
-import { Breadcrumb } from "@/components/admin";
+import { Breadcrumb, Link } from "@/components/admin";
 
 const SettingsPage = () => (
     <>
