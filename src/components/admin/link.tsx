@@ -1,6 +1,3 @@
-import * as React from "react";
-import { LinkBase, type LinkBaseProps } from "ra-core";
-
 /**
  * A router-agnostic Link component for use in admin UI.
  *
@@ -16,11 +13,4 @@ import { LinkBase, type LinkBaseProps } from "ra-core";
  *   <Link to="/posts">Go to Posts</Link>
  * );
  */
-export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
-  (props, ref) => {
-    return <LinkBase ref={ref} {...props} />;
-  },
-);
-Link.displayName = "Link";
-
-export type LinkProps = LinkBaseProps;
+export { LinkBase as Link, type LinkBaseProps as LinkProps } from "ra-core";
