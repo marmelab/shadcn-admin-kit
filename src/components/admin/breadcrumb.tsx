@@ -37,17 +37,16 @@ import { Translate } from "ra-core";
  *
  * @example
  * import { Edit, Breadcrumb, SimpleForm } from "@/components/admin";
- * import { RecordRepresentation } from 'ra-core';
- * import { Link } from "react-router";
+ * import { LinkBase, RecordRepresentation } from 'ra-core';
  *
  * const PostEdit = () => (
  *   <Edit disableBreadcrumb>
  *     <Breadcrumb>
- *       <Breadcrumb.Item><Link to="/">Home</Link></Breadcrumb.Item>
- *       <Breadcrumb.Item><Link to="/posts">Articles</Link></Breadcrumb.Item>
+ *       <Breadcrumb.Item><LinkBase to="/">Home</LinkBase></Breadcrumb.Item>
+ *       <Breadcrumb.Item><LinkBase to="/posts">Articles</LinkBase></Breadcrumb.Item>
  *       <Breadcrumb.PageItem>
  *         Edit Article "<RecordRepresentation />"
- *       </Breadcrumb.Item>
+ *       </Breadcrumb.PageItem>
  *     </Breadcrumb>
  *     <SimpleForm>
  *       ...

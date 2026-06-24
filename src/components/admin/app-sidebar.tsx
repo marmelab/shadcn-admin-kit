@@ -6,8 +6,9 @@ import {
   useHasDashboard,
   useResourceDefinitions,
   useTranslate,
+  LinkBase,
+  useMatch,
 } from "ra-core";
-import { Link, useMatch } from "react-router";
 import {
   Sidebar,
   SidebarContent,
@@ -53,10 +54,10 @@ export function AppSidebar() {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <Link to="/">
+              <LinkBase to="/">
                 <Shell className="!size-5" />
                 <span className="text-base font-semibold">Acme Inc.</span>
-              </Link>
+              </LinkBase>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -104,10 +105,10 @@ export const DashboardMenuItem = ({ onClick }: { onClick?: () => void }) => {
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild isActive={!!match}>
-        <Link to="/" onClick={onClick}>
+        <LinkBase to="/" onClick={onClick}>
           <House />
           {label}
-        </Link>
+        </LinkBase>
       </SidebarMenuButton>
     </SidebarMenuItem>
   );
@@ -152,14 +153,14 @@ export const ResourceMenuItem = ({
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild isActive={!!match}>
-        <Link to={to} state={{ _scrollToTop: true }} onClick={onClick}>
+        <LinkBase to={to} state={{ _scrollToTop: true }} onClick={onClick}>
           {resources[name].icon ? (
             createElement(resources[name].icon)
           ) : (
             <List />
           )}
           {getResourceLabel(name, 2)}
-        </Link>
+        </LinkBase>
       </SidebarMenuButton>
     </SidebarMenuItem>
   );

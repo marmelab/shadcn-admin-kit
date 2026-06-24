@@ -26,8 +26,8 @@ import {
   useStore,
   useTranslate,
   useTranslateLabel,
+  useNavigate,
 } from "ra-core";
-import { useNavigate } from "react-router";
 import { ArrowDownAZ, ArrowUpZA } from "lucide-react";
 import get from "lodash/get";
 import { cn } from "@/lib/utils";

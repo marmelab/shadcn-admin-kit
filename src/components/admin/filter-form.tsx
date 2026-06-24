@@ -12,11 +12,11 @@ import {
   type SavedQuery,
   useFilterContext,
   useListContext,
+  useNavigate,
   useResourceContext,
   useSavedQueries,
   useTranslate,
 } from "ra-core";
-import { useNavigate } from "react-router";
 import {
   Bookmark,
   BookmarkMinus,
