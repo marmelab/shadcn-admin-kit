@@ -1,4 +1,4 @@
-import { Resource, TestMemoryRouter } from "ra-core";
+import { LinkBase, Resource, TestMemoryRouter } from "ra-core";
 import fakeRestProvider from "ra-data-fakerest";
 import {
   Admin,
@@ -13,7 +13,6 @@ import {
   Breadcrumb,
 } from "@/components/admin";
 import { i18nProvider } from "@/lib/i18nProvider";
-import { Link } from "react-router";
 
 export default {
   title: "Layout/Breadcrumb",
@@ -212,7 +211,7 @@ const ShowWithCustomBreadcrumb = () => (
   <Show disableBreadcrumb>
     <Breadcrumb>
       <Breadcrumb.Item>
-        <Link to="/products">Products</Link>
+        <LinkBase to="/products">Products</LinkBase>
       </Breadcrumb.Item>
       <Breadcrumb.PageItem>Show Product</Breadcrumb.PageItem>
     </Breadcrumb>
@@ -224,7 +223,7 @@ const EditWithCustomBreadcrumb = () => (
   <Edit disableBreadcrumb>
     <Breadcrumb>
       <Breadcrumb.Item>
-        <Link to="/products">Products</Link>
+        <LinkBase to="/products">Products</LinkBase>
       </Breadcrumb.Item>
       <Breadcrumb.PageItem>Edit Product</Breadcrumb.PageItem>
     </Breadcrumb>
@@ -236,7 +235,7 @@ const CreateWithCustomBreadcrumb = () => (
   <Create disableBreadcrumb>
     <Breadcrumb>
       <Breadcrumb.Item>
-        <Link to="/products">Products</Link>
+        <LinkBase to="/products">Products</LinkBase>
       </Breadcrumb.Item>
       <Breadcrumb.PageItem>Create Product</Breadcrumb.PageItem>
     </Breadcrumb>

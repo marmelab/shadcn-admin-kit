@@ -1,9 +1,9 @@
 import React from "react";
-import { Link } from "react-router";
 import { buttonVariants } from "@/components/ui/button";
 import { Eye } from "lucide-react";
 import type { RaRecord } from "ra-core";
 import {
+  LinkBase,
   useCreatePath,
   useGetRecordRepresentation,
   useGetResourceLabel,
@@ -66,7 +66,7 @@ export const ShowButton = (props: ShowButtonProps) => {
     userText: labelProp,
   });
   return (
-    <Link
+    <LinkBase
       className={buttonVariants({ variant: "outline" })}
       to={link}
       onClick={stopPropagation}
@@ -75,7 +75,7 @@ export const ShowButton = (props: ShowButtonProps) => {
     >
       {icon ?? <Eye />}
       {label}
-    </Link>
+    </LinkBase>
   );
 };
 
