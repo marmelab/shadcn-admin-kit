@@ -34,7 +34,7 @@ It relies on [react-hook-form](https://react-hook-form.com/) for form handling. 
 |------|----------|------|---------|-------------|
 | `children` | Required | `ReactNode` | - | The form content (usually Input elements). |
 | `className` | Optional | `string` | - | Extra classes appended to base layout |
-| `defaultValues` | Optional | `object| function` | - | The default values of the record. |
+| `defaultValues` | Optional | `object`| `function` | - | The default values of the record. |
 | `id` | Optional | `string` | - | The id of the underlying `<form>` tag. |
 | `noValidate` | Optional | `boolean` | - | Set to `true` to disable the browser's default validation. |
 | `onSubmit` | Optional | `function` | `save` | A callback to call when the form is submitted. |
