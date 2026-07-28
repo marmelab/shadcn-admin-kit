@@ -1,34 +1,49 @@
 ---
 title: Radix UI to Base UI Migration
-description: Internal migration notes for moving shadcn-admin-kit from Radix UI to Base UI.
+description: What changed in shadcn-admin-kit when it moved from Radix UI to Base UI, and how to adapt your own code.
 ---
 
 # Radix UI to Base UI Migration
 
-This is an internal migration guide based on the `shadcn-admin-kit` migration from `Radix UI` to `Base UI`.
+shadcn-admin-kit builds on Base UI instead of Radix UI, which shadcn has supported [since January 2026](https://ui.shadcn.com/docs/changelog/2026-01-base-ui) and made the default in July. This page lists what that changes **in your own code**, and points to shadcn's official migration path for the components you own.
 
-It is **not** an official shadcn migration guide. At the time of writing, shadcn documents both primitive libraries, but does not provide a single official "Radix to Base UI migration" document.
+## Migrating your own components
 
-This guide is based on:
+shadcn ships an agent skill for this, not a codemod, precisely because you own your component files and have likely edited them. Install it once:
 
-- the official shadcn documentation and changelog
-- the official Base UI component docs
-- the concrete changes we had to make in this repository
+```bash
+pnpm dlx skills add shadcn/ui
+```
 
-## What Changed
+Then ask your coding agent, one component at a time:
 
-The migration was not just a dependency swap.
+```
+migrate accordion to base-ui
+```
 
-The main differences we hit were:
+It works with Claude Code, Cursor, or any agent that supports skills, migrates progressively, and writes a report per component under `.migration/`.
 
-- `asChild` patterns had to move to `render`
-- some wrappers and consumers assumed Radix-specific props or behavior
-- some Base UI parts have stricter structure requirements
-- some generated registry apps failed because the block expected local helpers or local wrapper behavior
+shadcn's [Base UI as the Default](https://ui.shadcn.com/docs/changelog/2026-07-base-ui-default) changelog entry covers this in full, including why they shipped a skill rather than a codemod: you own your component files, and a codemod would drop the variants, classes and props you added to them.
 
-## Main Migration Patterns
+## Breaking changes in shadcn-admin-kit
 
-### 1. `asChild` to `render`
+These are the kit's own API changes. The official skill will not know about them, so review these call sites by hand.
+
+| Component                       | Before                                | After                                                                                                 |
+| ------------------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `Badge`                         | `asChild`                             | `render`                                                                                              |
+| `Breadcrumb`                    | `asChild`                             | `render`                                                                                              |
+| `Button`                        | `asChild`                             | `render`, plus `nativeButton={false}` when rendering a non-button such as a link                      |
+| `SidebarMenuButton` and friends | `asChild`                             | `render`                                                                                              |
+| `SelectContent`                 | `position="popper" \| "item-aligned"` | `alignItemWithTrigger` (boolean, defaults to `false`, which matches the previous `"popper"` behavior) |
+| `Separator`                     | `decorative`                          | dropped, Base UI has no equivalent                                                                    |
+| `TooltipProvider`               | `delayDuration`                       | `delay`                                                                                               |
+
+Direct `@radix-ui/*` packages are no longer dependencies of the kit. If your app imported them itself, add them to your own `package.json`.
+
+## Main migration patterns
+
+### 1. `asChild` becomes `render`
 
 Radix-oriented code often uses:
 
@@ -38,19 +53,17 @@ Radix-oriented code often uses:
 </Button>
 ```
 
-In Base UI-first code, the equivalent pattern is:
+In Base UI-first code, the polymorphic element moves into a prop and the children stay children:
 
 ```tsx
-<Button render={<Link to="/profile" />}>
-  Profile
-</Button>
+<Button render={<Link to="/profile" />}>Profile</Button>
 ```
 
 In this repository, the long-term direction was to prefer `render` instead of keeping `asChild` compatibility everywhere.
 
 ### 2. Some Base UI parts are structurally stricter
 
-A common example is menus:
+A common example is [menus](https://base-ui.com/react/components/menu):
 
 - Base UI `Menu.GroupLabel` must be used inside `Menu.Group`
 
@@ -71,14 +84,8 @@ This does work:
 </Menu.Group>
 ```
 
-## References
+### 3. Some props only apply to mouse input
 
-- shadcn CLI: https://ui.shadcn.com/docs/cli
-- shadcn January 2026 Base UI documentation: https://ui.shadcn.com/docs/changelog/2026-01-base-ui
-- shadcn changelog: https://ui.shadcn.com/docs/changelog
-- Base UI Menu docs: https://base-ui.com/react/components/menu
-- Base UI Popover docs: https://base-ui.com/react/components/popover
+Base UI documents `alignItemWithTrigger` as applying to mouse input only. Opening a `Select` with the keyboard positions the popup below the trigger whichever value the prop holds, so verify this kind of behavior with the pointer, not just with tests driven by key presses.
 
-## Community / Unofficial References
-
-- shadcn-ui community discussion about migrating from Radix UI to Base UI: https://github.com/shadcn-ui/ui/discussions/9562
+Base UI's own [Popover documentation](https://base-ui.com/react/components/popover) shows the same `Portal > Positioner > Popup` anatomy, which most overlay primitives now follow.
