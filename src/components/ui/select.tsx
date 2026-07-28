@@ -63,7 +63,9 @@ function SelectContent({
   sideOffset = 4,
   align = "center",
   alignOffset = 0,
-  alignItemWithTrigger = true,
+  // Radix's position="popper" was this wrapper's default; its Base UI
+  // equivalent is alignItemWithTrigger, which defaults to true
+  alignItemWithTrigger = false,
   ...props
 }: SelectPrimitive.Popup.Props &
   Pick<
