@@ -274,7 +274,18 @@ export const SelectInput = (props: SelectInputProps) => {
               disabled={field.disabled}
               aria-labelledby={labelId}
             >
-              <SelectValue placeholder={renderEmptyItemOption()} />
+              <SelectValue placeholder={renderEmptyItemOption()}>
+                {(value: string | null) => {
+                  if (!value || value === emptyValue) {
+                    return renderEmptyItemOption();
+                  }
+                  const choice = finalChoices?.find(
+                    (choice) =>
+                      choice && getChoiceValue(choice)?.toString() === value,
+                  );
+                  return choice ? renderMenuItemOption(choice) : value;
+                }}
+              </SelectValue>
 
               {field.value && field.value !== emptyValue ? (
                 <div
