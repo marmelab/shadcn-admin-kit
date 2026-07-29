@@ -233,7 +233,9 @@ If you just need to ask users for a single string to create the new option, you 
 If you want to customize the label of the "Create XXX" item, use the `createItemLabel` prop. The `createLabel` prop is the hint displayed instead, as a disabled item, as long as the filter is empty.
 
 :::tip
-Inside a `<ReferenceArrayInput>`, the created record must be part of the choices for its badge to show up. `useCreate` invalidates the list queries of the resource it created, so this works out of the box — unless the `reference` you read the choices from is not the resource you create into (e.g. a database view). In that case, invalidate the `reference` queries yourself.
+Inside a `<ReferenceArrayInput>`, the created record must be part of the choices for its badge to show up.
+`useCreate` invalidates the list queries of the resource it created, so this works out of the box unless the `reference` you read the choices from is not the resource you create into (e.g. a database view).
+In that case, invalidate the `reference` queries yourself.
 :::
 
 ## Working With Object Values
