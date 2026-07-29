@@ -54,11 +54,15 @@ The form value for the source must be an array of the selected values, e.g.
 | `source` | Required* | `string` | - | Field name (inferred in ReferenceArrayInput) |
 | `choices` | Required* | `any[]` | - | List of choices |
 | `className` | Optional | `string` | - | CSS Classes |
+| `create` | Optional | `Element` | `-` | A React Element to render when users want to create a new choice |
+| `createItemLabel` | Optional | `string` &#124; `(filter: string) => ReactNode` | `ra.action .create_item` | The label for the menu item allowing users to create a new choice. Used when the filter is not empty. |
+| `createLabel` | Optional | `string` &#124; `ReactNode` | - | The label used as hint to let users know they can create a new choice. Displayed when the filter is empty. |
 | `disableValue` | Optional | `string` | `disabled` | The value to use for the disabled state |
 | `filterToQuery` | Optional | `(text:string)=>object` | `{ q: text }` | Server filter mapping |
 | `format` | Optional | `function` | - | Function to convert the value sent by the API to the value used by the form |
 | `helperText` | Optional | `ReactNode` | - | Help text |
 | `inputText` | Optional | `ReactNode \| (choice) =>string` | Choice text | Required if `optionText` is a custom Component, this function must return the text displayed for the current selection.   |
+| `onCreate` | Optional | `Function` | `-` | A function called with the current filter value when users choose to create a new choice. |
 | `optionText` | Optional | `string \| function` | `name` or record repr | Field name of record to display in the suggestion item or function which accepts the correct record as argument (`(record)=> {string}`)  |
 | `optionValue` | Optional | `string` | `id` | Field name of record containing the value to use as input value |
 | `parse` | Optional | `function` | - | Function to convert the value from the form to the value sent to the API |
@@ -138,6 +142,99 @@ const filterToQuery = searchText => ({ name_ilike: `%${searchText}%` });
     <AutocompleteArrayInput filterToQuery={filterToQuery} />
 </ReferenceArrayInput>
 ```
+
+## Creating New Choices On The Fly
+
+Users often discover that a choice is missing while they are filling the form. To let them add it without leaving the page, pass a React element as the `create` prop. `<AutocompleteArrayInput>` then renders an extra item at the bottom of the list, which renders the passed element when clicked. Once created, the new choice is added to the selection.
+
+```tsx
+import {
+    Edit,
+    SimpleForm,
+    ReferenceArrayInput,
+    AutocompleteArrayInput,
+} from '@/components/admin';
+import { useCreate, useCreateSuggestionContext } from 'ra-core';
+
+const CreateTag = () => {
+  const { onCancel, onCreate, filter } = useCreateSuggestionContext();
+  const [newTagName, setNewTagName] = React.useState(filter ?? "");
+  const [create] = useCreate();
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const newTag = await create(
+      "tags",
+      { data: { name: newTagName } },
+      { returnPromise: true },
+    );
+    setNewTagName("");
+    onCreate(newTag);
+  };
+
+  return (
+    <Dialog open onOpenChange={onCancel}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Create a tag</DialogTitle>
+        </DialogHeader>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="name">New tag name</Label>
+            <Input id="name" value={newTagName} onChange={event => setNewTagName(event.currentTarget.value)} autoFocus />
+          </div>
+          <DialogFooter>
+            <Button variant="outline" type="button" onClick={onCancel}>Cancel</Button>
+            <Button type="submit">Save</Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+const PostEdit = () => (
+    <Edit>
+        <SimpleForm>
+            <ReferenceArrayInput source="tag_ids" reference="tags">
+                <AutocompleteArrayInput
+                  create={<CreateTag />}
+                  createLabel="Start typing to create a new tag"
+                  createItemLabel="Create %{item}"
+                />
+            </ReferenceArrayInput>
+        </SimpleForm>
+    </Edit>
+);
+```
+
+The element passed to `create` must call the `useCreateSuggestionContext` hook, which provides:
+
+- `filter`: the text users typed in the input, to use as a default value,
+- `onCreate`: to call with the created choice once saved,
+- `onCancel`: to call when users dismiss the creation.
+
+If you just need to ask users for a single string to create the new option, you can use the `onCreate` prop instead:
+
+```jsx
+<AutocompleteArrayInput
+    source="tags"
+    choices={tags}
+    onCreate={filter => {
+        const newTag = { id: filter.toLowerCase(), name: filter };
+        tags.push(newTag);
+        return newTag;
+    }}
+    createLabel="Start typing to create a new tag"
+    createItemLabel="Create %{item}"
+/>
+```
+
+If you want to customize the label of the "Create XXX" item, use the `createItemLabel` prop. The `createLabel` prop is the hint displayed instead, as a disabled item, as long as the filter is empty.
+
+:::tip
+Inside a `<ReferenceArrayInput>`, the created record must be part of the choices for its badge to show up. `useCreate` invalidates the list queries of the resource it created, so this works out of the box — unless the `reference` you read the choices from is not the resource you create into (e.g. a database view). In that case, invalidate the `reference` queries yourself.
+:::
 
 ## Working With Object Values
 
