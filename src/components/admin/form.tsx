@@ -92,6 +92,20 @@ function FormLabel({
   );
 }
 
+/**
+ * Wires the field's id and aria attributes onto its single child input.
+ *
+ * This replaces Radix's `Slot`, which the Base UI migration removed, and the
+ * merging rules differ on purpose. Radix let the child win and merged
+ * `className`, `style` and event handlers; here the props passed to
+ * `FormControl` are applied over the child's, and nothing is merged. In
+ * practice `FormControl` is only ever given children, so the difference is not
+ * exercised, but do not pass it a `className` expecting it to combine with the
+ * child's.
+ *
+ * `aria-describedby` is the exception: the child's value is kept and the
+ * field's ids are appended to it, which Slot would have overwritten.
+ */
 function FormControl({
   children,
   ...props
