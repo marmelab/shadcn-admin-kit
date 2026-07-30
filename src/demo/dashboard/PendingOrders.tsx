@@ -16,10 +16,10 @@ const PendingOrders = (props: Props) => {
     <Card className="flex-1">
       <CardContent className="flex flex-col gap-4">
         <h2 className="text-xl">{translate("pos.dashboard.pending_orders")}</h2>
-        {/* Capped: each Base UI AvatarImage updates its Avatar root from a
-            layout effect, and useReference mounts them all in one deferred
-            commit, so ~30 in a single card exceeded React's 50 nested
-            updates. A dashboard card only needs the most recent few. */}
+        {/* Capped to work around a ra-core limitation: useGetManyAggregate
+            (behind useReference) resolves its pending calls one by one, so past
+            ~30 rows the React updates nest and exceed the 50 allowed. See
+            PendingReviews for the measured threshold. */}
         {orders.slice(0, 10).map((record) => (
           <PendingOrder key={record.id} order={record} />
         ))}

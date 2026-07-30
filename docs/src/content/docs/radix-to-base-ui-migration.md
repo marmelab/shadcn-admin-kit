@@ -133,35 +133,44 @@ Base UI documents `alignItemWithTrigger` as applying to mouse input only. Openin
 
 Base UI's own [Popover documentation](https://base-ui.com/react/components/popover) shows the same `Portal > Positioner > Popup` anatomy, which most overlay primitives now follow.
 
-### 4. Many `Avatar.Image` in one commit hit a React limit
+### 4. Long reference lists can exceed React's nested update limit
 
-Base UI's `Avatar.Image` updates its `Avatar.Root` context from a layout effect
-whenever the image loading status changes. When a lot of them mount in the **same
-commit**, those updates cascade and React throws:
+Not a Base UI problem, but the migration is what surfaced it, so it belongs here.
+
+`ReferenceField` fetches through ra-core's `useGetManyAggregate`, which resolves
+its pending calls one at a time. Each resolution triggers its own React update.
+React normally batches them, but a child that updates state **during commit**
+(in a layout effect) forces a synchronous flush, the batching is lost, and the
+updates nest instead. Past 50 nested updates React throws:
 
 ```
 Maximum update depth exceeded.
 ```
 
-It is not an infinite loop: the depth grows with the number of instances, so it
-is a threshold. Measured on this kit's dashboard, with the avatars mounted by a
-`ReferenceField` (which renders a placeholder while its query is pending, then
-swaps them all in at once):
+Base UI's `Avatar.Image` is one such child: it reports its image loading status
+from a layout effect, where Radix's Avatar did not. That is why a page that
+worked before the migration can break after it, with no change of its own.
 
-| Instances in one commit | Result |
-| ----------------------- | ------ |
-| up to 25                | fine   |
-| 35 and above            | throws |
+Measured on this kit's dashboard, one avatar per row inside a `ReferenceField`:
 
-Consistent with React's limit of 50 nested updates.
+| Rows         | Result |
+| ------------ | ------ |
+| 25           | fine   |
+| 35 and above | throws |
 
-**What to watch for.** Any long list where each row wraps an `Avatar` in a
-component that defers its children behind an async query: `ReferenceField`,
-`ReferenceOneField`, or your own equivalent. A list of 30+ rows is enough.
+Replacing the aggregated fetch with one `useGetOne` per row, keeping the same
+avatar, renders 79 rows with no error. And 100 Base UI avatars mounting together
+with no ra-core involved throw nothing either. The aggregation is the ingredient
+that matters.
 
-**Workaround** until it is fixed upstream: keep the number of simultaneously
-mounted avatars low, for example by paginating or capping the list. In this
-repository the three dashboard cards were capped to 10 entries.
+**What to watch for.** Long lists (30+ rows) where each row renders a
+`ReferenceField`, `ReferenceOneField` or `ReferenceManyField` around a component
+that updates state in a layout effect. An `Avatar` is the obvious case, but any
+such child qualifies.
+
+**Workaround** until ra-core batches those resolutions: keep the number of rows
+low, by paginating or capping. The three dashboard cards in this repository are
+capped to 10 entries for that reason.
 
 ### 5. Regenerating overwrites your local deviations
 

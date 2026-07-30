@@ -1,8 +1,4 @@
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
 import { Link } from "react-router";
@@ -23,11 +19,12 @@ const PendingReviews = () => {
   } = useGetList<Review>("reviews", {
     filter: { status: "pending" },
     sort: { field: "date", order: "DESC" },
-    // A dashboard card only needs the most recent few. It also keeps the number
-    // of Avatars well under the point where React's nested-update limit trips:
-    // each Base UI AvatarImage updates its Avatar root from a layout effect,
-    // and ReferenceField mounts them all in one deferred commit, so ~30 of them
-    // in a single card exceeded the 50 nested updates React allows.
+    // A dashboard card only needs the most recent few. It also works around a
+    // ra-core limitation: useGetManyAggregate (behind ReferenceField) resolves
+    // its pending calls one by one, so each row triggers its own React update.
+    // A child updating state during commit turns those into nested updates, and
+    // past ~30 rows the cascade exceeds the 50 React allows. Measured: 25 rows
+    // pass, 35 throw. Remove this cap once ra-core batches those resolutions.
     pagination: { page: 1, perPage: 10 },
   });
 
