@@ -33,9 +33,9 @@ export function Header() {
               <DropdownMenuTrigger className="text-md inline-block rounded-lg px-2 py-1 text-slate-700 hover:bg-slate-100 hover:text-slate-900">
                 Demos
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-64"
-              >
+              {/* Keep focus off the trigger on close, otherwise following an
+                  in-page anchor scrolls straight back up to the header. */}
+              <DropdownMenuContent className="w-64" finalFocus={false}>
                 <DropdownMenuItem
                   className="m-1 cursor-pointer"
                   render={
@@ -86,9 +86,7 @@ export function Header() {
               <DropdownMenuTrigger render={<Button variant="ghost" size="icon" />}>
                 <Menu className="size-6" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-64"
-              >
+              <DropdownMenuContent className="w-64" finalFocus={false}>
                 <DropdownMenuItem
                   className="m-1 cursor-pointer"
                   render={<a href="#features" />}

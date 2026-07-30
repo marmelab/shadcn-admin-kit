@@ -1,4 +1,8 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
 import { Link } from "react-router";
@@ -19,7 +23,12 @@ const PendingReviews = () => {
   } = useGetList<Review>("reviews", {
     filter: { status: "pending" },
     sort: { field: "date", order: "DESC" },
-    pagination: { page: 1, perPage: 100 },
+    // A dashboard card only needs the most recent few. It also keeps the number
+    // of Avatars well under the point where React's nested-update limit trips:
+    // each Base UI AvatarImage updates its Avatar root from a layout effect,
+    // and ReferenceField mounts them all in one deferred commit, so ~30 of them
+    // in a single card exceeded the 50 nested updates React allows.
+    pagination: { page: 1, perPage: 10 },
   });
 
   return (
@@ -57,6 +66,9 @@ const PendingReviews = () => {
                           src={`${customer.avatar}?size=32x32`}
                           alt={`${customer.first_name} ${customer.last_name}`}
                         />
+                        <AvatarFallback>
+                          {customer.first_name?.charAt(0)}
+                        </AvatarFallback>
                       </Avatar>
                     )}
                   />

@@ -1,3 +1,21 @@
+## Unreleased
+
+### 💥 Breaking Changes
+
+- **shadcn-admin-kit now builds on [Base UI](https://base-ui.com/) instead of Radix UI**, and its `components.json` uses the `base-vega` style.
+
+  **Before updating, switch your own `components.json` to the Base UI style.** The components the kit ships call Base UI APIs (`render`, `nativeButton={false}`), but the primitives they depend on are resolved by the shadcn CLI against the style configured in _your_ project. Staying on `new-york` gives you Radix primitives expecting `asChild` wired to kit components passing `render`, and triggers stop composing.
+
+  See the [Radix UI to Base UI Migration guide](./radix-to-base-ui-migration.md) for the full list of API changes, their behavioral consequences, and how to migrate the `src/components/ui/` files you own.
+
+- `Button`, `Badge`, `Breadcrumb` and `SidebarMenuButton` replace `asChild` with `render`. Rendering a link also needs `nativeButton={false}`.
+- `SelectContent` replaces `position` with `alignItemWithTrigger`.
+- `Separator` keeps its `decorative` prop, now mapped to `role="none"`, but its `data-slot` is `separator`, not `separator-root`.
+- `NavigationMenu` drops `viewport`. `PopoverAnchor` is removed.
+- `CommandDialog` no longer wraps its children in `<Command>`.
+- `TooltipProvider` renames `delayDuration` to `delay`. Base UI defaults to a 600ms open delay, so mount `<TooltipProvider delay={0}>` if you want tooltips to appear instantly.
+- Direct `@radix-ui/*` packages are no longer dependencies of the kit.
+
 ## v1.5.0 (Feb. 2026)
 
 ### 🚀 Features

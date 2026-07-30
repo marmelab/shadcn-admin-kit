@@ -2,6 +2,7 @@ import * as React from "react"
 import {
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
@@ -59,24 +60,28 @@ export const ActionButton = ({
   className,
   ...props
 }: ActionButtonProps) => (
-  <Tooltip>
-    <TooltipTrigger
-      render={
-        <Button
-          variant="ghost"
-          className={cn(
-            "text-muted-foreground hover:text-foreground relative flex h-7 w-7 flex-row rounded-none p-0",
-            "bg-transparent hover:bg-transparent",
-            className
-          )}
-          {...props}
-        >
-          {icon}
-        </Button>
-      }
-    />
-    <TooltipContent side="bottom">{tooltip}</TooltipContent>
-  </Tooltip>
+  // Base UI defaults tooltips to a 600ms open delay; the provider keeps
+  // them instant without app-level setup.
+  <TooltipProvider delay={0}>
+    <Tooltip>
+      <TooltipTrigger
+        render={
+          <Button
+            variant="ghost"
+            className={cn(
+              "text-muted-foreground hover:text-foreground relative flex h-7 w-7 flex-row rounded-none p-0",
+              "bg-transparent hover:bg-transparent",
+              className
+            )}
+            {...props}
+          >
+            {icon}
+          </Button>
+        }
+      />
+      <TooltipContent side="bottom">{tooltip}</TooltipContent>
+    </Tooltip>
+  </TooltipProvider>
 )
 
 ActionButton.displayName = "ActionButton"

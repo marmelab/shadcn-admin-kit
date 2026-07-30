@@ -70,7 +70,7 @@ export default defineConfig({
             "quick-start-guide",
             "guides-and-concepts",
             "changelog",
-            "radixtobaseuimigration",
+            "radix-to-base-ui-migration",
           ],
         },
         {

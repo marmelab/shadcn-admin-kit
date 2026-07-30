@@ -100,3 +100,4 @@ This allows to inline the render logic for the list of related records.
 
 - Use `link={false}` to disable navigation.
 - `<ReferenceField>` uses `dataProvider.getMany()` instead of `dataProvider.getOne()` for performance reasons. When using several `<ReferenceField>` in the same page (e.g. in a `<DataTable>`), this allows to call the `dataProvider` once instead of once per row.
+- Avoid rendering an `<Avatar>` with an `<AvatarImage>` inside a `<ReferenceField>` on very long lists. `<ReferenceField>` shows a placeholder while its query is pending, then mounts all its children at once, and Base UI's `AvatarImage` updates its `Avatar` root from a layout effect. More than roughly 30 of them in a single commit exceed React's nested update limit and throw `Maximum update depth exceeded`. Paginate or cap the list. See the [Radix UI to Base UI migration guide](./radix-to-base-ui-migration.md) for the measured threshold.

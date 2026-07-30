@@ -13,6 +13,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import {
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useTheme } from "../../hooks/use-theme"
@@ -81,33 +82,37 @@ const MemoizedColorButton = React.memo<{
   const label = isDarkMode && color.darkLabel ? color.darkLabel : color.label
 
   return (
-    <Tooltip>
-      <TooltipTrigger
-        render={
-          <ToggleGroupItem
-            tabIndex={0}
-            className="relative size-7 rounded-md p-0"
-            value={color.cssVar}
-            aria-label={label}
-            style={{ backgroundColor: color.cssVar }}
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-              e.preventDefault()
-              onClick(color.cssVar)
-            }}
-          >
-            {isSelected && (
-              <Check
-                className="absolute inset-0 m-auto size-6"
-                style={{ color: inverse }}
-              />
-            )}
-          </ToggleGroupItem>
-        }
-      />
-      <TooltipContent side="bottom">
-        <p>{label}</p>
-      </TooltipContent>
-    </Tooltip>
+    // Base UI defaults tooltips to a 600ms open delay; the provider keeps
+    // them instant without app-level setup.
+    <TooltipProvider delay={0}>
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <ToggleGroupItem
+              tabIndex={0}
+              className="relative size-7 rounded-md p-0"
+              value={color.cssVar}
+              aria-label={label}
+              style={{ backgroundColor: color.cssVar }}
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                e.preventDefault()
+                onClick(color.cssVar)
+              }}
+            >
+              {isSelected && (
+                <Check
+                  className="absolute inset-0 m-auto size-6"
+                  style={{ color: inverse }}
+                />
+              )}
+            </ToggleGroupItem>
+          }
+        />
+        <TooltipContent side="bottom">
+          <p>{label}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   )
 })
 

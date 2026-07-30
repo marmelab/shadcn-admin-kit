@@ -1,4 +1,8 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
 import { UserPlus } from "lucide-react";
 import { Link } from "react-router";
@@ -26,7 +30,7 @@ const NewCustomers = () => {
         first_seen_gte: aMonthAgo.toISOString(),
       }}
       sort={{ field: "first_seen", order: "DESC" }}
-      perPage={100}
+      perPage={10}
       disableSyncWithLocation
       render={({ data }) => (
         <CardWithIcon
@@ -48,6 +52,9 @@ const NewCustomers = () => {
                       src={`${record.avatar}?size=32x32`}
                       alt={`${record.first_name} ${record.last_name}`}
                     />
+                    <AvatarFallback>
+                      {record.first_name?.charAt(0)}
+                    </AvatarFallback>
                   </Avatar>
                 </div>
                 <div className="flex-1 flex flex-col items-start justify-center text-sm">

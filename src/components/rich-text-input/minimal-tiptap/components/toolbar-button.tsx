@@ -2,6 +2,7 @@ import * as React from "react"
 import {
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Toggle } from "@/components/ui/toggle"
@@ -32,12 +33,16 @@ export const ToolbarButton = ({
   }
 
   return (
-    <Tooltip>
-      <TooltipTrigger render={toggleButton} />
-      <TooltipContent {...tooltipOptions}>
-        <div className="flex flex-col items-center text-center">{tooltip}</div>
-      </TooltipContent>
-    </Tooltip>
+    // Base UI defaults tooltips to a 600ms open delay; the provider keeps
+    // them instant without app-level setup.
+    <TooltipProvider delay={0}>
+      <Tooltip>
+        <TooltipTrigger render={toggleButton} />
+        <TooltipContent {...tooltipOptions}>
+          <div className="flex flex-col items-center text-center">{tooltip}</div>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   )
 }
 

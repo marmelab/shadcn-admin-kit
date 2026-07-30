@@ -33,6 +33,7 @@ import { FieldToggle } from "@/components/admin/field-toggle";
 import {
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -78,25 +79,29 @@ export const ColumnsButton = (props: ColumnsButtonProps) => {
     <span className={cn("inline-flex", className)}>
       <Popover open={open} onOpenChange={setOpen}>
         {isMobile ? (
-          <Tooltip>
-            <PopoverTrigger
-              render={
-                <TooltipTrigger
-                  render={
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      aria-label={title}
-                      {...rest}
-                    />
-                  }
-                />
-              }
-            >
-              <Columns className="size-4" />
-            </PopoverTrigger>
-            <TooltipContent>{title}</TooltipContent>
-          </Tooltip>
+          // Base UI defaults tooltips to a 600ms open delay; the provider keeps
+          // them instant without app-level setup.
+          <TooltipProvider delay={0}>
+            <Tooltip>
+              <PopoverTrigger
+                render={
+                  <TooltipTrigger
+                    render={
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        aria-label={title}
+                        {...rest}
+                      />
+                    }
+                  />
+                }
+              >
+                <Columns className="size-4" />
+              </PopoverTrigger>
+              <TooltipContent>{title}</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         ) : (
           <PopoverTrigger
             render={<Button variant="outline" className="cursor-pointer" {...rest} />}
