@@ -1,8 +1,20 @@
-import { Resource, required, TestMemoryRouter } from "ra-core";
+import {
+  CreateBase,
+  Resource,
+  required,
+  TestMemoryRouter,
+  useCreateSuggestionContext,
+} from "ra-core";
 import polyglotI18nProvider from "ra-i18n-polyglot";
 import englishMessages from "ra-language-english";
 import fakeRestProvider from "ra-data-fakerest";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Admin } from "@/components/admin/admin";
 import { AutocompleteArrayInput } from "@/components/admin/autocomplete-array-input";
 import { Create } from "@/components/admin/create";
@@ -11,6 +23,7 @@ import { ListGuesser } from "@/components/admin/list-guesser";
 import { ShowGuesser } from "@/components/admin/show-guesser";
 import { SimpleForm } from "@/components/admin/simple-form";
 import { ReferenceArrayInput } from "@/components/admin/reference-array-input";
+import { TextInput } from "@/components/admin/text-input";
 
 export default {
   title: "Inputs/ReferenceArrayInput",
@@ -75,6 +88,59 @@ export const WithValidation = () => (
                 source="tags_ids"
               >
                 <AutocompleteArrayInput validate={required()} />
+              </ReferenceArrayInput>
+            </SimpleForm>
+          </Create>
+        }
+        edit={EditGuesser}
+        show={ShowGuesser}
+      />
+    </Admin>
+  </TestMemoryRouter>
+);
+
+const CreateTag = () => {
+  const { onCancel, onCreate, filter } = useCreateSuggestionContext();
+
+  return (
+    <Dialog open onOpenChange={onCancel}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Create a tag</DialogTitle>
+        </DialogHeader>
+        <CreateBase
+          resource="tags"
+          redirect={false}
+          mutationOptions={{ onSuccess: onCreate }}
+        >
+          <SimpleForm defaultValues={{ name: filter }}>
+            <TextInput source="name" autoFocus />
+          </SimpleForm>
+        </CreateBase>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export const WithCreateSupport = () => (
+  <TestMemoryRouter initialEntries={["/posts/create"]}>
+    <Admin dataProvider={dataProvider} i18nProvider={i18nProvider}>
+      <Resource name="tags" recordRepresentation={"name"} />
+      <Resource
+        name="posts"
+        list={ListGuesser}
+        create={
+          <Create resource="posts" record={{ tags_ids: [1, 3] }}>
+            <SimpleForm>
+              <ReferenceArrayInput
+                reference="tags"
+                resource="posts"
+                source="tags_ids"
+              >
+                <AutocompleteArrayInput
+                  create={<CreateTag />}
+                  createItemLabel="Create %{item}"
+                />
               </ReferenceArrayInput>
             </SimpleForm>
           </Create>
