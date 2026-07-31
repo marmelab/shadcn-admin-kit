@@ -147,47 +147,42 @@ const filterToQuery = searchText => ({ name_ilike: `%${searchText}%` });
 
 Users often discover that a choice is missing while they are filling the form. To let them add it without leaving the page, pass a React element as the `create` prop. `<AutocompleteArrayInput>` then renders an extra item at the bottom of the list, which renders the passed element when clicked. Once created, the new choice is added to the selection.
 
+This is generally useful when the choices are fetched from a reference resource, i.e. when using `<ReferenceArrayInput>`:
+
 ```tsx
 import {
     Edit,
     SimpleForm,
     ReferenceArrayInput,
     AutocompleteArrayInput,
+    TextInput,
 } from '@/components/admin';
-import { useCreate, useCreateSuggestionContext } from 'ra-core';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { CreateBase, useCreateSuggestionContext } from 'ra-core';
 
 const CreateTag = () => {
   const { onCancel, onCreate, filter } = useCreateSuggestionContext();
-  const [newTagName, setNewTagName] = React.useState(filter ?? "");
-  const [create] = useCreate();
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    const newTag = await create(
-      "tags",
-      { data: { name: newTagName } },
-      { returnPromise: true },
-    );
-    setNewTagName("");
-    onCreate(newTag);
-  };
 
   return (
     <Dialog open onOpenChange={onCancel}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Create a tag</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="name">New tag name</Label>
-            <Input id="name" value={newTagName} onChange={event => setNewTagName(event.currentTarget.value)} autoFocus />
-          </div>
-          <DialogFooter>
-            <Button variant="outline" type="button" onClick={onCancel}>Cancel</Button>
-            <Button type="submit">Save</Button>
-          </DialogFooter>
-        </form>
+        <CreateBase
+          resource="tags"
+          redirect={false}
+          mutationOptions={{ onSuccess: onCreate }}
+        >
+          <SimpleForm defaultValues={{ name: filter }}>
+            <TextInput source="name" autoFocus />
+          </SimpleForm>
+        </CreateBase>
       </DialogContent>
     </Dialog>
   );
@@ -196,13 +191,17 @@ const CreateTag = () => {
 const PostEdit = () => (
     <Edit>
         <SimpleForm>
-            <ReferenceArrayInput source="tag_ids" reference="tags">
-                <AutocompleteArrayInput
-                  create={<CreateTag />}
-                  createLabel="Start typing to create a new tag"
-                  createItemLabel="Create %{item}"
-                />
-            </ReferenceArrayInput>
+          <ReferenceArrayInput
+            reference="tags"
+            resource="posts"
+            source="tags_ids"
+          >
+            <AutocompleteArrayInput
+              create={<CreateTag />}
+              createLabel="Start typing to create a new tag"
+              createItemLabel="Create %{item}"
+            />
+          </ReferenceArrayInput>
         </SimpleForm>
     </Edit>
 );
@@ -231,12 +230,6 @@ If you just need to ask users for a single string to create the new option, you 
 ```
 
 If you want to customize the label of the "Create XXX" item, use the `createItemLabel` prop. The `createLabel` prop is the hint displayed instead, as a disabled item, as long as the filter is empty.
-
-:::tip
-Inside a `<ReferenceArrayInput>`, the created record must be part of the choices for its badge to show up.
-`useCreate` invalidates the list queries of the resource it created, so this works out of the box unless the `reference` you read the choices from is not the resource you create into (e.g. a database view).
-In that case, invalidate the `reference` queries yourself.
-:::
 
 ## Working With Object Values
 
