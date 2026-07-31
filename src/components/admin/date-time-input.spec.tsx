@@ -88,7 +88,8 @@ describe("<DateInput />", () => {
     );
     const input = await screen.getByLabelText("Published at *");
     await input.click();
-    await screen.getByRole("group").click(); // Click outside to blur
+    // Tab would only move between the segments of the date input, so blur explicitly
+    (input.element() as HTMLInputElement).blur();
     const error = await screen.getByText("Required");
     await expect.element(error).toBeInTheDocument();
   });
@@ -155,7 +156,8 @@ describe("<DateInput />", () => {
 
       const input = await screen.getByLabelText("Published at *");
       await input.click();
-      await screen.getByRole("group").click(); // Click outside to blur
+      // Tab would only move between the segments of the date input, so blur explicitly
+      (input.element() as HTMLInputElement).blur();
       const error = await screen.getByText("Required");
       await expect.element(error).toBeInTheDocument();
     });
