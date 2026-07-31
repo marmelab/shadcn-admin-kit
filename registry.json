@@ -58,8 +58,7 @@
         "react-router",
         "sonner",
         "tailwind-merge",
-        "tw-animate-css",
-        "vaul"
+        "tw-animate-css"
       ],
       "files": [
         {
@@ -683,9 +682,7 @@
       "name": "example-admin",
       "type": "registry:block",
       "title": "Example Admin built with Shadcn Admin Kit",
-      "registryDependencies": [
-        "@shadcn-admin-kit/admin"
-      ],
+      "registryDependencies": ["@shadcn-admin-kit/admin"],
       "files": [
         {
           "path": "src/examples/example-admin.tsx",
