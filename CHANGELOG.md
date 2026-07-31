@@ -1,20 +1,36 @@
-## Unreleased
+## 2.0.0
 
 ### 💥 Breaking Changes
 
-- **shadcn-admin-kit now builds on [Base UI](https://base-ui.com/) instead of Radix UI**, and its `components.json` uses the `base-vega` style.
+- **shadcn-admin-kit now builds on [Base UI](https://base-ui.com/) instead of Radix UI**, and its `components.json` uses the `base-vega` style. Check the Migration documentation for details
 
-  **Before updating, switch your own `components.json` to the Base UI style.** The components the kit ships call Base UI APIs (`render`, `nativeButton={false}`), but the primitives they depend on are resolved by the shadcn CLI against the style configured in _your_ project. Staying on `new-york` gives you Radix primitives expecting `asChild` wired to kit components passing `render`, and triggers stop composing.
+## v1.6.0 (Jun. 2026)
 
-  See the [Radix UI to Base UI Migration guide](./radix-to-base-ui-migration.md) for the full list of API changes, their behavioral consequences, and how to migrate the `src/components/ui/` files you own.
+### 🚀 Features
 
-- `Button`, `Badge`, `Breadcrumb` and `SidebarMenuButton` replace `asChild` with `render`. Rendering a link also needs `nativeButton={false}`.
-- `SelectContent` replaces `position` with `alignItemWithTrigger`.
-- `Separator` drops its `decorative` prop and its `data-slot` is `separator`, not `separator-root`. Base UI hardcodes `role="separator"`, so separators are now announced by screen readers; pass `role="none"` where you want one hidden.
-- `NavigationMenu` drops `viewport`. `PopoverAnchor` is removed.
-- `CommandDialog` no longer wraps its children in `<Command>`.
-- `TooltipProvider` renames `delayDuration` to `delay`. Base UI defaults to a 600ms open delay, so mount `<TooltipProvider delay={0}>` if you want tooltips to appear instantly.
-- Direct `@radix-ui/*` packages are no longer dependencies of the kit.
+* Add `<RichTextInput>` component
+* Add `<BooleanField>`
+* Add resource-specific translation for buttons
+
+### 🐛 Bug Fixes
+
+* Fix `<DateInput>` and `<DateTimeInput>` on mobile Safari
+* Fix `<AutocompleteInput>` options cannot be scrolled when used inside a modal
+* Fix `<SaveButton>` ignores `disabled` prop set at form level
+* Fix `<AutocompleteInput>` filtering
+* Fix `<AutocompleteInput>` validation when used inside an `<ArrayInput>`
+* Fix Github icon in ready page
+
+### 🧰 Chore & Maintenance
+
+* Remove guesser i18n overrides
+* Bump `astro`, `devalue`, `h3`, `picomatch`, `smol-toml`, `svgo`
+* Bump `vite` from 7.3.1 to 7.3.2
+* Bump `lodash` from 4.17.23 to 4.18.1
+* Bump `astro` and `defu`
+* Bump `astro` from 6.1.9 to 6.1.10
+
+**Full Changelog**: https://github.com/marmelab/shadcn-admin-kit/compare/v1.5.0...v1.6.0
 
 ## v1.5.0 (Feb. 2026)
 
