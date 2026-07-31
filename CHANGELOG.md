@@ -10,7 +10,7 @@
 
 - `Button`, `Badge`, `Breadcrumb` and `SidebarMenuButton` replace `asChild` with `render`. Rendering a link also needs `nativeButton={false}`.
 - `SelectContent` replaces `position` with `alignItemWithTrigger`.
-- `Separator` keeps its `decorative` prop, now mapped to `role="none"`, but its `data-slot` is `separator`, not `separator-root`.
+- `Separator` drops its `decorative` prop and its `data-slot` is `separator`, not `separator-root`. Base UI hardcodes `role="separator"`, so separators are now announced by screen readers; pass `role="none"` where you want one hidden.
 - `NavigationMenu` drops `viewport`. `PopoverAnchor` is removed.
 - `CommandDialog` no longer wraps its children in `<Command>`.
 - `TooltipProvider` renames `delayDuration` to `delay`. Base UI defaults to a 600ms open delay, so mount `<TooltipProvider delay={0}>` if you want tooltips to appear instantly.

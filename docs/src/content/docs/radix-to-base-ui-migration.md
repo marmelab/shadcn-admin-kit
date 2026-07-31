@@ -66,7 +66,7 @@ rename is mechanical, but the **behavior changes silently** if you only rename.
 | `Button`                        | `asChild`                             | `render`, plus `nativeButton={false}` when rendering a non-button such as a link                      | without `nativeButton={false}` a link renders as a `<button>` and loses navigation                                         |
 | `SidebarMenuButton` and friends | `asChild`                             | `render`                                                                                              | none                                                                                                                       |
 | `SelectContent`                 | `position="popper" \| "item-aligned"` | `alignItemWithTrigger` (boolean, defaults to `false`, which matches the previous `"popper"` behavior) | dropping the prop reverts to item-aligned positioning, which moves the popup over the trigger                              |
-| `Separator`                     | `decorative`                          | kept, now mapped to `role="none"`                                                                     | none in the kit. Base UI hardcodes `role="separator"`, so a bare Base UI `Separator` is announced by screen readers        |
+| `Separator`                     | `decorative`                          | dropped, the kit ships the shadcn/ui component as-is                                                  | Base UI hardcodes `role="separator"`, so separators that `decorative` used to hide are now announced by screen readers. Pass `role="none"` yourself where that matters |
 | `TooltipProvider`               | `delayDuration`                       | `delay`                                                                                               | **the value is not carried over**: Base UI defaults to a 600ms open delay, so mount `<TooltipProvider delay={0}>` yourself |
 | `NavigationMenu`                | `viewport`                            | dropped, the positioner is always rendered                                                            | any `group-data-[viewport=false]:*` styling you added no longer matches                                                    |
 | `Popover`                       | `PopoverAnchor`                       | dropped, use the `anchor` prop on `PopoverPositioner`                                                 | the import fails to resolve                                                                                                |
@@ -189,14 +189,13 @@ regenerated file comes back with the **upstream** default and your deviation is
 gone. No error, no type failure, no failing test: just a behavior that quietly
 reverts.
 
-In this repository it happened three times, and all three are restored in
-the version that ships:
+In this repository it happened three times:
 
-| Deviation                                            | What broke                                       |
-| ---------------------------------------------------- | ------------------------------------------------ |
-| `<TooltipProvider delayDuration={0}>` in the sidebar | every tooltip fell back to Base UI's 600ms delay |
-| `position="popper"` on `SelectContent`               | select popups reverted to item-aligned           |
-| `decorative={true}` on `Separator`                   | 13 separators became visible to screen readers   |
+| Deviation                                            | What broke                                       | Resolution                                                                                       |
+| ---------------------------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `<TooltipProvider delayDuration={0}>` in the sidebar | every tooltip fell back to Base UI's 600ms delay | restored                                                                                         |
+| `position="popper"` on `SelectContent`               | select popups reverted to item-aligned           | restored                                                                                         |
+| `decorative={true}` on `Separator`                   | 13 separators became visible to screen readers   | dropped on purpose: the kit follows the shadcn/ui component, so separators keep `role="separator"` |
 
 `shadcn info` is the quickest way to spot these. It prints the preset your
 project resolves to and marks every value that no longer matches it with an
