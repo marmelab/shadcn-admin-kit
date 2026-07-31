@@ -44,10 +44,7 @@ export const Error = (props: InternalErrorProps & {}) => {
       </div>
       {process.env.NODE_ENV !== "production" && (
         <>
-          <Accordion
-            multiple
-            className="mt-1 p-2 bg-secondary w-full lg:w-150"
-          >
+          <Accordion multiple className="mt-1 p-2 bg-secondary w-full lg:w-150">
             <AccordionItem value="error">
               <AccordionTrigger className="py-2">
                 <Translate i18nKey={errorMessage}>{errorMessage}</Translate>
@@ -106,8 +103,7 @@ export const Error = (props: InternalErrorProps & {}) => {
 };
 
 interface InternalErrorProps
-  extends Omit<HtmlHTMLAttributes<HTMLDivElement>, "title">,
-    FallbackProps {
+  extends Omit<HtmlHTMLAttributes<HTMLDivElement>, "title">, FallbackProps {
   className?: string;
   errorInfo?: ErrorInfo;
 }

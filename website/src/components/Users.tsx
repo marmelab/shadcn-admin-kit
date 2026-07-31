@@ -247,11 +247,7 @@ export function Users() {
             }
             nativeButton={false}
           >
-            <img
-              src={GithubLogo}
-              alt="GitHub"
-              className="inline h-4 w-auto"
-            />{" "}
+            <img src={GithubLogo} alt="GitHub" className="inline h-4 w-auto" />{" "}
             Star us on GitHub!
           </Button>
         </div>

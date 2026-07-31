@@ -60,7 +60,9 @@ export const IconButtonWithTooltip = ({
               variant="ghost"
               size="icon"
               aria-label={
-                typeof translatedLabel === "string" ? translatedLabel : undefined
+                typeof translatedLabel === "string"
+                  ? translatedLabel
+                  : undefined
               }
               onClick={handleClick}
               disabled={disabled}

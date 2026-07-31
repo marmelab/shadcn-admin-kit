@@ -55,7 +55,9 @@ export const BulkExportButton = <T extends RaRecord>({
   });
 
   const handleClick = (
-    event: Parameters<NonNullable<React.ComponentProps<typeof Button>["onClick"]>>[0],
+    event: Parameters<
+      NonNullable<React.ComponentProps<typeof Button>["onClick"]>
+    >[0],
   ) => {
     bulkExport();
     onClick?.(event);

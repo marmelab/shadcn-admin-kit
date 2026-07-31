@@ -36,7 +36,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
 /**
@@ -104,7 +108,9 @@ export const ColumnsButton = (props: ColumnsButtonProps) => {
           </TooltipProvider>
         ) : (
           <PopoverTrigger
-            render={<Button variant="outline" className="cursor-pointer" {...rest} />}
+            render={
+              <Button variant="outline" className="cursor-pointer" {...rest} />
+            }
           >
             <Columns />
             {title}

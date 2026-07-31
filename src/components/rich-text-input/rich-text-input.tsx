@@ -44,7 +44,11 @@ export const RichTextInput = (props: RichTextInputProps) => {
     format: _formatProp,
   } = props;
   const resource = useResourceContext(props);
-  const { id, field, isRequired } = useInput({ ...props, source, defaultValue });
+  const { id, field, isRequired } = useInput({
+    ...props,
+    source,
+    defaultValue,
+  });
 
   const resolvedToolbar = toolbar ?? <RichTextInputToolbar />;
 

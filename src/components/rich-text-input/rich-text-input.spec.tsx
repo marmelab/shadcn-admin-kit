@@ -32,10 +32,9 @@ describe("<RichTextInput />", () => {
     const editor = getEditorElement(screen.container);
 
     expect(editor).not.toBeNull();
-    await expect.element(editor as HTMLElement).toHaveAttribute(
-      "contenteditable",
-      "false",
-    );
+    await expect
+      .element(editor as HTMLElement)
+      .toHaveAttribute("contenteditable", "false");
     await expect
       .element(screen.getByRole("button", { name: /bold/i }))
       .toBeDisabled();
@@ -55,10 +54,9 @@ describe("<RichTextInput />", () => {
     const editor = getEditorElement(screen.container);
 
     expect(editor).not.toBeNull();
-    await expect.element(editor as HTMLElement).toHaveAttribute(
-      "contenteditable",
-      "false",
-    );
+    await expect
+      .element(editor as HTMLElement)
+      .toHaveAttribute("contenteditable", "false");
     await expect
       .element(screen.getByRole("button", { name: /bold/i }))
       .toBeDisabled();
@@ -101,5 +99,4 @@ describe("<RichTextInput />", () => {
       .element(screen.getByRole("button", { name: /bold/i }))
       .toBeInTheDocument();
   });
-
 });

@@ -38,7 +38,13 @@ export function LocalesMenuButton() {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger
-        render={<Button variant="ghost" size="icon" className="hidden sm:inline-flex" />}
+        render={
+          <Button
+            variant="ghost"
+            size="icon"
+            className="hidden sm:inline-flex"
+          />
+        }
       >
         {locale.toUpperCase()}
       </DropdownMenuTrigger>

@@ -116,7 +116,9 @@ const SortButtonComponent = (props: SortButtonProps) => {
         </TooltipProvider>
       ) : (
         <DropdownMenuTrigger
-          render={<Button variant="outline" size="sm" className="h-9" {...rest} />}
+          render={
+            <Button variant="outline" size="sm" className="h-9" {...rest} />
+          }
         >
           {icon}
           <span className="ml-2">{buttonLabel}</span>

@@ -405,7 +405,11 @@ export const ClearArrayButton = (props: React.ComponentProps<"button">) => {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger render={<Button type="button" variant="ghost" size="icon" {...props} />}>
+        <TooltipTrigger
+          render={
+            <Button type="button" variant="ghost" size="icon" {...props} />
+          }
+        >
           <Trash className="h-5 w-5 text-red-500" />
         </TooltipTrigger>
         <TooltipContent>

@@ -83,7 +83,9 @@ export function Header() {
           </div>
           <div className="md:hidden">
             <DropdownMenu>
-              <DropdownMenuTrigger render={<Button variant="ghost" size="icon" />}>
+              <DropdownMenuTrigger
+                render={<Button variant="ghost" size="icon" />}
+              >
                 <Menu className="size-6" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-64" finalFocus={false}>
@@ -95,7 +97,9 @@ export function Header() {
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="m-1 cursor-pointer"
-                  render={<a href="https://marmelab.com/shadcn-admin-kit/docs/install/" />}
+                  render={
+                    <a href="https://marmelab.com/shadcn-admin-kit/docs/install/" />
+                  }
                 >
                   Doc
                 </DropdownMenuItem>
@@ -142,11 +146,7 @@ export function Header() {
                     }
                     nativeButton={false}
                   >
-                    <img
-                      src={GithubLogo}
-                      alt="GitHub"
-                      className="inline h-4"
-                    />{" "}
+                    <img src={GithubLogo} alt="GitHub" className="inline h-4" />{" "}
                     Star us on GitHub!
                   </Button>
                 </div>
