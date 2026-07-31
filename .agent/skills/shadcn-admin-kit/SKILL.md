@@ -387,7 +387,7 @@ Shadcn Admin Kit shares the same **ra-core** foundation as react-admin but diffe
 
 | Aspect        | React-Admin         | Shadcn Admin Kit        |
 | ------------- | ------------------- | ----------------------- |
-| UI Framework  | Material-UI         | shadcn/ui (Radix)       |
+| UI Framework  | Material-UI         | shadcn/ui (BaseUI)      |
 | Styling       | CSS-in-JS (Emotion) | Tailwind CSS            |
 | Customization | MUI theme overrides | Tailwind classes        |
 | Bundle Size   | Larger              | Smaller, tree-shakeable |
