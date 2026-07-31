@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/drawer";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Translate } from "ra-core";
+import { cn } from "@/lib/utils";
 
 /**
  * A breadcrumb navigation component with mobile drawer support.
@@ -94,7 +95,7 @@ export const Breadcrumb = ({ children, ref }: BreadcrumbProps) => {
                     </ol>
                     <DrawerFooter className="pt-4">
                       <DrawerClose
-                        className={buttonVariants({ variant: "outline" })}
+                        className={cn(buttonVariants({ variant: "outline" }))}
                       >
                         <Translate i18nKey="ra.action.close">Close</Translate>
                       </DrawerClose>

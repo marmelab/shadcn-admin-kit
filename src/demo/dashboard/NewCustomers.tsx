@@ -65,7 +65,7 @@ const NewCustomers = () => {
 
           <div className="flex-grow">&nbsp;</div>
           <Link
-            className={buttonVariants({ variant: "outline" })}
+            className={buttonVariants({ variant: "ghost" })}
             to="/customers"
           >
             {translate("pos.dashboard.all_customers")}

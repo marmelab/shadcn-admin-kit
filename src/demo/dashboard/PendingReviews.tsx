@@ -84,7 +84,7 @@ const PendingReviews = () => {
       <div className="flex-grow">&nbsp;</div>
       <Link
         className={buttonVariants({
-          variant: "outline",
+          variant: "ghost",
         })}
         to="/reviews"
       >

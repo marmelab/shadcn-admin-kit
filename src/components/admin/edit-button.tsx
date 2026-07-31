@@ -11,6 +11,7 @@ import {
   useResourceContext,
   useResourceTranslation,
 } from "ra-core";
+import { cn } from "@/lib/utils";
 
 export type EditButtonProps = {
   record?: RaRecord;
@@ -67,7 +68,7 @@ export const EditButton = (props: EditButtonProps) => {
   });
   return (
     <LinkBase
-      className={buttonVariants({ variant: "outline" })}
+      className={cn(buttonVariants({ variant: "outline" }))}
       to={link}
       onClick={stopPropagation}
       aria-label={typeof label === "string" ? label : undefined}
