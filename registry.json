@@ -51,9 +51,13 @@
         "ra-language-english",
         "react-dropzone",
         "react-hook-form",
-        "react-router",
+        "react-router@^7.1.1",
+        "react-router-dom@^7.1.1",
         "tailwind-merge",
         "tw-animate-css"
+      ],
+      "devDependencies": [
+        "@types/lodash"
       ],
       "files": [
         {
