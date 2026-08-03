@@ -48,7 +48,7 @@ export const FrameworkCard = ({ href, logo, name, framework, borderHover, bgHove
   <FrameworkCard href="#create-a-new-project" framework="Next" logo={nextLogo.src} name="Next.js" borderHover="#d1d5db" bgHover="#f3f4f6" shadow="rgba(156,163,175,0.2)" />
   <FrameworkCard href="#create-a-new-project" framework="Vite" logo={viteLogo.src} name="Vite" borderHover="#c4b5fd" bgHover="#f5f3ff" shadow="rgba(139,92,246,0.15)" />
   <FrameworkCard href="#create-a-new-project" framework="React Router" logo={reactRouterLogo.src} name="React Router" borderHover="#fca5a5" bgHover="#fef2f2" shadow="rgba(239,68,68,0.15)" />
-  <FrameworkCard href="#create-a-new-project" framework="Tanstack Start" logo={tanstackLogo.src} name="TanStack Start" borderHover="#fcd34d" bgHover="#fffbeb" shadow="rgba(245,158,11,0.15)" />
+  <FrameworkCard href="#create-a-new-project" framework="TanStack Start" logo={tanstackLogo.src} name="TanStack Start" borderHover="#fcd34d" bgHover="#fffbeb" shadow="rgba(245,158,11,0.15)" />
 </div>
 
 ## Create a new project
@@ -81,7 +81,7 @@ npx shadcn@latest init \
   https://marmelab.com/shadcn-admin-kit/r/admin.json
 ```
   </TabItem>
-  <TabItem label="Tanstack Start">
+  <TabItem label="TanStack Start">
 ```bash
 npx shadcn@latest init \
   --template start \
@@ -92,7 +92,7 @@ npx shadcn@latest init \
   </TabItem>
 </Tabs>
 
-The command asks no questions: `--template`, `--base`, `--name` and the registry URL already answer them all. It takes about a minute and prints its progress (file list trimmed here):
+The command asks no questions: `--template`, `--base`, `--name` and the registry URL already answer them all. It runs in well under a minute. Here is the output for the Vite template, with the created file list trimmed:
 
 ```bash
 - Creating a new Vite project. This may take a few minutes.
@@ -108,24 +108,29 @@ The command asks no questions: `--template`, `--base`, `--name` and the registry
   - src/components/admin/...
 - Updating src/index.css
 ✔ Updating src/index.css
+The `tooltip` component has been added. Remember to wrap your app with the `TooltipProvider` component.
 
 Project initialization completed.
 ```
 
-You now have a `my-app` directory with Tailwind CSS v4, a path alias, a `components.json`, the shadcn/ui components in `components/ui`, and the `shadcn-admin-kit` components next to them:
+You can ignore that closing reminder: the `shadcn-admin-kit` components that use tooltips provide their own `TooltipProvider`.
 
-| Framework | Admin components | Path alias |
-| --- | --- | --- |
-| Next.js | `components/admin` | `@/*` to `./*` |
-| Vite | `src/components/admin` | `@/*` to `./src/*` |
-| React Router | `app/components/admin` | `~/*` to `./app/*` |
-| TanStack Start | `src/components/admin` | `@/*` to `./src/*` |
+Then enter your new project:
 
-`--base radix` is not optional: the shadcn CLI now defaults to Base UI primitives, and this version of `shadcn-admin-kit` is built on the Radix based components.
+```bash
+cd my-app
+```
 
-:::note
-The CLI ends with a reminder to wrap your app in a `TooltipProvider`. You can ignore it: the `shadcn-admin-kit` components that use tooltips provide their own.
-:::
+It comes with Tailwind CSS v4, a path alias, a `components.json`, the shadcn/ui components, and the `shadcn-admin-kit` components next to them. Each framework puts them where it puts its own source:
+
+| Framework | Admin components | shadcn/ui components | Path alias |
+| --- | --- | --- | --- |
+| Next.js | `components/admin` | `components/ui` | `@/*` to `./*` |
+| Vite | `src/components/admin` | `src/components/ui` | `@/*` to `./src/*` |
+| React Router | `app/components/admin` | `app/components/ui` | `~/*` to `./app/*` |
+| TanStack Start | `src/components/admin` | `src/components/ui` | `@/*` to `./src/*` |
+
+Keep `--base radix`: the shadcn CLI can generate its components on top of either Radix or Base UI primitives, and this version of `shadcn-admin-kit` is built on the Radix based ones.
 
 :::note
 The `shadcn` CLI tool has [known issues](https://github.com/shadcn-ui/ui/issues/8778) with Windows. If you are using Windows and encounter problems, please switch to a WSL terminal or use a different OS.
@@ -164,7 +169,7 @@ export default function Page() {
 ```
   </TabItem>
   <TabItem label="Vite">
-The main entry point of your new application is `src/main.tsx`, which renders the `App` component into the DOM. Replace the default Vite content of `src/App.tsx` with the admin app:
+Replace the default Vite content of `src/App.tsx` with the admin app:
 
 ```tsx title="src/App.tsx"
 import { Admin } from "@/components/admin";
@@ -187,12 +192,13 @@ The Vite template restricts the TypeScript types it loads, so `npm run build` fa
 ```
   </TabItem>
   <TabItem label="React Router">
-First, align `react-router-dom` with the `react-router` version your project already uses. The React Router framework pins its own tooling to an exact `react-router` version, so a newer `react-router-dom` drags in a second copy of `react-router` and the app fails to render server side. Check the version, then install the matching `react-router-dom`:
+First, align `react-router-dom` with your framework's own version. The React Router framework pins `@react-router/dev`, `@react-router/node` and `@react-router/serve` to one exact `react-router` version, so the newer `react-router-dom` that the registry pulls in brings a second copy of `react-router` along, and the app then fails to render server side. Read the `@react-router/dev` version from your `package.json` and install the `react-router-dom` that matches it:
 
 ```bash
-npm ls react-router
 npm install react-router-dom@7.15.1
 ```
+
+`7.15.1` is what the template pinned at the time of writing. Use whichever version your own `package.json` shows, and check the result with `npm ls react-router`: a single deduped entry means you are fine, two entries mean the versions still disagree.
 
 Next, add a `/admin` route to your application by editing the `app/routes.ts` file:
 
@@ -229,7 +235,7 @@ export default App;
 The convention for react-router applications is to use `~/` as prefix for imports, while other frameworks use `@/`. The Shadcn Admin Kit documentation uses `@/` everywhere, make sure to adapt the import paths accordingly.
 :::
   </TabItem>
-  <TabItem label="Tanstack Start">
+  <TabItem label="TanStack Start">
 Add `ra-router-tanstack` to your project, so that your `shadcn-admin-kit` application can make use of the TanStack router:
 
 ```bash
@@ -280,12 +286,14 @@ Then go to [http://localhost:5173/admin](http://localhost:5173/admin).
 If you get a `ReferenceError: document is not defined` error at this stage, `react-router` and `react-router-dom` are resolving to different versions. Run `npm ls react-router` to check, and install the `react-router-dom` version that matches.
 :::
   </TabItem>
-  <TabItem label="Tanstack Start">
+  <TabItem label="TanStack Start">
 ```bash
 npm run dev
 ```
 
-Then go to [http://localhost:3000](http://localhost:3000).
+Then go to [http://localhost:3000](http://localhost:3000). You should see this:
+
+![Welcome to shadcn-admin-kit!](./images/welcome-tanstack-start.png)
 
 :::tip
 The welcome screen includes a header bar from TanStack Start. To remove it, edit the `RootDocument` component in `src/routes/__root.tsx` and remove the `<Header />` component.
@@ -293,7 +301,7 @@ The welcome screen includes a header bar from TanStack Start. To remove it, edit
   </TabItem>
 </Tabs>
 
-You should see this:
+Except on TanStack Start, which adds its own header bar, you should see this:
 
 ![Welcome to shadcn-admin-kit!](./images/welcome.png)
 
@@ -301,10 +309,12 @@ Next step: Read the [Quick Start Guide](./Quick-Start-Guide.mdx) to learn how to
 
 ## Add to an existing project
 
-If you already have a React project set up with shadcn/ui and Tailwind CSS v4, skip the project creation and add the components to it:
+If you already have a React project set up with the Radix based shadcn components and Tailwind CSS v4, skip the project creation and add the kit to it:
 
 ```bash
 npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/admin.json
 ```
 
-The project must use the Radix based shadcn components. If it has no `components.json` yet, run `npx shadcn@latest init --base radix` first.
+The kit ships its own copies of the shadcn/ui components it builds on, so the CLI asks before overwriting each one you already have. Answer yes, or pass `--overwrite` to accept them all at once.
+
+If your project has no `components.json` yet, run `npx shadcn@latest init --base radix` first. That command expects Tailwind CSS v4 and path aliases to be configured already, and refuses to run otherwise: see the [shadcn installation guide](https://ui.shadcn.com/docs/installation) for that part.
