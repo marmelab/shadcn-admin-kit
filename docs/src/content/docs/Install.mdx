@@ -47,7 +47,7 @@ The `shadcn` CLI tool has [known issues](https://github.com/shadcn-ui/ui/issues/
 
 ## Install with Next.js
 
-```bash
+```shell
 npx shadcn@latest init \
   --template next \
   --base radix \
@@ -57,7 +57,7 @@ npx shadcn@latest init \
 
 This creates a Next.js project with Tailwind CSS v4, the `@/*` alias pointing at the project root, the shadcn/ui components in `components/ui`, and the `shadcn-admin-kit` components in `components/admin`.
 
-```bash
+```shell
 cd my-app
 ```
 
@@ -97,7 +97,7 @@ Next step: Read the [Quick Start Guide](./Quick-Start-Guide.mdx) to learn how to
 
 ## Install with Vite.js
 
-```bash
+```shell
 npx shadcn@latest init \
   --template vite \
   --base radix \
@@ -107,7 +107,7 @@ npx shadcn@latest init \
 
 This creates a Vite single-page app with Tailwind CSS v4, the `@/*` alias pointing at `src`, the shadcn/ui components in `src/components/ui`, and the `shadcn-admin-kit` components in `src/components/admin`.
 
-```bash
+```shell
 cd my-app
 ```
 
@@ -141,7 +141,7 @@ Next step: Read the [Quick Start Guide](./Quick-Start-Guide.mdx) to learn how to
 
 ## Install with React-Router
 
-```bash
+```shell
 npx shadcn@latest init \
   --template react-router \
   --base radix \
@@ -151,13 +151,13 @@ npx shadcn@latest init \
 
 This creates a React Router v7 (a.k.a. Remix v3) project with Tailwind CSS v4, the `~/*` alias pointing at `app`, the shadcn/ui components in `app/components/ui`, and the `shadcn-admin-kit` components in `app/components/admin`.
 
-```bash
+```shell
 cd my-app
 ```
 
 First, align `react-router-dom` with your framework's own version. The React Router framework pins `@react-router/dev`, `@react-router/node` and `@react-router/serve` to one exact `react-router` version, so the newer `react-router-dom` that the registry pulls in brings a second copy of `react-router` along, and the app then fails to render server side. Read the `@react-router/dev` version from your `package.json` and install the `react-router-dom` that matches it:
 
-```bash
+```shell
 npm install react-router-dom@7.15.1
 ```
 
@@ -210,7 +210,7 @@ Next step: Read the [Quick Start Guide](./Quick-Start-Guide.mdx) to learn how to
 
 ## Install with Tanstack Start
 
-```bash
+```shell
 npx shadcn@latest init \
   --template start \
   --base radix \
@@ -220,13 +220,13 @@ npx shadcn@latest init \
 
 This creates a TanStack Start project with Tailwind CSS v4, the `@/*` alias pointing at `src`, the shadcn/ui components in `src/components/ui`, and the `shadcn-admin-kit` components in `src/components/admin`.
 
-```bash
+```shell
 cd my-app
 ```
 
 Add `ra-router-tanstack` to your project, so that your `shadcn-admin-kit` application can make use of the TanStack router:
 
-```bash
+```shell
 npm install ra-router-tanstack
 ```
 
@@ -258,7 +258,7 @@ Next step: Read the [Quick Start Guide](./Quick-Start-Guide.mdx) to learn how to
 
 If you already have a React project set up with the Radix based shadcn components and Tailwind CSS v4, skip the project creation and add the kit to it:
 
-```bash
+```shell
 npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/admin.json
 ```
 
