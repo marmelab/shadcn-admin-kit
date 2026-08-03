@@ -1,11 +1,11 @@
-import { DataProvider, memoryStore, Resource, TestMemoryRouter } from "ra-core";
+import { type DataProvider, memoryStore, Resource, TestMemoryRouter } from "ra-core";
 import { i18nProvider } from "@/lib/i18nProvider.ts";
 import {
   Admin,
   DataTable,
   FilterButton,
   List,
-  ListProps,
+  type ListProps,
   NumberInput,
   SearchInput,
   SelectInput,

@@ -1,4 +1,4 @@
-import { ResourceProps } from "ra-core";
+import { type ResourceProps } from "ra-core";
 import { CategoryList } from "./CategoryList";
 import { CategoryEdit } from "./CategoryEdit";
 import { CategoryCreate } from "./CategoryCreate";

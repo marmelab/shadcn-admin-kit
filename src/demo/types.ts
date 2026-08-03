@@ -1,4 +1,4 @@
-import * as DataGenerator from "data-generator-retail";
+import type * as DataGenerator from "data-generator-retail";
 
 export type ThemeName = "light" | "dark";
 

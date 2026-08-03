@@ -1,4 +1,4 @@
-import { ResourceProps } from "ra-core";
+import { type ResourceProps } from "ra-core";
 import { ProductList } from "./ProductList";
 import { ProductEdit } from "./ProductEdit";
 import { ProductCreate } from "./ProductCreate";

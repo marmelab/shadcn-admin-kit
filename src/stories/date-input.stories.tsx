@@ -13,9 +13,9 @@ import get from "lodash/get";
 import {
   Create,
   SimpleForm,
-  SimpleFormProps,
+  type SimpleFormProps,
   DateInput,
-  DateInputProps,
+  type DateInputProps,
 } from "@/components/admin";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";

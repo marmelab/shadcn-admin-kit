@@ -6,7 +6,7 @@ import { ListBase, WithListContext, useTranslate } from "ra-core";
 import { subDays } from "date-fns";
 
 import CardWithIcon from "./CardWithIcon";
-import { Customer } from "../types";
+import { type Customer } from "../types";
 
 const NewCustomers = () => {
   const translate = useTranslate();

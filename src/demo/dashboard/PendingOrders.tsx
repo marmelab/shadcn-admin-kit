@@ -1,7 +1,7 @@
 import { useTranslate } from "ra-core";
 import { Card, CardContent } from "@/components/ui/card";
 
-import { Order } from "../types";
+import { type Order } from "../types";
 import { PendingOrder } from "./PendingOrder";
 
 interface Props {

@@ -1,4 +1,4 @@
-import { ReactNode, useRef } from "react";
+import { type ReactNode, useRef } from "react";
 import type { Editor } from "@tiptap/react";
 import { CoreAdminContext, RecordContextProvider, required } from "ra-core";
 import { useFormContext, useWatch } from "react-hook-form";

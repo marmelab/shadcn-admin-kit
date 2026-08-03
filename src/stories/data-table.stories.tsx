@@ -1,5 +1,5 @@
 import {
-  DataProvider,
+  type DataProvider,
   memoryStore,
   Resource,
   TestMemoryRouter,

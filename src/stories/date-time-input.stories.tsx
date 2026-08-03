@@ -18,9 +18,9 @@ import {
   Create,
   Edit,
   SimpleForm,
-  SimpleFormProps,
+  type SimpleFormProps,
   DateTimeInput,
-  DateTimeInputProps,
+  type DateTimeInputProps,
 } from "@/components/admin";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";

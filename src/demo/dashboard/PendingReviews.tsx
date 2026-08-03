@@ -8,7 +8,7 @@ import { ReferenceField } from "@/components/admin/reference-field";
 
 import CardWithIcon from "./CardWithIcon";
 //import StarRatingField from "../reviews/StarRatingField";
-import { Customer, Review } from "../types";
+import { type Customer, type Review } from "../types";
 
 const PendingReviews = () => {
   const translate = useTranslate();

@@ -4,7 +4,7 @@ import * as echarts from "echarts";
 import { useTranslate } from "ra-core";
 import { format, subDays, addDays } from "date-fns";
 
-import { Order } from "../types";
+import { type Order } from "../types";
 
 const lastDay = new Date();
 const lastMonthDays = Array.from({ length: 30 }, (_, i) => subDays(lastDay, i));

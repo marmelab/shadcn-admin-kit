@@ -35,6 +35,25 @@ export default tseslint.config(
         },
       ],
       "no-console": ["error", { allow: ["warn", "error"] }],
+      // Type-only imports must carry the `type` keyword. Without it, projects
+      // built with `verbatimModuleSyntax: true` (what the shadcn templates ship)
+      // keep the import at runtime and crash on a missing export.
+      "@typescript-eslint/consistent-type-imports": [
+        "error",
+        { fixStyle: "inline-type-imports" },
+      ],
+    },
+  },
+  {
+    // The ui components are vendored from shadcn and exempt from the rules
+    // above, but the registry ships them, so they need the type-import rule.
+    extends: [tseslint.configs.base],
+    files: ["src/components/ui/*.tsx"],
+    rules: {
+      "@typescript-eslint/consistent-type-imports": [
+        "error",
+        { fixStyle: "inline-type-imports" },
+      ],
     },
   },
   storybook.configs["flat/recommended"],

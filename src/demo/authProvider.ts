@@ -1,4 +1,4 @@
-import { AuthProvider, HttpError } from "ra-core";
+import { type AuthProvider, HttpError } from "ra-core";
 import data from "./users.json";
 
 const DEFAULT_IDENTITY = data.users[0];
