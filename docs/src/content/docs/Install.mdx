@@ -92,30 +92,11 @@ npx shadcn@latest init \
   </TabItem>
 </Tabs>
 
-The command asks no questions: `--template`, `--base`, `--name` and the registry URL already answer them all. It runs in well under a minute. Here is the output for the Vite template, with the created file list trimmed:
+The command asks no questions: `--template`, `--base`, `--name` and the registry URL already answer them all. In well under a minute it creates the project, installs the dependencies, writes about 120 files and updates your global stylesheet.
 
-```bash
-- Creating a new Vite project. This may take a few minutes.
-✔ Creating a new Vite project.
-- Writing components.json.
-✔ Writing components.json.
-- Checking registry.
-✔ Checking registry.
-- Installing dependencies.
-✔ Installing dependencies.
-- Updating files.
-✔ Created 119 files:
-  - src/components/admin/...
-- Updating src/index.css
-✔ Updating src/index.css
-The `tooltip` component has been added. Remember to wrap your app with the `TooltipProvider` component.
+It signs off with a reminder to wrap your app in a `TooltipProvider`. You can ignore it: the `shadcn-admin-kit` components that use tooltips provide their own.
 
-Project initialization completed.
-```
-
-You can ignore that closing reminder: the `shadcn-admin-kit` components that use tooltips provide their own `TooltipProvider`.
-
-Then enter your new project:
+Enter your new project:
 
 ```bash
 cd my-app
