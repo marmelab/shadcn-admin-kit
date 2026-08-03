@@ -13,45 +13,7 @@ This project is compatible with the new `shadcn mcp` command, and contains Curso
 
 ### Prerequisites
 
-It is recommended to use this registry within a **Next.js** or **Vite** project that already has **Tailwind CSS v4** configured.
-
-#### Using Next.js
-
-Example command to create a new Next.js project, configured with Shadcn UI and Tailwind CSS v4:
-
-```bash
-npx shadcn@latest init
-```
-
-#### Using Vite
-
-Example command to create a new Vite project:
-
-```bash
-npm create vite@latest my-shadcn-admin-app -- --template react-ts
-```
-
-Instructions to install and setup Tailwind CSS v4:
-
-```bash
-npm install tailwindcss @tailwindcss/vite
-```
-
-Replace everything in `src/index.css` with the following:
-
-```css
-@import "tailwindcss";
-```
-
-Make sure to also properly configure the `tsconfig.json` and `tsconfig.app.json` files as instructed here:
-
-<https://ui.shadcn.com/docs/installation/vite>
-
-Initialize ShadCN:
-
-```sh
-npx shadcn@latest init
-```
+A project created with the shadcn CLI, which sets up Tailwind CSS v4 and the shadcn components for you. See [Installation](./Install.mdx#create-a-new-project) for the single command that does it, per framework.
 
 ### Setup the registry MCP
 
