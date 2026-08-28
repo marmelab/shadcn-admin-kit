@@ -1,11 +1,9 @@
-import {
-  CoreAdminUI,
-  type CoreAdminUIProps,
-  CoreAdminContext,
-  type CoreAdminContextProps,
-  type CoreAdminProps,
-  localStorageStore,
+import type {
+  CoreAdminUIProps,
+  CoreAdminContextProps,
+  CoreAdminProps,
 } from "ra-core";
+import { CoreAdminUI, CoreAdminContext, localStorageStore } from "ra-core";
 import { i18nProvider as defaultI18nProvider } from "@/lib/i18nProvider";
 import { Layout } from "@/components/admin/layout";
 import { LoginPage } from "@/components/admin/login-page";

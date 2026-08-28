@@ -1,4 +1,4 @@
-import { ResourceProps } from "ra-core";
+import type { ResourceProps } from "ra-core";
 import { DollarSign } from "lucide-react";
 import { OrderList } from "./OrderList";
 import { OrderEdit } from "./OrderEdit";

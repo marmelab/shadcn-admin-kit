@@ -9,10 +9,8 @@ import {
   FormLabel,
 } from "@/components/admin/form";
 import { InputHelperText } from "@/components/admin/input-helper-text";
-import {
-  MinimalTiptapEditor,
-  type MinimalTiptapToolbar,
-} from "@/components/rich-text-input/minimal-tiptap";
+import type { MinimalTiptapToolbar } from "@/components/rich-text-input/minimal-tiptap";
+import { MinimalTiptapEditor } from "@/components/rich-text-input/minimal-tiptap";
 import { RichTextInputToolbar } from "@/components/rich-text-input/rich-text-input-toolbar";
 
 export const DefaultEditorOptions: Partial<UseEditorOptions> = {};
