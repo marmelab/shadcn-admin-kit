@@ -115,7 +115,7 @@ This will add some components to the `src/components/admin` and `src/components/
 cd my-app
 ```
 
-The template leaves `src/App.tsx` rendering `<ComponentExample />`, a showcase of the shadcn/ui components it just installed. Replace all its content by the following to serve your new `shadcn-admin-kit` application.
+The template leaves `src/App.tsx` rendering a "Project ready!" placeholder page with a single button. Replace all its content by the following to serve your new `shadcn-admin-kit` application.
 
 ```tsx
 // src/App.tsx
@@ -126,7 +126,7 @@ const App = () => <Admin></Admin>;
 export default App;
 ```
 
-Shadcn Admin Kit reads `process.env.NODE_ENV`, so `node` must be among the TypeScript types your app loads. Add it to the `types` array of `tsconfig.app.json`, or `npm run build` fails with `Cannot find name 'process'`.
+Shadcn Admin Kit reads `process.env.NODE_ENV`, so `node` must be among the TypeScript types your app loads. The `types` array of `tsconfig.app.json` already contains `vite/client`; add `node` next to it, or `npm run build` fails with `Cannot find name 'process'`.
 
 ```json title="tsconfig.app.json"
 {
@@ -171,7 +171,7 @@ cd my-app
 The React Router framework pins `@react-router/dev`, `@react-router/node` and `@react-router/serve` to one exact `react-router` version, so the newer `react-router-dom` that the registry pulls in brings a second copy of `react-router` along, and the app then fails to render server side. Read the `@react-router/dev` version from your `package.json` and **use the exact same version** for `react-router-dom`. At the time of writing this tutorial, it is `7.15.1`.
 
 ```shell
-npm add react-router-dom@7.15.1
+npm add --save-exact react-router-dom@7.15.1
 ```
 
 Next, add a `/admin` route to your application by editing the `app/routes.ts` file and adding the following route:
@@ -245,23 +245,13 @@ This will add some components to the `src/components/admin` and `src/components/
 cd my-app
 ```
 
-Shadcn Admin Kit reads `process.env.NODE_ENV`, so `node` must be among the TypeScript types your app loads. Add it to the `types` array of `tsconfig.json`, or `npm run build` fails with `Cannot find name 'process'`.
-
-```json title="tsconfig.json"
-{
-  "compilerOptions": {
-    "types": ["vite/client", "node"]
-  }
-}
-```
-
-Last but not least, you need to add `ra-router-tanstack` to your project, so that your `shadcn-admin-kit` application can make use of the tanstack router:
+You need to add `ra-router-tanstack` to your project, so that your `shadcn-admin-kit` application can make use of the tanstack router:
 
 ```shell
 npm install ra-router-tanstack
 ```
 
-You're ready to bootstrap your app! Here's a minimal example to get you started:
+You're ready to bootstrap your app! The template already ships a `src/routes/index.tsx` route rendering a placeholder page. Replace all its content by the following:
 
 ```tsx title="src/routes/index.tsx"
 import { createFileRoute } from "@tanstack/react-router";
@@ -270,10 +260,14 @@ import { Admin } from "@/components/admin";
 
 export const Route = createFileRoute("/")({ component: App });
 
-export function App() {
+function App() {
   return <Admin routerProvider={tanStackRouterProvider}></Admin>;
 }
 ```
+
+:::note
+Don't export the `App` component: TanStack Router can't code-split extra exports from a route file, and warns about it on every request.
+:::
 
 When you run `npm run dev` and visit [http://localhost:3000](http://localhost:3000/), you should see the Shadcn Admin Kit welcome screen:
 
