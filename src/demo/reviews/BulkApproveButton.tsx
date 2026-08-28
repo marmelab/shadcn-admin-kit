@@ -1,10 +1,10 @@
+import type { Identifier } from "ra-core";
 import {
   useUpdateMany,
   useNotify,
   useUnselectAll,
   useListContext,
   Translate,
-  type Identifier,
 } from "ra-core";
 import { Button } from "@/components/ui/button";
 import { ThumbsUp } from "lucide-react";

@@ -248,6 +248,16 @@ This will add some components to the `src/components/admin` and `src/components/
 cd my-app
 ```
 
+Add `node` to the `types` of your `tsconfig.json`, or `npm run build` fails with `Cannot find name 'process'`.
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "types": ["vite/client", "node"]
+  }
+}
+```
+
 Last but not least, you need to add `ra-router-tanstack` to your project, so that your `shadcn-admin-kit` application can make use of the tanstack router:
 
 ```shell

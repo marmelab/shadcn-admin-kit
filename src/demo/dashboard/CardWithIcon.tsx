@@ -1,6 +1,8 @@
-import { createElement, type ReactNode, type FC } from "react";
+import type { ReactNode, FC } from "react";
+import { createElement } from "react";
 import { Card } from "@/components/ui/card";
-import { Link, type To } from "react-router";
+import type { To } from "react-router";
+import { Link } from "react-router";
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

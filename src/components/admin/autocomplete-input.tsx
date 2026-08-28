@@ -39,7 +39,7 @@ import {
   useSupportCreateSuggestion,
 } from "ra-core";
 import { InputHelperText } from "./input-helper-text";
-import { PopoverProps } from "@radix-ui/react-popover";
+import type { PopoverProps } from "@radix-ui/react-popover";
 
 /**
  * Form control that lets users choose a value from a list using a dropdown with autocompletion.

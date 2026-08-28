@@ -1,9 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { render } from "vitest-browser-react";
-import {
-  CoreAdminContext,
-  type DataProvider,
-} from "ra-core";
+import type { DataProvider } from "ra-core";
+import { CoreAdminContext } from "ra-core";
 import { MemoryRouter } from "react-router";
 import { ListGuesser } from "./list-guesser";
 import { i18nProvider } from "@/lib/i18nProvider";

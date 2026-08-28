@@ -13,14 +13,13 @@ import {
 import { useFormContext, useWatch } from "react-hook-form";
 import get from "lodash/get";
 
+import type { SimpleFormProps, DateTimeInputProps } from "@/components/admin";
 import {
   Admin,
   Create,
   Edit,
   SimpleForm,
-  SimpleFormProps,
   DateTimeInput,
-  DateTimeInputProps,
 } from "@/components/admin";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";

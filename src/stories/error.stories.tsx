@@ -1,7 +1,7 @@
 import { CoreAdminContext } from "ra-core";
 import { ThemeProvider } from "@/components/admin";
 import { i18nProvider } from "@/lib/i18nProvider";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Error as RaError } from "@/components/admin/error";
 
 export default {
