@@ -13,7 +13,7 @@ This project is compatible with the new `shadcn mcp` command, and contains Curso
 
 ### Prerequisites
 
-You need a React project with Tailwind CSS v4 and the shadcn components configured. The fastest way to get one is the single shadcn CLI command documented in [Installation](./Install.mdx#create-a-new-project), which sets all of that up for you, whichever framework you pick.
+You need a React project with Tailwind CSS v4 and the shadcn components configured. The fastest way to get one is the single shadcn CLI command documented in [Installation](./Install.mdx), which sets all of that up for you, whichever framework you pick.
 
 ### Setup the registry MCP
 
