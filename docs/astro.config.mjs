@@ -9,6 +9,7 @@ import expressiveCode from "astro-expressive-code";
 import { pluginFullscreen } from "expressive-code-fullscreen";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import rehypeAstroRelativeMarkdownLinks from "astro-rehype-relative-markdown-links";
+import { unified } from "@astrojs/markdown-remark";
 import { readFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -189,23 +190,27 @@ export default defineConfig({
     mdx(),
   ],
   markdown: {
-    rehypePlugins: [
-      rehypeCodeGroup,
-      [
-        rehypeAstroRelativeMarkdownLinks,
-        {
-          base: "/shadcn-admin-kit/docs/",
-          collectionBase: false,
-        },
+    // Astro 7 renders Markdown with Sätteri by default; the rehype plugins below
+    // require the unified() pipeline.
+    processor: unified({
+      rehypePlugins: [
+        // rehype-code-group pins a different @types/hast version than Astro
+        // @ts-ignore
+        rehypeCodeGroup,
+        [
+          rehypeAstroRelativeMarkdownLinks,
+          {
+            base: "/shadcn-admin-kit/docs/",
+            collectionBase: false,
+          },
+        ],
       ],
-    ],
+    }),
   },
   redirects: {
     "/": "/shadcn-admin-kit/docs/install",
   },
   vite: {
-    // We are loading type for vite v7 but expecting type for vite v6
-    // @ts-ignore
     plugins: [tailwindcss(), inlineChangelogPlugin],
   },
   base: "/shadcn-admin-kit/docs/",
