@@ -208,6 +208,16 @@ You can now start adding components to your project. Let's start with the `shadc
 npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/admin.json
 ```
 
+Shadcn Admin Kit reads `process.env.NODE_ENV`, so add `node` to the `types` of your `tsconfig.app.json`. Without it, `npm run build` fails with `Cannot find name 'process'`.
+
+```json title="tsconfig.app.json"
+{
+  "compilerOptions": {
+    "types": ["vite/client", "node"]
+  }
+}
+```
+
 The main entry point of your new application is `main.tsx`, which renders the `App` component into the DOM.
 
 ```tsx
@@ -408,6 +418,16 @@ Now that shadcn is set up, let's start with the `shadcn-admin-kit` components.
 
 ```shell
 npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/admin.json
+```
+
+Add `node` to the `types` of your `tsconfig.json`, or `npm run build` fails with `Cannot find name 'process'`.
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "types": ["vite/client", "node"]
+  }
+}
 ```
 
 Last but not least, you need to add `ra-router-tanstack` to your project, so that your `shadcn-admin-kit` application can make use of the tanstack router:

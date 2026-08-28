@@ -55,7 +55,7 @@
         "tailwind-merge",
         "tw-animate-css"
       ],
-      "devDependencies": ["@types/lodash"],
+      "devDependencies": ["@types/lodash", "@types/node"],
       "files": [
         {
           "path": "src/components/admin/admin.tsx",
