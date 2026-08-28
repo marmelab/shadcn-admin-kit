@@ -1,7 +1,7 @@
 import { CoreAdminContext, RecordContextProvider, required } from "ra-core";
 import { TextArrayInput, SimpleForm, ThemeProvider } from "@/components/admin";
 import { i18nProvider } from "@/lib/i18nProvider";
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
 
 const record = {
   id: 1,

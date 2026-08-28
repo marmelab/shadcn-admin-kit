@@ -2,7 +2,7 @@ import polyglotI18nProvider from "ra-i18n-polyglot";
 import englishMessages from "ra-language-english";
 import { I18nContextProvider } from "ra-core";
 import { Loading } from "@/components/admin/loading";
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { ThemeProvider } from "@/components/admin";
 
 export default {

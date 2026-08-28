@@ -1,4 +1,4 @@
-import { type ResourceProps } from "ra-core";
+import type { ResourceProps } from "ra-core";
 import { CustomerList } from "./CustomerList";
 import { CustomerEdit } from "./CustomerEdit";
 import { CustomerCreate } from "./CustomerCreate";

@@ -1,5 +1,5 @@
+import type { DataProvider } from "ra-core";
 import {
-  type DataProvider,
   memoryStore,
   Resource,
   TestMemoryRouter,

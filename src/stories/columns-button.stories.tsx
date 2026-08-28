@@ -1,5 +1,6 @@
 import React from "react";
-import { type DataProvider, memoryStore, Resource, TestMemoryRouter } from "ra-core";
+import type { DataProvider } from "ra-core";
+import { memoryStore, Resource, TestMemoryRouter } from "ra-core";
 import { i18nProvider } from "@/lib/i18nProvider.ts";
 import {
   Admin,

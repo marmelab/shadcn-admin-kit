@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
 import polyglotI18nProvider from "ra-i18n-polyglot";
 import { I18nContextProvider } from "ra-core";
 import { GuesserEmpty } from "@/components/admin/guesser-empty";

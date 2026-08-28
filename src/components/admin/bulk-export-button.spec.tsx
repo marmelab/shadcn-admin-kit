@@ -1,14 +1,13 @@
 import { describe, expect, it, vi } from "vitest";
 import { render } from "vitest-browser-react";
 import { BulkExportButton } from "./bulk-export-button";
+import type { DataProvider, UseListOptions } from "ra-core";
 import {
-  type DataProvider,
   DataProviderContext,
   ListContextProvider,
   RecordContext,
   ResourceContextProvider,
   useList,
-  type UseListOptions,
 } from "ra-core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MemoryRouter } from "react-router";

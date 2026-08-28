@@ -10,7 +10,8 @@ import {
   ThemeProvider,
 } from "@/components/admin";
 import { i18nProvider } from "@/lib/i18nProvider";
-import { type FormEvent, type ReactNode, useState } from "react";
+import type { FormEvent, ReactNode } from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
