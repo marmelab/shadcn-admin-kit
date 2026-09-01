@@ -19,7 +19,9 @@ export default defineConfig({
     ],
     browser: {
       enabled: true,
-      provider: playwright(),
+      // Pin the browser locale so that tests relying on Intl (currency and
+      // date formatting) behave the same whatever the developer machine language
+      provider: playwright({ contextOptions: { locale: "en-US" } }),
       instances: [
         {
           browser: "chromium",

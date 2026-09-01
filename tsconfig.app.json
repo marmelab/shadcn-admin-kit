@@ -11,6 +11,9 @@
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
+    /* Matches the shadcn templates, so type-only imports that would survive
+       into the registry output and crash at runtime fail the typecheck here. */
+    "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",

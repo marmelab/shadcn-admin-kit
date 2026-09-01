@@ -7,7 +7,7 @@ description: This skill should be used when building, modifying, or debugging an
 
 Shadcn Admin Kit is a component library for building admin/CRUD applications using React, TypeScript, and shadcn/ui. It provides 98+ pre-built components on top of **ra-core** (from react-admin), combining react-admin's proven data layer with modern shadcn/ui components styled via Tailwind CSS. Before writing custom code, always check if shadcn-admin-kit already provides a component or hook for the task. Full documentation: https://marmelab.com/shadcn-admin-kit/docs
 
-**Tech Stack**: React Router v7, TanStack Query, React Hook Form, Zod, ra-core, shadcn/ui (Radix UI), Lucide icons, Tailwind CSS v4.
+**Tech Stack**: React Router v7, TanStack Query, React Hook Form, Zod, ra-core, shadcn/ui (Base UI), Lucide icons, Tailwind CSS v4.
 
 **Compatible with**: Vite.js, React-router, Next.js, TanStack Start, and more.
 

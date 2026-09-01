@@ -1,5 +1,7 @@
-import { Check, type LucideIcon, X } from "lucide-react";
-import { RaRecord, useFieldValue, useTranslate } from "ra-core";
+import type { LucideIcon } from "lucide-react";
+import { Check, X } from "lucide-react";
+import type { RaRecord } from "ra-core";
+import { useFieldValue, useTranslate } from "ra-core";
 
 import type { FieldProps } from "@/lib/field.type.ts";
 import { cn } from "@/lib/utils";

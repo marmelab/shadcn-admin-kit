@@ -10,13 +10,8 @@ import {
 import { useFormContext, useWatch } from "react-hook-form";
 import get from "lodash/get";
 
-import {
-  Create,
-  SimpleForm,
-  SimpleFormProps,
-  DateInput,
-  DateInputProps,
-} from "@/components/admin";
+import type { SimpleFormProps, DateInputProps } from "@/components/admin";
+import { Create, SimpleForm, DateInput } from "@/components/admin";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 

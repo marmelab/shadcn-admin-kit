@@ -8,7 +8,17 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist", "website/dist/**", "docs/.astro/**", "storybook-static/**"] },
+  // `temp` is the throwaway app the registry build scaffolds; it is gitignored
+  // and vendors its own copy of the sources, so linting it is noise.
+  {
+    ignores: [
+      "dist",
+      "website/dist/**",
+      "docs/.astro/**",
+      "storybook-static/**",
+      "temp",
+    ],
+  },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],
@@ -35,6 +45,27 @@ export default tseslint.config(
         },
       ],
       "no-console": ["error", { allow: ["warn", "error"] }],
+      // Type-only imports must carry the `type` keyword. Without it, projects
+      // built with `verbatimModuleSyntax: true` (what the shadcn templates ship)
+      // keep the import at runtime and crash on a missing export. Use a
+      // dedicated `import type` statement rather than inline `type`
+      // specifiers, so the bundler drops the whole line.
+      "@typescript-eslint/consistent-type-imports": [
+        "error",
+        { fixStyle: "separate-type-imports" },
+      ],
+    },
+  },
+  {
+    // The ui components are vendored from shadcn and exempt from the rules
+    // above, but the registry ships them, so they need the type-import rule.
+    extends: [tseslint.configs.base],
+    files: ["src/components/ui/*.tsx"],
+    rules: {
+      "@typescript-eslint/consistent-type-imports": [
+        "error",
+        { fixStyle: "separate-type-imports" },
+      ],
     },
   },
   storybook.configs["flat/recommended"],

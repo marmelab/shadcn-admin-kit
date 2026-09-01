@@ -3,12 +3,8 @@ import { Image as TiptapImage } from "@tiptap/extension-image"
 import type { Editor } from "@tiptap/react"
 import { ReactNodeViewRenderer } from "@tiptap/react"
 import { ImageViewBlock } from "./components/image-view-block"
-import {
-  filterFiles,
-  randomId,
-  type FileError,
-  type FileValidationOptions,
-} from "../../utils"
+import type { FileError, FileValidationOptions } from "../../utils"
+import { filterFiles, randomId } from "../../utils"
 import { ReplaceStep } from "@tiptap/pm/transform"
 import type { Attrs } from "@tiptap/pm/model"
 

@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useTranslate, useReference } from "ra-core";
 
-import { Customer, Order } from "../types";
+import type { Customer, Order } from "../types";
 
 interface Props {
   order: Order;

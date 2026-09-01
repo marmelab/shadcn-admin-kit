@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Label } from "@/components/ui/label";
 import { useRecordContext, useTranslate } from "ra-core";
 
-import { Order } from "../types";
+import type { Order } from "../types";
 
 export const Totals = () => {
   const record = useRecordContext<Order>();

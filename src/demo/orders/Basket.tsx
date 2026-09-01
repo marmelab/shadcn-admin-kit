@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { useTranslate, useGetMany, useRecordContext } from "ra-core";
 import { Link } from "react-router";
 
-import { Order, Product } from "../types";
+import type { Order, Product } from "../types";
 
 export const Basket = () => {
   const record = useRecordContext<Order>();

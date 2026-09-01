@@ -1,14 +1,16 @@
-import {
-  useState,
-  useEffect,
-  Children,
-  type ComponentProps,
-  type ReactNode,
-} from "react";
+import type { ComponentProps, ReactNode } from "react";
+import { useState, useEffect, Children } from "react";
 import { createPortal } from "react-dom";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as diacritic from "diacritic";
+import type {
+  RaRecord,
+  Identifier,
+  SortPayload,
+  HintedString,
+  ExtractRecordPaths,
+} from "ra-core";
 import {
   useDataTableStoreContext,
   useStore,
@@ -19,11 +21,6 @@ import {
   useTranslateLabel,
   DataTableColumnRankContext,
   DataTableColumnFilterContext,
-  type RaRecord,
-  type Identifier,
-  type SortPayload,
-  type HintedString,
-  type ExtractRecordPaths,
 } from "ra-core";
 import { Columns, Search } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";

@@ -39,37 +39,30 @@ export const FrameworkCard = ({ href, logo, name, borderHover, bgHover, shadow }
   <FrameworkCard href="#install-with-tanstack-start" logo={tanstackLogo.src} name="TanStack Start" borderHover="#fcd34d" bgHover="#fffbeb" shadow="rgba(245,158,11,0.15)" />
 </div>
 
-## Install with Next.js
-
-The first step is to create a new Next.js project using the `create-next-app` command. Name your app 'e.g., `my-app`, and answer **Yes** to the question about recommended Next.js defaults:
-
-```bash
-npx create-next-app@latest
-✔ What is your project named? … my-app
-✔ Would you like to use the recommended Next.js defaults? › Yes, use recommended defaults
-...
-Success! Created my-app at /path/to/my-app
-```
-
-Next, go to your project directory and pull the `shadcn-admin-kit` components using the `shadcn` command:
-
-```bash
-cd my-app
-npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/admin.json
-✔ You need to create a components.json file to add components. Proceed? … yes
-✔ Which color would you like to use as the base color? › Neutral
-✔ Writing components.json.
-✔ Checking registry.
-✔ Updating CSS variables in app/globals.css
-✔ Installing dependencies.
-✔ Created 114 files
-```
-
-This will add some components to the `components/admin` and `components/ui` directories, as well as some utilities inside the `hooks/` and `lib/` directories.
+Every command below passes `--base base --preset vega`. Keep both flags: the shadcn CLI can generate its components on top of either Base UI or Radix primitives, and this version of `shadcn-admin-kit` is built on the Base UI ones, in the `vega` preset. Together they produce the `base-vega` style the kit's own `components.json` uses; without the preset flag the CLI stops to ask which one you want. The command otherwise asks no questions, and signs off with a reminder to wrap your app in a `TooltipProvider` that you can ignore, since the components that use tooltips provide their own.
 
 :::note
 The `shadcn` CLI tool has [known issues](https://github.com/shadcn-ui/ui/issues/8778) with Windows. If you are using Windows and encounter problems, please switch to a WSL terminal or use a different OS.
 :::
+
+## Install with Next.js
+
+Create the project and pull the `shadcn-admin-kit` components in one command:
+
+```shell
+npx shadcn@latest init \
+  --template next \
+  --base base \
+  --preset vega \
+  --name my-app \
+  https://marmelab.com/shadcn-admin-kit/r/admin.json
+```
+
+This will add some components to the `components/admin` and `components/ui` directories, as well as some utilities inside the `hooks/` and `lib/` directories.
+
+```shell
+cd my-app
+```
 
 You're ready to bootstrap your app. Create an `app/admin` directory and an `app/admin/App.tsx` component file that will contain the admin app.
 
@@ -107,124 +100,24 @@ Next step: Read the [Quick Start Guide](./Quick-Start-Guide.mdx) to learn how to
 
 ## Install with Vite.js
 
-`shadcn-admin-kit` is built on React, so you need to create a Vite single-page app to use it.
+Create the project and pull the `shadcn-admin-kit` components in one command:
 
 ```shell
-npm create vite@latest my-app -- --template react-ts
-or
-yarn create vite my-app --template react-ts
+npx shadcn@latest init \
+  --template vite \
+  --base base \
+  --preset vega \
+  --name my-app \
+  https://marmelab.com/shadcn-admin-kit/r/admin.json
 ```
 
-Then, `cd` into your new project directory and [install shadcn/ui](https://ui.shadcn.com/docs/installation/vite). To do so, add Tailwind CSS.
+This will add some components to the `src/components/admin` and `src/components/ui` directories, as well as some utilities inside the `src/hooks/` and `src/lib/` directories.
 
 ```shell
-npm install tailwindcss @tailwindcss/vite
-# or
-yarn add tailwindcss @tailwindcss/vite
+cd my-app
 ```
 
-Install node types as a development dependency:
-
-```shell
-npm install -D @types/node
-# or
-yarn add -D @types/node
-```
-
-Replace everything in `src/index.css` with the following:
-
-```shell
-// src/index.css
-@import "tailwindcss";
-```
-
-Edit `tsconfig.json` file. Add the `baseUrl` and `paths` properties to the `compilerOptions` section of the `tsconfig.json` and `tsconfig.app.json` files:
-
-```diff lang="json"
-// tsconfig.json
-{
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ],
-+  "compilerOptions": {
-+    "baseUrl": ".",
-+    "paths": {
-+      "@/*": ["./src/*"]
-+    }
-+  }
-}
-```
-
-```diff lang="json"
-// tsconfig.app.json
-{
-  "compilerOptions": {
-    // ...
--   "verbatimModuleSyntax": true,
-+   "verbatimModuleSyntax": false,
-+   "baseUrl": ".",
-+   "paths": {
-+     "@/*": [ "./src/*" ]
-+   },
-  }
-}
-```
-
-Add the following code to the `vite.config.ts` so your app can resolve paths without error:
-
-```diff lang="tsx" title="vite.config.ts"
-+import path from "path"
-+import tailwindcss from "@tailwindcss/vite"
-import react from "@vitejs/plugin-react"
-import { defineConfig } from "vite"
- 
-// https://vite.dev/config/
-export default defineConfig({
--  plugins: [react()],
-+  plugins: [react(), tailwindcss()],
-+  resolve: {
-+    alias: {
-+      "@": path.resolve(__dirname, "./src"),
-+    },
-+  },
-})
-```
-
-Now, run the `shadcn` init command to setup your project:
-
-```shell
-npx shadcn@latest init
-# or
-yarn shadcn init
-```
-
-You will be asked a few questions to configure `components.json`.
-
-You can now start adding components to your project. Let's start with the `shadcn-admin-kit` components.
-
-```shell
-npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/admin.json
-```
-
-The main entry point of your new application is `main.tsx`, which renders the `App` component into the DOM.
-
-```tsx
-// src/main.tsx
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App.tsx";
-
-createRoot(document.getElementById("root")!).render(
-    <StrictMode>
-        <App />
-    </StrictMode>,
-);
-```
-
-The `<App>` component currently renders a default Vite application. You can replace all its content by the following to serve your new `shadcn-admin-kit` application.
+The template leaves `src/App.tsx` rendering a "Project ready!" placeholder page with a single button. Replace all its content by the following to serve your new `shadcn-admin-kit` application.
 
 ```tsx
 // src/App.tsx
@@ -235,9 +128,15 @@ const App = () => <Admin></Admin>;
 export default App;
 ```
 
-:::note
-The `shadcn` CLI tool has [known issues](https://github.com/shadcn-ui/ui/issues/8778) with Windows. If you are using Windows and encounter problems, please switch to a WSL terminal or use a different OS.
-:::
+Shadcn Admin Kit reads `process.env.NODE_ENV`, so `node` must be among the TypeScript types your app loads. The `types` array of `tsconfig.app.json` already contains `vite/client`; add `node` next to it, or `npm run build` fails with `Cannot find name 'process'`.
+
+```json title="tsconfig.app.json"
+{
+  "compilerOptions": {
+    "types": ["vite/client", "node"]
+  }
+}
+```
 
 It's time to test! Run the following command to run your project.
 
@@ -255,41 +154,27 @@ Next step: Read the [Quick Start Guide](./Quick-Start-Guide.mdx) to learn how to
 
 ## Install with React-Router
 
-You can setup a Shadcn Admin Kit application with React-Router v7 (a.k.a. Remix v3) as follows. First, creating a new React Router project with the following command:
+You can setup a Shadcn Admin Kit application with React-Router v7 (a.k.a. Remix v3). Create the project and pull the `shadcn-admin-kit` components in one command:
 
 ```shell
-npx create-react-router@latest 
-```
-
-This script will ask you for more details about your project. You can use the following options:
-
-- The name you want to give to your project, e.g. `my-app`
-- Initialize a new git repository? Choose Yes
-- Install dependencies with npm? Choose Yes
-
-Initialize shadcn in your new project:
-
-```shell
-cd my-app
-npx shadcn@latest init
-```
-
-Next, install the Shadcn Admin Kit components:
-
-```shell
-npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/admin.json
+npx shadcn@latest init \
+  --template react-router \
+  --base base \
+  --preset vega \
+  --name my-app \
+  https://marmelab.com/shadcn-admin-kit/r/admin.json
 ```
 
 This will add some components to the `app/components/admin` and `app/components/ui` directories, as well as some utilities inside the `app/hooks/` and `app/lib/` directories.
 
-:::note
-The `shadcn` CLI tool has [known issues](https://github.com/shadcn-ui/ui/issues/8778) with Windows. If you are using Windows and encounter problems, please switch to a WSL terminal or use a different OS.
-:::
+```shell
+cd my-app
+```
 
-Shadcn Admin Kit depends on the `react-router-dom` package. It used to be a direct dependency of `react-router`, but it's not anymore in v7 so you'll have to add it manually. Check the version of React Router that has been installed by `create-react-router` and **use the exact same version**. At the time of writing this tutorial, it is `7.10.1`.
+The React Router framework pins `@react-router/dev`, `@react-router/node` and `@react-router/serve` to one exact `react-router` version, so the newer `react-router-dom` that the registry pulls in brings a second copy of `react-router` along, and the app then fails to render server side. Read the `@react-router/dev` version from your `package.json` and **use the exact same version** for `react-router-dom`. At the time of writing this tutorial, it is `7.15.1`.
 
 ```shell
-npm add react-router-dom@7.10.1
+npm add --save-exact react-router-dom@7.15.1
 ```
 
 Next, add a `/admin` route to your application by editing the `app/routes.ts` file and adding the following route:
@@ -327,19 +212,6 @@ export default App;
 The convention for react-router applications is to use `~/` as prefix for imports, while other frameworks use `@/`. The Shadcn Admin Kit documentation uses `@/` everywhere, make sure to adapt the import paths accordingly.
 :::
 
-Edit the `tsconfig.json` file to avoid an [unsolved shadcn/ui bug](https://github.com/shadcn-ui/ui/issues/6618):
-
-```diff lang="json"
-// tsconfig.app.json
-{
-  "compilerOptions": {
-    // ...
--   "verbatimModuleSyntax": true,
-+   "verbatimModuleSyntax": false,
-    },
-}
-```
-
 It's time to test! Run the following command to run your project.
 
 ```shell
@@ -360,63 +232,30 @@ Next step: Read the [Quick Start Guide](./Quick-Start-Guide.mdx) to learn how to
 
 ## Install with Tanstack Start
 
-You can setup a Shadcn Admin Kit application with Tanstack Start as follows. First, create a new Tanstack Start project with the following command:
+You can setup a Shadcn Admin Kit application with Tanstack Start. Create the project and pull the `shadcn-admin-kit` components in one command:
 
 ```shell
-npx @tanstack/cli create
+npx shadcn@latest init \
+  --template start \
+  --base base \
+  --preset vega \
+  --name my-app \
+  https://marmelab.com/shadcn-admin-kit/r/admin.json
 ```
 
-The installer will prompt you for the name of your project. Select no toolchain, but choose to install Tailwind CSS. Your installation should look like this:
+This will add some components to the `src/components/admin` and `src/components/ui` directories, as well as some utilities inside the `src/hooks/` and `src/lib/` directories.
 
 ```shell
-$ npx @tanstack/cli create
-┌  Let's configure your TanStack application
-│
-◇  What would you like to name your project?
-│  shadcn-admin-app
-│
-◇  Select toolchain
-│  None
-│
-◇  Would you like to use Tailwind CSS?
-│  Yes
-│
-◇  Initialized git repository
-│
-◇  Installed dependencies
-│
-▲  Warnings:
-│  TanStack Start is not yet at 1.0 and may change significantly or not be compatible with other add-ons.
-│  Migrating to Start might require deleting node_modules and re-installing.
-│
-└  Your TanStack app is ready in 'shadcn-admin-app'.
-
-Use the following commands to start your app:
-% cd shadcn-admin-app
-% npm run dev
+cd my-app
 ```
 
-You can now install shadcn by running the `shadcn` init command:
-
-```shell
-npx shadcn@latest init
-```
-
-You will be asked a few questions to configure `components.json`.
-
-Now that shadcn is set up, let's start with the `shadcn-admin-kit` components.
-
-```shell
-npx shadcn@latest add https://marmelab.com/shadcn-admin-kit/r/admin.json
-```
-
-Last but not least, you need to add `ra-router-tanstack` to your project, so that your `shadcn-admin-kit` application can make use of the tanstack router:
+You need to add `ra-router-tanstack` to your project, so that your `shadcn-admin-kit` application can make use of the tanstack router:
 
 ```shell
 npm install ra-router-tanstack
 ```
 
-You're ready to bootstrap your app! Here's a minimal example to get you started:
+You're ready to bootstrap your app! The template already ships a `src/routes/index.tsx` route rendering a placeholder page. Replace all its content by the following:
 
 ```tsx title="src/routes/index.tsx"
 import { createFileRoute } from "@tanstack/react-router";
@@ -425,17 +264,17 @@ import { Admin } from "@/components/admin";
 
 export const Route = createFileRoute("/")({ component: App });
 
-export function App() {
+function App() {
   return <Admin routerProvider={tanStackRouterProvider}></Admin>;
 }
 ```
 
+:::note
+Don't export the `App` component: TanStack Router can't code-split extra exports from a route file, and warns about it on every request.
+:::
+
 When you run `npm run dev` and visit [http://localhost:3000](http://localhost:3000/), you should see the Shadcn Admin Kit welcome screen:
 
 ![Welcome to shadcn-admin-kit!](./images/welcome-tanstack-start.png)
-
-:::tip
-You'll notice that the welcome screen includes a header bar from Tanstack Start. If you want to remove it, you can edit the `RootDocument` component in `src/routes/__root.tsx` and remove the `<Header />` component.
-:::
 
 Next step: Read the [Quick Start Guide](./Quick-Start-Guide.mdx) to learn how to use the components in your admin app.

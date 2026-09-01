@@ -39,7 +39,7 @@
       ],
       "dependencies": [
         "@base-ui/react",
-        "@tanstack/react-query",
+        "@tanstack/react-query@^5.83.0",
         "class-variance-authority",
         "clsx",
         "cmdk",
@@ -54,12 +54,13 @@
         "ra-language-english",
         "react-dropzone",
         "react-error-boundary",
-        "react-hook-form",
-        "react-router",
+        "react-hook-form@^7.65.0",
+        "react-router-dom@^7.1.1",
         "sonner",
         "tailwind-merge",
         "tw-animate-css"
       ],
+      "devDependencies": ["@types/lodash", "@types/node"],
       "files": [
         {
           "path": "src/components/admin/admin.tsx",

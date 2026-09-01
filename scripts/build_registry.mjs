@@ -26,6 +26,58 @@ const dedupeBy = (items, keySelector) => {
   });
 };
 
+// "react-hook-form@^7.65.0" -> "react-hook-form", "@types/lodash" -> "@types/lodash"
+const packageName = (dep) => {
+  const separator = dep.lastIndexOf("@");
+  return separator > 0 ? dep.slice(0, separator) : dep;
+};
+
+// The ranges declared in registry.json, indexed by package name.
+const declaredRanges = (registry) => {
+  const ranges = new Map();
+
+  for (const item of registry.items) {
+    for (const dep of item.dependencies ?? []) {
+      const name = packageName(dep);
+
+      if (dep !== name) {
+        ranges.set(name, dep);
+      }
+    }
+  }
+
+  return ranges;
+};
+
+// shadcn registry:build appends the dependencies of every registry dependency
+// and derives more from the imports it finds, all without a version range. A
+// built item ends up with both "react-hook-form@^7.65.0" and "react-hook-form",
+// and npm keeps the last spec it sees, so the unversioned one wins and the range
+// we declare is silently dropped. Restore the declared range and keep a single
+// entry per package.
+const pinDependencies = (dependencies, ranges) => {
+  const byName = new Map();
+
+  for (const dep of dependencies) {
+    const name = packageName(dep);
+    const declared = ranges.get(name);
+
+    if (declared) {
+      byName.set(name, declared);
+      continue;
+    }
+
+    const kept = byName.get(name);
+
+    // Prefer whichever spec carries a range over the bare package name.
+    if (kept === undefined || kept === name) {
+      byName.set(name, dep);
+    }
+  }
+
+  return [...byName.values()];
+};
+
 const withFileContents = async (item) => {
   if (!item.files?.length) {
     return item;
@@ -75,6 +127,20 @@ const run = async () => {
     );
 
     await rm(tempDir, { recursive: true, force: true });
+
+    const ranges = declaredRanges(registry);
+
+    for (const item of autoBuiltItems) {
+      const builtPath = path.join(outputDir, `${item.name}.json`);
+      const built = JSON.parse(await readFile(builtPath, "utf8"));
+
+      if (!built.dependencies?.length) {
+        continue;
+      }
+
+      built.dependencies = pinDependencies(built.dependencies, ranges);
+      await writeFile(builtPath, `${JSON.stringify(built, null, 2)}\n`);
+    }
   }
 
   const manualItems = registry.items.filter((item) => manualBuildItems.has(item.name));
