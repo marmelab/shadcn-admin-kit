@@ -49,7 +49,7 @@
         "lucide-react",
         "next-themes",
         "query-string",
-        "ra-core",
+        "ra-core@^5.15.2",
         "ra-i18n-polyglot",
         "ra-language-english",
         "react-dropzone",

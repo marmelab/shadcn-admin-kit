@@ -16,10 +16,7 @@ const PendingOrders = (props: Props) => {
     <Card className="flex-1">
       <CardContent className="flex flex-col gap-4">
         <h2 className="text-xl">{translate("pos.dashboard.pending_orders")}</h2>
-        {/* Capped for the same reason as PendingReviews: past ~30 rows, the
-            per-row fetch settlements and the Avatar's commit-phase update nest
-            into more than the 50 nested React updates allowed. */}
-        {orders.slice(0, 10).map((record) => (
+        {orders.map((record) => (
           <PendingOrder key={record.id} order={record} />
         ))}
       </CardContent>

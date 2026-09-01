@@ -19,14 +19,7 @@ const PendingReviews = () => {
   } = useGetList<Review>("reviews", {
     filter: { status: "pending" },
     sort: { field: "date", order: "DESC" },
-    // A dashboard card only needs the most recent few. It also keeps this list
-    // short enough to avoid a React nested-update overflow: each row settles its
-    // own fetch, so each triggers its own update, and the Avatar updates state
-    // during commit, which stops React from batching them. Past ~30 rows the
-    // cascade exceeds the 50 React allows. Measured: 25 rows pass, 35 throw.
-    // ra-core is expected to coalesce the aggregated path, which is what makes
-    // this reliable rather than occasional; revisit the cap once it ships.
-    pagination: { page: 1, perPage: 10 },
+    pagination: { page: 1, perPage: 100 },
   });
 
   return (

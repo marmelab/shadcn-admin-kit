@@ -3,6 +3,7 @@
 ### 💥 Breaking Changes
 
 - **shadcn-admin-kit now builds on [Base UI](https://base-ui.com/) instead of Radix UI**, and its `components.json` uses the `base-vega` style. Check the Migration documentation for details
+- **`ra-core` 5.15.2 or later is now required.** Base UI's `<Avatar>` reports its image loading status from a layout effect, which turns a latent ra-core bug into a crash: on a page with enough `<ReferenceField>`, the per-row updates nest instead of batching and throw `Maximum update depth exceeded`. Fixed in [react-admin#11329](https://github.com/marmelab/react-admin/pull/11329)
 
 ## v1.6.0 (Jun. 2026)
 

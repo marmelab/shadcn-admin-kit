@@ -26,7 +26,7 @@ const NewCustomers = () => {
         first_seen_gte: aMonthAgo.toISOString(),
       }}
       sort={{ field: "first_seen", order: "DESC" }}
-      perPage={10}
+      perPage={100}
       disableSyncWithLocation
       render={({ data }) => (
         <CardWithIcon
