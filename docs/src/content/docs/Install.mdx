@@ -39,7 +39,7 @@ export const FrameworkCard = ({ href, logo, name, borderHover, bgHover, shadow }
   <FrameworkCard href="#install-with-tanstack-start" logo={tanstackLogo.src} name="TanStack Start" borderHover="#fcd34d" bgHover="#fffbeb" shadow="rgba(245,158,11,0.15)" />
 </div>
 
-Every command below passes `--base base --preset vega`. Keep both flags: the shadcn CLI can generate its components on top of either Base UI or Radix primitives, and this version of `shadcn-admin-kit` is built on the Base UI ones, in the `vega` preset. Together they produce the `base-vega` style the kit's own `components.json` uses; without the preset flag the CLI stops to ask which one you want. The command otherwise asks no questions, and signs off with a reminder to wrap your app in a `TooltipProvider` that you can ignore, since the components that use tooltips provide their own.
+Every command below passes `--preset vega`. Keep it: it produces the `base-vega` style that the kit's own `components.json` declares. The shadcn CLI can generate its components on top of Base UI, React Aria or Radix primitives, and this version of `shadcn-admin-kit` is built on the Base UI ones; the preset name carries that choice, so there is no separate flag to pass. Drop it and the CLI stops twice, to ask which library and which preset. The command otherwise asks no questions, and signs off with a reminder to wrap your app in a `TooltipProvider` that you can ignore, since the components that use tooltips provide their own.
 
 :::note
 The `shadcn` CLI tool has [known issues](https://github.com/shadcn-ui/ui/issues/8778) with Windows. If you are using Windows and encounter problems, please switch to a WSL terminal or use a different OS.
@@ -52,7 +52,6 @@ Create the project and pull the `shadcn-admin-kit` components in one command:
 ```shell
 npx shadcn@latest init \
   --template next \
-  --base base \
   --preset vega \
   --name my-app \
   https://marmelab.com/shadcn-admin-kit/r/admin.json
@@ -105,7 +104,6 @@ Create the project and pull the `shadcn-admin-kit` components in one command:
 ```shell
 npx shadcn@latest init \
   --template vite \
-  --base base \
   --preset vega \
   --name my-app \
   https://marmelab.com/shadcn-admin-kit/r/admin.json
@@ -159,7 +157,6 @@ You can setup a Shadcn Admin Kit application with React-Router v7 (a.k.a. Remix 
 ```shell
 npx shadcn@latest init \
   --template react-router \
-  --base base \
   --preset vega \
   --name my-app \
   https://marmelab.com/shadcn-admin-kit/r/admin.json
@@ -237,7 +234,6 @@ You can setup a Shadcn Admin Kit application with Tanstack Start. Create the pro
 ```shell
 npx shadcn@latest init \
   --template start \
-  --base base \
   --preset vega \
   --name my-app \
   https://marmelab.com/shadcn-admin-kit/r/admin.json
