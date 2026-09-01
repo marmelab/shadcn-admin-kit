@@ -48,3 +48,8 @@ Shadcn's [Base UI as the Default](https://ui.shadcn.com/docs/changelog/2026-07-b
 Direct `@radix-ui/*` packages are no longer dependencies of the kit. If your app
 imported them itself, add them to your own `package.json`.
 
+## Known Limitation: Radix Is Still In The Bundle, Through cmdk
+
+`command.tsx` builds on [cmdk](https://github.com/pacocoursey/cmdk), which shadcn/ui has not migrated, and cmdk depends on Radix's dialog, portal and presence primitives. Any build that includes `<AutocompleteInput>`, `<AutocompleteArrayInput>` or another `<Command>` consumer therefore ships both libraries: cmdk weighs 45 kB minified, 21 kB of which is Radix.
+
+There is nothing to do on your side, and nothing to gain from removing the `@radix-ui/*` packages by hand: they come in as transitive dependencies of cmdk. It is tracked upstream in [shadcn-ui/ui#9191](https://github.com/shadcn-ui/ui/issues/9191).
