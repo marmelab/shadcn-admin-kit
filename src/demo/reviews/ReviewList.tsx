@@ -22,7 +22,6 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 
 import { FullNameField } from "../customers/FullNameField";
 import { StarRatingField } from "./StarRatingField";
@@ -31,6 +30,7 @@ import { BulkApproveButton } from "./BulkApproveButton";
 import { BulkRejectButton } from "./BulkRejectButton";
 import { useIsMobile } from "../../hooks/use-mobile";
 import type { Review } from "../types";
+import { renderReviewStatusOption } from "./ReviewStatusOption";
 
 const filters = [
   <TextInput source="q" placeholder="Search" label={false} alwaysOn />,
@@ -53,26 +53,14 @@ const filters = [
   <AutocompleteInput
     source="status"
     placeholder="Filter by status"
+    className="min-w-36"
     choices={[
       { id: "accepted", name: "Approved" },
       { id: "rejected", name: "Rejected" },
       { id: "pending", name: "Pending" },
     ]}
-    optionText={(choice) => (
-      <>
-        <span
-          className={cn(
-            "h-2 w-2 rounded-full",
-            choice.id === "accepted"
-              ? "bg-green-400 dark:bg-green-800"
-              : choice.id === "rejected"
-                ? "bg-red-400 dark:bg-red-800"
-                : "bg-yellow-400 dark:bg-yellow-800",
-          )}
-        />
-        {choice.name}
-      </>
-    )}
+    optionText={renderReviewStatusOption}
+    inputText={renderReviewStatusOption}
     label={false}
     alwaysOn
   />,

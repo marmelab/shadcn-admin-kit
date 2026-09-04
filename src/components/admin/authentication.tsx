@@ -80,10 +80,8 @@ export const AuthError = (props: AuthErrorProps) => {
         <Translate i18nKey={title} />
       </h1>
       <p className="my-5">{translate(message, { _: message })}</p>
-      <Button asChild>
-        <LinkBase to="/login">
-          <LockIcon /> {translate("ra.auth.sign_in", { _: "Sign in" })}
-        </LinkBase>
+      <Button render={<LinkBase to="/login" />} nativeButton={false}>
+        <LockIcon /> {translate("ra.auth.sign_in", { _: "Sign in" })}
       </Button>
     </div>
   );

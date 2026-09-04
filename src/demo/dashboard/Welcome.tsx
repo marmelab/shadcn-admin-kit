@@ -2,6 +2,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { House, Code } from "lucide-react";
 import { useTranslate } from "ra-core";
+import { cn } from "@/lib/utils";
 
 import publishArticleImage from "./welcome_illustration.svg";
 
@@ -18,18 +19,22 @@ const Welcome = () => {
         </div>
         <div className="flex flex-col md:flex-row flex-wrap gap-2 mt-4">
           <a
-            className={buttonVariants({
-              variant: "outline",
-            })}
+            className={cn(
+              buttonVariants({
+                variant: "outline",
+              }),
+            )}
             href="https://marmelab.com/shadcn-admin-kit/"
           >
             <House className="mr-2 h-4 w-4" />
             {translate("pos.dashboard.welcome.ra_button")}
           </a>
           <a
-            className={buttonVariants({
-              variant: "outline",
-            })}
+            className={cn(
+              buttonVariants({
+                variant: "outline",
+              }),
+            )}
             href="https://github.com/marmelab/shadcn-admin-kit/tree/main/src/demo"
           >
             <Code className="mr-2 h-4 w-4" />

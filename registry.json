@@ -38,20 +38,25 @@
         "tooltip"
       ],
       "dependencies": [
+        "@base-ui/react",
         "@tanstack/react-query@^5.83.0",
         "class-variance-authority",
         "clsx",
+        "cmdk",
         "diacritic",
         "inflection",
         "lodash",
         "lucide-react",
+        "next-themes",
         "query-string",
-        "ra-core",
+        "ra-core@^5.15.2",
         "ra-i18n-polyglot",
         "ra-language-english",
         "react-dropzone",
+        "react-error-boundary",
         "react-hook-form@^7.65.0",
         "react-router-dom@^7.1.1",
+        "sonner",
         "tailwind-merge",
         "tw-animate-css"
       ],
@@ -397,6 +402,26 @@
           "path": "rules/AGENTS.md",
           "type": "registry:file",
           "target": "~/AGENTS.md"
+        },
+        {
+          "path": "src/components/admin/confirm.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/guesser-empty.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/icon-button-with-tooltip.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/select-all-button.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/spinner.tsx",
+          "type": "registry:component"
         }
       ]
     },
@@ -639,7 +664,7 @@
         }
       ],
       "dependencies": [
-        "@radix-ui/react-icons",
+        "lucide-react",
         "@tiptap/extension-code-block-lowlight",
         "@tiptap/extension-color",
         "@tiptap/extension-horizontal-rule",
@@ -658,9 +683,7 @@
       "name": "example-admin",
       "type": "registry:block",
       "title": "Example Admin built with Shadcn Admin Kit",
-      "registryDependencies": [
-        "@shadcn-admin-kit/admin"
-      ],
+      "registryDependencies": ["@shadcn-admin-kit/admin"],
       "files": [
         {
           "path": "src/examples/example-admin.tsx",

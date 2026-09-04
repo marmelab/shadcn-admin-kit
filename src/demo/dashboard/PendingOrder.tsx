@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useTranslate, useReference } from "ra-core";
 
 import type { Customer, Order } from "../types";
@@ -27,6 +27,7 @@ export const PendingOrder = (props: Props) => {
               src={`${customer?.avatar}?size=32x32`}
               alt={`${customer?.first_name} ${customer?.last_name}`}
             />
+            <AvatarFallback>{customer?.first_name?.charAt(0)}</AvatarFallback>
           </Avatar>
         )}
       </div>

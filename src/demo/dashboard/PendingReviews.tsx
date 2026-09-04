@@ -1,4 +1,4 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
 import { Link } from "react-router";
@@ -57,6 +57,9 @@ const PendingReviews = () => {
                           src={`${customer.avatar}?size=32x32`}
                           alt={`${customer.first_name} ${customer.last_name}`}
                         />
+                        <AvatarFallback>
+                          {customer.first_name?.charAt(0)}
+                        </AvatarFallback>
                       </Avatar>
                     )}
                   />
@@ -74,7 +77,7 @@ const PendingReviews = () => {
       <div className="flex-grow">&nbsp;</div>
       <Link
         className={buttonVariants({
-          variant: "outline",
+          variant: "ghost",
         })}
         to="/reviews"
       >

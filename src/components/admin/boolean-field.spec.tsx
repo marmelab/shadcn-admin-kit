@@ -22,9 +22,7 @@ describe("<BooleanField />", () => {
 
   it("should render the empty prop when the value is not a boolean", async () => {
     const screen = render(<Empty />);
-    await expect
-      .element(screen.getByLabelText("no value"))
-      .toBeInTheDocument();
+    await expect.element(screen.getByLabelText("no value")).toBeInTheDocument();
   });
 
   it("should not render an svg when the empty prop is shown", async () => {

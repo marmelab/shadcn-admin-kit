@@ -58,7 +58,7 @@ describe("<TextArrayInput />", () => {
   it("should remove a specific value when clicking its remove button", async () => {
     const screen = render(<Basic theme="system" />);
     await expect.element(screen.getByText("react")).toBeInTheDocument();
-    const removeButtons = screen.getByText("Remove");
+    const removeButtons = screen.getByRole("button", { name: "Remove" });
     await removeButtons.first().click();
     await expect.element(screen.getByText("react")).not.toBeInTheDocument();
     await expect.element(screen.getByText("typescript")).toBeInTheDocument();

@@ -1,8 +1,8 @@
 import * as React from "react"
-import type { TooltipContentProps } from "@radix-ui/react-tooltip"
 import {
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Toggle } from "@/components/ui/toggle"
@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils"
 interface ToolbarButtonProps extends React.ComponentProps<typeof Toggle> {
   isActive?: boolean
   tooltip?: string
-  tooltipOptions?: TooltipContentProps
+  tooltipOptions?: React.ComponentProps<typeof TooltipContent>
 }
 
 export const ToolbarButton = ({
@@ -33,12 +33,16 @@ export const ToolbarButton = ({
   }
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>{toggleButton}</TooltipTrigger>
-      <TooltipContent {...tooltipOptions}>
-        <div className="flex flex-col items-center text-center">{tooltip}</div>
-      </TooltipContent>
-    </Tooltip>
+    // Base UI defaults tooltips to a 600ms open delay; the provider keeps
+    // them instant without app-level setup.
+    <TooltipProvider delay={0}>
+      <Tooltip>
+        <TooltipTrigger render={toggleButton} />
+        <TooltipContent {...tooltipOptions}>
+          <div className="flex flex-col items-center text-center">{tooltip}</div>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   )
 }
 

@@ -10,7 +10,15 @@ import tseslint from "typescript-eslint";
 export default tseslint.config(
   // `temp` is the throwaway app the registry build scaffolds; it is gitignored
   // and vendors its own copy of the sources, so linting it is noise.
-  { ignores: ["dist", "docs/.astro/**", "temp"] },
+  {
+    ignores: [
+      "dist",
+      "website/dist/**",
+      "docs/.astro/**",
+      "storybook-static/**",
+      "temp",
+    ],
+  },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],

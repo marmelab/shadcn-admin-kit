@@ -54,9 +54,7 @@ describe("ListGuesser", () => {
       },
     );
 
-    await expect
-      .element(screen.getByText("Custom empty"))
-      .toBeInTheDocument();
+    await expect.element(screen.getByText("Custom empty")).toBeInTheDocument();
   });
 
   it("should not render an empty element when empty is false", async () => {

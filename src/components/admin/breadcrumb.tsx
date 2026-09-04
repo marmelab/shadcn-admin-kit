@@ -9,7 +9,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Drawer,
   DrawerClose,
@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/drawer";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Translate } from "ra-core";
+import { cn } from "@/lib/utils";
 
 /**
  * A breadcrumb navigation component with mobile drawer support.
@@ -62,7 +63,6 @@ export const Breadcrumb = ({ children, ref }: BreadcrumbProps) => {
   return createPortal(
     <>
       <Separator
-        decorative
         orientation="vertical"
         className="data-[orientation=vertical]:h-4 mr-4"
       />
@@ -94,10 +94,10 @@ export const Breadcrumb = ({ children, ref }: BreadcrumbProps) => {
                         .map((item) => item)}
                     </ol>
                     <DrawerFooter className="pt-4">
-                      <DrawerClose asChild>
-                        <Button variant="outline">
-                          <Translate i18nKey="ra.action.close">Close</Translate>
-                        </Button>
+                      <DrawerClose
+                        className={cn(buttonVariants({ variant: "outline" }))}
+                      >
+                        <Translate i18nKey="ra.action.close">Close</Translate>
                       </DrawerClose>
                     </DrawerFooter>
                   </DrawerContent>

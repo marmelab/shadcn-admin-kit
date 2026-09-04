@@ -1,3 +1,38 @@
+## 2.0.0
+
+### 💥 Breaking Changes
+
+- **shadcn-admin-kit now builds on [Base UI](https://base-ui.com/) instead of Radix UI**, and its `components.json` uses the `base-vega` style. Check the Migration documentation for details
+- **`ra-core` 5.15.2 or later is now required.** Base UI's `<Avatar>` reports its image loading status from a layout effect, which turns a latent ra-core bug into a crash: on a page with enough `<ReferenceField>`, the per-row updates nest instead of batching and throw `Maximum update depth exceeded`. Fixed in [react-admin#11329](https://github.com/marmelab/react-admin/pull/11329)
+
+## v1.6.0 (Jun. 2026)
+
+### 🚀 Features
+
+* Add `<RichTextInput>` component
+* Add `<BooleanField>`
+* Add resource-specific translation for buttons
+
+### 🐛 Bug Fixes
+
+* Fix `<DateInput>` and `<DateTimeInput>` on mobile Safari
+* Fix `<AutocompleteInput>` options cannot be scrolled when used inside a modal
+* Fix `<SaveButton>` ignores `disabled` prop set at form level
+* Fix `<AutocompleteInput>` filtering
+* Fix `<AutocompleteInput>` validation when used inside an `<ArrayInput>`
+* Fix Github icon in ready page
+
+### 🧰 Chore & Maintenance
+
+* Remove guesser i18n overrides
+* Bump `astro`, `devalue`, `h3`, `picomatch`, `smol-toml`, `svgo`
+* Bump `vite` from 7.3.1 to 7.3.2
+* Bump `lodash` from 4.17.23 to 4.18.1
+* Bump `astro` and `defu`
+* Bump `astro` from 6.1.9 to 6.1.10
+
+**Full Changelog**: https://github.com/marmelab/shadcn-admin-kit/compare/v1.5.0...v1.6.0
+
 ## v1.5.0 (Feb. 2026)
 
 ### 🚀 Features

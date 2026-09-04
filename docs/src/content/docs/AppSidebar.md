@@ -18,9 +18,10 @@ To customize all these elements, edit the `@/components/admin/app-sidebar.tsx` f
 
 For example, to customize the app name and logo, edit the `SidebarHeader` section:
 
-```tsx {2,22-25}
+```tsx {2-3,20,23-24}
 // in @/components/admin/app-sidebar.tsx
 import { Armchair } from "lucide-react";
+import { LinkBase } from "ra-core";
 
 export function AppSidebar() {
   const hasDashboard = useHasDashboard();
@@ -37,13 +38,11 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
-              asChild
+              render={<LinkBase to="/" />}
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <Link to="/">
-                <Armchair className="!size-5"/>
-                <span className="text-base font-semibold">My Company</span>
-              </Link>
+              <Armchair className="!size-5"/>
+              <span className="text-base font-semibold">My Company</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -106,10 +105,10 @@ export function AppSidebar() {
 
 To customize the menu items, edit the `SidebarContent` section. For example, if you added a `settings` [`CustomRoute`](./CustomRoutes.md), here is how to add a link to it in the sidebar:
 
-```tsx {2-3,35-42}
+```tsx {2-3,35-40}
 // in @/components/admin/app-sidebar.tsx
 import { Settings } from "lucide-react";
-import { Link } from "react-route";
+import { LinkBase } from "ra-core";
 
 export function AppSidebar() {
   const hasDashboard = useHasDashboard();
@@ -142,11 +141,9 @@ export function AppSidebar() {
                   />
                 ))}
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <Link to="/settings">
-                      <Settings />
-                      <span>Settings</span>
-                    </Link>
+                  <SidebarMenuButton render={<LinkBase to="/settings" />}>
+                    <Settings />
+                    <span>Settings</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
             </SidebarMenu>

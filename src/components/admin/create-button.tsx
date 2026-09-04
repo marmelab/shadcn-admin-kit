@@ -8,6 +8,7 @@ import {
   useResourceContext,
   useResourceTranslation,
 } from "ra-core";
+import { cn } from "@/lib/utils";
 
 export type CreateButtonProps = {
   label?: string;
@@ -56,7 +57,7 @@ export const CreateButton = (props: CreateButtonProps) => {
   });
   return (
     <LinkBase
-      className={buttonVariants({ variant: "outline" })}
+      className={cn(buttonVariants({ variant: "outline" }))}
       to={link}
       onClick={stopPropagation}
       aria-label={typeof label === "string" ? label : undefined}

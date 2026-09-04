@@ -65,7 +65,11 @@ const StoryArgs = {
 
 const FormValues = () => {
   const values = useWatch();
-  return <pre className="whitespace-pre-wrap break-words">{JSON.stringify(values, null, 2)}</pre>;
+  return (
+    <pre className="whitespace-pre-wrap break-words">
+      {JSON.stringify(values, null, 2)}
+    </pre>
+  );
 };
 
 const BodyHelper = () => {
@@ -108,11 +112,7 @@ export const Basic = ({ theme }: { theme: "system" | "light" | "dark" }) => (
 );
 Object.assign(Basic, StoryArgs);
 
-export const Disabled = ({
-  theme,
-}: {
-  theme: "system" | "light" | "dark";
-}) => (
+export const Disabled = ({ theme }: { theme: "system" | "light" | "dark" }) => (
   <StoryWrapper theme={theme}>
     <RichTextInput source="body" disabled />
     <FormValues />
@@ -120,11 +120,7 @@ export const Disabled = ({
 );
 Object.assign(Disabled, StoryArgs);
 
-export const ReadOnly = ({
-  theme,
-}: {
-  theme: "system" | "light" | "dark";
-}) => (
+export const ReadOnly = ({ theme }: { theme: "system" | "light" | "dark" }) => (
   <StoryWrapper theme={theme}>
     <RichTextInput source="body" readOnly />
     <FormValues />
@@ -169,11 +165,7 @@ const MyRichTextInputToolbar = () => (
   </RichTextInputToolbar>
 );
 
-export const Toolbar = ({
-  theme,
-}: {
-  theme: "system" | "light" | "dark";
-}) => (
+export const Toolbar = ({ theme }: { theme: "system" | "light" | "dark" }) => (
   <StoryWrapper theme={theme}>
     <RichTextInput source="body" toolbar={<MyRichTextInputToolbar />} />
     <FormValues />
@@ -197,7 +189,9 @@ export const EditorReference = ({
           <Button
             type="button"
             onClick={() => {
-              editorRef.current?.commands.setContent("<h3>Here is my template</h3>");
+              editorRef.current?.commands.setContent(
+                "<h3>Here is my template</h3>",
+              );
             }}
           >
             Use template

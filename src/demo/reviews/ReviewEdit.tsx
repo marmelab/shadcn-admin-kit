@@ -8,10 +8,10 @@ import {
 } from "@/components/admin";
 
 import { EditBase } from "ra-core";
-import { cn } from "@/lib/utils";
 
 import { FullNameField } from "../customers/FullNameField";
 import { StarRatingField } from "./StarRatingField";
+import { renderReviewStatusOption } from "./ReviewStatusOption";
 
 export const ReviewEdit = ({ id }: any) => (
   <EditBase id={id}>
@@ -42,21 +42,8 @@ export const ReviewEdit = ({ id }: any) => (
           { id: "rejected", name: "Rejected" },
           { id: "pending", name: "Pending" },
         ]}
-        optionText={(choice) => (
-          <>
-            <span
-              className={cn(
-                "h-2 w-2 rounded-full",
-                choice.id === "accepted"
-                  ? "bg-green-400 dark:bg-green-800"
-                  : choice.id === "rejected"
-                    ? "bg-red-400 dark:bg-red-800"
-                    : "bg-yellow-400 dark:bg-yellow-800",
-              )}
-            />
-            {choice.name}
-          </>
-        )}
+        optionText={renderReviewStatusOption}
+        inputText={renderReviewStatusOption}
       />
       <TextInput source="comment" multiline rows={5} />
     </SimpleForm>

@@ -51,13 +51,11 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
-              asChild
+              render={<LinkBase to="/" />}
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <LinkBase to="/">
-                <Shell className="!size-5" />
-                <span className="text-base font-semibold">Acme Inc.</span>
-              </LinkBase>
+              <Shell className="!size-5" />
+              <span className="text-base font-semibold">Acme Inc.</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -104,11 +102,12 @@ export const DashboardMenuItem = ({ onClick }: { onClick?: () => void }) => {
   const match = useMatch({ path: "/", end: true });
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton asChild isActive={!!match}>
-        <LinkBase to="/" onClick={onClick}>
-          <House />
-          {label}
-        </LinkBase>
+      <SidebarMenuButton
+        render={<LinkBase to="/" onClick={onClick} />}
+        isActive={!!match}
+      >
+        <House />
+        {label}
       </SidebarMenuButton>
     </SidebarMenuItem>
   );
@@ -152,15 +151,14 @@ export const ResourceMenuItem = ({
 
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton asChild isActive={!!match}>
-        <LinkBase to={to} state={{ _scrollToTop: true }} onClick={onClick}>
-          {resources[name].icon ? (
-            createElement(resources[name].icon)
-          ) : (
-            <List />
-          )}
-          {getResourceLabel(name, 2)}
-        </LinkBase>
+      <SidebarMenuButton
+        render={
+          <LinkBase to={to} state={{ _scrollToTop: true }} onClick={onClick} />
+        }
+        isActive={!!match}
+      >
+        {resources[name].icon ? createElement(resources[name].icon) : <List />}
+        {getResourceLabel(name, 2)}
       </SidebarMenuButton>
     </SidebarMenuItem>
   );
