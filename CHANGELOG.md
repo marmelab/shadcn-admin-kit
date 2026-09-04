@@ -5,6 +5,28 @@
 - **shadcn-admin-kit now builds on [Base UI](https://base-ui.com/) instead of Radix UI**, and its `components.json` uses the `base-vega` style. Check the Migration documentation for details
 - **`ra-core` 5.15.2 or later is now required.** Base UI's `<Avatar>` reports its image loading status from a layout effect, which turns a latent ra-core bug into a crash: on a page with enough `<ReferenceField>`, the per-row updates nest instead of batching and throw `Maximum update depth exceeded`. Fixed in [react-admin#11329](https://github.com/marmelab/react-admin/pull/11329)
 
+### 🚀 Features
+
+- Add ability to use TanStack Router instead of react-router. 
+- Add on-the-fly option creation to `<AutocompleteArrayInput>`
+
+### 🐛 Bug Fixes
+
+- Fix `<Admin>` ignores the `routerProvider` prop
+- Fix the registry install on a fresh project
+- Fix accessibility of labels in custom inputs
+
+### 📝 Documentation
+
+- Replace the manual install steps with a single `shadcn init --template <next|vite|react-router|start>` command per framework
+
+### 🧰 Chore & Maintenance
+
+- Bump `react-router` from 7.12.0 to 7.17.0
+- Bump `vitest` from 3.2.4 to 4.1.8, and migrate to `@vitest/browser-playwright`
+
+**Full Changelog**: https://github.com/marmelab/shadcn-admin-kit/compare/v1.6.0...v2.0.0
+
 ## v1.6.0 (Jun. 2026)
 
 ### 🚀 Features
