@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "example-admin",
+  "title": "Example Admin built with Shadcn Admin Kit",
+  "registryDependencies": [
+    "@shadcn-admin-kit/admin"
+  ],
+  "files": [
+    {
+      "path": "src/examples/example-admin.tsx",
+      "content": "\"use client\";\n\nimport { Resource } from \"ra-core\";\nimport jsonServerProvider from \"ra-data-json-server\";\nimport { Admin } from \"@/components/admin/admin\";\nimport { ListGuesser } from \"@/components/admin/list-guesser\";\nimport { ShowGuesser } from \"@/components/admin/show-guesser\";\nimport { EditGuesser } from \"@/components/admin/edit-guesser\";\n\nconst dataProvider = jsonServerProvider(\n  \"https://jsonplaceholder.typicode.com/\",\n);\n\nexport const App = () => (\n  <Admin dataProvider={dataProvider}>\n    <Resource\n      name=\"posts\"\n      list={ListGuesser}\n      edit={EditGuesser}\n      show={ShowGuesser}\n    />\n  </Admin>\n);\n",
+      "type": "registry:component"
+    }
+  ],
+  "type": "registry:block"
+}
