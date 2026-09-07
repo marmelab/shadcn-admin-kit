@@ -58,6 +58,19 @@ export const Basic = () => (
   </Wrapper>
 );
 
+export const WithoutLabel = () => (
+  <Wrapper>
+    <SelectInput
+      source="gender"
+      choices={genders}
+      optionText="label"
+      label={false}
+      emptyText="Select a gender"
+    />
+    <FormValues />
+  </Wrapper>
+);
+
 const CreateGender = () => {
   const translate = useTranslate();
   const { onCancel, onCreate } = useCreateSuggestionContext();
