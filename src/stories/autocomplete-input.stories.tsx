@@ -160,6 +160,18 @@ export const Basic = () => (
   </Wrapper>
 );
 
+export const WithoutLabel = () => (
+  <Wrapper>
+    <AutocompleteInput
+      source="tag_id"
+      choices={tags}
+      optionText="label"
+      label={false}
+      placeholder="Select a tag"
+    />
+  </Wrapper>
+);
+
 const CreateTag = () => {
   const translate = useTranslate();
   const { onCancel, onCreate, filter } = useCreateSuggestionContext();

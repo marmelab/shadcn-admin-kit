@@ -114,6 +114,9 @@ export const AutocompleteInput = (
   const translate = useTranslate();
   const { placeholder = translate("ra.action.search", { _: "Search..." }) } =
     props;
+  const hasLabel = props.label !== false;
+  const accessibleName =
+    !hasLabel && props.placeholder ? placeholder : undefined;
 
   const getRecordRepresentation = useGetRecordRepresentation(resource);
   const { getChoiceText, getChoiceValue } = useChoices({
@@ -208,7 +211,7 @@ export const AutocompleteInput = (
   return (
     <>
       <FormField className={props.className} id={id} name={field.name}>
-        {props.label !== false && (
+        {hasLabel && (
           <FormLabel id={uniqueId}>
             <FieldTitle
               label={props.label}
@@ -226,7 +229,8 @@ export const AutocompleteInput = (
                   variant="outline"
                   role="combobox"
                   aria-expanded={open}
-                  aria-labelledby={uniqueId}
+                  aria-label={accessibleName}
+                  aria-labelledby={hasLabel ? uniqueId : undefined}
                   className="w-full justify-between h-auto py-1.75 font-normal"
                 />
               }
