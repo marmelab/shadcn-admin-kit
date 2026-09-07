@@ -160,6 +160,27 @@ export const Basic = () => (
   </Wrapper>
 );
 
+export const WithoutValue = () => (
+  <Wrapper>
+    <AutocompleteInput
+      source="other_tag_id"
+      choices={tags}
+      optionText="label"
+    />
+  </Wrapper>
+);
+
+export const Required = () => (
+  <Wrapper>
+    <AutocompleteInput
+      source="tag_id"
+      choices={tags}
+      optionText="label"
+      validate={required()}
+    />
+  </Wrapper>
+);
+
 export const WithoutLabel = () => (
   <Wrapper>
     <AutocompleteInput
