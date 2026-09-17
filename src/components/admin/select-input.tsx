@@ -162,6 +162,12 @@ export const SelectInput = (props: SelectInputProps) => {
     disabled,
   });
 
+  const hasLabel = label !== "" && label !== false;
+  const accessibleName =
+    !hasLabel && typeof emptyText === "string" && emptyText !== ""
+      ? translate(emptyText, { _: emptyText })
+      : undefined;
+
   const renderEmptyItemOption = useCallback(() => {
     return typeof emptyText === "string"
       ? emptyText === ""
@@ -212,7 +218,7 @@ export const SelectInput = (props: SelectInputProps) => {
         name={field.name}
         className={cn("w-full min-w-20", className)}
       >
-        {label !== "" && label !== false && (
+        {hasLabel && (
           <FormLabel id={labelId}>
             <FieldTitle
               label={label}
@@ -251,7 +257,7 @@ export const SelectInput = (props: SelectInputProps) => {
         className={cn("w-full min-w-20", className)}
         {...rest}
       >
-        {label !== "" && label !== false && (
+        {hasLabel && (
           <FormLabel id={labelId}>
             <FieldTitle
               label={label}
@@ -272,7 +278,8 @@ export const SelectInput = (props: SelectInputProps) => {
             <SelectTrigger
               className={cn("w-full transition-all hover:bg-accent")}
               disabled={field.disabled}
-              aria-labelledby={labelId}
+              aria-label={accessibleName}
+              aria-labelledby={hasLabel ? labelId : undefined}
             >
               <SelectValue placeholder={renderEmptyItemOption()}>
                 {(value: string | null) => {

@@ -3,9 +3,12 @@ import { render } from "vitest-browser-react";
 import { userEvent } from "vitest/browser";
 
 import {
+  Basic,
   Create,
   InsideArrayInputWithValidation,
+  Required,
   WithMismatchedOptionTextAndValue,
+  WithoutValue,
 } from "@/stories/autocomplete-input.stories";
 
 describe("<AutocompleteInput />", () => {
@@ -71,5 +74,47 @@ describe("<AutocompleteInput />", () => {
     const submitButton = screen.getByRole("button", { name: /save/i });
     await submitButton.click();
     await expect.element(screen.getByText("Required")).toBeInTheDocument();
+  });
+
+  it("should let users clear the value", async () => {
+    const screen = render(<Basic />);
+    const combobox = screen.getByRole("combobox");
+    await expect.element(combobox).toHaveTextContent("Enthusiast");
+
+    await screen.getByRole("button", { name: "Clear value" }).click();
+
+    await expect.element(combobox).toHaveTextContent("Search");
+    await expect.element(combobox).toHaveAttribute("aria-expanded", "false");
+    expect(
+      screen.getByRole("button", { name: "Clear value" }).all(),
+    ).toHaveLength(0);
+  });
+
+  it("should clear the value when users select the current choice again", async () => {
+    const screen = render(<Basic />);
+    const combobox = screen.getByRole("combobox");
+    await combobox.click();
+
+    await screen.getByRole("option", { name: "Enthusiast" }).click();
+
+    await expect.element(combobox).toHaveTextContent("Search");
+  });
+
+  it("should not render a clear button when there is no value", async () => {
+    const screen = render(<WithoutValue />);
+    await expect.element(screen.getByRole("combobox")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Clear value" }).all(),
+    ).toHaveLength(0);
+  });
+
+  it("should not render a clear button when the input is required", async () => {
+    const screen = render(<Required />);
+    await expect
+      .element(screen.getByRole("combobox"))
+      .toHaveTextContent("Enthusiast");
+    expect(
+      screen.getByRole("button", { name: "Clear value" }).all(),
+    ).toHaveLength(0);
   });
 });
