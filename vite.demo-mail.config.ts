@@ -9,7 +9,8 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   root: path.resolve(__dirname, "src/demo-mail"),
   base: "./",
-  publicDir: false,
+  // Only the favicon: the repository public/ folder holds the built sites
+  publicDir: path.resolve(__dirname, "src/demo-mail/public"),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
