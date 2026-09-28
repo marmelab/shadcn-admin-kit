@@ -52,9 +52,13 @@ export const ReplyForm = () => {
 
 const SendButton = ({ thread }: { thread: Thread }) => {
   const { getValues, reset } = useFormContext();
-  const [update] = useUpdate<Thread>();
   const notify = useNotify();
   const refresh = useRefresh();
+  // Pessimistic, and refreshing once done, so that the refetch cannot bring
+  // back the unmuted thread
+  const [update] = useUpdate<Thread>(undefined, undefined, {
+    onSuccess: () => refresh(),
+  });
 
   return (
     <SaveButton
@@ -72,17 +76,18 @@ const SendButton = ({ thread }: { thread: Thread }) => {
       })}
       mutationOptions={{
         onSuccess: () => {
+          // The data provider updated the thread (snippet, date): refetch it
           if (getValues("mute")) {
-            update(
-              "threads",
-              { id: thread.id, data: { muted: true }, previousData: thread },
-              { mutationMode: "optimistic" },
-            );
+            update("threads", {
+              id: thread.id,
+              data: { muted: true },
+              previousData: thread,
+            });
+          } else {
+            refresh();
           }
           reset();
           notify("mail.notification.sent", { type: "success" });
-          // The data provider updated the thread (snippet, date): refetch it
-          refresh();
         },
       }}
     />

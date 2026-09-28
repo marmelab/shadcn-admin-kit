@@ -7,7 +7,8 @@ import { MailLayout } from "./layout/MailLayout";
 import { ThreadList } from "./threads/ThreadList";
 
 // The e-commerce demo is served from the same origin, so this demo keeps its
-// preferences (theme, locale, list params) under its own store key.
+// preferences (theme, locale, list params) under its own store key. A logout
+// there still clears them, as ra-core resets every key of every app.
 const store = localStorageStore(undefined, "demo-mail");
 
 const App = () => (

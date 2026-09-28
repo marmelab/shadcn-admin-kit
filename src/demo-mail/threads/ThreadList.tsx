@@ -1,4 +1,5 @@
-import { ShowBase, useMatch } from "ra-core";
+import { useEffect, useRef } from "react";
+import { ShowBase, useLocation, useMatch } from "ra-core";
 import { List } from "@/components/admin/list";
 import { ListPagination } from "@/components/admin/list-pagination";
 import { SearchInput } from "@/components/admin/search-input";
@@ -26,9 +27,20 @@ export const ThreadList = () => {
   const hideList = isMobile && selectedId != null;
   const showDisplay = !isMobile || selectedId != null;
 
+  // ra-core scrolls the window to top on page change, but the list scrolls in
+  // its own column
+  const listRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+  useEffect(() => {
+    if ((location.state as { _scrollToTop?: boolean })?._scrollToTop) {
+      listRef.current?.scrollTo(0, 0);
+    }
+  }, [location]);
+
   return (
     <div className="flex min-h-0 flex-1">
       <div
+        ref={listRef}
         className={cn(
           "flex w-full shrink-0 flex-col overflow-y-auto px-4 md:w-[400px] md:border-r [&_.filter-field]:grow",
           hideList && "hidden",
@@ -49,9 +61,10 @@ export const ThreadList = () => {
         </List>
       </div>
       {showDisplay ? (
-        <div className="min-w-0 flex-1 overflow-y-auto">
+        // Keyed so that each thread opens scrolled to the top
+        <div className="min-w-0 flex-1 overflow-y-auto" key={selectedId}>
           {selectedId != null ? (
-            <ShowBase resource="threads" id={selectedId} key={selectedId}>
+            <ShowBase resource="threads" id={selectedId}>
               <ThreadDisplay />
             </ShowBase>
           ) : (
