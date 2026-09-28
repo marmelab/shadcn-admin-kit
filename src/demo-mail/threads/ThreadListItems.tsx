@@ -4,8 +4,13 @@ import type { Thread } from "../types";
 import { ThreadListItem } from "./ThreadListItem";
 
 export const ThreadListItems = ({ selectedId }: { selectedId?: number }) => {
-  const { data, isPending } = useListContext<Thread>();
+  const { data, filterValues, isPending } = useListContext<Thread>();
   const translate = useTranslate();
+  // Undoable moves only update the cached record until the undo delay is
+  // over, so hide the threads that left the current folder right away
+  const threads = data?.filter(
+    (thread) => thread.folder === (filterValues.folder ?? "inbox"),
+  );
 
   if (isPending) {
     return (
@@ -16,7 +21,7 @@ export const ThreadListItems = ({ selectedId }: { selectedId?: number }) => {
       </div>
     );
   }
-  if (!data || data.length === 0) {
+  if (!threads || threads.length === 0) {
     return (
       <p className="py-8 text-center text-sm text-muted-foreground">
         {translate("mail.list.empty")}
@@ -25,7 +30,7 @@ export const ThreadListItems = ({ selectedId }: { selectedId?: number }) => {
   }
   return (
     <div className="flex flex-col gap-2">
-      {data.map((thread) => (
+      {threads.map((thread) => (
         <RecordContextProvider key={thread.id} value={thread}>
           <ThreadListItem selected={thread.id === selectedId} />
         </RecordContextProvider>

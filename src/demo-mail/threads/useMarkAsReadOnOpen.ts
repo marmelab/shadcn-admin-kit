@@ -1,15 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { Thread } from "../types";
 import { useUpdateThread } from "./useThreadActions";
 
-/** Marks the displayed thread as read, like a mail client does on open */
+/**
+ * Marks the displayed thread as read, like a mail client does on open.
+ * Only once per opened thread, so that "Mark as unread" is not undone while
+ * the display closes.
+ */
 export const useMarkAsReadOnOpen = (thread?: Thread) => {
   const updateThread = useUpdateThread();
+  const markedThreadId = useRef<Thread["id"] | undefined>(undefined);
   useEffect(() => {
-    if (thread && !thread.read) {
+    if (!thread || markedThreadId.current === thread.id) return;
+    markedThreadId.current = thread.id;
+    if (!thread.read) {
       updateThread(thread, { read: true });
     }
-    // Only react to the thread changing, not to the updater identity
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [thread?.id, thread?.read]);
+  }, [thread, updateThread]);
 };
