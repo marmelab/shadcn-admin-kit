@@ -22,6 +22,14 @@ build-demo: ## Build the demo
 	pnpm run demo:build
 	mv ./dist ./public/demo
 
+run-demo-mail: ## Run the email demo in development mode
+	pnpm run demo-mail:dev
+
+build-demo-mail: ## Build the email demo
+	rm -rf ./public/demo-mail
+	pnpm run demo-mail:build
+	mv ./dist-demo-mail ./public/demo-mail
+
 build-registry: ## Build the UI registry
 	pnpm run registry:build
 
@@ -56,7 +64,7 @@ build-website: ## Build the website
 	pnpm run website:build
 	mv ./website/dist/* ./public/
 
-build: build-website build-doc build-demo build-registry ## Build all components
+build: build-website build-doc build-demo build-demo-mail build-registry ## Build all components
 
 typecheck: ## Run TypeScript type checking
 	@pnpm run typecheck
