@@ -1,13 +1,8 @@
-import { createElement } from "react";
-import {
-  useDelete,
-  useLocation,
-  useNavigate,
-  useNotify,
-  useUpdate,
-} from "ra-core";
+import { useQueryClient } from "@tanstack/react-query";
+import { useLocation, useNavigate, useTranslate, useUpdate } from "ra-core";
+import { toast } from "sonner";
 import type { Folder, Thread } from "../types";
-import { MovedNotification } from "./MovedNotification";
+import { removeFromStaleLists } from "./threadCache";
 
 export const replyInputId = "reply-message";
 
@@ -22,60 +17,54 @@ export const useCloseThread = () => {
   return () => navigate({ pathname: "/threads", search: location.search });
 };
 
-/** Updates thread flags (read, starred, labels, muted) without waiting */
+/**
+ * Updates thread flags (read, starred, labels, muted) without waiting.
+ * The mode is set on the hook rather than on each call: ra-core resets a
+ * call-time mode when effects re-run (React StrictMode), which drops the call.
+ */
 export const useUpdateThread = () => {
-  const [update] = useUpdate<Thread>();
+  const [update] = useUpdate<Thread>(undefined, undefined, {
+    mutationMode: "optimistic",
+  });
   return (thread: Thread, data: Partial<Thread>) =>
-    update(
-      "threads",
-      { id: thread.id, data, previousData: thread },
-      { mutationMode: "optimistic" },
-    );
+    update("threads", { id: thread.id, data, previousData: thread });
 };
 
 /**
- * Moves a thread to another folder, with an undo notification.
+ * Moves a thread to another folder, with an Undo button in the notification.
  * The move is optimistic rather than undoable: it reaches the data provider
  * right away, so a refetch during the undo delay (opening the next thread,
  * searching) cannot bring the thread back. Undo moves it back.
  */
 export const useMoveThread = () => {
-  const [update] = useUpdate<Thread>();
-  const notify = useNotify();
+  const [update] = useUpdate<Thread>(undefined, undefined, {
+    mutationMode: "optimistic",
+  });
+  const queryClient = useQueryClient();
+  const translate = useTranslate();
   const closeThread = useCloseThread();
   return (thread: Thread, folder: Folder) => {
-    const moveTo = (target: Folder, previousData: Thread) =>
-      update(
-        "threads",
-        { id: thread.id, data: { folder: target }, previousData },
-        { mutationMode: "optimistic" },
-      );
+    const moveTo = (target: Folder, previousData: Thread) => {
+      update("threads", {
+        id: thread.id,
+        data: { folder: target },
+        previousData,
+      });
+      removeFromStaleLists(queryClient, { ...previousData, folder: target });
+    };
     closeThread();
     moveTo(folder, thread);
-    notify(
-      createElement(MovedNotification, {
-        folder,
-        onUndo: () => moveTo(thread.folder, { ...thread, folder }),
+    // Sonner (the kit notification library) dismisses only this toast on
+    // Undo, whereas useCloseNotification() would dismiss every toast
+    toast.info(
+      translate("mail.notification.moved", {
+        folder: translate(`mail.folders.${folder}`),
       }),
-      { type: "info" },
-    );
-  };
-};
-
-/** Deletes a thread and its messages, with an undo notification */
-export const useDeleteThread = () => {
-  const [deleteOne] = useDelete<Thread>();
-  const notify = useNotify();
-  const closeThread = useCloseThread();
-  return (thread: Thread) => {
-    closeThread();
-    deleteOne(
-      "threads",
-      { id: thread.id, previousData: thread },
       {
-        mutationMode: "undoable",
-        onSuccess: () =>
-          notify("mail.notification.deleted", { type: "info", undoable: true }),
+        action: {
+          label: translate("ra.action.undo"),
+          onClick: () => moveTo(thread.folder, { ...thread, folder }),
+        },
       },
     );
   };

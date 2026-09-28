@@ -65,6 +65,11 @@ const customEnglishMessages: TranslationMessages = {
       mute: "Mute thread",
       unmute: "Unmute thread",
     },
+    confirm: {
+      delete_title: "Delete this conversation permanently?",
+      delete_content:
+        "The conversation and its messages will be deleted. This action cannot be undone.",
+    },
     notification: {
       moved: "Conversation moved to %{folder}",
       deleted: "Conversation deleted",

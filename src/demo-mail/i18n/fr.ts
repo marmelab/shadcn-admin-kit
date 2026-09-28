@@ -65,6 +65,11 @@ const customFrenchMessages: TranslationMessages = {
       mute: "Ignorer la conversation",
       unmute: "Ne plus ignorer la conversation",
     },
+    confirm: {
+      delete_title: "Supprimer définitivement cette conversation ?",
+      delete_content:
+        "La conversation et ses messages seront supprimés. Cette action est irréversible.",
+    },
     notification: {
       moved: "Conversation déplacée : %{folder}",
       deleted: "Conversation supprimée",

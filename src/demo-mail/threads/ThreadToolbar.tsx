@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Archive,
   ArchiveX,
@@ -7,7 +8,8 @@ import {
   ReplyAll,
   Trash2,
 } from "lucide-react";
-import { useRecordContext } from "ra-core";
+import { useDelete, useNotify, useRecordContext } from "ra-core";
+import { Confirm } from "@/components/admin/confirm";
 import { IconButtonWithTooltip } from "@/components/admin/icon-button-with-tooltip";
 import { Separator } from "@/components/ui/separator";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -16,20 +18,19 @@ import { ThreadMoreMenu } from "./ThreadMoreMenu";
 import {
   focusReplyInput,
   useCloseThread,
-  useDeleteThread,
   useMoveThread,
 } from "./useThreadActions";
 
 /**
  * Each move button becomes "back to inbox" when the thread is already in the
- * target folder, and the trash button deletes permanently from the trash.
+ * target folder (Archive and Trash for the first one), and the trash button
+ * deletes permanently from the trash.
  */
 export const ThreadToolbar = () => {
   const thread = useRecordContext<Thread>();
   const isMobile = useIsMobile();
   const closeThread = useCloseThread();
   const moveThread = useMoveThread();
-  const deleteThread = useDeleteThread();
   if (!thread) return null;
 
   return (
@@ -39,7 +40,7 @@ export const ThreadToolbar = () => {
           <ArrowLeft />
         </IconButtonWithTooltip>
       ) : null}
-      {thread.folder === "archive" ? (
+      {thread.folder === "archive" || thread.folder === "trash" ? (
         <IconButtonWithTooltip
           label="mail.action.move_to_inbox"
           onClick={() => moveThread(thread, "inbox")}
@@ -70,12 +71,7 @@ export const ThreadToolbar = () => {
         </IconButtonWithTooltip>
       )}
       {thread.folder === "trash" ? (
-        <IconButtonWithTooltip
-          label="mail.action.delete_forever"
-          onClick={() => deleteThread(thread)}
-        >
-          <Trash2 />
-        </IconButtonWithTooltip>
+        <DeleteForeverButton thread={thread} />
       ) : (
         <IconButtonWithTooltip
           label="mail.action.move_to_trash"
@@ -105,5 +101,49 @@ export const ThreadToolbar = () => {
         <ThreadMoreMenu />
       </div>
     </div>
+  );
+};
+
+/**
+ * Deletes the thread and its messages after a confirmation. Pessimistic, as
+ * the deletion cannot be undone: the lists are updated once it is done.
+ */
+const DeleteForeverButton = ({ thread }: { thread: Thread }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [deleteOne, { isPending }] = useDelete<Thread>();
+  const notify = useNotify();
+  const closeThread = useCloseThread();
+
+  const handleConfirm = () =>
+    deleteOne(
+      "threads",
+      { id: thread.id, previousData: thread },
+      {
+        onSuccess: () => {
+          setIsOpen(false);
+          closeThread();
+          notify("mail.notification.deleted", { type: "info" });
+        },
+      },
+    );
+
+  return (
+    <>
+      <IconButtonWithTooltip
+        label="mail.action.delete_forever"
+        onClick={() => setIsOpen(true)}
+      >
+        <Trash2 />
+      </IconButtonWithTooltip>
+      <Confirm
+        isOpen={isOpen}
+        loading={isPending}
+        title="mail.confirm.delete_title"
+        content="mail.confirm.delete_content"
+        confirmColor="warning"
+        onConfirm={handleConfirm}
+        onClose={() => setIsOpen(false)}
+      />
+    </>
   );
 };
