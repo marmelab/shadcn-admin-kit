@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import type { Thread } from "../types";
 import { getInitials } from "./getInitials";
 import { MessageList } from "./MessageList";
+import { ReplyForm } from "./ReplyForm";
 import { ThreadToolbar } from "./ThreadToolbar";
 import { useMarkAsReadOnOpen } from "./useMarkAsReadOnOpen";
 
@@ -51,6 +52,12 @@ export const ThreadDisplay = () => {
       >
         <MessageList />
       </ReferenceManyField>
+      {thread.folder !== "drafts" ? (
+        <>
+          <Separator className="mt-auto" />
+          <ReplyForm />
+        </>
+      ) : null}
     </div>
   );
 };
