@@ -6,8 +6,8 @@ import { ThreadListItem } from "./ThreadListItem";
 export const ThreadListItems = ({ selectedId }: { selectedId?: number }) => {
   const { data, filterValues, isPending } = useListContext<Thread>();
   const translate = useTranslate();
-  // Undoable moves only update the cached record until the undo delay is
-  // over, so hide the threads that left the current folder right away
+  // Moves patch the cached record before the list refetches, so hide the
+  // threads that left the current folder right away
   const threads = data?.filter(
     (thread) => thread.folder === (filterValues.folder ?? "inbox"),
   );

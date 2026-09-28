@@ -1,12 +1,13 @@
+import { createElement } from "react";
 import {
   useDelete,
   useLocation,
   useNavigate,
   useNotify,
-  useTranslate,
   useUpdate,
 } from "ra-core";
 import type { Folder, Thread } from "../types";
+import { MovedNotification } from "./MovedNotification";
 
 export const replyInputId = "reply-message";
 
@@ -32,26 +33,31 @@ export const useUpdateThread = () => {
     );
 };
 
-/** Moves a thread to another folder, with an undo notification */
+/**
+ * Moves a thread to another folder, with an undo notification.
+ * The move is optimistic rather than undoable: it reaches the data provider
+ * right away, so a refetch during the undo delay (opening the next thread,
+ * searching) cannot bring the thread back. Undo moves it back.
+ */
 export const useMoveThread = () => {
   const [update] = useUpdate<Thread>();
   const notify = useNotify();
-  const translate = useTranslate();
   const closeThread = useCloseThread();
   return (thread: Thread, folder: Folder) => {
+    const moveTo = (target: Folder, previousData: Thread) =>
+      update(
+        "threads",
+        { id: thread.id, data: { folder: target }, previousData },
+        { mutationMode: "optimistic" },
+      );
     closeThread();
-    update(
-      "threads",
-      { id: thread.id, data: { folder }, previousData: thread },
-      {
-        mutationMode: "undoable",
-        onSuccess: () =>
-          notify("mail.notification.moved", {
-            type: "info",
-            undoable: true,
-            messageArgs: { folder: translate(`mail.folders.${folder}`) },
-          }),
-      },
+    moveTo(folder, thread);
+    notify(
+      createElement(MovedNotification, {
+        folder,
+        onUndo: () => moveTo(thread.folder, { ...thread, folder }),
+      }),
+      { type: "info" },
     );
   };
 };
