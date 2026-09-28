@@ -32,6 +32,7 @@ import {
 import { account } from "../account";
 import { getInitials } from "../threads/getInitials";
 import type { Category, Folder } from "../types";
+import { defaultFolder } from "../types";
 
 interface MailFilter {
   folder: Folder;
@@ -104,7 +105,7 @@ export const MailSidebar = () => {
     }
   };
   const isActive = (item: NavItem) =>
-    (currentFilter.folder ?? "inbox") === item.filter.folder &&
+    (currentFilter.folder ?? defaultFolder) === item.filter.folder &&
     currentFilter.category === item.filter.category;
 
   return (

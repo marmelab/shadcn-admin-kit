@@ -3,6 +3,8 @@ import { List } from "@/components/admin/list";
 import { ListPagination } from "@/components/admin/list-pagination";
 import { SearchInput } from "@/components/admin/search-input";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
+import { defaultFolder } from "../types";
 import { ReadTabs } from "./ReadTabs";
 import { NoThreadSelected, ThreadDisplay } from "./ThreadDisplay";
 import { ThreadListItems } from "./ThreadListItems";
@@ -19,28 +21,33 @@ export const ThreadList = () => {
   const match = useMatch({ path: "/threads/:id/show", end: false });
   const selectedId = match?.params.id ? Number(match.params.id) : undefined;
   const isMobile = useIsMobile();
-  const showList = !isMobile || selectedId == null;
+  // On mobile, the list is hidden rather than unmounted while a thread is
+  // open, so that it keeps its scroll position
+  const hideList = isMobile && selectedId != null;
   const showDisplay = !isMobile || selectedId != null;
 
   return (
     <div className="flex min-h-0 flex-1">
-      {showList ? (
-        <div className="flex w-full shrink-0 flex-col overflow-y-auto px-4 md:w-[400px] md:border-r [&_.filter-field]:grow">
-          <List
-            resource="threads"
-            title={<ThreadListTitle />}
-            actions={<ReadTabs />}
-            filters={filters}
-            filterDefaultValues={{ folder: "inbox" }}
-            sort={{ field: "updated_at", order: "DESC" }}
-            perPage={25}
-            disableBreadcrumb
-            pagination={<ListPagination rowsPerPageOptions={[10, 25, 50]} />}
-          >
-            <ThreadListItems selectedId={selectedId} />
-          </List>
-        </div>
-      ) : null}
+      <div
+        className={cn(
+          "flex w-full shrink-0 flex-col overflow-y-auto px-4 md:w-[400px] md:border-r [&_.filter-field]:grow",
+          hideList && "hidden",
+        )}
+      >
+        <List
+          resource="threads"
+          title={<ThreadListTitle />}
+          actions={<ReadTabs />}
+          filters={filters}
+          filterDefaultValues={{ folder: defaultFolder }}
+          sort={{ field: "updated_at", order: "DESC" }}
+          perPage={25}
+          disableBreadcrumb
+          pagination={<ListPagination rowsPerPageOptions={[10, 25, 50]} />}
+        >
+          <ThreadListItems selectedId={selectedId} />
+        </List>
+      </div>
       {showDisplay ? (
         <div className="min-w-0 flex-1 overflow-y-auto">
           {selectedId != null ? (

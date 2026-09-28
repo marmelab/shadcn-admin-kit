@@ -1,4 +1,5 @@
 import { useListContext, useTranslate } from "ra-core";
+import { defaultFolder } from "../types";
 
 /** Name of the current folder, or of the current category */
 export const ThreadListTitle = () => {
@@ -8,7 +9,7 @@ export const ThreadListTitle = () => {
     <>
       {filterValues.category
         ? translate(`mail.categories.${filterValues.category}`)
-        : translate(`mail.folders.${filterValues.folder ?? "inbox"}`)}
+        : translate(`mail.folders.${filterValues.folder ?? defaultFolder}`)}
     </>
   );
 };

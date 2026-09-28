@@ -23,23 +23,30 @@ export const ThreadListItem = ({ selected }: { selected: boolean }) => {
     >
       <div className="flex w-full items-center gap-2">
         <span className="truncate font-semibold">{thread.name}</span>
+        {/* The icons are decorative, screen readers get the sr-only text */}
         {!thread.read ? (
-          <span
-            className="size-2 shrink-0 rounded-full bg-blue-600"
-            aria-label={translate("mail.list.unread")}
-          />
+          <>
+            <span
+              className="size-2 shrink-0 rounded-full bg-blue-600"
+              aria-hidden
+            />
+            <span className="sr-only">{translate("mail.list.unread")}</span>
+          </>
         ) : null}
         {thread.starred ? (
-          <Star
-            className="size-3.5 shrink-0 fill-current"
-            aria-label={translate("mail.list.starred")}
-          />
+          <>
+            <Star className="size-3.5 shrink-0 fill-current" aria-hidden />
+            <span className="sr-only">{translate("mail.list.starred")}</span>
+          </>
         ) : null}
         {thread.muted ? (
-          <BellOff
-            className="size-3.5 shrink-0 text-muted-foreground"
-            aria-label={translate("mail.list.muted")}
-          />
+          <>
+            <BellOff
+              className="size-3.5 shrink-0 text-muted-foreground"
+              aria-hidden
+            />
+            <span className="sr-only">{translate("mail.list.muted")}</span>
+          </>
         ) : null}
         <span
           className={cn(

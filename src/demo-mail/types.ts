@@ -2,6 +2,9 @@ import type { RaRecord } from "ra-core";
 
 export type Folder = "inbox" | "drafts" | "sent" | "junk" | "trash" | "archive";
 
+/** Folder shown when the list has no folder filter */
+export const defaultFolder: Folder = "inbox";
+
 export type Category =
   | "primary"
   | "social"
