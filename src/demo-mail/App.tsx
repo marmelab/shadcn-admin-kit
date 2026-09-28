@@ -1,9 +1,10 @@
+import { Inbox } from "lucide-react";
 import { Resource, localStorageStore } from "ra-core";
 import { Admin } from "@/components/admin/admin";
-import { ListGuesser } from "@/components/admin/list-guesser";
 import { dataProvider } from "./dataProvider";
 import { i18nProvider } from "./i18nProvider";
 import { MailLayout } from "./layout/MailLayout";
+import { ThreadList } from "./threads/ThreadList";
 
 // The e-commerce demo is served from the same origin, so this demo keeps its
 // preferences (theme, locale, list params) under its own store key.
@@ -16,8 +17,8 @@ const App = () => (
     layout={MailLayout}
     store={store}
   >
-    <Resource name="threads" list={ListGuesser} />
-    <Resource name="messages" list={ListGuesser} />
+    <Resource name="threads" list={ThreadList} icon={Inbox} />
+    <Resource name="messages" />
   </Admin>
 );
 
