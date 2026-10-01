@@ -69,6 +69,7 @@ export default defineConfig({
           items: [
             "install",
             "quick-start-guide",
+            "demos",
             "guides-and-concepts",
             "changelog",
             "migrate",

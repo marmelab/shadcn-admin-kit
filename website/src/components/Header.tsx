@@ -60,6 +60,18 @@ export function Header() {
                 >
                   CRM
                 </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="m-1 cursor-pointer"
+                  render={
+                    <a
+                      href="https://marmelab.com/shadcn-admin-kit/demo-mail/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    />
+                  }
+                >
+                  Email client
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
             <NavLink href="#pricing">Pricing</NavLink>
@@ -126,6 +138,18 @@ export function Header() {
                   }
                 >
                   Demo CRM
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="m-1 cursor-pointer"
+                  render={
+                    <a
+                      href="https://marmelab.com/shadcn-admin-kit/demo-mail/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    />
+                  }
+                >
+                  Demo Email client
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="m-1 cursor-pointer"

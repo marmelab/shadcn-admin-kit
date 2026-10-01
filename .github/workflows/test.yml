@@ -27,6 +27,8 @@ jobs:
         run: make build-registry
       - name: Build demo
         run: make build-demo
+      - name: Build email demo
+        run: make build-demo-mail
 
   test:
     runs-on: ubuntu-latest
