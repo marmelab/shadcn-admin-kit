@@ -23,12 +23,23 @@ const deleteThreadMessages = async (
 };
 
 /**
- * Simulates the server-side logic of a mail backend:
- * a new message updates its thread, and deleting a thread deletes its messages.
+ * Simulates the server-side logic of a mail backend: a new message updates its
+ * thread (and mutes it when asked), and deleting a thread deletes its messages.
  */
 export const dataProvider = withLifecycleCallbacks(baseDataProvider, [
   {
     resource: "messages",
+    beforeCreate: async (params, dataProvider) => {
+      const { mute, ...data } = params.data;
+      if (mute) {
+        await dataProvider.update("threads", {
+          id: data.thread_id,
+          data: { muted: true },
+          previousData: {},
+        });
+      }
+      return { ...params, data };
+    },
     afterCreate: async (result, dataProvider) => {
       const message = result.data as Message;
       await dataProvider.update("threads", {

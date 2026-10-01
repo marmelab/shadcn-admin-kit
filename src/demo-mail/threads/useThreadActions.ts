@@ -1,8 +1,9 @@
+import { useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useLocation, useNavigate, useTranslate, useUpdate } from "ra-core";
 import { toast } from "sonner";
 import type { Folder, Thread } from "../types";
-import { removeFromStaleLists } from "./threadCache";
+import { refreshCounters, removeFromStaleLists } from "./threadCache";
 
 export const replyInputId = "reply-message";
 
@@ -10,24 +11,48 @@ export const focusReplyInput = () => {
   document.getElementById(replyInputId)?.focus();
 };
 
-/** Closes the displayed thread, keeping the list params */
+/** Marks the navigation from the list to a thread (see useCloseThread) */
+export const fromListState = { _fromList: true };
+
+/**
+ * Closes the displayed thread, keeping the list params. The thread leaves the
+ * history, so that the browser Back button does not reopen it.
+ */
 export const useCloseThread = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  return () => navigate({ pathname: "/threads", search: location.search });
+  return () => {
+    if ((location.state as typeof fromListState | null)?._fromList) {
+      navigate(-1);
+    } else {
+      navigate(
+        { pathname: "/threads", search: location.search },
+        { replace: true },
+      );
+    }
+  };
 };
 
 /**
- * Updates thread flags (read, starred, labels, muted) without waiting.
- * The mode is set on the hook rather than on each call: ra-core resets a
- * call-time mode when effects re-run (React StrictMode), which drops the call.
+ * Updates thread flags (read, starred, labels, muted).
+ * Pessimistic, so that the lists are not refetched: the thread stays in the
+ * Unread tab while it is displayed. Only the counters are refetched.
+ * The callback is set on the hook: a call-time one is lost when StrictMode
+ * remounts.
  */
 export const useUpdateThread = () => {
+  const queryClient = useQueryClient();
   const [update] = useUpdate<Thread>(undefined, undefined, {
-    mutationMode: "optimistic",
+    onSuccess: (result, { previousData }) => {
+      if (previousData) refreshCounters(queryClient, previousData as Thread);
+      refreshCounters(queryClient, result);
+    },
   });
-  return (thread: Thread, data: Partial<Thread>) =>
-    update("threads", { id: thread.id, data, previousData: thread });
+  return useCallback(
+    (thread: Thread, data: Partial<Thread>) =>
+      update("threads", { id: thread.id, data, previousData: thread }),
+    [update],
+  );
 };
 
 /**

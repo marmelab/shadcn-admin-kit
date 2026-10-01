@@ -27,7 +27,12 @@ export const ThreadListItems = ({ selectedId }: { selectedId?: number }) => {
     <div className="flex flex-col gap-2">
       {data.map((thread) => (
         <RecordContextProvider key={thread.id} value={thread}>
-          <ThreadListItem selected={thread.id === selectedId} />
+          <ThreadListItem
+            selected={thread.id === selectedId}
+            // Switching threads replaces the history entry, so that closing
+            // the thread goes back to the list
+            replace={selectedId != null}
+          />
         </RecordContextProvider>
       ))}
     </div>

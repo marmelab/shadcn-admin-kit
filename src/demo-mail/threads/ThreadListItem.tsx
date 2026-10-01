@@ -4,8 +4,15 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { Thread } from "../types";
 import { useFormatDistance } from "./useFormatDistance";
+import { fromListState } from "./useThreadActions";
 
-export const ThreadListItem = ({ selected }: { selected: boolean }) => {
+export const ThreadListItem = ({
+  selected,
+  replace,
+}: {
+  selected: boolean;
+  replace: boolean;
+}) => {
   const thread = useRecordContext<Thread>();
   const location = useLocation();
   const translate = useTranslate();
@@ -16,6 +23,8 @@ export const ThreadListItem = ({ selected }: { selected: boolean }) => {
     <LinkBase
       // Keep the list params in the URL, so the list stays the same
       to={{ pathname: `/threads/${thread.id}/show`, search: location.search }}
+      state={fromListState}
+      replace={replace}
       className={cn(
         "flex flex-col gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
         selected && "bg-muted",

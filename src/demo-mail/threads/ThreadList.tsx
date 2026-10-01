@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import { ShowBase, useLocation, useMatch } from "ra-core";
+import { useEffect, useRef, type RefObject } from "react";
+import { ShowBase, useListContext, useMatch } from "ra-core";
 import { List } from "@/components/admin/list";
 import { ListPagination } from "@/components/admin/list-pagination";
 import { SearchInput } from "@/components/admin/search-input";
@@ -26,16 +26,7 @@ export const ThreadList = () => {
   // open, so that it keeps its scroll position
   const hideList = isMobile && selectedId != null;
   const showDisplay = !isMobile || selectedId != null;
-
-  // ra-core scrolls the window to top on page change, but the list scrolls in
-  // its own column
   const listRef = useRef<HTMLDivElement>(null);
-  const location = useLocation();
-  useEffect(() => {
-    if ((location.state as { _scrollToTop?: boolean })?._scrollToTop) {
-      listRef.current?.scrollTo(0, 0);
-    }
-  }, [location]);
 
   return (
     <div className="flex min-h-0 flex-1">
@@ -57,6 +48,7 @@ export const ThreadList = () => {
           disableBreadcrumb
           pagination={<ListPagination rowsPerPageOptions={[10, 25, 50]} />}
         >
+          <ScrollToTopOnListChange scrollRef={listRef} />
           <ThreadListItems selectedId={selectedId} />
         </List>
       </div>
@@ -74,4 +66,21 @@ export const ThreadList = () => {
       ) : null}
     </div>
   );
+};
+
+/**
+ * Scrolls the list column to the top when the page, the folder or the search
+ * changes. ra-core scrolls the window instead, which does not scroll here.
+ */
+const ScrollToTopOnListChange = ({
+  scrollRef,
+}: {
+  scrollRef: RefObject<HTMLDivElement | null>;
+}) => {
+  const { page, perPage, filterValues } = useListContext();
+  const filters = JSON.stringify(filterValues);
+  useEffect(() => {
+    scrollRef.current?.scrollTo(0, 0);
+  }, [page, perPage, filters, scrollRef]);
+  return null;
 };
