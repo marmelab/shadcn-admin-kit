@@ -66,18 +66,3 @@ Here are all the props accepted by the component:
 | `title`               | Optional | `string`         | -                     | The error page title                                            |
 
 To learn more about these props, refer to [the `<CoreAdmin>` component documentation](https://marmelab.com/ra-core/coreadmin/) on the ra-core website.
-
-## Access Denied Page
-
-By default, `<Admin>` displays the exported `<AccessDenied>` component when a user is denied access to a page. Pass a custom component to the `accessDenied` prop to replace it:
-
-```tsx
-const CustomAccessDenied = () => <div>You don't have permission to view this page.</div>;
-
-<Admin
-    dataProvider={dataProvider}
-    accessDenied={CustomAccessDenied}
->
-    <Resource name="posts" list={PostList} />
-</Admin>
-```
