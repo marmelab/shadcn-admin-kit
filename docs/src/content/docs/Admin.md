@@ -42,7 +42,7 @@ Here are all the props accepted by the component:
 | --------------------- | -------- | ---------------- | --------------------- | --------------------------------------------------------------- |
 | `dataProvider`        | Required | `DataProvider`   | -                     | The data provider for fetching resources                        |
 | `children`            | Required | `ReactNode`      | -                     | The routes to render                                            |
-| `accessDenied`        | Optional | `Component`      | -                     | The component displayed when users are denied access to a page  |
+| `accessDenied`        | Optional | `Component`      | `AccessDenied`        | The component displayed when users are denied access to a page  |
 | `authCallbackPage`    | Optional | `Component`      | `AuthCallback`        | The content of the authentication callback page                 |
 | `authenticationError` | Optional | `Component`      | -                     | The component when an authentication error occurs               |
 | `authProvider`        | Optional | `AuthProvider`   | -                     | The authentication provider for security and permissions        |
@@ -66,3 +66,18 @@ Here are all the props accepted by the component:
 | `title`               | Optional | `string`         | -                     | The error page title                                            |
 
 To learn more about these props, refer to [the `<CoreAdmin>` component documentation](https://marmelab.com/ra-core/coreadmin/) on the ra-core website.
+
+## Access Denied Page
+
+By default, `<Admin>` displays the exported `<AccessDenied>` component when a user is denied access to a page. Pass a custom component to the `accessDenied` prop to replace it:
+
+```tsx
+const CustomAccessDenied = () => <div>You don't have permission to view this page.</div>;
+
+<Admin
+    dataProvider={dataProvider}
+    accessDenied={CustomAccessDenied}
+>
+    <Resource name="posts" list={PostList} />
+</Admin>
+```
