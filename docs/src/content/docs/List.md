@@ -4,7 +4,7 @@ title: "List"
 
 ---
 
-The `<List>` component is the root component for list pages. It fetches a list of records from the data provider (via `ra-core` hooks), puts them in a [`ListContext`](https://marmelab.com/ra-core/uselistcontext/.html), renders a default layout (breadcrumb, title, action buttons, inline filters, pagination), then renders its children (usually a [`<DataTable>`](./DataTable.md)).
+The `<List>` component is the root component for list pages. It fetches a list of records from the data provider (via `ra-core` hooks), puts them in a [`ListContext`](https://marmelab.com/ra-core/uselistcontext/), renders a default layout (breadcrumb, title, action buttons, inline filters, pagination), then renders its children (usually a [`<DataTable>`](./DataTable.md)).
 
 ![Simple users list](./images/users-list.png)
 
@@ -80,7 +80,7 @@ These props will soon be supported: `aside`, `empty`, `emptyWhileLoading`.
 
 ## Main Content Area
 
-`<List>` itself doesn't render the list of records. It delegates this task to its children components. These children components grab the `data` from the [`ListContext`](https://marmelab.com/ra-core/uselistcontext/.html) and render them on screen.
+`<List>` itself doesn't render the list of records. It delegates this task to its children components. These children components grab the `data` from the [`ListContext`](https://marmelab.com/ra-core/uselistcontext/) and render them on screen.
 
 ![List children](./images/users-list-items.png)
 
@@ -89,7 +89,7 @@ shadcn-admin-kit provides several components that can read and display a list of
 - [`<DataTable>`](./DataTable.md) displays records in a table
 - [`<SingleFieldList>`](./SingleFieldList.md) displays records inline, showing one field per record
 
-Alternatively to `children`, you can pass a `render` prop to `<List>`. It will receive the [`ListContext`](https://marmelab.com/ra-core/uselistcontext/.html#return-value) as its argument, and should return a React node. This allows to inline the render logic for the list page.
+Alternatively to `children`, you can pass a `render` prop to `<List>`. It will receive the [`ListContext`](https://marmelab.com/ra-core/uselistcontext/#return-value) as its argument, and should return a React node. This allows to inline the render logic for the list page.
 
 ```tsx
 const PostList = () => (
@@ -672,7 +672,7 @@ This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enter
 
 ## Rendering An Empty List
 
-When there is no data, shadcn-admin-kit displays a special page inviting the user to create the first record. This page can be customized using [the `empty` prop](#empty).
+When there is no data, shadcn-admin-kit displays a special page inviting the user to create the first record. This page can be customized using the `empty` prop.
 
 You can set the `empty` props value to `false` to disable the empty page and render the list layout instead.
 
@@ -690,7 +690,7 @@ const ProductList = () => (
 
 `<List>` deduces the resource and the list parameters from the URL. This is fine for a page showing a single list of records, but if you need to display more than one list in a page, you probably want to define the list parameters yourself.
 
-In that case, use the [`resource`](#resource), [`sort`](#sort), [`filter`](#filter-permanent-filter), and [`perPage`](#perpage) props to set the list parameters.
+In that case, use the [`resource`](#props), [`sort`](#sort), [`filter`](#permanent-filter), and [`perPage`](#pagination) props to set the list parameters.
 
 ```tsx
 import { List, DataTable, DateField } from '@/components/admin';
@@ -738,7 +738,7 @@ If you need to set the list parameters to render a list of records *related to a
 
 :::
 
-If the `<List>` children allow to *modify* the list state (i.e. if they let users change the sort order, the filters, the selection, or the pagination), then you should also use the [`disableSyncWithLocation`](#disablesyncwithlocation) prop to prevent shadcn-admin-kit from changing the URL. This is the case e.g. if you use a `<DataTable>`, which lets users sort the list by clicking on column headers.
+If the `<List>` children allow to *modify* the list state (i.e. if they let users change the sort order, the filters, the selection, or the pagination), then you should also use the [`disableSyncWithLocation`](#props) prop to prevent shadcn-admin-kit from changing the URL. This is the case e.g. if you use a `<DataTable>`, which lets users sort the list by clicking on column headers.
 
 ```tsx
 import { List, DataTable, DateField } from '@/components/admin';
@@ -785,7 +785,7 @@ If you render more than one `<DataTable>` for the same resource in the same page
 
 ## Headless Version
 
-Besides fetching a list of records from the data provider, `<List>` renders the default list page layout (title, buttons, filters, a `<Card>`, pagination) and its children. If you need a custom list layout, you may prefer [the `<ListBase>` component](https://marmelab.com/ra-core/listbase/), which only renders its children in a [`ListContext`](https://marmelab.com/ra-core/uselistcontext/.html).
+Besides fetching a list of records from the data provider, `<List>` renders the default list page layout (title, buttons, filters, a `<Card>`, pagination) and its children. If you need a custom list layout, you may prefer [the `<ListBase>` component](https://marmelab.com/ra-core/listbase/), which only renders its children in a [`ListContext`](https://marmelab.com/ra-core/uselistcontext/).
 
 ```tsx
 import { ListBase, WithListContext } from 'ra-core';
@@ -884,5 +884,5 @@ const PostList = () => (
 Users without access will be redirected to the [Access Denied page](https://marmelab.com/ra-core/coreadmin/#accessdenied).
 
 :::note
-Access control is disabled when you use [the `disableAuthentication` prop](#disableauthentication).
+Access control is disabled when you use [the `disableAuthentication` prop](#props).
 :::

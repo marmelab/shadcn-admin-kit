@@ -2,7 +2,7 @@
 title: "LoginPage"
 ---
 
-When [Authentication](./Authentication.md) is enabled, users must log in to access the admin interface. The login page is displayed automatically when an unauthenticated user tries to access a protected route.
+When [Authentication](./Security.md) is enabled, users must log in to access the admin interface. The login page is displayed automatically when an unauthenticated user tries to access a protected route.
 
 ![Login page](./images/login.jpg)
 
