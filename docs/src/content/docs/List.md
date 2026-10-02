@@ -672,16 +672,18 @@ This feature requires a valid [Enterprise Edition](https://marmelab.com/ra-enter
 
 ## Rendering An Empty List
 
-When there is no data, shadcn-admin-kit displays a special page inviting the user to create the first record. This page can be customized using the `empty` prop.
+`<List>` doesn't render a dedicated empty page yet (the `empty` prop is not supported, see [Props](#props)). When there is no data, it renders the list layout as usual, and its children decide what to display.
 
-You can set the `empty` props value to `false` to disable the empty page and render the list layout instead.
+For instance, `<DataTable>` shows a "No results found." message, which you can replace with [its `empty` prop](./DataTable.md#props):
 
 ```tsx
-import { List } from '@/components/admin';
+import { List, DataTable } from '@/components/admin';
 
 const ProductList = () => (
-    <List empty={false}>
-        ...
+    <List>
+        <DataTable empty={<p className="p-4">No products yet.</p>}>
+            ...
+        </DataTable>
     </List>
 )
 ```

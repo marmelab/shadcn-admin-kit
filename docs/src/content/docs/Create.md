@@ -6,7 +6,7 @@ The `<Create>` component is the main component for creation pages. It prepares a
 
 ![product creation form](./images/products-create.png)
 
-The `<Create>` component creates a `RecordContext` with an empty object `{}` by default. It also creates a [`SaveContext`](https://marmelab.com/ra-core/usesavecontext/) containing a `save` callback, which calls `dataProvider.create()`, and [a `CreateContext`](https://marmelab.com/ra-core/usecreatecontext/l) containing both the record and the callback.
+The `<Create>` component creates a `RecordContext` with an empty object `{}` by default. It also creates a [`SaveContext`](https://marmelab.com/ra-core/usesavecontext/) containing a `save` callback, which calls `dataProvider.create()`, and [a `CreateContext`](https://marmelab.com/ra-core/usecreatecontext/) containing both the record and the callback.
 
 ## Usage
 

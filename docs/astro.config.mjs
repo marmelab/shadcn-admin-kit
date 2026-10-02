@@ -34,7 +34,9 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "Shadcn Admin Kit",
-      plugins: [starlightLinksValidator()],
+      plugins: [
+        starlightLinksValidator({ components: [["FrameworkCard", "href"]] }),
+      ],
       customCss: ["./src/styles/global.css"],
       social: [
         {

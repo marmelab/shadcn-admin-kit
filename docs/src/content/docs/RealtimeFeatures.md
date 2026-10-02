@@ -114,8 +114,8 @@ When a user edits a resource, you can propagate these changes in real time so th
 
 Live updates leverage the following components and hooks:
 
-- [`<ListLiveUpdate>`](https://marmelab.com/ra-core/listliveupdates/)
-- [`<RecordLiveUpdate>`](https://marmelab.com/ra-core/recordliveupdate/)
+- [`<ListLiveUpdate>`](https://marmelab.com/ra-core/listliveupdate/)
+- [`<RecordLiveUpdate>`](./Show.md#live-updates)
 - [`useGetListLive`](https://marmelab.com/ra-core/usegetlistlive/)
 - [`useGetOneLive`](https://marmelab.com/ra-core/usegetonelive/)
 
