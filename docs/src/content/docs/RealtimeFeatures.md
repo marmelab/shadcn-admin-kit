@@ -115,7 +115,6 @@ When a user edits a resource, you can propagate these changes in real time so th
 Live updates leverage the following components and hooks:
 
 - [`<ListLiveUpdate>`](https://marmelab.com/ra-core/listliveupdate/)
-- [`<RecordLiveUpdate>`](./Show.md#live-updates)
 - [`useGetListLive`](https://marmelab.com/ra-core/usegetlistlive/)
 - [`useGetOneLive`](https://marmelab.com/ra-core/usegetonelive/)
 
@@ -137,6 +136,8 @@ const PostList = () => (
   <source src="https://react-admin-ee.marmelab.com/assets/useSubscribeToRecordList.mp4" type="video/mp4"/>
   Your browser does not support the video tag.
 </video>
+
+For show and edit views, build a small component on top of `useSubscribeToRecord`: the [`<Show>`](./Show.md#live-updates) documentation shows how to refresh the record, and the [`<Edit>`](./Edit.md#live-updates) documentation shows how to notify the user and let them reload the record.
 
 ### Locks
 

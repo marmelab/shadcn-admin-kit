@@ -52,7 +52,7 @@ It also accepts additional props to configure the behavior of that specific colu
 | `bulkActionButtons` | Optional | `ReactNode \| false` | Bulk Delete and Export | Custom bulk action buttons or disable with `false` |
 | `bulkActionsToolbar` | Optional | `ReactNode` | - | Full custom toolbar (overrides default) |
 | `className` | Optional | `string` | - | Wrapper classes |
-| `empty` | Optional | Element | `<Empty>` | The component to render when the list is empty. |
+| `empty` | Optional | Element | "No results found." alert | The component to render when the list is empty. |
 | `hiddenColumns`| Optional | Array | `[]`| The list of columns to hide by default (to be used with `ColumnsButton`) . |
 | `isRowSelectable` | Optional | Function | `() => true` | A function that returns whether a row is selectable. |
 | `rowClassName` | Optional | `(record) => string` | - | Dynamic row classes |
