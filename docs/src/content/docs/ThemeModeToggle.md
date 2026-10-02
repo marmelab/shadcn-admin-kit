@@ -6,7 +6,7 @@ Lets users switch between light and dark UI themes.
 
 ![ThemeModeToggle](./images/theme-mode-toggle.jpg)
 
-It leverages the [store](https://marmelab.com/shadcn-admin-kit/Store.html) so that their selection is persisted.
+It leverages the [store](https://marmelab.com/ra-core/store/) so that their selection is persisted.
 
 ## Usage
 

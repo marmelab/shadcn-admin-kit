@@ -27,6 +27,8 @@ jobs:
         run: make build-registry
       - name: Build demo
         run: make build-demo
+      - name: Build doc
+        run: make build-doc
 
   test:
     runs-on: ubuntu-latest

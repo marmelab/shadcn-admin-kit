@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
+import starlightLinksValidator from "starlight-links-validator";
 import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
 import tailwindcss from "@tailwindcss/vite";
@@ -33,6 +34,9 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "Shadcn Admin Kit",
+      plugins: [
+        starlightLinksValidator({ components: [["FrameworkCard", "href"]] }),
+      ],
       customCss: ["./src/styles/global.css"],
       social: [
         {
