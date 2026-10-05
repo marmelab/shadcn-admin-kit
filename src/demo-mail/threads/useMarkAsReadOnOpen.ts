@@ -8,7 +8,7 @@ import { useUpdateThread } from "./useThreadActions";
  * so that "Mark as unread" is not undone while the display closes.
  */
 export const useMarkAsReadOnOpen = (thread?: Thread) => {
-  const updateThread = useUpdateThread();
+  const [updateThread] = useUpdateThread();
   const markedThreadId = useRef<Thread["id"] | undefined>(undefined);
   useEffect(() => {
     if (!thread || markedThreadId.current === thread.id) return;

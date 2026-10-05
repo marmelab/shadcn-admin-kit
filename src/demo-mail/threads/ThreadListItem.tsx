@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { Thread } from "../types";
 import { useFormatDistance } from "./useFormatDistance";
-import { fromListState } from "./useThreadActions";
+import { fromListState, isFromList } from "./useThreadActions";
 
 export const ThreadListItem = ({
   selected,
@@ -23,7 +23,9 @@ export const ThreadListItem = ({
     <LinkBase
       // Keep the list params in the URL, so the list stays the same
       to={{ pathname: `/threads/${thread.id}/show`, search: location.search }}
-      state={fromListState}
+      // A replaced entry stays "from the list" only if it was: a thread opened
+      // from a direct link was not
+      state={!replace || isFromList(location.state) ? fromListState : undefined}
       replace={replace}
       className={cn(
         "flex flex-col gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",

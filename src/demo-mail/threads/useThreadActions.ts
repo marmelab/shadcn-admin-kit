@@ -14,6 +14,10 @@ export const focusReplyInput = () => {
 /** Marks the navigation from the list to a thread (see useCloseThread) */
 export const fromListState = { _fromList: true };
 
+/** Whether the current history entry was opened from the list */
+export const isFromList = (state: unknown) =>
+  !!(state as typeof fromListState | null)?._fromList;
+
 /**
  * Closes the displayed thread, keeping the list params. The thread leaves the
  * history, so that the browser Back button does not reopen it.
@@ -22,7 +26,7 @@ export const useCloseThread = () => {
   const navigate = useNavigate();
   const location = useLocation();
   return () => {
-    if ((location.state as typeof fromListState | null)?._fromList) {
+    if (isFromList(location.state)) {
       navigate(-1);
     } else {
       navigate(
@@ -37,22 +41,25 @@ export const useCloseThread = () => {
  * Updates thread flags (read, starred, labels, muted).
  * Pessimistic, so that the lists are not refetched: the thread stays in the
  * Unread tab while it is displayed. Only the counters are refetched.
+ * The thread is updated once the server replies: isPending tells when a new
+ * update would be built from the old values.
  * The callback is set on the hook: a call-time one is lost when StrictMode
  * remounts.
  */
 export const useUpdateThread = () => {
   const queryClient = useQueryClient();
-  const [update] = useUpdate<Thread>(undefined, undefined, {
+  const [update, { isPending }] = useUpdate<Thread>(undefined, undefined, {
     onSuccess: (result, { previousData }) => {
       if (previousData) refreshCounters(queryClient, previousData as Thread);
       refreshCounters(queryClient, result);
     },
   });
-  return useCallback(
+  const updateThread = useCallback(
     (thread: Thread, data: Partial<Thread>) =>
       update("threads", { id: thread.id, data, previousData: thread }),
     [update],
   );
+  return [updateThread, { isPending }] as const;
 };
 
 /**

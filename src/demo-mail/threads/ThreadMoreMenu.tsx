@@ -19,7 +19,9 @@ import { useCloseThread, useUpdateThread } from "./useThreadActions";
 export const ThreadMoreMenu = () => {
   const thread = useRecordContext<Thread>();
   const translate = useTranslate();
-  const updateThread = useUpdateThread();
+  // The toggles are built from the displayed thread, so they wait for the
+  // previous update to land
+  const [updateThread, { isPending }] = useUpdateThread();
   const closeThread = useCloseThread();
   if (!thread) return null;
 
@@ -53,6 +55,7 @@ export const ThreadMoreMenu = () => {
           {translate("mail.action.mark_as_unread")}
         </DropdownMenuItem>
         <DropdownMenuItem
+          disabled={isPending}
           onClick={() => updateThread(thread, { starred: !thread.starred })}
         >
           {translate(
@@ -68,6 +71,7 @@ export const ThreadMoreMenu = () => {
               <DropdownMenuCheckboxItem
                 key={label}
                 checked={thread.labels.includes(label)}
+                disabled={isPending}
                 onCheckedChange={(checked) => toggleLabel(label, checked)}
               >
                 {translate(`mail.labels.${label}`)}
@@ -77,6 +81,7 @@ export const ThreadMoreMenu = () => {
         </DropdownMenuSub>
         <DropdownMenuSeparator />
         <DropdownMenuItem
+          disabled={isPending}
           onClick={() => updateThread(thread, { muted: !thread.muted })}
         >
           {translate(thread.muted ? "mail.action.unmute" : "mail.action.mute")}
