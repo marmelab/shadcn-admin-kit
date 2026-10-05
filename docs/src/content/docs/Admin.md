@@ -42,7 +42,7 @@ Here are all the props accepted by the component:
 | --------------------- | -------- | ---------------- | --------------------- | --------------------------------------------------------------- |
 | `dataProvider`        | Required | `DataProvider`   | -                     | The data provider for fetching resources                        |
 | `children`            | Required | `ReactNode`      | -                     | The routes to render                                            |
-| `accessDenied`        | Optional | `Component`      | -                     | The component displayed when users are denied access to a page  |
+| `accessDenied`        | Optional | `Component`      | `AccessDenied`        | The component displayed when users are denied access to a page  |
 | `authCallbackPage`    | Optional | `Component`      | `AuthCallback`        | The content of the authentication callback page                 |
 | `authenticationError` | Optional | `Component`      | -                     | The component when an authentication error occurs               |
 | `authProvider`        | Optional | `AuthProvider`   | -                     | The authentication provider for security and permissions        |

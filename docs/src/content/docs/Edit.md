@@ -4,7 +4,7 @@ title: "Edit"
 ---
 
 
-The `<Edit>` component is the main component for edition pages. It fetches a record based on the URL, prepares a form submit handler, and renders the page title and actions. It is not responsible for rendering the actual form - that's the job of its child component (usually a form component, like [`<SimpleForm>`](./SimpleForm.html)). This form component uses its children ([`<Input>`](./DataEdition.mdx#inputs) components) to render each form input.
+The `<Edit>` component is the main component for edition pages. It fetches a record based on the URL, prepares a form submit handler, and renders the page title and actions. It is not responsible for rendering the actual form - that's the job of its child component (usually a form component, like [`<SimpleForm>`](./SimpleForm.md)). This form component uses its children ([`<Input>`](./DataEdition.mdx#inputs) components) to render each form input.
 
 ![Edit view](./images/customers-edit.png)
 
@@ -101,7 +101,7 @@ export const CustomerEdit = () => (
 );
 ```
 
-Alternatively to `children`, you can use a `render` prop. It will receive the [`EditContext`](./useEditContext.md#return-value) as its argument, and should return a React node.
+Alternatively to `children`, you can use a `render` prop. It will receive the [`EditContext`](https://marmelab.com/ra-core/useeditcontext/#return-value) as its argument, and should return a React node.
 
 This allows to inline the render logic for the edition page.
 
@@ -159,7 +159,6 @@ export const PostEdit = () => (
 Common buttons used as Edit actions are:
 
 * [`<CreateButton>`](./CreateButton.md) to create a new record
-* [`<ListButton>`](./ListButton.md) to go back to the list
 * [`<ShowButton>`](./ShowButton.md) to go to the show page
 * [`<DeleteButton>`](./DeleteButton.md) to delete the current record
 
@@ -256,7 +255,7 @@ export const PostEdit = () => (
 
 `<Edit>` calls `dataProvider.getOne()` on mount via react-query's `useQuery` hook. You can customize the options you pass to this hook by setting the `queryOptions` prop.
 
-This can be useful e.g. to pass [a custom `meta`](./Actions.md#meta-parameter) to the `dataProvider.getOne()` call.
+This can be useful e.g. to pass [a custom `meta`](https://marmelab.com/ra-core/actions/#meta-parameter) to the `dataProvider.getOne()` call.
 
 ```jsx
 import { Edit, SimpleForm } from '@/components/admin';
@@ -284,7 +283,7 @@ Refer to the [useQuery documentation](https://tanstack.com/query/v5/docs/react/r
 
 ## Mutation Options
 
-`<Edit>` calls `dataProvider.update()` via react-query's `useMutation` hook. You can customize the options you pass to this hook, e.g. to pass [a custom `meta`](./Actions.md#meta-parameter) to the `dataProvider.update()` call.
+`<Edit>` calls `dataProvider.update()` via react-query's `useMutation` hook. You can customize the options you pass to this hook, e.g. to pass [a custom `meta`](https://marmelab.com/ra-core/actions/#meta-parameter) to the `dataProvider.update()` call.
 
 ```jsx
 import { Edit, SimpleForm } from '@/components/admin';
@@ -346,11 +345,11 @@ The default `onSuccess` function is:
 ```
 
 :::tip
-If you just want to customize the redirect behavior, you can use [the `redirect` prop](#redirect) instead.
+If you just want to customize the redirect behavior, you can use [the `redirect` prop](#redirection-after-submission) instead.
 :::
 
 :::tip
-When you use `mutationMode="pessimistic"`, the `onSuccess` function receives the response from the `dataProvider.update()` call, which is the created/edited record (see [the dataProvider documentation for details](./DataProviderWriting.md#update)). You can use that response in the success side effects:
+When you use `mutationMode="pessimistic"`, the `onSuccess` function receives the response from the `dataProvider.update()` call, which is the created/edited record (see [the dataProvider documentation for details](https://marmelab.com/ra-core/dataproviderwriting/#update)). You can use that response in the success side effects:
 
 ```jsx
 import { Edit, SimpleForm } from '@/components/admin';
@@ -455,7 +454,7 @@ const englishMessages = {
 };
 ```
 
-Alternately, you can customize this message by passing a custom success side effect function in [the `mutationOptions` prop](#mutationoptions):
+Alternately, you can customize this message by passing a custom success side effect function in [the `mutationOptions` prop](#success-and-error-side-effects):
 
 ```jsx
 import { Edit, SimpleForm } from '@/components/admin';
@@ -510,7 +509,7 @@ const PostEdit = () => (
 ```
 
 :::note
-The `redirect` prop is ignored if you set [the `mutationOptions` prop](#mutationoptions). See that prop for how to set a different redirection path in that case.
+The `redirect` prop is ignored if you set [the `mutationOptions` prop](#success-and-error-side-effects). See that prop for how to set a different redirection path in that case.
 :::
 
 ## Mutation Mode
@@ -588,7 +587,7 @@ export const UserEdit = () => {
 
 ## Scaffolding An Edit Page
 
-You can use [`<EditGuesser>`](./EditGuesser.md) to quickly bootstrap an Edit view on top of an existing API, without adding the inputs one by one.
+You can use `<EditGuesser>` to quickly bootstrap an Edit view on top of an existing API, without adding the inputs one by one.
 
 ```tsx
 // in src/App.js
@@ -621,7 +620,7 @@ As a reminder, HTML form inputs always return strings, even for numbers and bool
 }
 ```
 
-If you prefer to have `null` values, or to omit the key for empty values, use [the `transform` prop](#transform) to sanitize the form data before submission:
+If you prefer to have `null` values, or to omit the key for empty values, use [the `transform` prop](#transforming-data) to sanitize the form data before submission:
 
 ```jsx
 export const UserEdit = () => {

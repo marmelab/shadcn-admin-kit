@@ -6,7 +6,7 @@ Also known as the "language switcher", it displays a menu allowing users to sele
 
 ![LocalesMenuButton](./images/locales-menu-button.jpg)
 
-It leverages the [store](https://marmelab.com/shadcn-admin-kit/Store.html) so that their selection is persisted.
+It leverages the [store](https://marmelab.com/ra-core/store/) so that their selection is persisted.
 
 ## Usage
 

@@ -10,7 +10,7 @@ In this tutorial, you will learn to create a web application with `shadcn-admin-
 
 ## Setting Up
 
-Follow the [installation instructions](./Install.md) to install `shadcn-admin-kit` in your project with Next.js, Vite.js, Remix, Tanstack Start, or any other framework of your choice.
+Follow the [installation instructions](./Install.mdx) to install `shadcn-admin-kit` in your project with Next.js, Vite.js, Remix, Tanstack Start, or any other framework of your choice.
 
 You should end up with a welcome screen like this:
 
@@ -508,7 +508,7 @@ In `shadcn-admin-kit`, most configuration is done through components. Instead of
 
 ## Writing A Custom Field
 
-The columns are rendered by the [`<DataTable.Col>`](./DataTable.md#datatablecol) component. By default, it renders the value as a simple string. You can customize how each column is rendered by passing a custom React component as [the `field` prop](./DataTable.md#field).
+The columns are rendered by the [`<DataTable.Col>`](./DataTable.md#cell-rendering) component. By default, it renders the value as a simple string. You can customize how each column is rendered by passing a custom React component as [the `field` prop](./DataTable.md#cell-rendering).
 
 Field components can read the `record` fetched from the API (e.g. `{ "id": 2, "name": "Ervin Howell", "website": "anastasia.net", ... }`) using a custom context, and use the `source` prop (e.g. `website`) to get the value they should display (e.g. "anastasia.net").
 

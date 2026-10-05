@@ -70,7 +70,7 @@ We don't recommend using `<ReferenceManyToManyInputBase>` in an edition view tha
 :::
 
 :::tip
-If you need to edit the fields of the associative table (e.g. the `date` in `performances`), you can use a [`<ReferenceManyInputBase>`](#referencemanyinputbase) instead of `<ReferenceManyToManyInputBase>`.
+If you need to edit the fields of the associative table (e.g. the `date` in `performances`), you can use a [`<ReferenceManyInputBase>`](./ReferenceManyInputBase.md) instead of `<ReferenceManyToManyInputBase>`.
 :::
 
 You will need to let users select the related record (`venue` in the example above) via a `<ReferenceInputBase>`:

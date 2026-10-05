@@ -6,7 +6,7 @@ A user menu component displayed in the top right corner of the admin layout. It 
 
 ![User Menu](./images/user-menu.jpg)
 
-It only displays in application using [Authentication](./Authentication.md).
+It only displays in application using [Authentication](./Security.md).
 
 ## Usage
 

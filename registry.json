@@ -235,6 +235,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/access-denied.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/not-found.tsx",
           "type": "registry:component"
         },
