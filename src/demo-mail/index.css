@@ -1,0 +1,4 @@
+@import "../index.css";
+
+/* Tailwind only scans the Vite root (src/demo-mail) by default */
+@source "../components";
