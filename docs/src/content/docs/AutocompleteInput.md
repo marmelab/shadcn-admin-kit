@@ -83,6 +83,19 @@ If you need to let users select more than one item in the list, check out the [`
 
 `*` `source` and `choices` are optional inside `<ReferenceInput>`.
 
+## Clearing The Value
+
+When the input is not required and holds a value, `<AutocompleteInput>` renders a clear button next to the dropdown arrow. Clicking it empties the field. Users can also clear the value by selecting the current choice again in the dropdown.
+
+Make the input required to remove that button:
+
+```jsx
+import { required } from 'ra-core';
+import { AutocompleteInput } from '@/components/admin';
+
+<AutocompleteInput source="category" choices={choices} validate={required()} />
+```
+
 ## Defining Choices
 
 The list of choices must be an array of objects with at least two fields: one to use for the name, and the other to use for the value. By default, `<AutocompleteInput>` will use the `id` and `name` fields.
