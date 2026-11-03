@@ -1,9 +1,10 @@
-import { useEffect, useRef, type RefObject } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import {
   InfiniteListBase,
   ShowBase,
   useInfinitePaginationContext,
   useListContext,
+  useLocation,
   useMatch,
 } from "ra-core";
 import { ListView } from "@/components/admin/list";
@@ -14,9 +15,11 @@ import { cn } from "@/lib/utils";
 import { defaultFolder } from "../types";
 import { Composer } from "./Composer";
 import { ReadTabs } from "./ReadTabs";
+import { ThreadBulkActions } from "./ThreadBulkActions";
 import { NoThreadSelected, ThreadDisplay } from "./ThreadDisplay";
 import { ThreadListItems } from "./ThreadListItems";
 import { ThreadListTitle } from "./ThreadListTitle";
+import { getComposeState } from "./useThreadActions";
 
 const filters = [<SearchInput key="q" source="q" alwaysOn />];
 
@@ -30,6 +33,17 @@ export const ThreadList = () => {
   const match = useMatch({ path: "/threads/:id/show", end: false });
   const selectedId = match?.params.id ? Number(match.params.id) : undefined;
   const isComposing = !!useMatch({ path: "/threads/create", end: false });
+  const location = useLocation();
+  // The list navigation (search) drops the history state: the editor id is
+  // kept until another New message or Forward click. Going back to an editor
+  // already opened keeps the current one, which holds the latest changes.
+  const [compose, setCompose] = useState<{ id?: number; seen: number[] }>({
+    seen: [],
+  });
+  const stateComposeId = getComposeState(location.state)?.id;
+  if (stateComposeId != null && !compose.seen.includes(stateComposeId)) {
+    setCompose({ id: stateComposeId, seen: [...compose.seen, stateComposeId] });
+  }
   const isMobile = useIsMobile();
   const hasPanel = selectedId != null || isComposing;
   // On mobile, the list is hidden rather than unmounted while a thread is
@@ -61,15 +75,17 @@ export const ThreadList = () => {
             pagination={<LoadMoreOnScroll scrollRef={listRef} />}
           >
             <ScrollToTopOnListChange scrollRef={listRef} />
+            <ThreadBulkActions selectedId={selectedId} />
             <ThreadListItems selectedId={selectedId} replace={hasPanel} />
           </ListView>
         </InfiniteListBase>
       </div>
       {showPanel ? (
-        // Keyed so that each thread opens scrolled to the top
+        // Keyed so that each thread opens scrolled to the top, and each New
+        // message or Forward click gets a new editor
         <div
           className="relative min-w-0 flex-1 overflow-y-auto overscroll-contain"
-          key={isComposing ? "create" : selectedId}
+          key={isComposing ? `create-${compose.id}` : selectedId}
         >
           {isComposing ? (
             <Composer />

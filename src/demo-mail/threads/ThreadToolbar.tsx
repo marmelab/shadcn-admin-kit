@@ -3,21 +3,33 @@ import {
   Archive,
   ArchiveX,
   ArrowLeft,
+  Forward,
   Inbox,
   Reply,
   ReplyAll,
   Trash2,
 } from "lucide-react";
-import { useDelete, useNotify, useRecordContext } from "ra-core";
+import {
+  useDelete,
+  useGetManyReference,
+  useLocaleState,
+  useLocation,
+  useNavigate,
+  useNotify,
+  useRecordContext,
+  useTranslate,
+} from "ra-core";
 import { Confirm } from "@/components/admin/confirm";
 import { IconButtonWithTooltip } from "@/components/admin/icon-button-with-tooltip";
 import { Separator } from "@/components/ui/separator";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
-import type { Thread } from "../types";
+import type { Message, Thread } from "../types";
+import { formatContacts } from "./formatContacts";
 import type { ReplyMode } from "./ReplyForm";
 import { ThreadMoreMenu } from "./ThreadMoreMenu";
 import {
+  composeState,
   focusReplyInput,
   useCloseThread,
   useMoveThread,
@@ -28,6 +40,7 @@ import {
  * target folder (Archive and Trash for the first one), and the trash button
  * deletes permanently from the trash. The reply buttons choose the recipients
  * of the reply form, Reply all being disabled when there is no one in Cc.
+ * Forward opens the new message editor with the last message quoted.
  */
 export const ThreadToolbar = ({
   replyMode,
@@ -113,10 +126,67 @@ export const ThreadToolbar = ({
         >
           <ReplyAll />
         </IconButtonWithTooltip>
+        <ForwardButton thread={thread} />
         <Separator orientation="vertical" className="mx-1" />
         <ThreadMoreMenu />
       </div>
     </div>
+  );
+};
+
+/**
+ * Opens the new message editor with the last message quoted, like mail
+ * clients do. The editor is pushed in the history, so that closing it goes
+ * back to the thread. The messages come from the cache of the thread display
+ * (same query as its ReferenceManyField).
+ */
+const ForwardButton = ({ thread }: { thread: Thread }) => {
+  const translate = useTranslate();
+  const [locale] = useLocaleState();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { data } = useGetManyReference<Message>("messages", {
+    target: "thread_id",
+    id: thread.id,
+    pagination: { page: 1, perPage: 100 },
+    sort: { field: "timestamp", order: "ASC" },
+    filter: {},
+  });
+  const last = data?.at(-1);
+
+  const forward = () => {
+    if (!last) return;
+    const header = [
+      translate("mail.forward.header"),
+      `${translate("mail.forward.from")} ${last.name} <${last.email}>`,
+      `${translate("mail.forward.date")} ${new Date(last.timestamp).toLocaleString(locale)}`,
+      `${translate("mail.forward.subject")} ${thread.subject}`,
+      `${translate("mail.reply.to")} ${formatContacts(last.to)}`,
+      ...(last.cc.length > 0
+        ? [`${translate("mail.reply.cc")} ${formatContacts(last.cc)}`]
+        : []),
+    ];
+    navigate(
+      { pathname: "/threads/create", search: location.search },
+      {
+        state: composeState(true, {
+          subject: /^fwd:/i.test(thread.subject)
+            ? thread.subject
+            : `Fwd: ${thread.subject}`,
+          draft: `\n\n${header.join("\n")}\n\n${last.message}`,
+        }),
+      },
+    );
+  };
+
+  return (
+    <IconButtonWithTooltip
+      label="mail.action.forward"
+      disabled={!last}
+      onClick={forward}
+    >
+      <Forward />
+    </IconButtonWithTooltip>
   );
 };
 

@@ -8,6 +8,8 @@ import {
   required,
   useCreate,
   useDelete,
+  useGetList,
+  useLocation,
   useNotify,
   useRefresh,
   useTranslate,
@@ -20,11 +22,42 @@ import { Separator } from "@/components/ui/separator";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { Thread } from "../types";
 import { refreshCounters } from "./threadCache";
-import { useCloseThread } from "./useThreadActions";
+import { getComposeState, useCloseThread } from "./useThreadActions";
 
-type DraftValues = Pick<Thread, "email" | "subject" | "draft">;
+/** The form values: the Cc recipients are typed as a list of addresses */
+interface DraftValues {
+  email: string;
+  cc: string;
+  subject: string;
+  draft: string;
+}
+
+const parseAddresses = (value?: string) =>
+  (value ?? "").split(/[\s,;]+/).filter(Boolean);
+
+const validateAddress = email();
+
+/** Each Cc address must be valid */
+const validateAddresses = (value?: string) =>
+  parseAddresses(value)
+    .map((address) => validateAddress(address, {}))
+    .find(Boolean);
+
+/** The data provider resolves the names of known correspondents */
+const toThreadData = (values: Partial<DraftValues>): Partial<Thread> => ({
+  email: values.email ?? "",
+  cc: parseAddresses(values.cc).map((address) => ({
+    name: address,
+    email: address,
+  })),
+  subject: values.subject ?? "",
+  draft: values.draft ?? "",
+});
 
 const AUTOSAVE_DELAY = 1000;
+
+/** The new message editors already opened, see Composer */
+const openedComposeIds = new Set<number>();
 
 /**
  * Editor of a draft, or of a new message when there is no draft yet. Changes
@@ -34,17 +67,31 @@ const AUTOSAVE_DELAY = 1000;
  */
 export const Composer = ({ draft }: { draft?: Thread }) => {
   const translate = useTranslate();
+  const location = useLocation();
   const isMobile = useIsMobile();
   const notify = useNotify();
   const refresh = useRefresh();
   const closeThread = useCloseThread();
   const { save, send, discard } = useDraftSaver(draft);
-  // Frozen, so that the form is not reset when a save updates the draft
-  const [initialValues] = useState<DraftValues>(() => ({
-    email: draft?.email ?? "",
-    subject: draft?.subject ?? "",
-    draft: draft?.draft ?? "",
-  }));
+  // Frozen, so that the form is not reset when a save updates the draft.
+  // A forward prefills a new message.
+  const [composeId] = useState(() => getComposeState(location.state)?.id);
+  const [initialValues] = useState<DraftValues>(() => {
+    // Once only: the draft saved from a forward holds the forwarded content
+    const forwarded =
+      draft || (composeId != null && openedComposeIds.has(composeId))
+        ? {}
+        : getComposeState(location.state)?.values;
+    return {
+      email: draft?.email ?? "",
+      cc: draft?.cc.map((contact) => contact.email).join(", ") ?? "",
+      subject: draft?.subject ?? forwarded?.subject ?? "",
+      draft: draft?.draft ?? forwarded?.draft ?? "",
+    };
+  });
+  useEffect(() => {
+    if (composeId != null) openedComposeIds.add(composeId);
+  }, [composeId]);
 
   const handleSend = async (values: Partial<DraftValues>) => {
     const sent = await send(values);
@@ -95,11 +142,22 @@ export const Composer = ({ draft }: { draft?: Thread }) => {
         onSubmit={handleSend}
         className="flex flex-1 flex-col gap-4 p-4"
       >
+        <ContactOptions />
         <TextInput
           source="email"
           label="mail.compose.to"
+          list={contactListId}
+          autoComplete="off"
+          // Chrome adds a dropdown arrow to the inputs with suggestions
+          inputClassName="[&::-webkit-calendar-picker-indicator]:hidden!"
           autoFocus={!draft}
           validate={[required(), email()]}
+        />
+        <TextInput
+          source="cc"
+          label="mail.compose.cc"
+          helperText="mail.compose.cc_help"
+          validate={validateAddresses}
         />
         <TextInput source="subject" label="mail.compose.subject" />
         <TextInput
@@ -117,6 +175,31 @@ export const Composer = ({ draft }: { draft?: Thread }) => {
         </div>
       </Form>
     </div>
+  );
+};
+
+const contactListId = "compose-contacts";
+
+/** Suggestions for the To field: the known correspondents */
+const ContactOptions = () => {
+  const { data } = useGetList<Thread>("threads", {
+    pagination: { page: 1, perPage: 1000 },
+    sort: { field: "id", order: "ASC" },
+  });
+  const contacts = new Map(
+    (data ?? [])
+      .flatMap((thread) => [thread, ...thread.cc])
+      .filter((contact) => contact.email && contact.name !== contact.email)
+      .map((contact) => [contact.email, contact.name]),
+  );
+  return (
+    <datalist id={contactListId}>
+      {[...contacts].map(([email, name]) => (
+        <option key={email} value={email}>
+          {name}
+        </option>
+      ))}
+    </datalist>
   );
 };
 
@@ -153,6 +236,7 @@ const AutoSave = ({
   useEffect(() => {
     const snapshot = {
       email: values.email ?? "",
+      cc: values.cc ?? "",
       subject: values.subject ?? "",
       draft: values.draft ?? "",
     };
@@ -164,7 +248,7 @@ const AutoSave = ({
     pending.current = snapshot;
     const timeout = setTimeout(() => saveNow(snapshot), AUTOSAVE_DELAY);
     return () => clearTimeout(timeout);
-  }, [values.email, values.subject, values.draft, saveNow]);
+  }, [values.email, values.cc, values.subject, values.draft, saveNow]);
 
   // Changes typed less than a second before closing the editor
   useEffect(
@@ -249,8 +333,10 @@ const useDraftSaver = (draft?: Thread) => {
   );
 
   const save = useCallback(
-    (values: Partial<Thread>) =>
-      isClosed.current ? Promise.resolve(false) : run(() => write(values)),
+    (values: Partial<DraftValues>) =>
+      isClosed.current
+        ? Promise.resolve(false)
+        : run(() => write(toThreadData(values))),
     [run, write],
   );
 
@@ -270,8 +356,8 @@ const useDraftSaver = (draft?: Thread) => {
   );
 
   const send = useCallback(
-    (values: Partial<Thread>) =>
-      close(() => write({ ...values, folder: "sent" })),
+    (values: Partial<DraftValues>) =>
+      close(() => write({ ...toThreadData(values), folder: "sent" })),
     [close, write],
   );
 

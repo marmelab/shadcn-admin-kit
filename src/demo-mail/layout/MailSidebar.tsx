@@ -10,6 +10,7 @@ import {
   Send,
   SquarePen,
   ShoppingCart,
+  Star,
   Tag,
   Trash2,
   Users,
@@ -40,7 +41,7 @@ import {
 } from "@/components/ui/sidebar";
 import { account } from "../account";
 import { getInitials } from "../threads/getInitials";
-import { fromListState, isFromList } from "../threads/useThreadActions";
+import { composeState, isFromList } from "../threads/useThreadActions";
 import type { Category, Label } from "../types";
 import { defaultFolder, labels } from "../types";
 
@@ -60,6 +61,12 @@ const folderItems: NavItem[] = [
     icon: Inbox,
     filter: { folder: "inbox" },
     countFilter: { folder: "inbox", read: false },
+  },
+  {
+    label: "mail.folders.starred",
+    icon: Star,
+    // Like the labels, every folder but the junk and the trash
+    filter: { starred: true, folder_neq_any: ["junk", "trash"] },
   },
   {
     label: "mail.folders.drafts",
@@ -196,9 +203,7 @@ const ComposeMenuItem = ({ onClick }: { onClick: () => void }) => {
         render={
           <LinkBase
             to={{ pathname: "/threads/create", search: location.search }}
-            state={
-              !replace || isFromList(location.state) ? fromListState : undefined
-            }
+            state={composeState(!replace || isFromList(location.state))}
             replace={replace}
             onClick={onClick}
           />

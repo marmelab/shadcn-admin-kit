@@ -101,7 +101,7 @@ const getContactName = async (email: string) => {
   return contact?.name ?? email;
 };
 
-/** Fields derived from the draft body and from the recipient address */
+/** Fields derived from the draft body and from the recipient addresses */
 const withDraftFields = async (data: Partial<Thread>) => ({
   ...data,
   ...(typeof data.draft === "string"
@@ -109,6 +109,16 @@ const withDraftFields = async (data: Partial<Thread>) => ({
     : {}),
   ...(typeof data.email === "string"
     ? { name: await getContactName(data.email) }
+    : {}),
+  ...(data.cc
+    ? {
+        cc: await Promise.all(
+          data.cc.map(async ({ email }) => ({
+            name: await getContactName(email),
+            email,
+          })),
+        ),
+      }
     : {}),
 });
 

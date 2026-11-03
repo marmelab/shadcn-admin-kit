@@ -1,7 +1,7 @@
 import { useListContext, useTranslate } from "ra-core";
 import { defaultFolder } from "../types";
 
-/** Name of the current label, category or folder */
+/** Name of the current label, category, starred view or folder */
 export const ThreadListTitle = () => {
   const { filterValues } = useListContext();
   const translate = useTranslate();
@@ -11,7 +11,9 @@ export const ThreadListTitle = () => {
         ? translate(`mail.labels.${filterValues.labels}`)
         : filterValues.category
           ? translate(`mail.categories.${filterValues.category}`)
-          : translate(`mail.folders.${filterValues.folder ?? defaultFolder}`)}
+          : filterValues.starred
+            ? translate("mail.folders.starred")
+            : translate(`mail.folders.${filterValues.folder ?? defaultFolder}`)}
     </>
   );
 };

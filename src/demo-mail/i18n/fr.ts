@@ -10,6 +10,7 @@ const customFrenchMessages: TranslationMessages = {
   mail: {
     folders: {
       inbox: "Boîte de réception",
+      starred: "Suivis",
       drafts: "Brouillons",
       sent: "Envoyés",
       junk: "Indésirables",
@@ -45,6 +46,9 @@ const customFrenchMessages: TranslationMessages = {
       draft: "Brouillon",
       no_recipient: "(aucun destinataire)",
       no_subject: "(aucun objet)",
+      select: "Sélectionner %{subject}",
+      select_all: "Tout sélectionner",
+      selected: "%{smart_count} sélectionnée |||| %{smart_count} sélectionnées",
     },
     sidebar: {
       categories: "Catégories",
@@ -65,14 +69,17 @@ const customFrenchMessages: TranslationMessages = {
       delete_forever: "Supprimer définitivement",
       reply: "Répondre",
       reply_all: "Répondre à tous",
+      forward: "Transférer",
       more: "Plus d'actions",
       mark_as_unread: "Marquer comme non lu",
+      mark_as_read: "Marquer comme lu",
       star: "Suivre la conversation",
       unstar: "Ne plus suivre la conversation",
       labels: "Libellés",
       category: "Catégorie",
       compose: "Nouveau message",
       discard: "Supprimer le brouillon",
+      discard_many: "Supprimer les brouillons",
       mute: "Ignorer la conversation",
       unmute: "Ne plus ignorer la conversation",
     },
@@ -80,12 +87,25 @@ const customFrenchMessages: TranslationMessages = {
       delete_title: "Supprimer définitivement cette conversation ?",
       delete_content:
         "La conversation et ses messages seront supprimés. Cette action est irréversible.",
+      delete_many_title:
+        "Supprimer définitivement cette conversation ? |||| Supprimer définitivement ces %{smart_count} conversations ?",
+      delete_many_content:
+        "La conversation et ses messages seront supprimés. Cette action est irréversible. |||| Les conversations et leurs messages seront supprimés. Cette action est irréversible.",
+      discard_many_title:
+        "Supprimer ce brouillon ? |||| Supprimer ces %{smart_count} brouillons ?",
+      discard_many_content: "Cette action est irréversible.",
     },
     notification: {
       moved: "Conversation déplacée : %{folder}",
+      moved_many:
+        "Conversation déplacée : %{folder} |||| %{smart_count} conversations déplacées : %{folder}",
       deleted: "Conversation supprimée",
+      deleted_many:
+        "Conversation supprimée |||| %{smart_count} conversations supprimées",
       sent: "Message envoyé",
       discarded: "Brouillon supprimé",
+      discarded_many:
+        "Brouillon supprimé |||| %{smart_count} brouillons supprimés",
     },
     reply: {
       placeholder: "Répondre à %{name}...",
@@ -101,10 +121,18 @@ const customFrenchMessages: TranslationMessages = {
       title: "Nouveau message",
       draft: "Brouillon",
       to: "À",
+      cc: "Cc",
+      cc_help: "Séparez les adresses par des virgules",
       subject: "Objet",
       placeholder: "Rédigez votre message...",
       saving: "Enregistrement...",
       saved: "Brouillon enregistré",
+    },
+    forward: {
+      header: "---------- Message transféré ----------",
+      from: "De :",
+      date: "Date :",
+      subject: "Objet :",
     },
   },
 };

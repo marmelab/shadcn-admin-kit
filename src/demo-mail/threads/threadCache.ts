@@ -66,6 +66,19 @@ export const removeFromStaleLists = (
 };
 
 /**
+ * Caches the threads as single records before an updateMany. The mutation
+ * merges its data into the getOne cache of every id, so a thread never opened
+ * would otherwise be cached as a partial record ({ folder }) and open broken.
+ */
+export const seedRecordCache = (queryClient: QueryClient, threads: Thread[]) =>
+  threads.forEach((thread) =>
+    queryClient.setQueryData<Thread>(
+      ["threads", "getOne", { id: String(thread.id) }],
+      (cached) => cached ?? thread,
+    ),
+  );
+
+/**
  * Refetches the sidebar counters that counted this thread. Count fetches a
  * single record with getList, which tells its queries apart from the thread
  * list (an infinite one).
