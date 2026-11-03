@@ -6,14 +6,16 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { Label, Thread } from "../types";
-import { labels } from "../types";
+import type { Category, Label, Thread } from "../types";
+import { categories, labels } from "../types";
 import { useCloseThread, useUpdateThread } from "./useThreadActions";
 
 export const ThreadMoreMenu = () => {
@@ -64,7 +66,7 @@ export const ThreadMoreMenu = () => {
         </DropdownMenuItem>
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
-            {translate("mail.action.add_label")}
+            {translate("mail.action.labels")}
           </DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
             {labels.map((label) => (
@@ -77,6 +79,32 @@ export const ThreadMoreMenu = () => {
                 {translate(`mail.labels.${label}`)}
               </DropdownMenuCheckboxItem>
             ))}
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            {translate("mail.action.category")}
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            <DropdownMenuRadioGroup
+              value={thread.category}
+              // Called for the checked item too
+              onValueChange={(category: Category) => {
+                if (category !== thread.category) {
+                  updateThread(thread, { category });
+                }
+              }}
+            >
+              {categories.map((category) => (
+                <DropdownMenuRadioItem
+                  key={category}
+                  value={category}
+                  disabled={isPending}
+                >
+                  {translate(`mail.categories.${category}`)}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />

@@ -1,6 +1,12 @@
 import { useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useLocation, useNavigate, useTranslate, useUpdate } from "ra-core";
+import {
+  useLocation,
+  useNavigate,
+  useNotify,
+  useTranslate,
+  useUpdate,
+} from "ra-core";
 import { toast } from "sonner";
 import type { Folder, Thread } from "../types";
 import { refreshCounters, removeFromStaleLists } from "./threadCache";
@@ -38,9 +44,11 @@ export const useCloseThread = () => {
 };
 
 /**
- * Updates thread flags (read, starred, labels, muted).
+ * Updates thread flags (read, starred, labels, category, muted).
  * Pessimistic, so that the lists are not refetched: the thread stays in the
- * Unread tab while it is displayed. Only the counters are refetched.
+ * Unread tab while it is displayed. Only the counters are refetched, and a
+ * thread whose category or labels changed leaves the lists it no longer
+ * belongs to.
  * The thread is updated once the server replies: isPending tells when a new
  * update would be built from the old values.
  * The callback is set on the hook: a call-time one is lost when StrictMode
@@ -48,10 +56,22 @@ export const useCloseThread = () => {
  */
 export const useUpdateThread = () => {
   const queryClient = useQueryClient();
+  const notify = useNotify();
+  const translate = useTranslate();
   const [update, { isPending }] = useUpdate<Thread>(undefined, undefined, {
-    onSuccess: (result, { previousData }) => {
+    onSuccess: (result, { data, previousData }) => {
       if (previousData) refreshCounters(queryClient, previousData as Thread);
       refreshCounters(queryClient, result);
+      if (data?.category || data?.labels) {
+        removeFromStaleLists(queryClient, result);
+      }
+      if (data?.category) {
+        notify("mail.notification.moved", {
+          messageArgs: {
+            folder: translate(`mail.categories.${data.category}`),
+          },
+        });
+      }
     },
   });
   const updateThread = useCallback(

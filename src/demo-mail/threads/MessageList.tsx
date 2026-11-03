@@ -3,10 +3,12 @@ import {
   useListContext,
   useLocaleState,
   useRecordContext,
+  useTranslate,
 } from "ra-core";
 import { DateField } from "@/components/admin/date-field";
 import { Separator } from "@/components/ui/separator";
 import type { Message } from "../types";
+import { formatContacts } from "./formatContacts";
 
 /** Messages of the thread, oldest first (inside a ReferenceManyField) */
 export const MessageList = () => {
@@ -27,6 +29,7 @@ export const MessageList = () => {
 const MessageItem = () => {
   const message = useRecordContext<Message>();
   const [locale] = useLocaleState();
+  const translate = useTranslate();
   if (!message) return null;
   return (
     <div className="flex flex-col gap-2 p-4 text-sm">
@@ -39,6 +42,12 @@ const MessageItem = () => {
           locales={locale}
           className="ml-auto text-xs text-muted-foreground"
         />
+      </div>
+      <div className="-mt-1 text-xs text-muted-foreground">
+        {translate("mail.reply.to")} {formatContacts(message.to)}
+        {message.cc.length > 0
+          ? ` · ${translate("mail.reply.cc")} ${formatContacts(message.cc)}`
+          : null}
       </div>
       <div className="whitespace-pre-wrap">{message.message}</div>
     </div>

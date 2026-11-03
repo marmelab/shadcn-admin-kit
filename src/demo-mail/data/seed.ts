@@ -1,4 +1,4 @@
-import type { Category, Folder, Label } from "../types";
+import type { Category, Contact, Folder, Label } from "../types";
 
 export interface SeedMessage {
   author: "contact" | "me";
@@ -9,7 +9,9 @@ export interface SeedMessage {
 
 export interface SeedThread {
   subject: string;
-  contact: { name: string; email: string };
+  contact: Contact;
+  /** Other recipients of the messages, defaults to none */
+  cc?: Contact[];
   folder: Folder;
   /** Defaults to "primary" */
   category?: Category;

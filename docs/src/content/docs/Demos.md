@@ -13,7 +13,7 @@ The admin of an imaginary poster shop: orders, products, categories, customers a
 
 ## Email Client
 
-A mail client inspired by the shadcn/ui Mail example: folders and categories with unread counters, a searchable list of conversations, threads with replies, labels, and undoable actions (archive, junk, trash). It uses a custom layout and sidebar, and adapts to mobile screens.
+A mail client inspired by the shadcn/ui Mail example: folders, categories and labels with unread counters, an infinite list of conversations with a full-text search, threads with replies to the sender or to all, a new message editor with autosaved drafts, and undoable actions (archive, junk, trash). It uses a custom layout and sidebar, and adapts to mobile screens.
 
 - Live demo: [marmelab.com/shadcn-admin-kit/demo-mail](https://marmelab.com/shadcn-admin-kit/demo-mail/)
 - Source: [src/demo-mail](https://github.com/marmelab/shadcn-admin-kit/tree/main/src/demo-mail)

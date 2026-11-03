@@ -3,7 +3,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { Thread } from "../types";
 import { ThreadListItem } from "./ThreadListItem";
 
-export const ThreadListItems = ({ selectedId }: { selectedId?: number }) => {
+export const ThreadListItems = ({
+  selectedId,
+  replace,
+}: {
+  selectedId?: number;
+  /** Whether a thread or the new message editor is open */
+  replace: boolean;
+}) => {
   const { data, isPending } = useListContext<Thread>();
   const translate = useTranslate();
 
@@ -29,9 +36,9 @@ export const ThreadListItems = ({ selectedId }: { selectedId?: number }) => {
         <RecordContextProvider key={thread.id} value={thread}>
           <ThreadListItem
             selected={thread.id === selectedId}
-            // Switching threads replaces the history entry, so that closing
-            // the thread goes back to the list
-            replace={selectedId != null}
+            // Switching from a thread or from the editor replaces the history
+            // entry, so that closing the thread goes back to the list
+            replace={replace}
           />
         </RecordContextProvider>
       ))}

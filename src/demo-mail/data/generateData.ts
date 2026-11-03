@@ -19,7 +19,8 @@ export const toSnippet = (message: string) =>
 
 /**
  * Turns the seeds into FakeRest collections. Dates are relative to `now`, so
- * the inbox always looks recent.
+ * the inbox always looks recent. A draft keeps its body on the thread: it has
+ * no message until it is sent.
  */
 export const generateData = (now = Date.now()) => {
   const threads: Thread[] = [];
@@ -28,21 +29,28 @@ export const generateData = (now = Date.now()) => {
 
   seeds.forEach((seed, index) => {
     const threadId = index + 1;
-    const threadMessages = [...seed.messages]
-      .sort((a, b) => b.hoursAgo - a.hoursAgo)
-      .map((seedMessage): Message => {
-        const sender = seedMessage.author === "me" ? account : seed.contact;
-        return {
+    const cc = seed.cc ?? [];
+    const seedMessages = [...seed.messages].sort(
+      (a, b) => b.hoursAgo - a.hoursAgo,
+    );
+    const lastMessage = seedMessages[seedMessages.length - 1];
+    const isDraft = seed.folder === "drafts";
+
+    if (!isDraft) {
+      seedMessages.forEach((seedMessage) => {
+        const fromMe = seedMessage.author === "me";
+        messages.push({
           id: nextMessageId++,
           thread_id: threadId,
           author: seedMessage.author,
-          name: sender.name,
-          email: sender.email,
+          ...(fromMe ? account : seed.contact),
+          to: [fromMe ? seed.contact : account],
+          cc,
           message: seedMessage.message,
           timestamp: new Date(now - seedMessage.hoursAgo * HOUR).toISOString(),
-        };
+        });
       });
-    const lastMessage = threadMessages[threadMessages.length - 1];
+    }
 
     threads.push({
       id: threadId,
@@ -55,10 +63,11 @@ export const generateData = (now = Date.now()) => {
       muted: seed.muted ?? false,
       name: seed.contact.name,
       email: seed.contact.email,
+      cc,
+      draft: isDraft ? lastMessage.message : null,
       snippet: toSnippet(lastMessage.message),
-      updated_at: lastMessage.timestamp,
+      updated_at: new Date(now - lastMessage.hoursAgo * HOUR).toISOString(),
     });
-    messages.push(...threadMessages);
   });
 
   return { threads, messages };

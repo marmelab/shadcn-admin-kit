@@ -3,24 +3,33 @@ import {
   AlertCircle,
   Archive,
   ArchiveX,
+  Bookmark,
   File,
   Inbox,
   MessagesSquare,
   Send,
+  SquarePen,
   ShoppingCart,
   Tag,
   Trash2,
   Users,
 } from "lucide-react";
+import isEqual from "lodash/isEqual";
 import type { ListParams } from "ra-core";
-import { LinkBase, useStore, useTranslate } from "ra-core";
-import { Count } from "@/components/admin/count";
+import {
+  LinkBase,
+  useGetList,
+  useLocation,
+  useStore,
+  useTranslate,
+} from "ra-core";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuBadge,
@@ -31,13 +40,11 @@ import {
 } from "@/components/ui/sidebar";
 import { account } from "../account";
 import { getInitials } from "../threads/getInitials";
-import type { Category, Folder } from "../types";
-import { defaultFolder } from "../types";
+import { fromListState, isFromList } from "../threads/useThreadActions";
+import type { Category, Label } from "../types";
+import { defaultFolder, labels } from "../types";
 
-interface MailFilter {
-  folder: Folder;
-  category?: Category;
-}
+type MailFilter = Record<string, unknown>;
 
 interface NavItem {
   label: string;
@@ -82,6 +89,20 @@ const categoryItem = (category: Category, icon: LucideIcon): NavItem => ({
   countFilter: { folder: "inbox", category, read: false },
 });
 
+const labelFilter = (label: Label) => ({
+  labels: label,
+  // Like mail clients, a label shows the conversations of every folder but
+  // these ones
+  folder_neq_any: ["junk", "trash"],
+});
+
+const labelItems: NavItem[] = labels.map((label) => ({
+  label: `mail.labels.${label}`,
+  icon: Bookmark,
+  filter: labelFilter(label),
+  countFilter: { ...labelFilter(label), read: false },
+}));
+
 const categoryItems: NavItem[] = [
   categoryItem("social", Users),
   categoryItem("updates", AlertCircle),
@@ -97,7 +118,8 @@ const categoryItems: NavItem[] = [
 export const MailSidebar = () => {
   // The thread list stores its params (including filters) under this key
   const [listParams] = useStore<Partial<ListParams>>("threads.listParams");
-  const currentFilter: Partial<MailFilter> = listParams?.filter ?? {};
+  // The search and the Unread tab apply to every item
+  const { q: _q, read: _read, ...currentFilter } = listParams?.filter ?? {};
   const { openMobile, setOpenMobile } = useSidebar();
   const handleClick = () => {
     if (openMobile) {
@@ -105,8 +127,12 @@ export const MailSidebar = () => {
     }
   };
   const isActive = (item: NavItem) =>
-    (currentFilter.folder ?? defaultFolder) === item.filter.folder &&
-    currentFilter.category === item.filter.category;
+    isEqual(
+      Object.keys(currentFilter).length > 0
+        ? currentFilter
+        : { folder: defaultFolder },
+      item.filter,
+    );
 
   return (
     <Sidebar variant="floating" collapsible="icon">
@@ -124,6 +150,13 @@ export const MailSidebar = () => {
         </div>
       </SidebarHeader>
       <SidebarContent>
+        <SidebarGroup className="pb-0">
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <ComposeMenuItem onClick={handleClick} />
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
         <MailMenuGroup
           items={folderItems}
           isActive={isActive}
@@ -131,7 +164,15 @@ export const MailSidebar = () => {
         />
         <SidebarSeparator />
         <MailMenuGroup
+          title="mail.sidebar.categories"
           items={categoryItems}
+          isActive={isActive}
+          onClick={handleClick}
+        />
+        <SidebarSeparator />
+        <MailMenuGroup
+          title="mail.sidebar.labels"
+          items={labelItems}
           isActive={isActive}
           onClick={handleClick}
         />
@@ -140,30 +181,68 @@ export const MailSidebar = () => {
   );
 };
 
+/**
+ * Opens the new message editor next to the list. Like the list items, it
+ * replaces the open thread in the history, so that closing the editor goes
+ * back to the list.
+ */
+const ComposeMenuItem = ({ onClick }: { onClick: () => void }) => {
+  const translate = useTranslate();
+  const location = useLocation();
+  const replace = location.pathname !== "/threads";
+  return (
+    <SidebarMenuItem>
+      <SidebarMenuButton
+        render={
+          <LinkBase
+            to={{ pathname: "/threads/create", search: location.search }}
+            state={
+              !replace || isFromList(location.state) ? fromListState : undefined
+            }
+            replace={replace}
+            onClick={onClick}
+          />
+        }
+        variant="outline"
+        tooltip={translate("mail.action.compose")}
+      >
+        <SquarePen />
+        <span>{translate("mail.action.compose")}</span>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+  );
+};
+
 const MailMenuGroup = ({
+  title,
   items,
   isActive,
   onClick,
 }: {
+  title?: string;
   items: NavItem[];
   isActive: (item: NavItem) => boolean;
   onClick: () => void;
-}) => (
-  <SidebarGroup>
-    <SidebarGroupContent>
-      <SidebarMenu>
-        {items.map((item) => (
-          <MailMenuItem
-            key={item.label}
-            item={item}
-            isActive={isActive(item)}
-            onClick={onClick}
-          />
-        ))}
-      </SidebarMenu>
-    </SidebarGroupContent>
-  </SidebarGroup>
-);
+}) => {
+  const translate = useTranslate();
+  return (
+    <SidebarGroup>
+      {title ? <SidebarGroupLabel>{translate(title)}</SidebarGroupLabel> : null}
+      <SidebarGroupContent>
+        <SidebarMenu>
+          {items.map((item) => (
+            <MailMenuItem
+              key={item.label}
+              item={item}
+              isActive={isActive(item)}
+              onClick={onClick}
+            />
+          ))}
+        </SidebarMenu>
+      </SidebarGroupContent>
+    </SidebarGroup>
+  );
+};
 
 const MailMenuItem = ({
   item,
@@ -190,15 +269,25 @@ const MailMenuItem = ({
           />
         }
         isActive={isActive}
+        tooltip={translate(item.label)}
       >
         <Icon />
         <span>{translate(item.label)}</span>
       </SidebarMenuButton>
-      {item.countFilter ? (
-        <SidebarMenuBadge>
-          <Count resource="threads" filter={item.countFilter} />
-        </SidebarMenuBadge>
-      ) : null}
+      {item.countFilter ? <CounterBadge filter={item.countFilter} /> : null}
     </SidebarMenuItem>
   );
+};
+
+/**
+ * Number of threads matching the filter, hidden when there are none. Fetched
+ * like the kit Count component, so that refreshCounters() refetches it.
+ */
+const CounterBadge = ({ filter }: { filter: Record<string, unknown> }) => {
+  const { total } = useGetList("threads", {
+    filter,
+    pagination: { page: 1, perPage: 1 },
+  });
+  if (!total) return null;
+  return <SidebarMenuBadge>{total}</SidebarMenuBadge>;
 };

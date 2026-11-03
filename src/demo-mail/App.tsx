@@ -9,7 +9,9 @@ import { ThreadList } from "./threads/ThreadList";
 // The e-commerce demo is served from the same origin, so this demo keeps its
 // preferences (theme, locale, list params) under its own store key. A logout
 // there still clears them, as ra-core resets every key of every app.
-const store = localStorageStore(undefined, "demo-mail");
+// Version 2 drops the page of the list params stored by the paginated list,
+// as the infinite list would start at that page.
+const store = localStorageStore("2", "demo-mail");
 
 const App = () => (
   <Admin

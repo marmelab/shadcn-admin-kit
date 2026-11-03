@@ -4,6 +4,10 @@ export const inboxThreads: SeedThread[] = [
   {
     subject: "Meeting Tomorrow",
     contact: { name: "William Smith", email: "williamsmith@example.com" },
+    cc: [
+      { name: "Alice Smith", email: "alicesmith@example.com" },
+      { name: "Emily Davis", email: "emilydavis@example.com" },
+    ],
     folder: "inbox",
     labels: ["meeting", "work", "important"],
     messages: [
@@ -18,6 +22,7 @@ export const inboxThreads: SeedThread[] = [
   {
     subject: "Re: Project Update",
     contact: { name: "Alice Smith", email: "alicesmith@example.com" },
+    cc: [{ name: "David Lee", email: "davidlee@example.com" }],
     folder: "inbox",
     labels: ["work", "important"],
     messages: [
@@ -158,6 +163,10 @@ export const inboxThreads: SeedThread[] = [
   {
     subject: "Team Dinner",
     contact: { name: "Sophia White", email: "sophiawhite@example.com" },
+    cc: [
+      { name: "Ethan Clark", email: "ethanclark@example.com" },
+      { name: "Ava Taylor", email: "avataylor@example.com" },
+    ],
     folder: "inbox",
     labels: ["meeting", "work"],
     read: false,
@@ -188,6 +197,7 @@ export const inboxThreads: SeedThread[] = [
   {
     subject: "Re: Meeting Agenda",
     contact: { name: "Ava Taylor", email: "avataylor@example.com" },
+    cc: [{ name: "William Smith", email: "williamsmith@example.com" }],
     folder: "inbox",
     labels: ["meeting", "work"],
     messages: [
@@ -260,6 +270,7 @@ export const inboxThreads: SeedThread[] = [
   {
     subject: "Re: Budget Approval",
     contact: { name: "Chloe Hall", email: "chloehall@example.com" },
+    cc: [{ name: "Emily Davis", email: "emilydavis@example.com" }],
     folder: "inbox",
     labels: ["work", "budget"],
     messages: [

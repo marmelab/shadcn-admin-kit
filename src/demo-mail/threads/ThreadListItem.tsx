@@ -18,6 +18,7 @@ export const ThreadListItem = ({
   const translate = useTranslate();
   const formatDistance = useFormatDistance();
   if (!thread) return null;
+  const isDraft = thread.folder === "drafts";
 
   return (
     <LinkBase
@@ -28,12 +29,19 @@ export const ThreadListItem = ({
       state={!replace || isFromList(location.state) ? fromListState : undefined}
       replace={replace}
       className={cn(
-        "flex flex-col gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
+        "relative flex flex-col gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
         selected && "bg-muted",
       )}
     >
       <div className="flex w-full items-center gap-2">
-        <span className="truncate font-semibold">{thread.name}</span>
+        {isDraft ? (
+          <span className="shrink-0 font-semibold text-destructive">
+            {translate("mail.list.draft")}
+          </span>
+        ) : null}
+        <span className="truncate font-semibold">
+          {thread.name || translate("mail.list.no_recipient")}
+        </span>
         {/* The icons are decorative, screen readers get the sr-only text */}
         {!thread.read ? (
           <>
@@ -68,7 +76,9 @@ export const ThreadListItem = ({
           {formatDistance(thread.updated_at)}
         </span>
       </div>
-      <div className="text-xs font-medium">{thread.subject}</div>
+      <div className="text-xs font-medium">
+        {thread.subject || translate("mail.list.no_subject")}
+      </div>
       <div className="line-clamp-2 text-xs text-muted-foreground">
         {thread.snippet}
       </div>

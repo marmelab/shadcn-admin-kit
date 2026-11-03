@@ -1,11 +1,17 @@
 import { useListContext, useTranslate } from "ra-core";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-/** All mail / Unread tabs, bound to the `read` filter */
+/**
+ * All mail / Unread tabs, bound to the `read` filter. Hidden in the folders
+ * of my own messages, which are all read.
+ */
 export const ReadTabs = () => {
   const { filterValues, displayedFilters, setFilters } = useListContext();
   const translate = useTranslate();
   const value = filterValues.read === false ? "unread" : "all";
+  if (filterValues.folder === "drafts" || filterValues.folder === "sent") {
+    return null;
+  }
 
   const handleChange = (unreadOnly: boolean) => {
     const otherFilters = Object.fromEntries(

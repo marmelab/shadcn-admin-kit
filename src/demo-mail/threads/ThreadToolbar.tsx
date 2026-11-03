@@ -13,7 +13,9 @@ import { Confirm } from "@/components/admin/confirm";
 import { IconButtonWithTooltip } from "@/components/admin/icon-button-with-tooltip";
 import { Separator } from "@/components/ui/separator";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 import type { Thread } from "../types";
+import type { ReplyMode } from "./ReplyForm";
 import { ThreadMoreMenu } from "./ThreadMoreMenu";
 import {
   focusReplyInput,
@@ -24,14 +26,27 @@ import {
 /**
  * Each move button becomes "back to inbox" when the thread is already in the
  * target folder (Archive and Trash for the first one), and the trash button
- * deletes permanently from the trash.
+ * deletes permanently from the trash. The reply buttons choose the recipients
+ * of the reply form, Reply all being disabled when there is no one in Cc.
  */
-export const ThreadToolbar = () => {
+export const ThreadToolbar = ({
+  replyMode,
+  onReplyModeChange,
+}: {
+  replyMode: ReplyMode;
+  onReplyModeChange: (mode: ReplyMode) => void;
+}) => {
   const thread = useRecordContext<Thread>();
   const isMobile = useIsMobile();
   const closeThread = useCloseThread();
   const moveThread = useMoveThread();
   if (!thread) return null;
+  const canReplyAll = thread.cc.length > 0;
+  const activeMode = canReplyAll ? replyMode : "reply";
+  const reply = (mode: ReplyMode) => {
+    onReplyModeChange(mode);
+    focusReplyInput();
+  };
 
   return (
     <div className="flex items-center gap-1 p-2">
@@ -81,23 +96,24 @@ export const ThreadToolbar = () => {
         </IconButtonWithTooltip>
       )}
       <div className="ml-auto flex items-center gap-1">
-        {thread.folder !== "drafts" ? (
-          <>
-            <IconButtonWithTooltip
-              label="mail.action.reply"
-              onClick={focusReplyInput}
-            >
-              <Reply />
-            </IconButtonWithTooltip>
-            <IconButtonWithTooltip
-              label="mail.action.reply_all"
-              onClick={focusReplyInput}
-            >
-              <ReplyAll />
-            </IconButtonWithTooltip>
-            <Separator orientation="vertical" className="mx-1" />
-          </>
-        ) : null}
+        <IconButtonWithTooltip
+          label="mail.action.reply"
+          aria-pressed={activeMode === "reply"}
+          className={cn(activeMode === "reply" && "bg-accent")}
+          onClick={() => reply("reply")}
+        >
+          <Reply />
+        </IconButtonWithTooltip>
+        <IconButtonWithTooltip
+          label="mail.action.reply_all"
+          aria-pressed={activeMode === "replyAll"}
+          className={cn(activeMode === "replyAll" && "bg-accent")}
+          disabled={!canReplyAll}
+          onClick={() => reply("replyAll")}
+        >
+          <ReplyAll />
+        </IconButtonWithTooltip>
+        <Separator orientation="vertical" className="mx-1" />
         <ThreadMoreMenu />
       </div>
     </div>
