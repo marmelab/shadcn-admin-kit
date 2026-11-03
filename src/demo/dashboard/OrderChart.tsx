@@ -60,6 +60,7 @@ const OrderChart = (props: { orders?: Order[] }) => {
           max: new Date().getTime(),
           axisLabel: {
             formatter: (value: number) => dateFormatter(value),
+            hideOverlap: true,
           },
         },
         yAxis: {

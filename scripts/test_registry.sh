@@ -25,6 +25,12 @@ setup_temp_app() {
 echo "Building registry"
 make build-registry
 
+# The temp apps live inside the workspace: install them as standalone projects
+# without a lockfile, so they never touch pnpm-lock.yaml. Exported because
+# shadcn add runs its own pnpm add.
+export pnpm_config_ignore_workspace=true
+export pnpm_config_lockfile=false
+
 echo "Serving registry locally on port 8080"
 python3 -m http.server -d ./public 8080 &
 SERVER_PID=$!
