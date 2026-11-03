@@ -24,7 +24,6 @@
   "dependencies": {
     "@base-ui/react": "^1.6.0",
     "@fontsource-variable/inter": "^5.2.8",
-    "@hookform/resolvers": "^5.0.1",
     "@tailwindcss/vite": "^4.2.1",
     "@tanstack/react-query": "^5.83.0",
     "@tiptap/extension-code-block-lowlight": "^3.20.0",
@@ -43,7 +42,7 @@
     "data-generator-retail": "^5.14.0",
     "date-fns": "^4.1.0",
     "diacritic": "^0.0.2",
-    "echarts": "^5.6.0",
+    "echarts": "^6.1.0",
     "inflection": "^3.0.2",
     "lodash": "^4.18.1",
     "lowlight": "^3.3.0",
@@ -64,8 +63,7 @@
     "react-shiki": "^0.7.4",
     "sonner": "^2.0.3",
     "tailwind-merge": "^3.5.0",
-    "tailwindcss": "^4.2.1",
-    "zod": "^3.24.3"
+    "tailwindcss": "^4.2.1"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.1.3",
