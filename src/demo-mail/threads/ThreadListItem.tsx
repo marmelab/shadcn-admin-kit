@@ -106,7 +106,13 @@ export const ThreadListItem = ({
         {thread.labels.length > 0 ? (
           <div className="flex flex-wrap gap-2">
             {thread.labels.map((label) => (
-              <Badge key={label} variant="secondary">
+              <Badge
+                // Secondary, muted and accent share a color: an outlined
+                // badge stays visible on a hovered or open thread
+                key={label}
+                variant="outline"
+                className="bg-background"
+              >
                 {translate(`mail.labels.${label}`)}
               </Badge>
             ))}
