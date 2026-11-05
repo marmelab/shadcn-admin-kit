@@ -40,6 +40,7 @@ const customEnglishMessages: TranslationMessages = {
     },
     list: {
       empty: "No conversations",
+      no_results: 'No conversations match "%{q}"',
       unread: "Unread",
       starred: "Starred",
       muted: "Muted",
@@ -118,6 +119,7 @@ const customEnglishMessages: TranslationMessages = {
     },
     compose: {
       title: "New message",
+      forward: "Forward",
       draft: "Draft",
       to: "To",
       cc: "Cc",

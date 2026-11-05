@@ -65,8 +65,10 @@ export const ThreadBulkActions = ({ selectedId }: { selectedId?: number }) => {
   return (
     <div className="sticky top-0 z-10 -mx-1 mb-2 flex h-11 items-center gap-1 bg-background px-1">
       <Checkbox
-        className="mx-2"
+        // The kit checkbox has no indeterminate icon: a dash replaces the check
+        className="mx-2 data-indeterminate:border-primary data-indeterminate:bg-primary data-indeterminate:text-primary-foreground data-indeterminate:[&_svg]:hidden data-indeterminate:before:h-0.5 data-indeterminate:before:w-2 data-indeterminate:before:rounded-full data-indeterminate:before:bg-current data-indeterminate:before:content-['']"
         checked={allChecked}
+        indeterminate={checked.length > 0 && !allChecked}
         onCheckedChange={() =>
           allChecked
             ? onUnselectItems()
@@ -214,6 +216,7 @@ const DeleteButton = ({
             : "mail.confirm.delete_many_content"
         }
         translateOptions={{ smart_count: threads.length }}
+        confirm={label}
         confirmColor="warning"
         onConfirm={handleConfirm}
         onClose={() => setIsOpen(false)}

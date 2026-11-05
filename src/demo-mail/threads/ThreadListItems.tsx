@@ -34,7 +34,9 @@ export const ThreadListItems = ({
   if (!data || data.length === 0) {
     return (
       <p className="py-8 text-center text-sm text-muted-foreground">
-        {translate("mail.list.empty")}
+        {filterValues.q
+          ? translate("mail.list.no_results", { q: filterValues.q })
+          : translate("mail.list.empty")}
       </p>
     );
   }

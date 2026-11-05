@@ -89,6 +89,12 @@ export const Composer = ({ draft }: { draft?: Thread }) => {
       draft: draft?.draft ?? forwarded?.draft ?? "",
     };
   });
+  const [isForward] = useState(
+    () =>
+      !draft &&
+      initialValues.subject !== "" &&
+      initialValues.subject === getComposeState(location.state)?.values.subject,
+  );
   useEffect(() => {
     if (composeId != null) openedComposeIds.add(composeId);
   }, [composeId]);
@@ -126,7 +132,13 @@ export const Composer = ({ draft }: { draft?: Thread }) => {
           </IconButtonWithTooltip>
         ) : null}
         <h2 className="px-2 text-sm font-semibold">
-          {translate(draft ? "mail.compose.draft" : "mail.compose.title")}
+          {translate(
+            draft
+              ? "mail.compose.draft"
+              : isForward
+                ? "mail.compose.forward"
+                : "mail.compose.title",
+          )}
         </h2>
         <IconButtonWithTooltip
           label="mail.action.discard"

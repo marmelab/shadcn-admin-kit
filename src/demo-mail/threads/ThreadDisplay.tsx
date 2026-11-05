@@ -58,7 +58,8 @@ const ThreadView = ({ thread }: { thread: Thread }) => {
           source="updated_at"
           showTime
           locales={locale}
-          className="ml-auto shrink-0 text-xs text-muted-foreground"
+          // Each message shows its date, mobile screens have no room for it
+          className="ml-auto hidden shrink-0 text-xs text-muted-foreground sm:inline"
         />
       </div>
       <Separator />

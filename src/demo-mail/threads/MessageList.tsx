@@ -35,7 +35,10 @@ const MessageItem = () => {
     <div className="flex flex-col gap-2 p-4 text-sm">
       <div className="flex flex-wrap items-center gap-2">
         <span className="font-semibold">{message.name}</span>
-        <span className="text-xs text-muted-foreground">{message.email}</span>
+        {/* The thread header shows the address on mobile screens */}
+        <span className="hidden text-xs text-muted-foreground sm:inline">
+          {message.email}
+        </span>
         <DateField
           source="timestamp"
           showTime

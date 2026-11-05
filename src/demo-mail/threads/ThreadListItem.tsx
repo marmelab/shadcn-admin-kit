@@ -35,14 +35,17 @@ export const ThreadListItem = ({
   return (
     <div
       className={cn(
-        "relative flex rounded-lg border text-sm transition-all hover:bg-accent",
-        selected && "bg-muted",
+        // Hover is lighter than the open thread, so both stay distinct
+        "relative flex rounded-lg border text-sm transition-all hover:bg-accent/50",
+        selected && "bg-muted hover:bg-muted",
         checked &&
-          "border-blue-300 bg-blue-50 dark:border-blue-800 dark:bg-blue-950/40",
+          "border-blue-300 bg-blue-50 hover:bg-blue-100 dark:border-blue-800 dark:bg-blue-950/40 dark:hover:bg-blue-950/60",
       )}
     >
       <div className="flex flex-col items-center gap-3 py-3.5 pl-3">
         <Checkbox
+          // Visible on the grey background of the open thread
+          className="bg-background"
           checked={checked}
           onCheckedChange={(_, { event }) =>
             onCheck((event as MouseEvent).shiftKey ?? false)

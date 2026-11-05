@@ -40,6 +40,7 @@ const customFrenchMessages: TranslationMessages = {
     },
     list: {
       empty: "Aucune conversation",
+      no_results: "Aucune conversation ne correspond à « %{q} »",
       unread: "Non lu",
       starred: "Suivi",
       muted: "Ignoré",
@@ -119,6 +120,7 @@ const customFrenchMessages: TranslationMessages = {
     },
     compose: {
       title: "Nouveau message",
+      forward: "Transférer",
       draft: "Brouillon",
       to: "À",
       cc: "Cc",

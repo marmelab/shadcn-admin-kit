@@ -226,6 +226,7 @@ const DeleteForeverButton = ({ thread }: { thread: Thread }) => {
         loading={isPending}
         title="mail.confirm.delete_title"
         content="mail.confirm.delete_content"
+        confirm="mail.action.delete_forever"
         confirmColor="warning"
         onConfirm={handleConfirm}
         onClose={() => setIsOpen(false)}
