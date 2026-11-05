@@ -5,12 +5,15 @@
 A component kit to build your Admin app with [shadcn/ui](https://ui.shadcn.com/).
 
 [![Online Demo]][OnlineDemoLink]
+[![Email Demo]][EmailDemoLink]
 [![Documentation]][DocumentationLink]
 
 [Online Demo]: https://img.shields.io/badge/Online_Demo-blue?style=for-the-badge
+[Email Demo]: https://img.shields.io/badge/Email_Demo-blue?style=for-the-badge
 [Documentation]: https://img.shields.io/badge/Documentation-blueviolet?style=for-the-badge
 
 [OnlineDemoLink]: https://marmelab.com/shadcn-admin-kit/demo 'Online Demo'
+[EmailDemoLink]: https://marmelab.com/shadcn-admin-kit/demo-mail/ 'Email Demo'
 [DocumentationLink]: https://marmelab.com/shadcn-admin-kit/docs 'Documentation'
 
 ## Features
