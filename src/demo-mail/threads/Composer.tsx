@@ -93,6 +93,9 @@ export const Composer = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  // The latest location, read when the saved draft resolves
+  const locationRef = useRef(location);
+  locationRef.current = location;
   const dataProvider = useDataProvider();
   // Read once: the editor itself saves its draft into the map
   const [savedDraft] = useState(() =>
@@ -110,9 +113,10 @@ export const Composer = ({
       .then(({ data }) => {
         if (data.folder !== "drafts") throw new Error("Not a draft anymore");
         if (cancelled) return;
+        const { search, state } = locationRef.current;
         navigate(
-          { pathname: `/threads/${data.id}/show`, search: location.search },
-          { replace: true, state: location.state },
+          { pathname: `/threads/${data.id}/show`, search },
+          { replace: true, state },
         );
       })
       .catch(() => {
@@ -446,8 +450,11 @@ const useDraftSaver = (draft?: Thread, composeId?: number) => {
 
   const send = useCallback(
     (values: Partial<DraftValues>) =>
-      close(() => write({ ...toThreadData(values), folder: "sent" })),
-    [close, write],
+      close(async () => {
+        await write({ ...toThreadData(values), folder: "sent" });
+        if (composeId != null) composeDrafts.delete(composeId);
+      }),
+    [close, write, composeId],
   );
 
   const discard = useCallback(
@@ -460,9 +467,10 @@ const useDraftSaver = (draft?: Thread, composeId?: number) => {
           { id: previousData.id, previousData },
           { mutationMode: "pessimistic", returnPromise: true },
         );
+        if (composeId != null) composeDrafts.delete(composeId);
         refreshCounters(queryClient, [previousData]);
       }),
-    [close, deleteOne, queryClient],
+    [close, deleteOne, queryClient, composeId],
   );
 
   return { save, send, discard };
