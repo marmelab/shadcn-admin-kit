@@ -5,9 +5,9 @@ import { useWatch } from "react-hook-form";
 import {
   email,
   Form,
-  type Identifier,
   required,
   useCreate,
+  useDataProvider,
   useDelete,
   useGetList,
   useLocation,
@@ -71,8 +71,11 @@ const joinAddresses = (contacts: { email: string }[]) =>
 
 const AUTOSAVE_DELAY = 1000;
 
-/** The draft saved by each new message editor, by compose id */
-const composeDrafts = new Map<number, Identifier>();
+/**
+ * The draft saved by each new message editor, by compose id. A promise, as
+ * the draft creation may still be in progress.
+ */
+const composeDrafts = new Map<number, Promise<Thread["id"]>>();
 
 /**
  * Editor of a draft, or of a new message when there is no draft yet. Changes
@@ -90,18 +93,38 @@ export const Composer = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const savedDraftId =
-    !draft && composeId != null ? composeDrafts.get(composeId) : undefined;
+  const dataProvider = useDataProvider();
+  // Read once: the editor itself saves its draft into the map
+  const [savedDraft] = useState(() =>
+    !draft && composeId != null ? composeDrafts.get(composeId) : undefined,
+  );
+  const [showForm, setShowForm] = useState(savedDraft == null);
   useEffect(() => {
-    if (savedDraftId == null) return;
+    if (savedDraft == null || composeId == null) return;
+    let cancelled = false;
     // Back to an editor through the history: its draft holds the latest
-    // changes, a new editor would save a second draft
-    navigate(
-      { pathname: `/threads/${savedDraftId}/show`, search: location.search },
-      { replace: true, state: location.state },
-    );
-  }, [savedDraftId, navigate, location.search, location.state]);
-  if (savedDraftId != null) return null;
+    // changes, a new editor would save a second draft. A draft since sent
+    // or deleted gives a new editor.
+    savedDraft
+      .then((id) => dataProvider.getOne<Thread>("threads", { id }))
+      .then(({ data }) => {
+        if (data.folder !== "drafts") throw new Error("Not a draft anymore");
+        if (cancelled) return;
+        navigate(
+          { pathname: `/threads/${data.id}/show`, search: location.search },
+          { replace: true, state: location.state },
+        );
+      })
+      .catch(() => {
+        composeDrafts.delete(composeId);
+        if (!cancelled) setShowForm(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  if (!showForm) return null;
   return <ComposerForm draft={draft} composeId={composeId} />;
 };
 
@@ -351,13 +374,19 @@ const useDraftSaver = (draft?: Thread, composeId?: number) => {
       if (!current) {
         // Created as a draft even when sent right away, as the data provider
         // turns drafts into messages
-        current = (await create(
+        const creation = create(
           "threads",
           { data: { ...data, folder: "drafts" } },
           { returnPromise: true },
-        )) as Thread;
+        ) as Promise<Thread>;
+        if (composeId != null) {
+          const draftId = creation.then((thread) => thread.id);
+          // A failed creation leaves no draft to go back to
+          draftId.catch(() => composeDrafts.delete(composeId));
+          composeDrafts.set(composeId, draftId);
+        }
+        current = await creation;
         record.current = current;
-        if (composeId != null) composeDrafts.set(composeId, current.id);
         refreshCounters(queryClient, [current]);
         // Shows the new draft in the drafts list
         queryClient.invalidateQueries({
@@ -431,10 +460,9 @@ const useDraftSaver = (draft?: Thread, composeId?: number) => {
           { id: previousData.id, previousData },
           { mutationMode: "pessimistic", returnPromise: true },
         );
-        if (composeId != null) composeDrafts.delete(composeId);
         refreshCounters(queryClient, [previousData]);
       }),
-    [close, deleteOne, queryClient, composeId],
+    [close, deleteOne, queryClient],
   );
 
   return { save, send, discard };

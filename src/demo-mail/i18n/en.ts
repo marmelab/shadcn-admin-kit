@@ -43,6 +43,7 @@ const customEnglishMessages: TranslationMessages = {
       no_results: 'No conversations match "%{q}"',
       unread: "Unread",
       muted: "Muted",
+      load_more_retry: "Loading failed, retry",
       draft: "Draft",
       no_recipient: "(no recipient)",
       no_subject: "(no subject)",

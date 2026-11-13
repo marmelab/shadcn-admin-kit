@@ -6,9 +6,11 @@ import {
   useListContext,
   useLocation,
   useMatch,
+  useTranslate,
 } from "ra-core";
 import { ListView } from "@/components/admin/list";
 import { SearchInput } from "@/components/admin/search-input";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -114,6 +116,7 @@ const LoadMoreOnScroll = ({
   const { hasNextPage, fetchNextPage, isFetchingNextPage } =
     useInfinitePaginationContext();
   const { error } = useListContext();
+  const translate = useTranslate();
   const sentinelRef = useRef<HTMLDivElement>(null);
   const hasError = error != null;
   useEffect(() => {
@@ -121,8 +124,8 @@ const LoadMoreOnScroll = ({
     if (!sentinel || !hasNextPage || isFetchingNextPage) return;
     // Re-created after each page, so that a page too short to scroll loads
     // the next one. After a failed page, the end of the list must scroll out
-    // and back into view: the observer reports the visible end at once, which
-    // would retry in a loop.
+    // and back into view, or the Retry button be clicked: the observer reports
+    // the visible end at once, which would retry in a loop.
     let skipInitialEntry = hasError;
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -140,7 +143,17 @@ const LoadMoreOnScroll = ({
 
   return (
     <div ref={sentinelRef} className="pb-4">
-      {isFetchingNextPage ? <Skeleton className="h-28 w-full" /> : null}
+      {isFetchingNextPage ? (
+        <Skeleton className="h-28 w-full" />
+      ) : hasError && hasNextPage ? (
+        <Button
+          variant="ghost"
+          className="w-full"
+          onClick={() => fetchNextPage()}
+        >
+          {translate("mail.list.load_more_retry")}
+        </Button>
+      ) : null}
     </div>
   );
 };

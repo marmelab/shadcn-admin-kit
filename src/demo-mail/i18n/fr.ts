@@ -43,6 +43,7 @@ const customFrenchMessages: TranslationMessages = {
       no_results: "Aucune conversation ne correspond à « %{q} »",
       unread: "Non lu",
       muted: "Ignoré",
+      load_more_retry: "Échec du chargement, réessayer",
       draft: "Brouillon",
       no_recipient: "(aucun destinataire)",
       no_subject: "(aucun objet)",
