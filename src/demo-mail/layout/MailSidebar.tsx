@@ -275,6 +275,8 @@ const MailMenuItem = ({
         }
         isActive={isActive}
         tooltip={translate(item.label)}
+        // The kit accent is too light to spot the active icon once collapsed
+        className="data-active:bg-sidebar-foreground/10 data-active:hover:bg-sidebar-foreground/10"
       >
         <Icon />
         <span>{translate(item.label)}</span>

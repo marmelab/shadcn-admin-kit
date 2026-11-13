@@ -3,7 +3,7 @@ import { withLifecycleCallbacks } from "ra-core";
 import fakeRestDataProvider from "ra-data-fakerest";
 import { account } from "./account";
 import { generateData, toSnippet } from "./data/generateData";
-import type { Message, Thread } from "./types";
+import type { Contact, Message, Thread } from "./types";
 
 const fakeRest = fakeRestDataProvider(generateData(), true, 300);
 
@@ -43,7 +43,10 @@ const searchThreads = async (q: string) => {
         thread.subject,
         thread.name,
         thread.email,
-        ...thread.cc.flatMap(({ name, email }) => [name, email]),
+        ...[...thread.to, ...thread.cc].flatMap(({ name, email }) => [
+          name,
+          email,
+        ]),
         thread.draft ?? "",
       ].join(" "),
     ]),
@@ -96,7 +99,7 @@ const getContactName = async (email: string) => {
   if (!email) return "";
   const threads = await getAll<Thread>("threads");
   const contact = threads
-    .flatMap((thread) => [thread, ...thread.cc])
+    .flatMap((thread) => [thread, ...thread.to, ...thread.cc])
     .find((contact) => contact.email === email);
   return contact?.name ?? email;
 };
@@ -110,17 +113,17 @@ const withDraftFields = async (data: Partial<Thread>) => ({
   ...(typeof data.email === "string"
     ? { name: await getContactName(data.email) }
     : {}),
-  ...(data.cc
-    ? {
-        cc: await Promise.all(
-          data.cc.map(async ({ email }) => ({
-            name: await getContactName(email),
-            email,
-          })),
-        ),
-      }
-    : {}),
+  ...(data.to ? { to: await withContactNames(data.to) } : {}),
+  ...(data.cc ? { cc: await withContactNames(data.cc) } : {}),
 });
+
+const withContactNames = (contacts: Contact[]) =>
+  Promise.all(
+    contacts.map(async ({ email }) => ({
+      name: await getContactName(email),
+      email,
+    })),
+  );
 
 const deleteThreadMessages = async (
   threadIds: Identifier[],
@@ -136,7 +139,7 @@ const deleteThreadMessages = async (
 
 /**
  * Simulates the server-side logic of a mail backend: a new message updates its
- * thread (and mutes it when asked), moving a draft to the sent folder turns
+ * thread (and sets its mute toggle), moving a draft to the sent folder turns
  * its body into a message, and deleting a thread deletes its messages.
  */
 export const dataProvider = withLifecycleCallbacks(baseDataProvider, [
@@ -144,10 +147,10 @@ export const dataProvider = withLifecycleCallbacks(baseDataProvider, [
     resource: "messages",
     beforeCreate: async (params, dataProvider) => {
       const { mute, ...data } = params.data;
-      if (mute) {
+      if (typeof mute === "boolean") {
         await dataProvider.update("threads", {
           id: data.thread_id,
-          data: { muted: true },
+          data: { muted: mute },
           previousData: {},
         });
       }
@@ -177,6 +180,7 @@ export const dataProvider = withLifecycleCallbacks(baseDataProvider, [
         read: true,
         starred: false,
         muted: false,
+        to: [],
         cc: [],
         ...params.data,
       }),
@@ -194,7 +198,7 @@ export const dataProvider = withLifecycleCallbacks(baseDataProvider, [
           thread_id: thread.id,
           author: "me",
           ...account,
-          to: [{ name: thread.name, email: thread.email }],
+          to: [{ name: thread.name, email: thread.email }, ...thread.to],
           cc: thread.cc,
           message: thread.draft ?? "",
           timestamp: new Date().toISOString(),

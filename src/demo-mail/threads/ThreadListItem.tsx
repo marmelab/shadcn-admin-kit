@@ -1,3 +1,4 @@
+import type { MouseEvent as ReactMouseEvent } from "react";
 import { BellOff, Star } from "lucide-react";
 import { LinkBase, useLocation, useRecordContext, useTranslate } from "ra-core";
 import { Badge } from "@/components/ui/badge";
@@ -6,7 +7,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import type { Thread } from "../types";
 import { useFormatDistance } from "./useFormatDistance";
-import { fromListState, isFromList, useUpdateThread } from "./useThreadActions";
+import {
+  fromListState,
+  isFromList,
+  useCloseThread,
+  useUpdateThread,
+} from "./useThreadActions";
 
 /**
  * A thread of the list: a link to the thread, next to its selection checkbox
@@ -28,6 +34,7 @@ export const ThreadListItem = ({
   const location = useLocation();
   const translate = useTranslate();
   const formatDistance = useFormatDistance();
+  const closeThread = useCloseThread();
   if (!thread) return null;
   const isDraft = thread.folder === "drafts";
   const subject = thread.subject || translate("mail.list.no_subject");
@@ -63,6 +70,15 @@ export const ThreadListItem = ({
           !replace || isFromList(location.state) ? fromListState : undefined
         }
         replace={replace}
+        // Clicking the open thread closes it (a modified click still opens a
+        // new tab or window)
+        onClick={(event: ReactMouseEvent<HTMLAnchorElement>) => {
+          if (!selected || event.metaKey || event.ctrlKey || event.shiftKey) {
+            return;
+          }
+          event.preventDefault();
+          closeThread();
+        }}
         className="flex min-w-0 flex-1 flex-col gap-2 p-3 text-left"
       >
         <div className="flex w-full items-center gap-2">

@@ -1,10 +1,24 @@
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { Archive, ArchiveX, Inbox, Mail, MailOpen, Trash2 } from "lucide-react";
 import {
+  Archive,
+  ArchiveX,
+  CheckCheck,
+  Inbox,
+  LoaderCircle,
+  Mail,
+  MailOpen,
+  RotateCw,
+  Trash2,
+} from "lucide-react";
+import {
+  useDataProvider,
   useDeleteMany,
+  useGetList,
   useListContext,
+  useLoading,
   useNotify,
+  useRefresh,
   useTranslate,
 } from "ra-core";
 import { Confirm } from "@/components/admin/confirm";
@@ -19,8 +33,8 @@ import {
 } from "./useThreadActions";
 
 /**
- * Select all checkbox and actions on the checked threads, sticky above the
- * list. The actions follow the thread toolbar: each move becomes "back to
+ * Select all checkbox and actions on the checked threads (or on the whole
+ * view when none is checked), sticky above the list. The actions follow the thread toolbar: each move becomes "back to
  * inbox" when every checked thread is already in the target folder.
  */
 export const ThreadBulkActions = ({ selectedId }: { selectedId?: number }) => {
@@ -76,7 +90,9 @@ export const ThreadBulkActions = ({ selectedId }: { selectedId?: number }) => {
         }
         aria-label={translate("mail.list.select_all")}
       />
-      {checked.length === 0 ? null : (
+      {checked.length === 0 ? (
+        <ViewActions />
+      ) : (
         <>
           <span className="mr-auto text-sm text-muted-foreground">
             {translate("mail.list.selected", { smart_count: checked.length })}
@@ -155,6 +171,53 @@ export const ThreadBulkActions = ({ selectedId }: { selectedId?: number }) => {
         </>
       )}
     </div>
+  );
+};
+
+/** Mark all as read (every unread thread of the view, not only the loaded
+ * ones) and refresh */
+const ViewActions = () => {
+  const { filterValues } = useListContext<Thread>();
+  const dataProvider = useDataProvider();
+  const notify = useNotify();
+  const refresh = useRefresh();
+  const loading = useLoading();
+  const [updateThreads, { isPending }] = useUpdateThreads();
+  const unreadFilter = { ...filterValues, read: false };
+  // Fetched like the sidebar counters, so that refreshCounters() refetches it
+  const { total } = useGetList<Thread>("threads", {
+    filter: unreadFilter,
+    pagination: { page: 1, perPage: 1 },
+  });
+
+  const markAllAsRead = async () => {
+    if (!total) return;
+    try {
+      const { data } = await dataProvider.getList<Thread>("threads", {
+        filter: unreadFilter,
+        pagination: { page: 1, perPage: total },
+        sort: { field: "id", order: "ASC" },
+      });
+      updateThreads(data, { read: true });
+    } catch {
+      notify("ra.notification.http_error", { type: "error" });
+    }
+  };
+
+  return (
+    <>
+      <IconButtonWithTooltip
+        label="mail.action.mark_all_as_read"
+        className="ml-auto"
+        disabled={!total || isPending}
+        onClick={markAllAsRead}
+      >
+        <CheckCheck />
+      </IconButtonWithTooltip>
+      <IconButtonWithTooltip label="ra.action.refresh" onClick={refresh}>
+        {loading ? <LoaderCircle className="animate-spin" /> : <RotateCw />}
+      </IconButtonWithTooltip>
+    </>
   );
 };
 

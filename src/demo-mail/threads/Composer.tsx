@@ -24,7 +24,7 @@ import type { Thread } from "../types";
 import { refreshCounters } from "./threadCache";
 import { getComposeState, useCloseThread } from "./useThreadActions";
 
-/** The form values: the Cc recipients are typed as a list of addresses */
+/** The form values: the recipients are typed as lists of addresses */
 interface DraftValues {
   email: string;
   cc: string;
@@ -37,22 +37,35 @@ const parseAddresses = (value?: string) =>
 
 const validateAddress = email();
 
-/** Each Cc address must be valid */
+/** Each address must be valid */
 const validateAddresses = (value?: string) =>
   parseAddresses(value)
     .map((address) => validateAddress(address, {}))
     .find(Boolean);
 
-/** The data provider resolves the names of known correspondents */
-const toThreadData = (values: Partial<DraftValues>): Partial<Thread> => ({
-  email: values.email ?? "",
-  cc: parseAddresses(values.cc).map((address) => ({
-    name: address,
-    email: address,
-  })),
-  subject: values.subject ?? "",
-  draft: values.draft ?? "",
-});
+const toContacts = (addresses: string[]) =>
+  addresses.map((address) => ({ name: address, email: address }));
+
+/**
+ * The first To address is the thread correspondent. The data provider
+ * resolves the names of known correspondents.
+ */
+const toThreadData = (values: Partial<DraftValues>): Partial<Thread> => {
+  const [email = "", ...to] = parseAddresses(values.email);
+  return {
+    email,
+    to: toContacts(to),
+    cc: toContacts(parseAddresses(values.cc)),
+    subject: values.subject ?? "",
+    draft: values.draft ?? "",
+  };
+};
+
+const joinAddresses = (contacts: { email: string }[]) =>
+  contacts
+    .map((contact) => contact.email)
+    .filter(Boolean)
+    .join(", ");
 
 const AUTOSAVE_DELAY = 1000;
 
@@ -83,8 +96,8 @@ export const Composer = ({ draft }: { draft?: Thread }) => {
         ? {}
         : getComposeState(location.state)?.values;
     return {
-      email: draft?.email ?? "",
-      cc: draft?.cc.map((contact) => contact.email).join(", ") ?? "",
+      email: draft ? joinAddresses([draft, ...draft.to]) : "",
+      cc: draft ? joinAddresses(draft.cc) : "",
       subject: draft?.subject ?? forwarded?.subject ?? "",
       draft: draft?.draft ?? forwarded?.draft ?? "",
     };
@@ -158,17 +171,21 @@ export const Composer = ({ draft }: { draft?: Thread }) => {
         <TextInput
           source="email"
           label="mail.compose.to"
+          helperText="mail.compose.addresses_help"
+          // A multiple email input suggests the contacts for the last address
+          type="email"
+          multiple
           list={contactListId}
           autoComplete="off"
           // Chrome adds a dropdown arrow to the inputs with suggestions
           inputClassName="[&::-webkit-calendar-picker-indicator]:hidden!"
           autoFocus={!draft}
-          validate={[required(), email()]}
+          validate={[required(), validateAddresses]}
         />
         <TextInput
           source="cc"
           label="mail.compose.cc"
-          helperText="mail.compose.cc_help"
+          helperText="mail.compose.addresses_help"
           validate={validateAddresses}
         />
         <TextInput source="subject" label="mail.compose.subject" />
@@ -200,7 +217,7 @@ const ContactOptions = () => {
   });
   const contacts = new Map(
     (data ?? [])
-      .flatMap((thread) => [thread, ...thread.cc])
+      .flatMap((thread) => [thread, ...thread.to, ...thread.cc])
       .filter((contact) => contact.email && contact.name !== contact.email)
       .map((contact) => [contact.email, contact.name]),
   );

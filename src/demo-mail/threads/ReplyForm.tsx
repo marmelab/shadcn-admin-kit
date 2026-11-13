@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
 import {
   CreateBase,
   Form,
@@ -14,6 +15,7 @@ import { TextInput } from "@/components/admin/text-input";
 import { Button } from "@/components/ui/button";
 import { account } from "../account";
 import type { Thread } from "../types";
+import { canReplyAll } from "./canReplyAll";
 import { formatContacts } from "./formatContacts";
 import { focusReplyInput, replyInputId } from "./useThreadActions";
 
@@ -21,7 +23,7 @@ export type ReplyMode = "reply" | "replyAll";
 
 /**
  * Creates a message from me in the displayed thread, to the correspondent
- * only or to every recipient. The data provider mutes the thread when asked,
+ * only or to every recipient. The data provider sets the thread mute toggle,
  * so that the reply and the mute are a single request.
  */
 export const ReplyForm = ({
@@ -38,9 +40,10 @@ export const ReplyForm = ({
   // Remounting the form clears it once the reply is sent
   const [formKey, setFormKey] = useState(0);
   if (!thread) return null;
-  const canReplyAll = thread.cc.length > 0;
-  const replyAll = canReplyAll && mode === "replyAll";
-  const to = [{ name: thread.name, email: thread.email }];
+  const hasOtherRecipients = canReplyAll(thread);
+  const replyAll = hasOtherRecipients && mode === "replyAll";
+  const correspondent = { name: thread.name, email: thread.email };
+  const to = replyAll ? [correspondent, ...thread.to] : [correspondent];
   const cc = replyAll ? thread.cc : [];
 
   const switchMode = () => {
@@ -86,7 +89,7 @@ export const ReplyForm = ({
               {formatContacts(cc)}
             </span>
           ) : null}
-          {canReplyAll ? (
+          {hasOtherRecipients ? (
             <Button
               type="button"
               variant="link"
@@ -120,7 +123,9 @@ export const ReplyForm = ({
             source="mute"
             label="mail.reply.mute"
             helperText={false}
+            defaultValue={thread.muted}
           />
+          <SyncMuteToggle muted={thread.muted} />
           <SaveButton
             label={replyAll ? "mail.reply.send_all" : "mail.reply.send"}
             icon={null}
@@ -130,4 +135,16 @@ export const ReplyForm = ({
       </Form>
     </CreateBase>
   );
+};
+
+/**
+ * Keeps the mute toggle on the thread state, which changes after a muted reply
+ * (the form remounts before the thread refetch) or from the more menu.
+ */
+const SyncMuteToggle = ({ muted }: { muted: boolean }) => {
+  const { setValue } = useFormContext();
+  useEffect(() => {
+    setValue("mute", muted);
+  }, [muted, setValue]);
+  return null;
 };

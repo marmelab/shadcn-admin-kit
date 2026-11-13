@@ -45,7 +45,9 @@ export interface Thread extends RaRecord {
   /** The correspondent, denormalized for the list and the search */
   name: string;
   email: string;
-  /** The other recipients, used by Reply all */
+  /** The other To recipients of a message sent to several people */
+  to: Contact[];
+  /** The Cc recipients */
   cc: Contact[];
   /** Body of a thread in the drafts folder, which has no message yet */
   draft?: string | null;

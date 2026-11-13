@@ -63,6 +63,7 @@ export const generateData = (now = Date.now()) => {
       muted: seed.muted ?? false,
       name: seed.contact.name,
       email: seed.contact.email,
+      to: [],
       cc,
       draft: isDraft ? lastMessage.message : null,
       snippet: toSnippet(lastMessage.message),

@@ -26,6 +26,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import type { Message, Thread } from "../types";
 import { formatContacts } from "./formatContacts";
+import { canReplyAll as hasOtherRecipients } from "./canReplyAll";
 import type { ReplyMode } from "./ReplyForm";
 import { ThreadMoreMenu } from "./ThreadMoreMenu";
 import {
@@ -54,7 +55,7 @@ export const ThreadToolbar = ({
   const closeThread = useCloseThread();
   const moveThread = useMoveThread();
   if (!thread) return null;
-  const canReplyAll = thread.cc.length > 0;
+  const canReplyAll = hasOtherRecipients(thread);
   const activeMode = canReplyAll ? replyMode : "reply";
   const reply = (mode: ReplyMode) => {
     onReplyModeChange(mode);
