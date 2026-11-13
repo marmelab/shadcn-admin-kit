@@ -62,7 +62,8 @@ export const ReplyForm = ({
         to,
         cc,
         message: data.message,
-        mute: !!data.mute,
+        // Only when toggled, to spare the data provider a thread update
+        ...(!!data.mute !== thread.muted ? { mute: !!data.mute } : {}),
         timestamp: new Date().toISOString(),
       })}
       // Hook-level, so that it still runs when another thread is opened while

@@ -86,10 +86,13 @@ export const useUpdateThread = () => {
   const translate = useTranslate();
   const [update, { isPending }] = useUpdate<Thread>(undefined, undefined, {
     onSuccess: (result, { data, previousData }) => {
-      if (previousData) refreshCounters(queryClient, previousData as Thread);
-      refreshCounters(queryClient, result);
+      refreshCounters(
+        queryClient,
+        previousData ? [previousData as Thread, result] : [result],
+      );
+      // The displayed thread stays in the Unread tab (see above)
       if (data?.category || data?.labels || data?.starred != null) {
-        removeFromStaleLists(queryClient, result);
+        removeFromStaleLists(queryClient, result, ["read"]);
       }
       if (data?.category) {
         notify("mail.notification.moved", {
@@ -123,12 +126,13 @@ export const useUpdateThreads = () => {
         { ids: threads.map((thread) => thread.id), data },
         {
           mutationMode: "pessimistic",
-          onSuccess: () =>
-            threads.forEach((thread) => {
-              refreshCounters(queryClient, thread);
-              refreshCounters(queryClient, { ...thread, ...data });
-              removeFromStaleLists(queryClient, { ...thread, ...data });
-            }),
+          onSuccess: () => {
+            const updated = threads.map((thread) => ({ ...thread, ...data }));
+            refreshCounters(queryClient, [...threads, ...updated]);
+            updated.forEach((thread) =>
+              removeFromStaleLists(queryClient, thread),
+            );
+          },
         },
       );
     },

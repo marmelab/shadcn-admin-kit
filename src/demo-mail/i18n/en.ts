@@ -42,7 +42,6 @@ const customEnglishMessages: TranslationMessages = {
       empty: "No conversations",
       no_results: 'No conversations match "%{q}"',
       unread: "Unread",
-      starred: "Starred",
       muted: "Muted",
       draft: "Draft",
       no_recipient: "(no recipient)",

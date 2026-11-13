@@ -314,7 +314,7 @@ const DeleteButton = ({
         mutationMode: "pessimistic",
         onSuccess: () => {
           setIsOpen(false);
-          threads.forEach((thread) => refreshCounters(queryClient, thread));
+          refreshCounters(queryClient, threads);
           onDone();
           notify(
             isDraft

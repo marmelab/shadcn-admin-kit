@@ -88,7 +88,7 @@ export const ThreadList = () => {
           key={isComposing ? `create-${compose.id}` : selectedId}
         >
           {isComposing ? (
-            <Composer />
+            <Composer composeId={compose.id} />
           ) : selectedId != null ? (
             <ShowBase resource="threads" id={selectedId}>
               <ThreadDisplay />
@@ -113,21 +113,30 @@ const LoadMoreOnScroll = ({
 }) => {
   const { hasNextPage, fetchNextPage, isFetchingNextPage } =
     useInfinitePaginationContext();
+  const { error } = useListContext();
   const sentinelRef = useRef<HTMLDivElement>(null);
+  const hasError = error != null;
   useEffect(() => {
     const sentinel = sentinelRef.current;
     if (!sentinel || !hasNextPage || isFetchingNextPage) return;
     // Re-created after each page, so that a page too short to scroll loads
-    // the next one
+    // the next one. After a failed page, the end of the list must scroll out
+    // and back into view: the observer reports the visible end at once, which
+    // would retry in a loop.
+    let skipInitialEntry = hasError;
     const observer = new IntersectionObserver(
       ([entry]) => {
+        if (skipInitialEntry) {
+          skipInitialEntry = false;
+          return;
+        }
         if (entry.isIntersecting) fetchNextPage();
       },
       { root: scrollRef.current, rootMargin: "200px" },
     );
     observer.observe(sentinel);
     return () => observer.disconnect();
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage, scrollRef]);
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage, scrollRef, hasError]);
 
   return (
     <div ref={sentinelRef} className="pb-4">

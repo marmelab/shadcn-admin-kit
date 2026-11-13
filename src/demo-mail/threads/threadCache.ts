@@ -18,9 +18,13 @@ const getParams = (queryKey: readonly unknown[]) =>
  * Whether a thread belongs to a list filter, for the FakeRest operators the
  * app uses (the full-text search is ignored)
  */
-const matchesFilter = (thread: Thread, filter: Record<string, unknown> = {}) =>
+const matchesFilter = (
+  thread: Thread,
+  filter: Record<string, unknown> = {},
+  ignoredKeys: string[] = [],
+) =>
   Object.entries(filter).every(([key, value]) => {
-    if (key === "q") return true;
+    if (key === "q" || ignoredKeys.includes(key)) return true;
     if (key.endsWith("_neq_any")) {
       return !(value as unknown[]).includes(thread[key.slice(0, -8)]);
     }
@@ -41,15 +45,19 @@ const removeFromResult = (result: GetListResult<Thread>, thread: Thread) => {
 /**
  * Removes a thread from the cached lists it no longer belongs to, so that a
  * move shows up at once instead of after the lists refetch.
+ * The ignored filter keys keep the thread in the lists filtering on them.
  */
 export const removeFromStaleLists = (
   queryClient: QueryClient,
   thread: Thread,
+  ignoredKeys: string[] = [],
 ) => {
+  const isStale = (queryKey: readonly unknown[]) =>
+    !matchesFilter(thread, getParams(queryKey).filter, ignoredKeys);
   queryClient
     .getQueriesData<GetListResult<Thread>>(threadLists)
     .forEach(([queryKey, result]) => {
-      if (!result || matchesFilter(thread, getParams(queryKey).filter)) return;
+      if (!result || !isStale(queryKey)) return;
       queryClient.setQueryData(queryKey, removeFromResult(result, thread));
     });
   queryClient
@@ -57,7 +65,7 @@ export const removeFromStaleLists = (
       InfiniteData<GetInfiniteListResult<Thread>>
     >(threadInfiniteLists)
     .forEach(([queryKey, result]) => {
-      if (!result || matchesFilter(thread, getParams(queryKey).filter)) return;
+      if (!result || !isStale(queryKey)) return;
       queryClient.setQueryData(queryKey, {
         ...result,
         pages: result.pages.map((page) => removeFromResult(page, thread)),
@@ -79,15 +87,20 @@ export const seedRecordCache = (queryClient: QueryClient, threads: Thread[]) =>
   );
 
 /**
- * Refetches the sidebar counters that counted this thread. Count fetches a
+ * Refetches the sidebar counters that counted these threads. Count fetches a
  * single record with getList, which tells its queries apart from the thread
  * list (an infinite one).
  */
-export const refreshCounters = (queryClient: QueryClient, thread: Thread) =>
+export const refreshCounters = (queryClient: QueryClient, threads: Thread[]) =>
+  // A single invalidation: each one cancels and restarts the counter fetches
+  // in progress
   queryClient.invalidateQueries({
     ...threadLists,
     predicate: ({ queryKey }) => {
       const { filter, pagination } = getParams(queryKey);
-      return pagination?.perPage === 1 && matchesFilter(thread, filter);
+      return (
+        pagination?.perPage === 1 &&
+        threads.some((thread) => matchesFilter(thread, filter))
+      );
     },
   });

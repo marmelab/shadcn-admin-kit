@@ -5,11 +5,13 @@ import { useWatch } from "react-hook-form";
 import {
   email,
   Form,
+  type Identifier,
   required,
   useCreate,
   useDelete,
   useGetList,
   useLocation,
+  useNavigate,
   useNotify,
   useRefresh,
   useTranslate,
@@ -69,8 +71,8 @@ const joinAddresses = (contacts: { email: string }[]) =>
 
 const AUTOSAVE_DELAY = 1000;
 
-/** The new message editors already opened, see Composer */
-const openedComposeIds = new Set<number>();
+/** The draft saved by each new message editor, by compose id */
+const composeDrafts = new Map<number, Identifier>();
 
 /**
  * Editor of a draft, or of a new message when there is no draft yet. Changes
@@ -78,23 +80,49 @@ const openedComposeIds = new Set<number>();
  * the draft. Sending moves the draft to the sent folder, where the data
  * provider turns it into a message.
  */
-export const Composer = ({ draft }: { draft?: Thread }) => {
+export const Composer = ({
+  draft,
+  composeId,
+}: {
+  draft?: Thread;
+  /** Id of a new message editor (see composeState) */
+  composeId?: number;
+}) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const savedDraftId =
+    !draft && composeId != null ? composeDrafts.get(composeId) : undefined;
+  useEffect(() => {
+    if (savedDraftId == null) return;
+    // Back to an editor through the history: its draft holds the latest
+    // changes, a new editor would save a second draft
+    navigate(
+      { pathname: `/threads/${savedDraftId}/show`, search: location.search },
+      { replace: true, state: location.state },
+    );
+  }, [savedDraftId, navigate, location.search, location.state]);
+  if (savedDraftId != null) return null;
+  return <ComposerForm draft={draft} composeId={composeId} />;
+};
+
+const ComposerForm = ({
+  draft,
+  composeId,
+}: {
+  draft?: Thread;
+  composeId?: number;
+}) => {
   const translate = useTranslate();
   const location = useLocation();
   const isMobile = useIsMobile();
   const notify = useNotify();
   const refresh = useRefresh();
   const closeThread = useCloseThread();
-  const { save, send, discard } = useDraftSaver(draft);
+  const { save, send, discard } = useDraftSaver(draft, composeId);
   // Frozen, so that the form is not reset when a save updates the draft.
-  // A forward prefills a new message.
-  const [composeId] = useState(() => getComposeState(location.state)?.id);
+  // A forward prefills a new message until its draft is saved.
   const [initialValues] = useState<DraftValues>(() => {
-    // Once only: the draft saved from a forward holds the forwarded content
-    const forwarded =
-      draft || (composeId != null && openedComposeIds.has(composeId))
-        ? {}
-        : getComposeState(location.state)?.values;
+    const forwarded = draft ? {} : getComposeState(location.state)?.values;
     return {
       email: draft ? joinAddresses([draft, ...draft.to]) : "",
       cc: draft ? joinAddresses(draft.cc) : "",
@@ -108,10 +136,6 @@ export const Composer = ({ draft }: { draft?: Thread }) => {
       initialValues.subject !== "" &&
       initialValues.subject === getComposeState(location.state)?.values.subject,
   );
-  useEffect(() => {
-    if (composeId != null) openedComposeIds.add(composeId);
-  }, [composeId]);
-
   const handleSend = async (values: Partial<DraftValues>) => {
     const sent = await send(values);
     if (sent == null) return;
@@ -242,10 +266,11 @@ const AutoSave = ({
   save,
   initialValues,
 }: {
-  save: (values: DraftValues) => Promise<boolean>;
+  save: (values: DraftValues) => Promise<boolean | undefined>;
   initialValues: DraftValues;
 }) => {
   const translate = useTranslate();
+  const notify = useNotify();
   const values = useWatch() as DraftValues;
   const [status, setStatus] = useState<SaveStatus>("idle");
   const lastSaved = useRef(JSON.stringify(initialValues));
@@ -253,13 +278,21 @@ const AutoSave = ({
 
   const saveNow = useCallback(
     async (toSave: DraftValues) => {
+      const snapshot = JSON.stringify(toSave);
+      const previous = lastSaved.current;
       pending.current = null;
-      lastSaved.current = JSON.stringify(toSave);
+      lastSaved.current = snapshot;
       setStatus("saving");
       const saved = await save(toSave);
       setStatus(saved ? "saved" : "idle");
+      // Unless the draft is closed or a newer save started, a failed save is
+      // retried with the next edit, or when the editor closes
+      if (saved !== false || lastSaved.current !== snapshot) return;
+      lastSaved.current = previous;
+      pending.current ??= toSave;
+      notify("ra.notification.http_error", { type: "error" });
     },
-    [save],
+    [save, notify],
   );
 
   useEffect(() => {
@@ -302,20 +335,13 @@ const AutoSave = ({
  * Saves a draft, one request at a time: a save waits for the previous one, so
  * that the first save creates the draft and the next ones update it.
  */
-const useDraftSaver = (draft?: Thread) => {
+const useDraftSaver = (draft?: Thread, composeId?: number) => {
   const queryClient = useQueryClient();
   const [create] = useCreate<Thread>();
   const [update] = useUpdate<Thread>();
   const [deleteOne] = useDelete<Thread>();
   const record = useRef<Thread | undefined>(draft);
-  const queue = useRef<Promise<unknown>>(Promise.resolve());
-
-  const enqueue = useCallback(<T,>(task: () => Promise<T>) => {
-    const result = queue.current.then(task);
-    // A failed save must not block the next ones
-    queue.current = result.catch(() => undefined);
-    return result;
-  }, []);
+  const queue = useRef<Promise<boolean>>(Promise.resolve(true));
 
   // The hooks return the record only with returnPromise, which their types
   // do not tell
@@ -331,7 +357,8 @@ const useDraftSaver = (draft?: Thread) => {
           { returnPromise: true },
         )) as Thread;
         record.current = current;
-        refreshCounters(queryClient, current);
+        if (composeId != null) composeDrafts.set(composeId, current.id);
+        refreshCounters(queryClient, [current]);
         // Shows the new draft in the drafts list
         queryClient.invalidateQueries({
           queryKey: ["threads", "getInfiniteList"],
@@ -344,27 +371,31 @@ const useDraftSaver = (draft?: Thread) => {
         { mutationMode: "pessimistic", returnPromise: true },
       )) as Thread;
     },
-    [create, update, queryClient],
+    [create, update, queryClient, composeId],
   );
 
   // Set once the draft is sent or discarded, so that the autosave does not
   // write it again
   const isClosed = useRef(false);
 
-  /** Runs a task after the pending ones, resolves to whether it succeeded */
-  const run = useCallback(
-    (task: () => Promise<unknown>) =>
-      enqueue(task).then(
-        () => true,
-        () => false,
-      ),
-    [enqueue],
-  );
+  /**
+   * Runs a task after the pending ones, resolves to whether it succeeded. The
+   * queue never rejects: a failed save must not block the next ones.
+   */
+  const run = useCallback((task: () => Promise<unknown>) => {
+    const result = queue.current.then(task).then(
+      () => true,
+      () => false,
+    );
+    queue.current = result;
+    return result;
+  }, []);
 
+  /** Resolves to undefined when the draft is closed (sent or discarded) */
   const save = useCallback(
     (values: Partial<DraftValues>) =>
       isClosed.current
-        ? Promise.resolve(false)
+        ? Promise.resolve(undefined)
         : run(() => write(toThreadData(values))),
     [run, write],
   );
@@ -400,9 +431,10 @@ const useDraftSaver = (draft?: Thread) => {
           { id: previousData.id, previousData },
           { mutationMode: "pessimistic", returnPromise: true },
         );
-        refreshCounters(queryClient, previousData);
+        if (composeId != null) composeDrafts.delete(composeId);
+        refreshCounters(queryClient, [previousData]);
       }),
-    [close, deleteOne, queryClient],
+    [close, deleteOne, queryClient, composeId],
   );
 
   return { save, send, discard };

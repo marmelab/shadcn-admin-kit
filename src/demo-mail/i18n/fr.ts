@@ -42,7 +42,6 @@ const customFrenchMessages: TranslationMessages = {
       empty: "Aucune conversation",
       no_results: "Aucune conversation ne correspond à « %{q} »",
       unread: "Non lu",
-      starred: "Suivi",
       muted: "Ignoré",
       draft: "Brouillon",
       no_recipient: "(aucun destinataire)",

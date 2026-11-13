@@ -58,20 +58,34 @@ const searchThreads = async (q: string) => {
     );
   });
   // Each word of the search starts a word of the text: "tent" does not find
-  // "content"
-  const patterns = words.map(
-    (word) =>
-      new RegExp(
-        `(^|[^\\p{L}\\p{N}])${word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`,
-        "u",
-      ),
-  );
+  // "content". A word starting with punctuation ("@example.com") matches
+  // anywhere.
+  const patterns = words.map((word) => {
+    const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const wordStart = /^[\p{L}\p{N}]/u.test(word) ? "(^|[^\\p{L}\\p{N}])" : "";
+    return new RegExp(`${wordStart}${escaped}`, "u");
+  });
   return [...texts]
     .filter(([, text]) => {
       const normalized = normalize(text);
       return patterns.every((pattern) => pattern.test(normalized));
     })
     .map(([id]) => id);
+};
+
+/**
+ * The searches in progress: the list and its unread counter search at once,
+ * and share the scan
+ */
+const pendingSearches = new Map<string, Promise<Identifier[]>>();
+
+const searchThreadsOnce = (q: string) => {
+  let search = pendingSearches.get(q);
+  if (!search) {
+    search = searchThreads(q).finally(() => pendingSearches.delete(q));
+    pendingSearches.set(q, search);
+  }
+  return search;
 };
 
 /**
@@ -86,7 +100,7 @@ const baseDataProvider: DataProvider = {
     if (resource !== "threads" || !q) {
       return fakeRest.getList(resource, params);
     }
-    const ids = await searchThreads(q);
+    const ids = await searchThreadsOnce(q);
     return fakeRest.getList(resource, {
       ...params,
       filter: { ...filter, id: ids },
@@ -94,36 +108,42 @@ const baseDataProvider: DataProvider = {
   },
 };
 
-/** Name of a known correspondent, or the address itself */
-const getContactName = async (email: string) => {
-  if (!email) return "";
+/**
+ * Names of the known correspondents by address, fetched only when there are
+ * addresses to resolve (most thread updates have none)
+ */
+const getContactNames = async (emails: string[]) => {
+  if (!emails.some(Boolean)) return new Map<string, string>();
   const threads = await getAll<Thread>("threads");
-  const contact = threads
-    .flatMap((thread) => [thread, ...thread.to, ...thread.cc])
-    .find((contact) => contact.email === email);
-  return contact?.name ?? email;
+  // Reversed, so that the first occurrence of an address wins
+  return new Map(
+    threads
+      .flatMap((thread) => [thread, ...thread.to, ...thread.cc])
+      .reverse()
+      .map((contact) => [contact.email, contact.name]),
+  );
 };
 
 /** Fields derived from the draft body and from the recipient addresses */
-const withDraftFields = async (data: Partial<Thread>) => ({
-  ...data,
-  ...(typeof data.draft === "string"
-    ? { snippet: toSnippet(data.draft), updated_at: new Date().toISOString() }
-    : {}),
-  ...(typeof data.email === "string"
-    ? { name: await getContactName(data.email) }
-    : {}),
-  ...(data.to ? { to: await withContactNames(data.to) } : {}),
-  ...(data.cc ? { cc: await withContactNames(data.cc) } : {}),
-});
-
-const withContactNames = (contacts: Contact[]) =>
-  Promise.all(
-    contacts.map(async ({ email }) => ({
-      name: await getContactName(email),
-      email,
-    })),
-  );
+const withDraftFields = async (data: Partial<Thread>) => {
+  const names = await getContactNames([
+    data.email ?? "",
+    ...[...(data.to ?? []), ...(data.cc ?? [])].map(({ email }) => email),
+  ]);
+  const withNames = (contacts: Contact[]) =>
+    contacts.map(({ email }) => ({ name: names.get(email) ?? email, email }));
+  return {
+    ...data,
+    ...(typeof data.draft === "string"
+      ? { snippet: toSnippet(data.draft), updated_at: new Date().toISOString() }
+      : {}),
+    ...(typeof data.email === "string"
+      ? { name: names.get(data.email) ?? data.email }
+      : {}),
+    ...(data.to ? { to: withNames(data.to) } : {}),
+    ...(data.cc ? { cc: withNames(data.cc) } : {}),
+  };
+};
 
 const deleteThreadMessages = async (
   threadIds: Identifier[],
