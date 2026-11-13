@@ -49,6 +49,15 @@ const customEnglishMessages: TranslationMessages = {
       no_subject: "(no subject)",
       select: "Select %{subject}",
       select_all: "Select all",
+      select_by: "Select",
+      selection: {
+        all: "All",
+        none: "None",
+        read: "Read",
+        unread: "Unread",
+        starred: "Starred",
+        unstarred: "Unstarred",
+      },
       selected: "%{smart_count} selected",
     },
     sidebar: {

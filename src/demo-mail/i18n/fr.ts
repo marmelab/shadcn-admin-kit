@@ -49,6 +49,15 @@ const customFrenchMessages: TranslationMessages = {
       no_subject: "(aucun objet)",
       select: "Sélectionner %{subject}",
       select_all: "Tout sélectionner",
+      select_by: "Sélectionner",
+      selection: {
+        all: "Tous",
+        none: "Aucun",
+        read: "Lus",
+        unread: "Non lus",
+        starred: "Suivis",
+        unstarred: "Non suivis",
+      },
       selected: "%{smart_count} sélectionnée |||| %{smart_count} sélectionnées",
     },
     sidebar: {

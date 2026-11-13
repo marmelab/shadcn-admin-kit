@@ -3,7 +3,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import {
   Archive,
   ArchiveX,
-  CheckCheck,
+  ChevronDown,
+  EllipsisVertical,
   Inbox,
   LoaderCircle,
   Mail,
@@ -23,7 +24,14 @@ import {
 } from "ra-core";
 import { Confirm } from "@/components/admin/confirm";
 import { IconButtonWithTooltip } from "@/components/admin/icon-button-with-tooltip";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import type { Folder, Thread } from "../types";
 import { refreshCounters } from "./threadCache";
 import {
@@ -80,7 +88,7 @@ export const ThreadBulkActions = ({ selectedId }: { selectedId?: number }) => {
     <div className="sticky top-0 z-10 -mx-1 mb-2 flex h-11 items-center gap-1 bg-background px-1">
       <Checkbox
         // The kit checkbox has no indeterminate icon: a dash replaces the check
-        className="mx-2 data-indeterminate:border-primary data-indeterminate:bg-primary data-indeterminate:text-primary-foreground data-indeterminate:[&_svg]:hidden data-indeterminate:before:h-0.5 data-indeterminate:before:w-2 data-indeterminate:before:rounded-full data-indeterminate:before:bg-current data-indeterminate:before:content-['']"
+        className="ml-2 data-indeterminate:border-primary data-indeterminate:bg-primary data-indeterminate:text-primary-foreground data-indeterminate:[&_svg]:hidden data-indeterminate:before:h-0.5 data-indeterminate:before:w-2 data-indeterminate:before:rounded-full data-indeterminate:before:bg-current data-indeterminate:before:content-['']"
         checked={allChecked}
         indeterminate={checked.length > 0 && !allChecked}
         onCheckedChange={() =>
@@ -90,6 +98,7 @@ export const ThreadBulkActions = ({ selectedId }: { selectedId?: number }) => {
         }
         aria-label={translate("mail.list.select_all")}
       />
+      <SelectMenu />
       {checked.length === 0 ? (
         <ViewActions />
       ) : (
@@ -174,14 +183,57 @@ export const ThreadBulkActions = ({ selectedId }: { selectedId?: number }) => {
   );
 };
 
-/** Mark all as read (every unread thread of the view, not only the loaded
- * ones) and refresh */
+/** Threads of the loaded list a selection shortcut checks, like Gmail */
+const selections: Record<string, (thread: Thread) => boolean> = {
+  all: () => true,
+  none: () => false,
+  read: (thread) => thread.read,
+  unread: (thread) => !thread.read,
+  starred: (thread) => thread.starred,
+  unstarred: (thread) => !thread.starred,
+};
+
+const SelectMenu = () => {
+  const { data = [], onSelect } = useListContext<Thread>();
+  const translate = useTranslate();
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={
+          <Button
+            variant="ghost"
+            size="icon-xs"
+            aria-label={translate("mail.list.select_by")}
+          />
+        }
+      >
+        <ChevronDown />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start">
+        {Object.entries(selections).map(([name, matches]) => (
+          <DropdownMenuItem
+            key={name}
+            onClick={() =>
+              onSelect(data.filter(matches).map((thread) => thread.id))
+            }
+          >
+            {translate(`mail.list.selection.${name}`)}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
+/** Refresh, and a more menu to mark all as read (every unread thread of the
+ * view, not only the loaded ones), like Gmail */
 const ViewActions = () => {
   const { filterValues } = useListContext<Thread>();
   const dataProvider = useDataProvider();
   const notify = useNotify();
   const refresh = useRefresh();
   const loading = useLoading();
+  const translate = useTranslate();
   const [updateThreads, { isPending }] = useUpdateThreads();
   const unreadFilter = { ...filterValues, read: false };
   // Fetched like the sidebar counters, so that refreshCounters() refetches it
@@ -206,17 +258,31 @@ const ViewActions = () => {
 
   return (
     <>
-      <IconButtonWithTooltip
-        label="mail.action.mark_all_as_read"
-        className="ml-auto"
-        disabled={!total || isPending}
-        onClick={markAllAsRead}
-      >
-        <CheckCheck />
-      </IconButtonWithTooltip>
       <IconButtonWithTooltip label="ra.action.refresh" onClick={refresh}>
         {loading ? <LoaderCircle className="animate-spin" /> : <RotateCw />}
       </IconButtonWithTooltip>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          render={
+            <Button
+              variant="ghost"
+              size="icon"
+              aria-label={translate("mail.action.more")}
+            />
+          }
+        >
+          <EllipsisVertical />
+        </DropdownMenuTrigger>
+        {/* The kit menu takes the width of its trigger, an icon here */}
+        <DropdownMenuContent align="start" className="w-max">
+          <DropdownMenuItem
+            disabled={!total || isPending}
+            onClick={markAllAsRead}
+          >
+            {translate("mail.action.mark_all_as_read")}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </>
   );
 };

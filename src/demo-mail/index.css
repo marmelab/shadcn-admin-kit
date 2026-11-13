@@ -11,3 +11,8 @@
     cursor: pointer;
   }
 }
+
+/* The kit menu items set cursor-default: unlayered, so that it wins */
+[role^="menuitem"]:not([data-disabled]) {
+  cursor: pointer;
+}
