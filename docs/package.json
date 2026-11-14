@@ -20,7 +20,7 @@
     "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
-    "astro": "^7.2.9",
+    "astro": "^7.4.7",
     "astro-expressive-code": "^0.44.1",
     "astro-rehype-relative-markdown-links": "^0.19.2",
     "expressive-code-fullscreen": "^2.0.0",
