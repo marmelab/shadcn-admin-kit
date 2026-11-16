@@ -39,6 +39,7 @@
       ],
       "dependencies": [
         "@base-ui/react",
+        "@marmelab/query-string",
         "@tanstack/react-query@^5.83.0",
         "class-variance-authority",
         "clsx",
@@ -48,8 +49,7 @@
         "lodash",
         "lucide-react",
         "next-themes",
-        "query-string",
-        "ra-core@^5.15.2",
+        "ra-core@^5.15.6",
         "ra-i18n-polyglot",
         "ra-language-english",
         "react-dropzone",
