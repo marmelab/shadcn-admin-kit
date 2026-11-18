@@ -39,7 +39,6 @@
       ],
       "dependencies": [
         "@base-ui/react",
-        "@marmelab/query-string",
         "@tanstack/react-query@^5.83.0",
         "class-variance-authority",
         "clsx",
