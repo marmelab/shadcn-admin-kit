@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { render } from "vitest-browser-react";
 import { userEvent } from "vitest/browser";
 
@@ -6,12 +6,33 @@ import {
   Basic,
   Create,
   InsideArrayInputWithValidation,
+  OnCreate,
   Required,
   WithMismatchedOptionTextAndValue,
   WithoutValue,
 } from "@/stories/autocomplete-input.stories";
 
 describe("<AutocompleteInput />", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it("should close and leave the value unchanged when onCreate returns nothing", async () => {
+    // Users cancel the prompt
+    vi.spyOn(window, "prompt").mockReturnValue(null);
+    const screen = render(<OnCreate />);
+    const combobox = screen.getByRole("combobox");
+    await combobox.click();
+    await userEvent.type(screen.getByPlaceholder("Search..."), "Zola");
+
+    await screen.getByRole("option", { name: "Create Zola" }).click();
+
+    expect(window.prompt).toHaveBeenCalledWith("New tag name", "Zola");
+    await expect.element(combobox).toHaveAttribute("aria-expanded", "false");
+    // Not "@@ra-create", which matches no choice and shows the placeholder
+    await expect.element(combobox).toHaveTextContent("Enthusiast");
+  });
+
   it("should display the choices and a create option if supported", async () => {
     const screen = render(<Create />);
     const combobox = screen.getByRole("combobox");
