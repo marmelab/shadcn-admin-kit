@@ -37,7 +37,9 @@ const ThreadView = ({ thread }: { thread: Thread }) => {
           <AvatarFallback>{getInitials(thread.name)}</AvatarFallback>
         </Avatar>
         <div className="grid min-w-0 gap-1">
-          <div className="font-semibold">{thread.name}</div>
+          <div className="font-semibold">
+            {formatContacts([thread, ...thread.to])}
+          </div>
           <div className="text-xs">{thread.subject}</div>
           <div className="text-xs">
             <span className="font-medium">

@@ -216,27 +216,23 @@ const ComposerForm = ({
       <Form
         record={initialValues}
         onSubmit={handleSend}
+        // The browser rejects the addresses separated by spaces or semicolons
+        // in an email input: validateAddresses checks them instead
+        noValidate
         className="flex flex-1 flex-col gap-4 p-4"
       >
         <ContactOptions />
         <TextInput
           source="email"
           label="mail.compose.to"
-          helperText="mail.compose.addresses_help"
-          // A multiple email input suggests the contacts for the last address
-          type="email"
-          multiple
-          list={contactListId}
-          autoComplete="off"
-          // Chrome adds a dropdown arrow to the inputs with suggestions
-          inputClassName="[&::-webkit-calendar-picker-indicator]:hidden!"
+          {...addressInputProps}
           autoFocus={!draft}
           validate={[required(), validateAddresses]}
         />
         <TextInput
           source="cc"
           label="mail.compose.cc"
-          helperText="mail.compose.addresses_help"
+          {...addressInputProps}
           validate={validateAddresses}
         />
         <TextInput source="subject" label="mail.compose.subject" />
@@ -259,6 +255,18 @@ const ComposerForm = ({
 };
 
 const contactListId = "compose-contacts";
+
+/** The To and Cc inputs accept the same separators and suggest the contacts */
+const addressInputProps = {
+  helperText: "mail.compose.addresses_help",
+  // A multiple email input suggests the contacts for the last address
+  type: "email",
+  multiple: true,
+  list: contactListId,
+  autoComplete: "off",
+  // Chrome adds a dropdown arrow to the inputs with suggestions
+  inputClassName: "[&::-webkit-calendar-picker-indicator]:hidden!",
+} as const;
 
 /** Suggestions for the To field: the known correspondents */
 const ContactOptions = () => {

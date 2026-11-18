@@ -88,7 +88,7 @@ export const ThreadBulkActions = ({ selectedId }: { selectedId?: number }) => {
     <div className="sticky top-0 z-10 -mx-1 mb-2 flex h-11 items-center gap-1 bg-background px-1">
       <Checkbox
         // The kit checkbox has no indeterminate icon: a dash replaces the check
-        className="ml-2 data-indeterminate:border-primary data-indeterminate:bg-primary data-indeterminate:text-primary-foreground data-indeterminate:[&_svg]:hidden data-indeterminate:before:h-0.5 data-indeterminate:before:w-2 data-indeterminate:before:rounded-full data-indeterminate:before:bg-current data-indeterminate:before:content-['']"
+        className="ml-2 data-indeterminate:border-primary data-indeterminate:bg-primary dark:data-indeterminate:bg-primary data-indeterminate:text-primary-foreground data-indeterminate:[&_svg]:hidden data-indeterminate:before:h-0.5 data-indeterminate:before:w-2 data-indeterminate:before:rounded-full data-indeterminate:before:bg-current data-indeterminate:before:content-['']"
         checked={allChecked}
         indeterminate={checked.length > 0 && !allChecked}
         onCheckedChange={() =>
@@ -258,7 +258,12 @@ const ViewActions = () => {
 
   return (
     <>
-      <IconButtonWithTooltip label="ra.action.refresh" onClick={refresh}>
+      <IconButtonWithTooltip
+        label="ra.action.refresh"
+        // The view actions sit at the far end, away from the select all box
+        className="ml-auto"
+        onClick={refresh}
+      >
         {loading ? <LoaderCircle className="animate-spin" /> : <RotateCw />}
       </IconButtonWithTooltip>
       <DropdownMenu>

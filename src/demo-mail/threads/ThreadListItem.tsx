@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import type { Thread } from "../types";
+import { formatContacts } from "./formatContacts";
 import { useFormatDistance } from "./useFormatDistance";
 import {
   fromListState,
@@ -88,7 +89,9 @@ export const ThreadListItem = ({
             </span>
           ) : null}
           <span className="truncate font-semibold">
-            {thread.name || translate("mail.list.no_recipient")}
+            {/* Every To recipient, for a message sent to several people */}
+            {formatContacts([thread, ...thread.to]) ||
+              translate("mail.list.no_recipient")}
           </span>
           {/* The icons are decorative, screen readers get the sr-only text */}
           {!thread.read ? (
