@@ -17,18 +17,18 @@ describe("<AutocompleteInput />", () => {
     vi.restoreAllMocks();
   });
 
-  it("should close and leave the value unchanged when onCreate returns nothing", async () => {
+  it("should leave the value unchanged when onCreate returns nothing", async () => {
     // Users cancel the prompt
     vi.spyOn(window, "prompt").mockReturnValue(null);
     const screen = render(<OnCreate />);
-    const combobox = screen.getByRole("combobox");
+    // By label, as the open popover has a search combobox too
+    const combobox = screen.getByRole("combobox", { name: "Tag" });
     await combobox.click();
     await userEvent.type(screen.getByPlaceholder("Search..."), "Zola");
 
     await screen.getByRole("option", { name: "Create Zola" }).click();
 
     expect(window.prompt).toHaveBeenCalledWith("New tag name", "Zola");
-    await expect.element(combobox).toHaveAttribute("aria-expanded", "false");
     // Not "@@ra-create", which matches no choice and shows the placeholder
     await expect.element(combobox).toHaveTextContent("Enthusiast");
   });

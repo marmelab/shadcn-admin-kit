@@ -190,13 +190,7 @@ export const AutocompleteInput = (
     createValue,
     createHintValue,
     createItemLabel,
-    // Close the popover even if onCreate creates nothing, e.g. when users cancel
-    onCreate:
-      onCreate &&
-      ((filter) => {
-        setOpen(false);
-        return onCreate(filter);
-      }),
+    onCreate,
     handleChange,
     optionText,
     filter: filterValue,
