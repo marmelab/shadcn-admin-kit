@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "demo:build": "tsc -b && vite build",
+    "demo-mail:dev": "vite --config vite.demo-mail.config.ts --port 5175",
+    "demo-mail:build": "tsc -b && vite build --config vite.demo-mail.config.ts",
     "registry:build": "node ./scripts/build_registry.mjs",
     "website:dev": "vite --config website/vite.config.ts --port 5174",
     "website:build": "tsc -b website && vite build --config website/vite.config.ts",
