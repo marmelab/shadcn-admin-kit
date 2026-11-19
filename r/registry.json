@@ -48,7 +48,7 @@
         "lodash",
         "lucide-react",
         "next-themes",
-        "ra-core@^5.15.6",
+        "ra-core@^5.15.7",
         "ra-i18n-polyglot",
         "ra-language-english",
         "react-dropzone",
