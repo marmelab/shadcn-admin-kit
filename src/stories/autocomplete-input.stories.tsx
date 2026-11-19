@@ -253,6 +253,31 @@ export const Create = () => (
   </Wrapper>
 );
 
+/**
+ * Creation through a function. Returning nothing, e.g. when users cancel the
+ * prompt, leaves the value unchanged.
+ */
+export const OnCreate = () => {
+  const [choices, setChoices] = React.useState(tags);
+  return (
+    <Wrapper>
+      <AutocompleteInput
+        source="tag_id"
+        choices={choices}
+        optionText="label"
+        onCreate={(filter) => {
+          const label = prompt("New tag name", filter);
+          if (!label) return;
+          const newTag = { id: label.toLowerCase(), label };
+          setChoices((previous) => [...previous, newTag]);
+          return newTag;
+        }}
+        createItemLabel="Create %{item}"
+      />
+    </Wrapper>
+  );
+};
+
 const ContactOptionRender = () => {
   const record = useRecordContext();
   if (!record) return null;
