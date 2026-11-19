@@ -4,7 +4,6 @@ import type { HtmlHTMLAttributes, ReactNode } from "react";
 import { useCallback, useEffect, useState, isValidElement } from "react";
 import get from "lodash/get";
 import isEqual from "lodash/isEqual";
-import queryString from "query-string";
 import type { SavedQuery } from "ra-core";
 import {
   extractValidSavedQueries,
@@ -382,17 +381,23 @@ export const FilterButton = (props: FilterButtonProps) => {
             ) : (
               <DropdownMenuItem
                 onClick={(): void => {
+                  const params = {
+                    filter: JSON.stringify(savedQuery.value.filter),
+                    sort: savedQuery.value.sort?.field,
+                    order: savedQuery.value.sort?.order,
+                    page: "1",
+                    perPage: savedQuery.value.perPage?.toString(),
+                    displayedFilters: JSON.stringify(
+                      savedQuery.value.displayedFilters,
+                    ),
+                  };
                   navigate({
-                    search: queryString.stringify({
-                      filter: JSON.stringify(savedQuery.value.filter),
-                      sort: savedQuery.value.sort?.field,
-                      order: savedQuery.value.sort?.order,
-                      page: 1,
-                      perPage: savedQuery.value.perPage,
-                      displayedFilters: JSON.stringify(
-                        savedQuery.value.displayedFilters,
+                    search: new URLSearchParams(
+                      Object.entries(params).filter(
+                        (entry): entry is [string, string] =>
+                          entry[1] !== undefined,
                       ),
-                    }),
+                    ).toString(),
                   });
                   setOpen(false);
                 }}
