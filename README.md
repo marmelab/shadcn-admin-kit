@@ -274,6 +274,14 @@ To test the UI registry, run:
 make test-registry
 ```
 
+The `files` of the `admin` and `rich-text-input` items in `registry.json` are generated from the files tracked by git, by a pre-commit hook installed with the dependencies. New components are added to the registry automatically when you commit them. To regenerate the list manually (after staging new files), run:
+
+```bash
+make generate-registry
+```
+
+If `registry.json` misses some of your changes, update `scripts/generate_registry.mjs`.
+
 ## License
 
 This project is licensed under the [MIT License](./LICENSE), courtesy of [Marmelab](https://marmelab.com/).
