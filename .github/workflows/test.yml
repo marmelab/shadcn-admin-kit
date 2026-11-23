@@ -23,6 +23,8 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm i --frozen-lockfile
+      - name: Check registry.json is up to date
+        run: make generate-registry && git diff --exit-code registry.json
       - name: Build registry
         run: make build-registry
       - name: Build demo
