@@ -1,0 +1,18 @@
+@import "../index.css";
+
+/* Tailwind only scans the Vite root (src/demo-mail) by default */
+@source "../components";
+
+/* Tailwind v4 dropped the pointer cursor on buttons, mail clients keep it */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [role="checkbox"]:not([data-disabled]) {
+    cursor: pointer;
+  }
+}
+
+/* The kit menu items set cursor-default: unlayered, so that it wins */
+[role^="menuitem"]:not([data-disabled]) {
+  cursor: pointer;
+}
