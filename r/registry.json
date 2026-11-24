@@ -62,6 +62,10 @@
       "devDependencies": ["@types/lodash", "@types/node"],
       "files": [
         {
+          "path": "src/components/admin/access-denied.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/admin.tsx",
           "type": "registry:component"
         },
@@ -82,11 +86,11 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/autocomplete-input.tsx",
+          "path": "src/components/admin/autocomplete-array-input.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/autocomplete-array-input.tsx",
+          "path": "src/components/admin/autocomplete-input.tsx",
           "type": "registry:component"
         },
         {
@@ -122,11 +126,15 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/count.tsx",
+          "path": "src/components/admin/columns-button.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/create.tsx",
+          "path": "src/components/admin/confirm.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/count.tsx",
           "type": "registry:component"
         },
         {
@@ -134,7 +142,7 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/columns-button.tsx",
+          "path": "src/components/admin/create.tsx",
           "type": "registry:component"
         },
         {
@@ -158,10 +166,6 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/edit.tsx",
-          "type": "registry:component"
-        },
-        {
           "path": "src/components/admin/edit-button.tsx",
           "type": "registry:component"
         },
@@ -170,7 +174,15 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/edit.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/email-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/error.tsx",
           "type": "registry:component"
         },
         {
@@ -198,6 +210,14 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/guesser-empty.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/icon-button-with-tooltip.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/image-field.tsx",
           "type": "registry:component"
         },
@@ -214,10 +234,6 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/list.tsx",
-          "type": "registry:component"
-        },
-        {
           "path": "src/components/admin/list-guesser.tsx",
           "type": "registry:component"
         },
@@ -226,15 +242,19 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/list.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/loading.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/locales-menu-button.tsx",
           "type": "registry:component"
         },
         {
           "path": "src/components/admin/login-page.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "src/components/admin/access-denied.tsx",
           "type": "registry:component"
         },
         {
@@ -266,11 +286,7 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/reference-field.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "src/components/admin/reference-input.tsx",
+          "path": "src/components/admin/reference-array-field.tsx",
           "type": "registry:component"
         },
         {
@@ -278,7 +294,11 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/reference-array-field.tsx",
+          "path": "src/components/admin/reference-field.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/reference-input.tsx",
           "type": "registry:component"
         },
         {
@@ -302,15 +322,15 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/select-all-button.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/select-field.tsx",
           "type": "registry:component"
         },
         {
           "path": "src/components/admin/select-input.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "src/components/admin/show.tsx",
           "type": "registry:component"
         },
         {
@@ -322,11 +342,15 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/simple-form.tsx",
+          "path": "src/components/admin/show.tsx",
           "type": "registry:component"
         },
         {
           "path": "src/components/admin/simple-form-iterator.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/admin/simple-form.tsx",
           "type": "registry:component"
         },
         {
@@ -342,6 +366,10 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/spinner.tsx",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/text-array-input.tsx",
           "type": "registry:component"
         },
@@ -354,19 +382,15 @@
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/theme-mode-toggle.tsx",
-          "type": "registry:component"
-        },
-        {
           "path": "src/components/admin/theme-context.ts",
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/theme-provider.tsx",
+          "path": "src/components/admin/theme-mode-toggle.tsx",
           "type": "registry:component"
         },
         {
-          "path": "src/components/admin/use-theme.ts",
+          "path": "src/components/admin/theme-provider.tsx",
           "type": "registry:component"
         },
         {
@@ -378,15 +402,11 @@
           "type": "registry:component"
         },
         {
+          "path": "src/components/admin/use-theme.ts",
+          "type": "registry:component"
+        },
+        {
           "path": "src/components/admin/user-menu.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "src/components/admin/error.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "src/components/admin/loading.tsx",
           "type": "registry:component"
         },
         {
@@ -405,26 +425,6 @@
           "path": "rules/AGENTS.md",
           "type": "registry:file",
           "target": "~/AGENTS.md"
-        },
-        {
-          "path": "src/components/admin/confirm.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "src/components/admin/guesser-empty.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "src/components/admin/icon-button-with-tooltip.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "src/components/admin/select-all-button.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "src/components/admin/spinner.tsx",
-          "type": "registry:component"
         }
       ]
     },
@@ -451,14 +451,6 @@
       "files": [
         {
           "path": "src/components/rich-text-input/index.ts",
-          "type": "registry:component"
-        },
-        {
-          "path": "src/components/rich-text-input/rich-text-input.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "src/components/rich-text-input/rich-text-input-toolbar.tsx",
           "type": "registry:component"
         },
         {
@@ -663,6 +655,14 @@
         },
         {
           "path": "src/components/rich-text-input/minimal-tiptap/utils.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/rich-text-input-toolbar.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/rich-text-input/rich-text-input.tsx",
           "type": "registry:component"
         }
       ],
