@@ -25,6 +25,9 @@ build-demo: ## Build the demo
 build-registry: ## Build the UI registry
 	pnpm run registry:build
 
+generate-registry: ## Generate the files of registry.json (run by the pre-commit hook)
+	pnpm run registry:gen
+
 test:
 	pnpm run test
 

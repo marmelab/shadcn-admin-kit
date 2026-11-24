@@ -7,6 +7,7 @@
     "dev": "vite",
     "demo:build": "tsc -b && vite build",
     "registry:build": "node ./scripts/build_registry.mjs",
+    "registry:gen": "node ./scripts/generate_registry.mjs && prettier --write registry.json",
     "website:dev": "vite --config website/vite.config.ts --port 5174",
     "website:build": "tsc -b website && vite build --config website/vite.config.ts",
     "lint": "eslint .",
@@ -19,7 +20,8 @@
     "test:watch": "vitest watch --browser.headless",
     "test:browser": "vitest watch",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
-    "doc:build": "cd docs && pnpm run build"
+    "doc:build": "cd docs && pnpm run build",
+    "prepare": "husky"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
@@ -83,6 +85,7 @@
     "eslint-plugin-react-refresh": "^0.4.26",
     "eslint-plugin-storybook": "^10.2.12",
     "globals": "^16.5.0",
+    "husky": "^9.1.7",
     "playwright": "^1.57.0",
     "postcss": "^8.5.23",
     "prettier": "^3.8.1",
