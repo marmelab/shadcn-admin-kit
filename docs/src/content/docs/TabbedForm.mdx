@@ -1,0 +1,143 @@
+---
+title: "TabbedForm"
+---
+
+import video from './images/tabbed-form.mp4';
+
+`<TabbedForm>` creates a `<form>` to edit a record, and renders inputs grouped by tab. The tabs are set by using `<TabbedForm.Tab>` components. It is useful for forms with a lot of inputs, to reduce the time taken to change a subset of the fields. It renders a toolbar at the bottom (Cancel + Save buttons).
+
+<video controls autoplay playsinline muted loop class="w-full aspect-video">
+    <source src={video} type="video/mp4" />
+    Your browser does not support the video tag.
+</video>
+
+## Usage
+
+`<TabbedForm>` is often used as child of [`<Create>`](./Create.md) or [`<Edit>`](./Edit.md). It accepts `<TabbedForm.Tab>` elements as children. It requires no prop by default.
+
+```tsx
+import { Edit, TabbedForm, TextInput, NumberInput } from '@/components/admin';
+import { required } from 'ra-core';
+
+export const PostEdit = () => (
+  <Edit>
+    <TabbedForm>
+      <TabbedForm.Tab label="summary">
+        <TextInput source="title" validate={required()} />
+        <TextInput source="teaser" multiline validate={required()} />
+      </TabbedForm.Tab>
+      <TabbedForm.Tab label="body">
+        <TextInput source="body" multiline label={false} />
+      </TabbedForm.Tab>
+      <TabbedForm.Tab label="miscellaneous">
+        <TextInput source="password" type="password" />
+        <NumberInput source="average_note" />
+      </TabbedForm.Tab>
+    </TabbedForm>
+  </Edit>
+);
+```
+
+`<TabbedForm>` reads the `record` from the `RecordContext`, uses it to initialize the form default values, renders the tab headers, the content of the active tab, and a toolbar with a `<SaveButton>` that calls the `save` callback prepared by the edit or the create controller when pressed.
+
+All the tabs are rendered (the inactive ones are hidden), so the validation covers the inputs of every tab. When a tab contains invalid inputs, its header is highlighted in the destructive color.
+
+Like [`<SimpleForm>`](./SimpleForm.md), it relies on [react-hook-form](https://react-hook-form.com/) for form handling, so you can use the [`useFormContext`](https://react-hook-form.com/docs/useformcontext) and [`useFormState`](https://react-hook-form.com/docs/useformstate) hooks in its children.
+
+## Props
+
+| Prop | Required | Type | Default | Description |
+|------|----------|------|---------|-------------|
+| `children` | Required | `ReactNode` | - | `<TabbedForm.Tab>` elements. |
+| `className` | Optional | `string` | - | Extra classes appended to base layout |
+| `defaultValues` | Optional | `object \| function` | - | The default values of the record. |
+| `id` | Optional | `string` | - | The id of the underlying `<form>` tag. |
+| `noValidate` | Optional | `boolean` | - | Set to `true` to disable the browser's default validation. |
+| `onSubmit` | Optional | `function` | `save` | A callback to call when the form is submitted. |
+| `sanitizeEmptyValues` | Optional | `boolean` | - | Set to `true` to remove empty values from the form state. |
+| `syncWithLocation` | Optional | `boolean` | `true` | Set to `false` to disable the synchronization of the active tab with the location. |
+| `toolbar` | Optional | `ReactNode \| false` | - | The toolbar component. |
+| `validate` | Optional | `function` | - | A function to validate the form values. |
+| `warnWhenUnsavedChanges` | Optional | `boolean` | - | Set to `true` to warn the user when leaving the form with unsaved changes. |
+
+Additional props are passed to [the `useForm` hook](https://react-hook-form.com/docs/useform).
+
+## `syncWithLocation`
+
+By default, `<TabbedForm>` syncs the active tab with the location, so that users can link directly to a tab. The first tab is at the form root (e.g. `/posts/12`), the next ones at their index (e.g. `/posts/12/1`), or at their [`path`](#path).
+
+Set `syncWithLocation` to `false` to keep the active tab in a local state instead, e.g. when the form is displayed in a dialog:
+
+```tsx
+<TabbedForm syncWithLocation={false}>
+  <TabbedForm.Tab label="summary">...</TabbedForm.Tab>
+  <TabbedForm.Tab label="body">...</TabbedForm.Tab>
+</TabbedForm>
+```
+
+## `toolbar`
+
+By default, `<TabbedForm>` renders a [`<FormToolbar>`](./SimpleForm.md#toolbar) with Cancel and Save buttons. Pass a custom element to replace it, or `false` to hide it:
+
+```tsx
+import { FormToolbar, SaveButton, TabbedForm } from '@/components/admin';
+
+const PostEdit = () => (
+  <Edit>
+    <TabbedForm
+      toolbar={
+        <FormToolbar>
+          <SaveButton label="Publish" />
+        </FormToolbar>
+      }
+    >
+      ...
+    </TabbedForm>
+  </Edit>
+);
+```
+
+## `validate`
+
+To validate the form values, provide a `validate` function taking the record as input, and returning an object with error messages indexed by field. You can also set validators on the inputs directly. See the [validation section of the SimpleForm documentation](./SimpleForm.md#validation) for details.
+
+Errors in inactive tabs are signaled by highlighting the tab header.
+
+## `<TabbedForm.Tab>`
+
+`<TabbedForm.Tab>` renders its children (usually inputs) one per row. It accepts the following props:
+
+| Prop | Required | Type | Default | Description |
+|------|----------|------|---------|-------------|
+| `label` | Required | `string \| ReactElement` | - | The tab header label. Strings are translated. |
+| `children` | Optional | `ReactNode` | - | The tab content (usually Input elements). |
+| `className` | Optional | `string` | - | Extra classes for the tab header. |
+| `contentClassName` | Optional | `string` | - | Extra classes for the tab content. |
+| `count` | Optional | `ReactNode` | - | A number displayed after the label, e.g. "comments (3)". |
+| `icon` | Optional | `ReactElement` | - | An icon displayed before the label. |
+| `path` | Optional | `string` | Tab index | The location path of the tab, when `syncWithLocation` is `true`. |
+
+```tsx
+import { MessageSquare } from 'lucide-react';
+
+<TabbedForm.Tab
+  label="comments"
+  path="comments"
+  icon={<MessageSquare />}
+  count={3}
+  contentClassName="grid grid-cols-2 gap-4"
+>
+  ...
+</TabbedForm.Tab>
+```
+
+### `path`
+
+By default, the first tab is at the form root, and the next ones at their index. Set `path` to use a more readable URL, e.g. `/posts/12/comments`:
+
+```tsx
+<TabbedForm>
+  <TabbedForm.Tab label="summary">...</TabbedForm.Tab>
+  <TabbedForm.Tab label="comments" path="comments">...</TabbedForm.Tab>
+</TabbedForm>
+```
